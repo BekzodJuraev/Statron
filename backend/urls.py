@@ -3,5 +3,5 @@ from . import views
 
 
 urlpatterns=[
- path('',views.hello_world,name='main')
+ path('api/',views.ChanelAPI.as_view())
 ]
