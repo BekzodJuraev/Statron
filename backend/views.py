@@ -66,6 +66,8 @@ class RegistrationAPIView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        user.profile.phone_number = serializer.validated_data.get('phone_number')
+        user.profile.save()
         # Add any additional logic here, such as sending a welcome email
         return Response({'detail': 'Registration successful'}, status=status.HTTP_201_CREATED)
 def index(requests):

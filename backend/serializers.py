@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Chanel
+from .models import Chanel,Profile
 from django.contrib.auth.models import User
-from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.serializerfields import PhoneNumberField
 class ChanelSerializer(serializers.ModelSerializer):
     pictures=serializers.ImageField(required=False)
     class Meta:
@@ -27,25 +27,43 @@ class LoginFormSerializer(serializers.Serializer):
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    phone_number = PhoneNumberField(required=True)
+
+
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("This email address is already registered. Please use a different one.")
         return value
 
+    def validate_password(self, value):
+        if len(value) < 8:
+            raise serializers.ValidationError("Password must be at least 8 characters long.")
+        return value
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password', 'phone_number']
 
 
 
     def create(self, validated_data):
+        phone_number = validated_data.pop('phone_number')
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
         )
 
+        Profile.objects.create(
+            username=user,
+            first_name=user.username,
+            last_name=user.last_name,
+            email=user.email,
+            phone_number=phone_number
+        )
+
         return user
+
 
 
 
