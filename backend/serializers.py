@@ -68,4 +68,3 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 
-
