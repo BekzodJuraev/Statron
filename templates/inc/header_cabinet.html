@@ -1,0 +1,285 @@
+{% load static %}
+<header class="header">
+			<div class="header__container">
+				<div class="header__column">
+					<a href="home.html" class="header__logo">
+						<picture><source srcset="img/logo.webp" type="image/webp"><img class="img-fluid logo-desc" src="img/logo.png" alt=""></picture>
+						<picture><source srcset="img/logo_mob.webp" type="image/webp"><img class="img-fluid logo-mob" src="img/logo_mob.png" alt=""></picture>
+					</a>
+					<form action="#" class="header__search" method="POST">
+						<input placeholder="Поиск..." class="header__input" type="text">
+						<button class="header__search-btn" type="submit">
+							<img class="img-fluid" src="img/icons/search.svg" alt="">
+						</button>
+					</form>
+				</div>
+				<div class="header__column header__column_account">
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<span>Сервисы</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list dropdown-header__list_account">
+							<!-- <a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+						<span></span>
+<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+					</a>
+					<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+						<span>Регистрация</span>
+<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+					</a> -->
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/1.svg" alt="">
+									Каталог каналов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/2.svg" alt="">
+									Поиск постов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/3.svg" alt="">
+									Отслеживание постов
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/4.svg" alt="">
+									Мои каналы
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/5.svg" alt="">
+									Анализ аудитории
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/6.svg" alt="">
+									Telegraph-статьи
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/7.svg" alt="">
+									Детальная статистика
+								</span>
+							</a>
+
+							<button type="button" class="dropdown-header__option">Включить ночную тему</button>
+						</div>
+					</div>
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_tablet-dn">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<span>Демо-доступ</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list">
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span></span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>Регистрация</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/1.svg" alt="">
+									Каталог каналов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/2.svg" alt="">
+									Поиск постов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/3.svg" alt="">
+									Отслеживание постов
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/4.svg" alt="">
+									Мои каналы
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/5.svg" alt="">
+									Анализ аудитории
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/6.svg" alt="">
+									Telegraph-статьи
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/7.svg" alt="">
+									Детальная статистика
+								</span>
+							</a>
+
+							<button type="button" class="dropdown-header__option">Включить ночную тему</button>
+						</div>
+					</div>
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_tablet-dn">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<span>Баланс</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list">
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span></span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>Регистрация</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/1.svg" alt="">
+									Каталог каналов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/2.svg" alt="">
+									Поиск постов
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/3.svg" alt="">
+									Отслеживание постов
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/4.svg" alt="">
+									Мои каналы
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/5.svg" alt="">
+									Анализ аудитории
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/6.svg" alt="">
+									Telegraph-статьи
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="img/header/7.svg" alt="">
+									Детальная статистика
+								</span>
+							</a>
+
+							<button type="button" class="dropdown-header__option">Включить ночную тему</button>
+						</div>
+					</div>
+					<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+						<button data-dropdown-btn class="dropdown-header__btn" type="button">
+							<span>Ru</span>
+							<img class="arrow" src="img/icons/arrow-down.svg" alt="">
+						</button>
+						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
+							<a href="#" class="dropdown-header-lang__item">En</a>
+							<a href="#" class="dropdown-header-lang__item">De</a>
+						</div>
+					</div>
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_mobi-dn">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<picture><source srcset="img/account/1.webp" type="image/webp"><img class="dropdown-header__avatar" src="img/account/1.png" alt=""></picture>
+								<img class="dropdown-header__icon arrow" src="img/icons/arrow-down.svg" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list dropdown-header__list_account">
+							<div class="dropdown-header__head">
+								<a href="#" class="dropdown-header__head-avatar">
+									<picture><source srcset="img/account/1.webp" type="image/webp"><img class="img-fluid" src="img/account/1.png" alt=""></picture>
+								</a>
+								<div class="dropdown-header__head-content">
+									<div class="dropdown-header__head-email">nikitalarionov2001@mail.ru</div>
+									<div class="dropdown-header__head-status label-red">Демо-доступ</div>
+									<!-- <div class="dropdown-header__head-status label-green">Премиум-доступ</div> -->
+								</div>
+							</div>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>
+									<img src="img/header-icons/1.svg" alt="">
+									Профиль
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>
+									<img src="img/header-icons/2.svg" alt="">
+									Реф.баланс: 0 руб.
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>
+									<img src="img/header-icons/3.svg" alt="">
+									Поддержка
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>
+									<img src="img/header-icons/4.svg" alt="">
+									<span class="color-red">Продление доступа</span>
+								</span>
+								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+							</a>
+							<div class="dropdown-header__bottom">
+								<button type="button" class="dropdown-header__option">Включить ночную тему</button>
+								<button class="button" type="button">Выйти</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>

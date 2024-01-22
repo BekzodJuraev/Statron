@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="page">
+			<section class="auth-form">
+				<div class="auth-form__container">
+					<form action="#" method="post" class="auth-form__form">
+						<h1 class="title title_center">Вход</h1>
+						<div class="auth-form__item">
+							<input type="text" name="login" placeholder="Логин" class="auth-form__input">
+						</div>
+						<div class="auth-form__item">
+							<input type="text" name="pass" placeholder="Пароль" class="auth-form__input">
+						</div>
+						<div class="auth-form__form-bottom">
+							<button class="button button_sm button_no-bg" type="submit">Войти на сайт</button>
+							<div class="auth-form__actions">
+								<a href="register.html" class="auth-form__action hhv-blue">Зарегистрироваться</a>
+								<a href="#" class="auth-form__action hhv-blue">Забыли пароль?</a>
+							</div>
+						</div>
+					</form>
+					<div class="auth-form__bottom">
+						<div class="label-white label-white_s16 label-white_fw700">или продолжить с</div>
+						<div class="place-ad__btns">
+							<button class="button button_sm button_no-bg" type="button">
+								<picture><source srcset="img/icons/tg.webp" type="image/webp"><img src="img/icons/tg.png" alt=""></picture>
+								Telegram
+							</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

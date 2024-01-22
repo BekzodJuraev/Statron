@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="page">
+			<section class="auth-form">
+				<div class="auth-form__container">
+					<form action="#" method="post" class="auth-form__form">
+						<h1 class="title title_center">Регистрация</h1>
+						<div class="auth-form__item">
+							<input type="text" name="email" placeholder="Ваш username" class="auth-form__input">
+						</div>
+                        <div class="auth-form__item">
+							<input type="text" name="email" placeholder="Ваш email" class="auth-form__input">
+						</div>
+						<div class="auth-form__item">
+							<input type="text" name="pass" placeholder="Пароль" class="auth-form__input">
+							<a href="https://collaborator.pro/ua/privacy-policy" class="auth-form__policy hhv-blue">
+							</a>
+						</div>
+						<div class="auth-form__form-bottom">
+							<button class="button" type="submit">Завершить регистрацию</button>
+							<div class="auth-form__text">
+								Уже есть аккаунт? <a href="sing-in.html" class="hhv-green">Войти</a>
+							</div>
+						</div>
+					</form>
+					<div class="auth-form__bottom">
+						<div class="label-white label-white_s16 label-white_fw700">или продолжить с</div>
+						<div class="place-ad__btns">
+							<button class="button button_sm button_no-bg" type="button">
+								<picture><source srcset="img/icons/tg.webp" type="image/webp"><img src="img/icons/tg.png" alt=""></picture>
+								Telegram
+							</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

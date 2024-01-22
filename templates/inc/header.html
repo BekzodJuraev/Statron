@@ -1,0 +1,103 @@
+{% load static %}
+<header class="header">
+			<div class="header__container">
+				<div class="header__column">
+					<a href="home.html" class="header__logo">
+						<picture><source srcset="{% static 'img/logo.webp'%}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/logo.png' %}" alt=""></picture>
+						<picture><source srcset="{% static 'img/logo_mob.webp' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/logo_mob.png' %}" alt=""></picture>
+					</a>
+					<form action="#" class="header__search" method="POST">
+						<input placeholder="Поиск..." class="header__input" type="text">
+						<button class="header__search-btn" type="submit">
+							<img class="img-fluid" src="{% static 'img/icons/search.svg' %}" alt="">
+						</button>
+					</form>
+				</div>
+				<div class="header__column">
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<span>Сервисы</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list">
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span></span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>Регистрация</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/1.svg' %}" alt="">
+									Каталог каналов
+								</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/2.svg' %}" alt="">
+									Поиск постов
+								</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/3.svg' %}" alt="">
+									Отслеживание постов
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/4.svg' %}" alt="">
+									Мои каналы
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/5.svg' %}" alt="">
+									Анализ аудитории
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/6.svg' %}" alt="">
+									Telegraph-статьи
+								</span>
+							</a>
+							<a href="#" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/7.svg' %}" alt="">
+									Детальная статистика
+								</span>
+							</a>
+
+							<button type="button" class="dropdown-header__option">Включить ночную тему</button>
+						</div>
+					</div>
+					<div class="header__btns">
+						<a href="#" class="header__btn button">Регистрация</a>
+						<a data-da=".dropdown-header__item span,767.98" href="#" class="header__btn_no-bg">
+							Войти
+							<img src="{% static 'img/icons/login.svg' %}" alt="">
+						</a>
+					</div>
+					<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+						<button data-dropdown-btn class="dropdown-header__btn" type="button">
+							<span>Ru</span>
+							<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+						</button>
+						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
+							<a href="#" class="dropdown-header-lang__item">En</a>
+							<a href="#" class="dropdown-header-lang__item">De</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>

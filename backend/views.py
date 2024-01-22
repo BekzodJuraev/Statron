@@ -71,4 +71,11 @@ class RegistrationAPIView(generics.CreateAPIView):
         # Add any additional logic here, such as sending a welcome email
         return Response({'detail': 'Registration successful'}, status=status.HTTP_201_CREATED)
 def index(requests):
-    return render(requests,'index.html')
+    return render(requests,'main.html')
+
+
+def login(requests):
+    return render(requests,'login.html')
+
+def register(requests):
+    return render(requests,'register.html')
