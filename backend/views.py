@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from rest_framework import generics
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
 from .models import Chanel
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
+
 
 class ChanelAPI(APIView):
     def get(self, request):
@@ -56,7 +57,7 @@ class LoginAPIView(APIView):
                     return Response({'detail': 'Login successful'}, status=status.HTTP_200_OK)
 
             else:
-                return Response({'detail': 'Invalid login credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'detail': 'Логин или пароль неверны'}, status=status.HTTP_401_UNAUTHORIZED)
 
         return Response({'detail': 'Invalid form data'}, status=status.HTTP_400_BAD_REQUEST)
 class RegistrationAPIView(generics.CreateAPIView):
@@ -70,12 +71,19 @@ class RegistrationAPIView(generics.CreateAPIView):
         user.profile.save()
         # Add any additional logic here, such as sending a welcome email
         return Response({'detail': 'Registration successful'}, status=status.HTTP_201_CREATED)
-def index(requests):
-    return render(requests,'main.html')
+def index(request):
+    return render(request,'main.html')
 
 
-def login(requests):
-    return render(requests,'login.html')
+def login_user(request):
+    return render(request,'login.html')
 
-def register(requests):
-    return render(requests,'register.html')
+def register(request):
+    logout(request)
+    return render(request,'register.html')
+
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main')

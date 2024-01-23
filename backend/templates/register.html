@@ -7,16 +7,23 @@
 					<form action="#" method="post" class="auth-form__form">
 						<h1 class="title title_center">Регистрация</h1>
 						<div class="auth-form__item">
-							<input type="text" name="email" placeholder="Ваш username" class="auth-form__input">
+							<input type="text" name="username" placeholder="Ваш username" class="auth-form__input">
 						</div>
                         <div class="auth-form__item">
 							<input type="text" name="email" placeholder="Ваш email" class="auth-form__input">
 						</div>
 						<div class="auth-form__item">
-							<input type="text" name="pass" placeholder="Пароль" class="auth-form__input">
+							<input type="text" name="phone_number" placeholder="+998" class="auth-form__input">
 							<a href="https://collaborator.pro/ua/privacy-policy" class="auth-form__policy hhv-blue">
 							</a>
 						</div>
+						<div class="auth-form__item">
+							<input type="password" name="password" placeholder="Пароль" class="auth-form__input">
+							<a href="https://collaborator.pro/ua/privacy-policy" class="auth-form__policy hhv-blue">
+							</a>
+						</div>
+
+							<div class="error-message"></div>
 						<div class="auth-form__form-bottom">
 							<button class="button" type="submit">Завершить регистрацию</button>
 							<div class="auth-form__text">
@@ -36,8 +43,43 @@
 				</div>
 			</section>
 		</main>
+<script>
+ 		$(document).ready(function () {
+            $('form').submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Serialize the form data
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '{% url 'register' %}',  // Replace with your API endpoint
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        // Handle successful login response
+                        console.log(data);
+                        // Redirect to the 'next' URL if present in the response
+                        if (data.next) {
+                            window.location.href = data.next;
+                        }
+                        else {
+                        window.location.href = '{% url 'login_site' %}';
+
+                        }
+                    },
+                    error: function (xhr) {
+                        // Handle error
+
+
+                        $('.error-message').text(xhr.responseJSON.email).css('color', 'red');
+                        $('.error-message').text(xhr.responseJSON.password).css('color', 'red');
+                        $('.error-message').text(xhr.responseJSON.phone_number).css('color', 'red');
+                        $('.error-message').text(xhr.responseJSON.username).css('color', 'red');
+
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
-{% block scripts %}
-
-{% endblock %}

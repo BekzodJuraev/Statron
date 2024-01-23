@@ -5,14 +5,17 @@
 <main class="page">
 			<section class="auth-form">
 				<div class="auth-form__container">
-					<form action="#" method="post" class="auth-form__form">
+					<form action="" method="post" class="auth-form__form">
+						{% csrf_token %}
 						<h1 class="title title_center">Вход</h1>
 						<div class="auth-form__item">
-							<input type="text" name="login" placeholder="Логин" class="auth-form__input">
+							<input type="text" name="username" placeholder="Логин" class="auth-form__input">
 						</div>
 						<div class="auth-form__item">
-							<input type="text" name="pass" placeholder="Пароль" class="auth-form__input">
+							<input type="password" name="password" placeholder="Пароль" class="auth-form__input">
 						</div>
+						<div class="error-message"></div>
+
 						<div class="auth-form__form-bottom">
 							<button class="button button_sm button_no-bg" type="submit">Войти на сайт</button>
 							<div class="auth-form__actions">
@@ -34,7 +37,40 @@
 			</section>
 		</main>
 
-{% endblock %}
-{% block scripts %}
 
+
+
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Serialize the form data
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '{% url 'login' %}',  // Replace with your API endpoint
+                    type: 'POST',
+                    data: formData,
+                    success: function (data) {
+                        // Handle successful login response
+                        console.log(data);
+                        // Redirect to the 'next' URL if present in the response
+                        if (data.next) {
+                            window.location.href = data.next;
+                        }
+                        else {
+                        window.location.href = '{% url 'main' %}';
+
+                        }
+                    },
+                    error: function (xhr) {
+                        // Handle error
+                        console.error(xhr.responseJSON.detail);
+                        $('.error-message').text(xhr.responseJSON.detail).css('color', 'red');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
