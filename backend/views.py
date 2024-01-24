@@ -6,6 +6,7 @@ from .models import Chanel
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
+from django.views.generic import View,ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
 # Create your views here.
 
 
@@ -71,8 +72,10 @@ class RegistrationAPIView(generics.CreateAPIView):
         user.profile.save()
         # Add any additional logic here, such as sending a welcome email
         return Response({'detail': 'Registration successful'}, status=status.HTTP_201_CREATED)
-def index(request):
-    return render(request,'main.html')
+class Main(ListView):
+    template_name = 'main.html'
+    context_object_name = "item"
+    model = Chanel
 
 
 def login_user(request):

@@ -6,138 +6,32 @@
 				<div class="home-mainscreen__container">
 					<h2 class="home-mainscreen__title title">ТОП активных телеграмм каналов</h2>
 					<ul class="home-mainscreen__list">
+						{% for item in item|slice:":6" %}
 						<li class="home-mainscreen__item item-mainscreen">
 							<div class="item-mainscreen__head">
 								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/1.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/1.png" alt=""></picture>
+									<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 								</a>
 								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">FUCKTЫ</a>
-									<div class="item-mainscreen__label label-grey">Факты</div>
+									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">{{item.name}}</a>
+									<div class="item-mainscreen__label label-grey">{{item.add_chanel.category}}</div>
 								</div>
 								<div class="item-mainscreen__info">
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
+										<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 										3,451,556
 									</div>
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
+										<img src="{% static 'img/icons/eye.svg' %}" alt="">
 										208,704
 									</div>
 								</div>
 							</div>
 							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
 						</li>
-						<li class="home-mainscreen__item item-mainscreen">
-							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/2.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/2.png" alt=""></picture>
-								</a>
-								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">Фильмы Сер..</a>
-									<div class="item-mainscreen__label label-grey">Кино, фильмы</div>
-								</div>
-								<div class="item-mainscreen__info">
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
-										3,451,556
-									</div>
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
-										208,704
-									</div>
-								</div>
-							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
-						</li>
-						<li class="home-mainscreen__item item-mainscreen">
-							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/3.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/3.png" alt=""></picture>
-								</a>
-								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">Игра в кальм..</a>
-									<div class="item-mainscreen__label label-grey">Кино, фильмы</div>
-								</div>
-								<div class="item-mainscreen__info">
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
-										3,451,556
-									</div>
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
-										208,704
-									</div>
-								</div>
-							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
-						</li>
-						<li class="home-mainscreen__item item-mainscreen">
-							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/4.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/4.png" alt=""></picture>
-								</a>
-								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">Telegram Tips</a>
-									<div class="item-mainscreen__label label-grey">Факты</div>
-								</div>
-								<div class="item-mainscreen__info">
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
-										8.08m
-									</div>
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
-										208,704
-									</div>
-								</div>
-							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
-						</li>
-						<li class="home-mainscreen__item item-mainscreen">
-							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/5.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/5.png" alt=""></picture>
-								</a>
-								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">КРИПТОВАЛ...</a>
-									<div class="item-mainscreen__label label-grey">Криптовалюта</div>
-								</div>
-								<div class="item-mainscreen__info">
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
-										3,451,556
-									</div>
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
-										208,704
-									</div>
-								</div>
-							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
-						</li>
-						<li class="home-mainscreen__item item-mainscreen">
-							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="img/home-mainscreen/6.webp" type="image/webp"><img class="img-fluid" src="img/home-mainscreen/6.png" alt=""></picture>
-								</a>
-								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">Факт дня</a>
-									<div class="item-mainscreen__label label-grey">Факты</div>
-								</div>
-								<div class="item-mainscreen__info">
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/users-filling.svg" alt="">
-										3,451,556
-									</div>
-									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
-										<img src="img/icons/eye.svg" alt="">
-										208,704
-									</div>
-								</div>
-							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
-						</li>
+						{% endfor %}
+
+
 					</ul>
 				</div>
 			</section>
