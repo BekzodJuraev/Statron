@@ -2,14 +2,15 @@ from django.shortcuts import render,redirect
 from rest_framework import generics
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel
+from .models import Chanel,Profile
+from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
 from django.views.generic import View,ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
 # Create your views here.
-
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 class ChanelAPI(APIView):
     def get(self, request):
         chanel_links = Chanel.objects.all()
@@ -76,6 +77,49 @@ class Main(ListView):
     template_name = 'main.html'
     context_object_name = "item"
     model = Chanel
+
+class UpdateCabinet(LoginRequiredMixin,DetailView):
+    model = Profile
+    login_url = reverse_lazy('login_site')
+    success_url = reverse_lazy('updatecabinet')
+    template_name = 'cabinet.html'
+    context_object_name = 'item'
+
+
+class UpdateView(LoginRequiredMixin,View):
+    login_url = reverse_lazy('login_site')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            qiwi = request.POST.get('qiwi')
+            photo = request.FILES.get('photo')
+            instance_id = self.request.user.profile.id  # Assuming you pass the instance ID in the request
+
+            # Validate data if needed
+
+            if instance_id:
+                # If instance_id is provided, update the existing instance
+                instance = Profile.objects.get(pk=instance_id)
+                if qiwi:
+                    instance.qiwi = qiwi
+                    instance.save()
+                if photo:
+                    instance.photo = photo
+                    instance.save()
+
+
+
+
+
+
+            response_data = {'success': True, 'message': 'Data saved successfully'}
+        except Profile.DoesNotExist:
+            response_data = {'success': False, 'error': 'Instance not found'}
+        except Exception as e:
+            response_data = {'success': False, 'error': str(e)}
+
+        return JsonResponse(response_data)
+
 
 
 def login_user(request):

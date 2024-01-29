@@ -2,7 +2,7 @@
 <header class="header">
 			<div class="header__container">
 				<div class="header__column">
-					<a href="home.html" class="header__logo">
+					<a href="{% url 'main' %}" class="header__logo">
 						<picture><source srcset="{% static 'img/logo.webp' %}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/logo.png' %}" alt=""></picture>
 						<picture><source srcset="{% static 'img/logo_mob.webp' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/logo_mob.png' %}" alt=""></picture>
 					</a>
@@ -228,7 +228,11 @@
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_mobi-dn">
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
 							<div class="dropdown-header__btn dropdown-header__btn_desc">
-								<picture><source srcset="/{{user.profile.photo}}" type="image/webp"><img class="dropdown-header__avatar" src="/{{user.profile.photo}}" alt=""></picture>
+							{% if user.profile.photo %}
+							<picture><source srcset="/{{user.profile.photo}}" type="image/webp"><img class="dropdown-header__avatar" src="/{{user.profile.photo}}" alt=""></picture>
+							{% else %}
+							<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="dropdown-header__avatar" src="{% static 'img/account/1.png' %}" alt=""></picture>
+							{% endif %}
 								<img class="dropdown-header__icon arrow" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
 							</div>
 							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
@@ -238,7 +242,13 @@
 						<div class="dropdown-header__list dropdown-header__list_account">
 							<div class="dropdown-header__head">
 								<a href="#" class="dropdown-header__head-avatar">
+									{% if user.profile.photo %}
 									<picture><source srcset="/{{user.profile.photo}}" type="image/webp"><img class="img-fluid" src="/{{user.profile.photo}}" alt=""></picture>
+									{% else %}
+									<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/account/1.png' %}" alt=""></picture>
+									{% endif %}
+
+
 								</a>
 								<div class="dropdown-header__head-content">
 									<div class="dropdown-header__head-email">{{user.email}}</div>
@@ -246,7 +256,7 @@
 									<!-- <div class="dropdown-header__head-status label-green">Премиум-доступ</div> -->
 								</div>
 							</div>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+							<a href="{% url 'updatecabinet' user.profile.pk %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/1.svg' %}" alt="">
 									Профиль
@@ -276,7 +286,7 @@
 							</a>
 							<div class="dropdown-header__bottom">
 								<button type="button" class="dropdown-header__option">Включить ночную тему</button>
-								<button class="button" type="button">Выйти</button>
+								<a href="{% url 'logout' %}"><button class="button" type="button">Выйти</button></a>
 							</div>
 						</div>
 					</div>

@@ -1,0 +1,262 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="page">
+			<section class="account-mainscreen">
+				<div class="account-mainscreen__container">
+					<div class="info-account">
+						<div class="info-account__item">
+							<div class="info-account__head">
+								<div class="info-account__img-wrap">
+									<div class="info-account__img">
+										{% if item.photo %}
+										<picture><source srcset="/{{item.photo}}" type="image/webp"><img class="img-fluid" src="/{{item.photo}}" alt=""></picture>
+										{% else %}
+										<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/account/1.png' %}" alt=""></picture>
+										{% endif %}
+									</div>
+									<button class="info-account__label hhv-blue" type="button" id="changePhoto">Сменить фото</button>
+									    <input type="file" id="photoInput" name="photo" style="display: none;" accept="image/*">
+								</div>
+								<div class="info-account__head-content">
+									<div class="info-account__head-list">
+										<div class="info-account__head-list-item">
+											<div class="info-account__icon">
+												<img class="img-fluid" src="{% static 'img/account/pig.svg' %}" alt="">
+											</div>
+											<div class="info-account__item-content">
+												<div class="label-black">Реф. баланс</div>
+												<div class="label-blue label-blue_s24">{{item.balance}} руб.</div>
+											</div>
+										</div>
+										<div class="info-account__head-list-item">
+											<div class="info-account__icon">
+												<img class="img-fluid" src="{% static 'img/account/member.svg' %}" alt="">
+											</div>
+											<div class="info-account__item-content">
+												<div class="label-black">Рефералов</div>
+												<div class="label-blue label-blue_s24">О</div>
+											</div>
+										</div>
+									</div>
+									<div class="info-account__head-email">
+										<span>Email:</span>
+										<a href="mailto:{{item.email}}">{{item.email}}</a>
+									</div>
+								</div>
+							</div>
+							<div class="text">
+								Реферальный баланс, полученый за привлечение пользователей, вы можете потратить на продление премиум-доступа либо вывести на qiwi-кошелек.
+							</div>
+						</div>
+						<div class="info-account__item info-account__item_text">
+							<p class="text">
+								Чтобы снять все ограничения - <a href="#" class="red">приобретите полный доступ </a>ко всем возможностями сервиса без ограничений.
+							</p>
+						</div>
+					</div>
+					<div class="settings-account account-mainscreen__item">
+						<h4 class="title">Настройки</h4>
+						<div class="settings-account__content">
+							<div class="settings-account__item">
+								<div class="label-black">Telegram:</div>
+								<button class="button button_no-bg" type="button">Прикрепить</button>
+							</div>
+							<div class="settings-account__item">
+								<div class="label-black">Аккаунт ВКонтакте:</div>
+								<button class="button button_no-bg" type="button">Прикрепить</button>
+							</div>
+							<div class="settings-account__item">
+								<div class="settings-account__email">
+									<span>Email:</span>
+									<a href="mailto:{{item.email}}">{{item.email}}</a>
+									<a class="label-blue" href="#">[?]</a>
+								</div>
+							</div>
+							<div class="settings-account__item">
+								<form action="#" class="form" method="POST" id="qiwiForm">
+									 {% csrf_token %}
+									<div class="search-form__item">
+										<label for="qiwi" class="label-black">QIWI кошелек для выплат:</label>
+										<input type="text" id="qiwi" name="qiwi" placeholder="Введите qiwi" class="form__input">
+									</div>
+								</form>
+							</div>
+							<div class="settings-account__item">
+								<button class="button" type="button" id="qiwibutton">Добавить</button>
+							</div>
+						</div>
+					</div>
+					<div class="change-pass account-mainscreen__item">
+						<h4 class="title">Изменение пароля</h4>
+						<form action="#" class="form form-pass" method="POST">
+							<div class="search-form__item">
+								<label for="current-pass" class="label-black">Введите текущий пароль:</label>
+								<input type="text" id="current-pass" name="current-pass" placeholder="Текущий пароль" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="new-pass" class="label-black">Введите новый пароль:</label>
+								<input type="text" id="new-pass" name="new-pass" placeholder="Текущий пароль" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="new-pass-repeat" class="label-black">Повторите новый пароль:</label>
+								<input type="text" id="new-pass-repeat" name="new-pass-repeat" placeholder="Текущий пароль" class="form__input">
+							</div>
+							<button class="button" type="button">Изменить</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="account-tabs">
+				<div class="account-tabs__container">
+					<div data-tabs class="channels-tabs tabs-account">
+						<div class="tabs-account__head">
+							<nav data-tabs-titles class="tabs-navigation tabs-account__navigation">
+								<button type="button" class="tabs-navigation__title _tab-active">
+									<img class="grey" src="{% static 'img/tabs-account/management_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/management_black.svg' %}" alt="">
+									Реферальная система
+								</button>
+								<button type="button" class="tabs-navigation__title">
+									<img class="grey" src="{% static 'img/tabs-account/pay_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/pay_black.svg' %}" alt="">
+									Выплаты баланса
+								</button>
+								<button type="button" class="tabs-navigation__title">
+									<img class="grey" src="{% static 'img/tabs-account/doc_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/doc_black.svg' %}" alt="">
+									История аккаунта
+								</button>
+							</nav>
+						</div>
+						<div data-tabs-body class="tabs-account__content">
+							<div class="tabs-account__body">
+								<p class="text">
+									Наш сервис предлагает вам зарабатывать вместе с нами! <br> Основные правила и принципы реферальной программы просты:
+								</p>
+								<ul class="tabs-account__list">
+									<li class="tabs-account__item tabs-account__item_ok">
+										Вы будете получать 10% от суммы трат пользователей, зарегистрировавшихся по вашим реферальным ссылкам, на продление доступа.
+									</li>
+									<li class="tabs-account__item tabs-account__item_ok">
+										При условии хорошего количества оплат от вас мы можем увеличить ваш процент. Все условия индивидуальны и обсуждаются через поддержку.
+									</li>
+									<li class="tabs-account__item tabs-account__item_ok">
+										Как только пользователь регистрируется по вашей ссылке, он будет закреплен за вами навсегда - и вы будете получать свою комиссию с каждой оплаты пользователя за продление доступа к сервису.
+									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+										Запрещен спам в любых его проявлениях. За это - бан всего аккаунта без выплат.
+									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+										Запрещена регистрация и оплата по своим же ссылкам. За это - бан всех аккаунтов без выплат.
+									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+										Запрещено рекламировать сервис брендовыми запросами: Telemetr, Telemetr.me, Телеметр.
+									</li>
+								</ul>
+							</div>
+							<div class="tabs-account__body">
+								Содержимое второго таба
+							</div>
+							<div class="tabs-account__body">
+								Содержимое третьего таба
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="account-table">
+				<div class="account-table__container">
+					<div class="account-table__item">
+						<h4 class="label-black">Ссылка</h4>
+						<form action="#" method="POST" class="link-form">
+							<div class="search-form__item">
+								<input type="text" id="link-gen" name="link-gen" placeholder="https://stattron.me/r/EwtQHe5/" class="form__input">
+								<button class="button" type="submit">Сгенерировать еще одну ссылку</button>
+							</div>
+						</form>
+					</div>
+					<div class="account-table__list">
+						<div class="account-table__item">
+							<h4 class="label-black">Регистраций</h4>
+						</div>
+						<div class="account-table__item">
+							<h4 class="label-black">Оплат</h4>
+						</div>
+						<div class="account-table__item">
+							<h4 class="label-black">Комиссия</h4>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+<script>
+	document.getElementById('changePhoto').addEventListener('click', function() {
+    // Trigger the click event of the hidden file input
+    document.getElementById('photoInput').click();
+});
+
+// Add an event listener to the file input for when a file is selected
+document.getElementById('photoInput').addEventListener('change', function(event) {
+    // Get the selected file
+    const selectedFile = event.target.files[0];
+
+    // You can perform additional checks on the file if needed
+
+    // Example: Display the file name
+    console.log('Selected file: ' + selectedFile.name);
+
+    // Here, you can perform the file upload logic or use the selected file as needed
+
+    // Use FormData for handling file uploads
+    var formData = new FormData();
+    formData.append('photo', selectedFile);
+    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+    $.ajax({
+        url: '{% url 'update' %}',
+        type: 'POST',
+        data: formData,
+        processData: false,  // Don't process the data (already in the correct form)
+        contentType: false,  // Don't set content type (will be automatically set by FormData)
+        success: function(response) {
+            if (response.success) {
+                location.reload();
+            } else {
+                console.error('Error saving data:', response.error);
+            }
+        },
+        error: function(error) {
+            console.error('Ajax request failed:', error);
+        }
+    });
+});
+    $(document).ready(function() {
+        $("#qiwibutton").click(function() {
+       	    var formData = new FormData($("#qiwiForm")[0]);
+
+
+            $.ajax({
+                url: '{% url 'update' %}',  // Replace with your actual endpoint
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        console.error('Error saving data:', response.error);
+                    }
+                },
+                error: function(error) {
+                    console.error('Ajax request failed:', error);
+                }
+            });
+        });
+    });
+</script>
+
+
+{% endblock %}
