@@ -11,5 +11,6 @@ urlpatterns=[
  path('register_site/', views.register, name='register_site'),
  path('logout/',views.logout_view,name='logout'),
  path('update_ajax',views.UpdateView.as_view(),name='update'),
+ path('password_update/',views.UpdatePassword.as_view(),name='update_password'),
  path('',views.Main.as_view(),name='main')
 ]

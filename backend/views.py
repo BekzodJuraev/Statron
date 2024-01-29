@@ -4,6 +4,7 @@ from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerial
 from rest_framework.views import APIView
 from .models import Chanel,Profile
 from django.http import JsonResponse
+from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
@@ -120,6 +121,29 @@ class UpdateView(LoginRequiredMixin,View):
 
         return JsonResponse(response_data)
 
+class UpdatePassword(LoginRequiredMixin,View):
+
+    def post(self, request, *args, **kwargs):
+        current_password = request.POST.get('current-pass')
+        new_password = request.POST.get('new-pass')
+        new_password_repeat = request.POST.get('new-pass-repeat')
+        if new_password != new_password_repeat:
+            return JsonResponse({'success': False, 'error': 'New passwords do not match.'})
+
+            # Verify the current password
+        if not request.user.check_password(current_password):
+            return JsonResponse({'success': False, 'error': 'Incorrect current password.'})
+
+            # Change the password
+        request.user.set_password(new_password)
+        request.user.save()
+
+        # Update the session to avoid logging out the user
+        update_session_auth_hash(request, request.user)
+
+        return JsonResponse({'success': True})
+
+       # return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 
 def login_user(request):
