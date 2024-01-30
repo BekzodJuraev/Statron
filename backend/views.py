@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from rest_framework import generics
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile
+from .models import Chanel,Profile,Add_chanel
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -12,6 +12,7 @@ from django.views.generic import View,ListView, CreateView, UpdateView, DeleteVi
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from .forms import AddChanelForm
 class ChanelAPI(APIView):
     def get(self, request):
         chanel_links = Chanel.objects.all()
@@ -145,6 +146,23 @@ class UpdatePassword(LoginRequiredMixin,View):
 
        # return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
+class DetailChanel(DetailView):
+    model = Chanel
+    template_name = 'detail.html'
+    context_object_name = 'item'
+
+
+class CreateChanel(LoginRequiredMixin,CreateView):
+    model = Add_chanel
+    form_class = AddChanelForm
+    login_url = reverse_lazy('login_site')
+    success_url = reverse_lazy('create')
+    template_name = 'detail-statistics.html'
+
+    def form_valid(self, form):
+        # Associate the current user with the model instance
+        form.instance.username = self.request.user.profile
+        return super().form_valid(form)
 
 def login_user(request):
     return render(request,'login.html')

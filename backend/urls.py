@@ -12,5 +12,7 @@ urlpatterns=[
  path('logout/',views.logout_view,name='logout'),
  path('update_ajax',views.UpdateView.as_view(),name='update'),
  path('password_update/',views.UpdatePassword.as_view(),name='update_password'),
+ path('detail/<int:pk>',views.DetailChanel.as_view(), name='detail'),
+ path('create/',views.CreateChanel.as_view(),name='create'),
  path('',views.Main.as_view(),name='main')
 ]

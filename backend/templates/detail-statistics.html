@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="page">
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<div class="content-block__content">
+						<p class="text">
+							Этот инструмент позволяет добавить в аналитику вашего канала статистику о точном количестве <span class="text_fw500">подписавшихся и отписавшихся</span> пользователей по часам, распределение аудитории <span class="text_fw500">по языкам</span> и прочую новую внутреннюю статистику от ТГ.
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Шаг 1. Добавление бота</h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<div>
+								<p class="text">
+									Вам необходимо добавить нашего бота <a href="https://t.me/telemetr_auth_bot" target="_blank" class="hhv-blue hhv-underline">https://t.me/telemetr_auth_bot</a> в администраторы вашего канала и дать минимальные права <span class="text_fw500">на добавление администраторов - Add admins.</span>
+								</p>
+								<p class="text">
+									Это необходимое условие для получения данной статистики.
+								</p>
+							</div>
+							<div>
+								<p class="text">
+									Если кроме почасовых детальных подписок и отписок вы хотите видеть еще и аналогичные внутренней статистике канала от ТГ данные (язык аудитории, % уведомлений, пересылки постов) - боту нужны дополнительно права "Публиковать посты". Это особенность работы самого ТГ, разумеется, наш бот ничего публиковать не будет.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Шаг 2. Добавление канала</h2>
+					<div class="content-block__content content-block__content_pl-big content-block__content_big">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								После добавления нашего бота введите ссылку на канал и нажмите "Добавить".
+							</p>
+						</div>
+					</div>
+					<div class="detail-statistics-form">
+						<form action="" method="POST" class="detail-statistics-form__form">
+                            {% csrf_token %}
+
+                            {{form.chanel_link}}
+							<button class="button" type="submit">Добавить</button>
+						</form>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Дополнительная информация</h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Обратите внимание: наш бот добавит дополнительного пользователя (юзербота) в администраторы с такими же правами, как у основного добавленного бота. Это техническая необходимость для получения нужной информации.
+							</p>
+							<p class="text">
+								Для того, чтобы статистика продолжала собираться постоянно, не удаляйте нашего бота и добавленного им юзербота из администраторов! Напоминаем, это необходимое техническое условие для сбора статистики.
+							</p>
+							<p class="text">
+								Распределение по языкам, % включенных уведомлений и число пересылок постов доступны только для каналов от 500 подписчиков. Для "стандартной" детальной статистики (точное число подписок, отписок и моментальных подписок по часам) лимита нет.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+{% endblock %}

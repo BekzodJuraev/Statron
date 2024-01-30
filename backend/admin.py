@@ -22,7 +22,7 @@ class Category_chanelsAdmin(admin.ModelAdmin):
 
 @admin.register(Add_chanel)
 class Category_chanelsAdmin(admin.ModelAdmin):
-    list_display = ['username','category','chanel_link']
+    list_display = ['username','chanel_link']
 
 
 class AddUserbotAdmin(admin.ModelAdmin):

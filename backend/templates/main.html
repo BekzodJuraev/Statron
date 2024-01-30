@@ -27,7 +27,7 @@
 									</div>
 								</div>
 							</div>
-							<a href="#" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
+							<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__btn button button_no-bg">Подробнее</a>
 						</li>
 						{% endfor %}
 
