@@ -14,5 +14,6 @@ urlpatterns=[
  path('password_update/',views.UpdatePassword.as_view(),name='update_password'),
  path('detail/<int:pk>',views.DetailChanel.as_view(), name='detail'),
  path('create/',views.CreateChanel.as_view(),name='create'),
+ path('analysis/',views.AnalisChanel.as_view(),name='analysis'),
  path('',views.Main.as_view(),name='main')
 ]

@@ -7,6 +7,7 @@
 				<div class="auth-form__container">
 					<form action="" method="post" class="auth-form__form">
 						{% csrf_token %}
+						<input type="hidden" name="next" value="{{ request.GET.next }}">
 						<h1 class="title title_center">Вход</h1>
 						<div class="auth-form__item">
 							<input type="text" name="username" placeholder="Логин" class="auth-form__input">
@@ -52,12 +53,12 @@
                     url: '{% url 'login' %}',  // Replace with your API endpoint
                     type: 'POST',
                     data: formData,
-                    success: function (data) {
+                    success: function (response) {
                         // Handle successful login response
-                        console.log(data);
+                        console.log(response);
                         // Redirect to the 'next' URL if present in the response
-                        if (data.next) {
-                            window.location.href = data.next;
+                        if (response.next) {
+                            window.location.href = response.next;
                         }
                         else {
                         window.location.href = '{% url 'main' %}';

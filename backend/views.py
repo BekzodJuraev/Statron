@@ -163,7 +163,10 @@ class CreateChanel(LoginRequiredMixin,CreateView):
         # Associate the current user with the model instance
         form.instance.username = self.request.user.profile
         return super().form_valid(form)
-
+class AnalisChanel(LoginRequiredMixin,TemplateView):
+    template_name = 'audience-analysis.html'
+    login_url = reverse_lazy('login_site')
+    success_url = reverse_lazy('analysis')
 def login_user(request):
     return render(request,'login.html')
 

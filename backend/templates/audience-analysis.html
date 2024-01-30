@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="page">
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Этот инструмент позволяет провести аналитику активности аудитории вашего канала. Работает с открытыми и закрытыми каналами!
+							</p>
+							<p class="text">
+								Сначала вам необходимо добавить нашего бота <a href="https://t.me/stattors_auth_bot" target="_blank" class="text_fw500 hhv-blue">https://t.me/stattors_auth_bot</a> в администраторы вашего канала и дать права на добавление администраторов - Add admins. Это необходимое условие для получения аудитории.
+							</p>
+							<p class="text">
+								После введите ссылку на канал в первое поле и нажмите <span class="text_fw500">"Анализ"</span>. В результате вы увидите распределение времени последнего посещения ТГ (не канала!) вашей аудиторией. Это позволяет увидеть, насколько живая у вас аудитория. Боты обычно никогда не заходят в ТГ после своей первой активности.
+							</p>
+							<p>
+								Кроме того, вы можете увидеть пересечение аудитории вашего канала с другим каналом (вашим или любым уже проанализированным из списка "доступные для пересечения"). Для этого введите ссылку на второй канал во второе поле и нажмите "Пересечение". Обратите внимание, что для поиска пересечений необходимо, чтобы наш бот https://t.me/telemetr_auth_bot был в администраторах у обоих каналов на момент проверки.
+							</p>
+							<p>
+								Нажав на <span class="text_fw500">"Поделиться",</span> вы можете получить постоянную ссылку на результаты анализа вашего канала для рекламодателей.
+							</p>
+							<p>
+								Обратите внимание: на время проверки бот может добавлять дополнительного пользователя в администраторы с минимальными правами (и после окончания проверки - убирать его). Это техническая необходимость для получения нужной информации.
+							</p>
+							<p>
+								Обработка запроса может занять от 5 до 30 минут в зависимости от размера канала (больше подписчиков - дольше). На время обработки вы можете либо остаться на странице, либо закрыть ее и открыть позже. Результаты будут доступны по текущей ссылке либо слева в блоке "Мои проверки"
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content-section audience-form">
+				<div class="audience-form__container">
+					<form action="#" method="POST" class="audience-form__form audience-form__form_1">
+						<input type="text" id="search-link" name="search-link" placeholder="Введите ссылку/username" class="form__input">
+						<button class="button" type="submit">Анализ</button>
+					</form>
+					<form action="#" method="POST" class="audience-form__form audience-form__form_2">
+						<input type="text" id="search-link" name="search-link" placeholder="Введите ссылку/username" class="form__input">
+						<select name="crossing" id="crossing" data-class-modif="custom-select">
+							<option value="1" selected>Из кеша</option>
+							<option value="2">Из кеша 1</option>
+							<option value="3">Из кеша 2</option>
+							<option value="4">Из кеша 3</option>
+						</select>
+						<button class="button" type="submit">Пересечение</button>
+					</form>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Мои проверки</h2>
+				</div>
+			</section>
+		</main>
+
+{% endblock %}
