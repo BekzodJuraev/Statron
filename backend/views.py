@@ -166,7 +166,13 @@ class CreateChanel(LoginRequiredMixin,CreateView):
 class AnalisChanel(LoginRequiredMixin,TemplateView):
     template_name = 'audience-analysis.html'
     login_url = reverse_lazy('login_site')
-    success_url = reverse_lazy('analysis')
+
+
+
+class MyChanels(LoginRequiredMixin,TemplateView):
+    template_name = 'my-channels.html'
+    login_url = reverse_lazy('login_site')
+
 def login_user(request):
     return render(request,'login.html')
 

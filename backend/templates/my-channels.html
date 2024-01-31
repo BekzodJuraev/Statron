@@ -1,0 +1,113 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+<main class="page">
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Мои каналы</h2>
+					<div class="content-block__content content-block__content_big">
+						<p class="text">
+							Вы еще не прикрепили ни одного канала.
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Управление ценами на каналах</h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Этот раздел предназначен для управления ценами на рекламу на ваших каналах. После того, как вы привяжете ваши каналы, вы сможете устанавливать цену на продажу рекламы и контактные данные.
+							</p>
+							<p class="text">
+								Эта информация будет доступна всем пользователям в поиске по каналам и в рекламных публикациях.
+							</p>
+							<p class="text text_fw600">
+								Не забывайте актуализировать данные по цене и контактам, чтобы получить больше заявок на рекламу!
+							</p>
+						</div>
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Для того, чтобы управлять ценами на своем канале, вам необходимо сначала прикрепить его к нашему сервису. Для этого необходимо проделать несколько шагов.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Шаг 1. Авторизация аккаунта. <span class="label-red label-red_s20">Не выполнено</span></h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<div>
+								<p class="text">
+									Проверить, что ваш Телеграм-аккаунт, на котором создан ваш канал, присутствует в списке <span class="text_fw500">"Авторизованные аккаунты".</span>
+								</p>
+								<p class="text">
+									Если аккаунт еще не привязан (или если хотите добавить еще один) - просто нажмите кнопку ниже и в появившемся диалоге с ботом нажмите <span class="text_fw500">START</span>, затем вернитесь на эту страницу.
+								</p>
+							</div>
+							<div>
+								<p class="text text_fw500">
+									Авторизованные аккаунты:
+								</p>
+								<p class="text">
+									Авторизованных аккаунтов еще нет.
+								</p>
+							</div>
+						</div>
+						<div class="content-block__text-wrap content-block__text-wrap_btn">
+							<a href="#" class="button">Авторизоваться с помощью Telegram</a>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Шаг 2. Выбор канала. <span class="label-red label-red_s20">Не выполнено</span></h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Проверить, есть ли ваш канал в нашем сервисе.
+							</p>
+							<p class="text">
+								Напомним, критерии попадания - от 200 подписчиков, русскоязычный канал. Введите ссылку или username канала и выберите его из выпадающего списка.
+							</p>
+						</div>
+					</div>
+					<form action="#" class="form search-form" method="POST">
+						<input type="text" id="search-link" name="search-link" placeholder="Введите ссылку на канал или юзернейм" class="form__input">
+					</form>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title"> Шаг 3. Авторизация канала. <span class="label-red label-red_s20">Не выполнено</span></h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<div>
+								<p class="text">
+									Добавьте нашего бота <a href="#" class="label label-blue hhv-underline">Stattron Бот авторизации</a> <span class="text_fw500">- stattron_auth_bot,</span> с помощью которого вы на предыдущем шаге авторизовывали свой аккаунт, в список администраторов канала.
+								</p>
+								<p class="text">
+									Для этого перейдите в настройки вашего канала в Телеграме и в разделе "Администраторы" добавьте нашего бота. <span class="text_fw500">Права можно выдать минимальные (любые).</span>
+								</p>
+								<p class="text">
+									Нажмите кнопку:
+								</p>
+							</div>
+						</div>
+						<div class="content-block__text-wrap content-block__text-wrap_btn">
+							<button type="button" class="button">Проверить</button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+
+{% endblock %}
