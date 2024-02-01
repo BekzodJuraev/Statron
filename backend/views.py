@@ -173,6 +173,55 @@ class MyChanels(LoginRequiredMixin,TemplateView):
     template_name = 'my-channels.html'
     login_url = reverse_lazy('login_site')
 
+class Search(ListView):
+    model = Chanel
+    context_object_name = 'item'
+    template_name = 'search.html'
+    paginate_by = 1
+
+    def get_queryset(self):
+        search_query = self.request.GET.get('chanel_link')
+        select_category = self.request.GET.get('selected_category')
+        chanel_name = self.request.GET.get('chanel_name')
+        views_from = self.request.GET.get('views_from')
+        views_to = self.request.GET.get('views_to')
+        subscribers_from = self.request.GET.get('subscribers_from')
+        subscribers_to = self.request.GET.get('subscribers_to')
+        cost_from = self.request.GET.get('cost_from')
+        cost_to = self.request.GET.get('cost_to')
+        queryset = Chanel.objects.all()
+
+        if search_query:
+            queryset = queryset.filter(chanel_link__icontains=search_query)
+
+        if select_category:
+            queryset = queryset.filter(add_chanel__category__name=select_category)
+
+        if chanel_name:
+            queryset = queryset.filter(name__icontains=chanel_name)
+
+            # If no search parameters are provided, return all objects
+
+        if views_from and views_to:
+            queryset = queryset.filter(views__range=[views_from, views_to])
+
+        if subscribers_from and subscribers_to:
+            queryset = queryset.filter(subscribers__range=[subscribers_from, subscribers_to])
+
+        if cost_from and cost_to:
+            queryset = queryset.filter(add_chanel__cost_formats__cost_per_format__range=[cost_from, cost_to])
+
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lists'] = self.get_queryset().count()
+        context['count'] = Chanel.objects.select_related('add_chanel').prefetch_related('add_chanel__cost_formats')
+
+
+        return context
+
+
 def login_user(request):
     return render(request,'login.html')
 

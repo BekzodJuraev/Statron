@@ -16,5 +16,6 @@ urlpatterns=[
  path('create/',views.CreateChanel.as_view(),name='create'),
  path('analysis/',views.AnalisChanel.as_view(),name='analysis'),
  path('mychanels/',views.MyChanels.as_view(),name='my_chanels'),
+ path('search/',views.Search.as_view(),name='search'),
  path('',views.Main.as_view(),name='main')
 ]
