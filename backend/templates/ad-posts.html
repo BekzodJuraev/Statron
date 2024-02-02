@@ -1,0 +1,351 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main class="page">
+			<section class="search">
+				<div class="search__container">
+					<form action="#" class="search-form form" method="POST">
+						<div class="search-form__column search-form__column_1">
+							<div class="search-form__item">
+								<label for="channel" class="label-black">Упоминаемый канал:</label>
+								<input type="text" id="channel" name="channel" placeholder="взлом маркетинга" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="word-or-phrase" class="label-black">Слово или фраза в тексте:</label>
+								<input type="text" id="word-or-phrase" name="word-or-phrase" placeholder="маркетинг" class="form__input">
+							</div>
+						</div>
+						<div class="search-form__column search-form__column_2">
+							<div class="search-form__item">
+								<label for="channel-for-search" class="label-black">Канал для поиска:</label>
+								<input type="text" id="channel-for-search" name="channel-for-search" placeholder="young Trader" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="period" class="label-black">За период:</label>
+								<input data-datepicker type="text" id="period" name="period" placeholder="23-04-2021 - 19-11-2022" class="form__input">
+								<img class="search-form__calendar" src="img/analitics/calendar.svg" alt="">
+							</div>
+						</div>
+						<div data-da=".search-form__column_1,992.98" class="search-form__column">
+							<div class="search-form__item search-form__item_select">
+								<div class="search-form__item-content">
+									<div class="search-form__item">
+										<label for="text-search" class="label-black">Тип поиска по тексту:</label>
+										<select name="text-search" id="text-search" data-class-modif="custom-select">
+											<option value="1" selected>По всему тексту</option>
+											<option value="2">По всему тексту 1</option>
+											<option value="3">По всему тексту 2</option>
+											<option value="4">По всему тексту 3</option>
+										</select>
+									</div>
+									<div class="search-form__item">
+										<label for="sort" class="label-black">Сортировка:</label>
+										<select name="sort" id="sort" data-class-modif="custom-select">
+											<option value="1" selected>Дата добавления</option>
+											<option value="2">Дата добавления 1</option>
+											<option value="3">Дата добавления 2</option>
+											<option value="4">Дата добавления 3</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div data-da=".search-form__column_2,992.98" class="search-form__item search-form__item_center">
+								<label for="view-from" class="label-black search-form__label">Просмотров:</label>
+								<div class="search-form__item-content search-form__item-content_center">
+									<label for="view-from" class="label-black">От</label>
+									<input type="number" id="view-from" name="view-from" placeholder="1000" class="form__input">
+									<label for="view-to" class="label-black">До</label>
+									<input type="number" id="view-to" name="view-to" placeholder="4,570" class="form__input">
+								</div>
+							</div>
+						</div>
+						<div data-da=".search-form__column_2,992.98" class="search-form__column search-form__column_btn">
+							<button class="button" type="submit">Найти записи</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="ad-posts">
+				<div class="ad-posts__container">
+					<div class="search-channels__head ad-posts__head">
+						<div class="search-channels__tabs-head">
+							<div class="search-channels__nums tabs-navigation">
+								<button class="search-channels__num tabs-navigation__title _tab-active" type="button">1</button>
+								<button class="search-channels__num tabs-navigation__title" type="button">2</button>
+								<button class="search-channels__num tabs-navigation__title" type="button">3</button>
+								<button class="search-channels__num tabs-navigation__title" type="button">...</button>
+								<button class="search-channels__num tabs-navigation__title" type="button">1956</button>
+							</div>
+							<div class="search-channels__head-text">
+								Найдено <span>121,456</span> поста
+							</div>
+						</div>
+					</div>
+					<div class="ad-posts__list">
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/7.webp" type="image/webp"><img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">young 💸Trader💸</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-img.webp" type="image/webp"><img src="img/icons/icon-img.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/8.webp" type="image/webp"><img class="img-fluid" src="img/channels/8.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">Дудь </div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-video.webp" type="image/webp"><img src="img/icons/icon-video.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/7.webp" type="image/webp"><img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">young 💸Trader💸</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-img.webp" type="image/webp"><img src="img/icons/icon-img.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/9.webp" type="image/webp"><img class="img-fluid" src="img/channels/9.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">young 💸Trader💸</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-img.webp" type="image/webp"><img src="img/icons/icon-img.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/7.webp" type="image/webp"><img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">young 💸Trader💸</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-img.webp" type="image/webp"><img src="img/icons/icon-img.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="img/channels/10.webp" type="image/webp"><img class="img-fluid" src="img/channels/10.png" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">young 💸Trader💸</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/users-filling.svg" alt="">
+											3,451,556
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="img/icons/eye.svg" alt="">
+											208,704
+										</div>
+									</div>
+								</div>
+								<div class="item-popup__btns">
+									<button class="button button_no-bg" type="button">Упоминания</button>
+									<button class="button button_no-bg" type="button">Рекламные посты</button>
+								</div>
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+								<div class="item-popup__text">
+									<p class="text text_fw600">
+										Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+									</p>
+									<p class="text">
+										Биткоин — это аполитичные деньги. <br>
+										Это деньги для ваших друзей. <br>
+										Это деньги для ваших врагов. <br>
+										Это деньги для всех" <br>
+									</p>
+								</div>
+							</div>
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="img/icons/icon-img.webp" type="image/webp"><img src="img/icons/icon-img.png" alt=""></picture>
+								Изображение
+							</button>
+						</div>
+					</div>
+					<div class="ad-posts__list ad-posts__list_center">
+						<div class="ad-posts__item">
+							<p class="text">
+								К сожалению вам недоступен просмотр остальных постов, поскольку у вашего аккаунта демонстрационный режим. Чтобы снять ограничения и получить доступ ко всем возможностям сервиса оформите подписку.
+							</p>
+							<a href="#" class="button">Оформить подписку</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+{% endblock %}

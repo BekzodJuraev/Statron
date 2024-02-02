@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% load mathfilters %}
 {% load static %}
+{% load mathfilters %}
 {% block content %}
+
 <main class="page">
 			<section class="search">
 				<div class="search__container">
-					<form action="{% url 'search' %}" class="search-form form" method="GET">
+					<form action="{% url 'like' %}" class="search-form form" method="GET">
 						<div class="search-form__column search-form__column_1">
 							<div class="search-form__item">
 								<label for="search-link" class="label-black">Ссылка:</label>
@@ -105,15 +106,24 @@
 					</form>
 				</div>
 			</section>
-			<section class="search-channels">
+			<section class="search-channels bookmarks">
 				<div class="search-channels__container">
-					<div class="search-channels__head">
-						<div class="search-channels__tabs-head">
-							<div class="search-channels__nums tabs-navigation">
-								  {% for p in page_obj.paginator.page_range %}
+					<div data-tabs class="channels-tabs">
+						<div class="tabs-head">
+							<nav data-tabs-titles class="tabs-navigation">
+								<button type="button" class="tabs-navigation__title _tab-active">С заметками </button>
+								<button type="button" class="tabs-navigation__title">Все папки</button>
+							</nav>
+						</div>
+						<div data-tabs-body class="channels-tabs__content">
+							<div class="channels-tabs__body">
+								<div class="search-channels__head">
+									<div class="search-channels__tabs-head">
+										<div class="search-channels__nums tabs-navigation">
+								  		{% for p in page_obj.paginator.page_range %}
 
 
-								 	{% if page_obj.number == p %}
+								 			{% if page_obj.number == p %}
 									<a href="?page={{ p }}">
 									<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{p}}</button>
 									</a>
@@ -126,13 +136,13 @@
 							</div>
 
 
-							<div class="search-channels__head-text">
-								Найдено <span>{{lists}}</span> каналов
-							</div>
-						</div>
-					</div>
-					<div class="analitics-tabs__table-wrap-container analitics-tabs__table-wrap-container_auto">
-						<table class="table search-channels__table">
+										<div class="search-channels__head-text">
+											Найдено <span>{{count}}</span> канала
+										</div>
+									</div>
+								</div>
+								<div class="analitics-tabs__table-wrap-container">
+									<table class="table search-channels__table">
 							<thead>
 								<tr>
 									<th scope="col">
@@ -178,21 +188,21 @@
 							<tbody>
 							{% for item in object_list  %}
 
-							{% with last_cost_format=item.add_chanel.cost_formats.last %}
-							{% with er=item.views|div:item.subscribers|mul:100 %}
+							{% with last_cost_format=item.chanel_name.add_chanel.cost_formats.last %}
+							{% with er=item.chanel_name.views|div:item.chanel_name.subscribers|mul:100 %}
 
 
 								<tr>
 									<td scope="row">
 										<div class="channel-tabs-channels__head">
 											<a href="#" target="_blank" class="channel-tabs-channels__img">
-												<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+												<picture><source srcset="/{{item.chanel_name.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel_name.pictures}}" alt=""></picture>
 											</a>
 											<div class="channel-tabs-channels__content">
 												<div class="channel-tabs-channels__content">
 
 
-													<a href="{{item.chanel_link}}" class="channel-tabs-channels__title title title_s20">{{item.name}}
+													<a href="{{item.chanel_name.chanel_link}}" class="channel-tabs-channels__title title title_s20">{{item.chanel_name.name}}
 														<img src="{% static 'img/icons/copy.svg' %}" alt="">
 
 													</a>
@@ -203,7 +213,7 @@
 
 														<span>
 															<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-															{{item.subscribers}}
+															{{item.chanel_name.subscribers}}
 														</span>
 														<div class="channel-count__btns">
 															<button class="channel-count__btn" type="button">
@@ -223,13 +233,13 @@
 										</div>
 									</td>
 									<td>
-										<div class="label-blue label-blue_s24">{{item.subscribers}}</div>
+										<div class="label-blue label-blue_s24">{{item.chanel_name.subscribers}}</div>
 									</td>
 									<td>
 										<div class="label-green label-green_s24">+129</div>
 									</td>
 									<td>
-										<div class="label-blue label-blue_s24">{{item.views}}</div>
+										<div class="label-blue label-blue_s24">{{item.chanel_name.views}}</div>
 									</td>
 									<td>
 										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
@@ -251,50 +261,16 @@
 
 							</tbody>
 						</table>
-					</div>
-					<div class="channels-tabs__bottom">
-						<div class="search-channels__nums tabs-navigation">
-							{% for p in page_obj.paginator.page_range %}
-
-
-								 	{% if page_obj.number == p %}
-									<a href="?page={{ p }}">
-									<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{p}}</button>
-									</a>
-										{% else %}
-								<a href="?page={{ p }}">
-									<button class="search-channels__num tabs-navigation__title" type="button">{{ p }}</button>
-									</a>
-									{% endif %}
-									{% endfor %}
-						</div>
-						<div class="channels-tabs__arrows">
-							{% if page_obj.has_previous %}
-							<a href="?page={{page_obj.previous_page_number}}">
-							<button class="channels-tabs__arrow channels-tabs__arrow_left" type="button">
-								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
-							</button></a>
-							{% else %}
-							<a href="?page={{page_obj.number}}">
-							<button class="channels-tabs__arrow channels-tabs__arrow_left" type="button">
-								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
-							</button></a>
-							{% endif %}
-							 {% if page_obj.has_next %}
-							<a href="?page={{ page_obj.next_page_number }}">
-							<button class="channels-tabs__arrow channels-tabs__arrow_right" type="button">
-								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
-							</button></a>
-							{% else %}
-							<a href="?page={{page_obj.number}}">
-							<button class="channels-tabs__arrow channels-tabs__arrow_right" type="button">
-								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
-							</button></a>
-							{% endif %}
-
+								</div>
+							</div>
+							<div class="channels-tabs__body">
+								<p class="bookmarks__text">По вашему запросу ничего не найдено..</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 		</main>
+
+
 {% endblock %}
