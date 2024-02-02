@@ -1,0 +1,84 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+	<main class="page">
+			<section class="tracking-posts">
+				<div class="tracking-posts__container">
+					<div class="dynamic-analitics__dynamic">
+						<h2 class="title">Управление отслеживаниями</h2>
+						<div class="dynamic-analitics__content">
+							<div>
+								<p class="text text_s20">
+									В этом разделе вы можете подписаться на уведомления в ваш Телеграм о появлении новых публикаций с упоминанием вашего бренда\аккаунта или любого слова\фразы.
+								</p>
+								<p class="text text_s20">
+									Поскольку у вас неоплаченный аккаунт, для вас действует лимит на 2 одновременно запущенных отслеживаний. Чтобы поднять лимит до 15, оплатите подписку.
+								</p>
+								<p class="text text_s20">
+									После окончания подписки все ваши уведомления будут приостановлены.
+								</p>
+							</div>
+							<div>
+								<p class="tex text_s20">
+									Для того, чтобы настроить уведомления, нажмите кнопку ниже и в появившемся диалоге с ботом нажмите <span class="text_fw500">START</span>, затем обновите на эту страницу.
+								</p>
+							</div>
+							<div class="btn-wrap">
+								<button class="button" type="button">Авторизоваться с помощью Telegram</button>
+							</div>
+						</div>
+					</div>
+			</section>
+			<section class="tracking-form">
+				<div class="tracking-form__container">
+					<h2 class="title">Добавить отслеживание</h2>
+					<form class="tracking-form__form" action="#" method="POST">
+						<div class="tracking-form__items">
+							<div class="tracking-form__item">
+								<label for="what-search" class="label-black">Что ищем:</label>
+								<select name="what-search" id="what-search" data-class-modif="custom-select">
+									<option value="1" selected>Упоминания канала</option>
+									<option value="2">Упоминания канала 1</option>
+									<option value="3">Упоминания канала 2</option>
+									<option value="4">Упоминания канала 3</option>
+								</select>
+							</div>
+							<div class="tracking-form__item">
+								<label for="channel" class="label-black">Упоминаемый канал:</label>
+								<input type="text" id="channel" name="channel" placeholder="Ссылка на канал или юзернейм" class="form__input">
+							</div>
+						</div>
+						<div class="tracking-form__item-btn">
+							<button type="submit" class="button">Запустить отслеживание</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="last-messages">
+				<div class="last-messages__container">
+					<h2 class="title">Последние уведомления</h2>
+					<div class="last-messages__list">
+						<div class="last-messages__item">
+							<h4 class="label-black">Фраза или канал</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Ссылка</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Где</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Дата</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Обнаружено</h4>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+{% endblock %}

@@ -221,7 +221,8 @@ class Search(ListView):
 
         return context
 
-
+class TrackingPosts(TemplateView):
+    template_name = 'tracking-posts.html'
 def login_user(request):
     return render(request,'login.html')
 

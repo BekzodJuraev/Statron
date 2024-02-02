@@ -9,11 +9,11 @@
 						{% for item in item|slice:":6" %}
 						<li class="home-mainscreen__item item-mainscreen">
 							<div class="item-mainscreen__head">
-								<a href="#" target="_blank" class="item-mainscreen__img">
+								<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__img">
 									<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 								</a>
 								<div class="item-mainscreen__content">
-									<a href="#" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">{{item.name}}</a>
+									<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">{{item.name}}</a>
 									<div class="item-mainscreen__label label-grey">{{item.add_chanel.category}}</div>
 								</div>
 								<div class="item-mainscreen__info">
