@@ -33,7 +33,7 @@
 						<span>Регистрация</span>
 <img src="img/icons/arrow-down.svg" class="arrow" alt="">
 					</a> -->
-							<a href="#" class="dropdown-header__item">
+							<a href="{% url 'search' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/1.svg' %}" alt="">
 									Каталог каналов
@@ -47,31 +47,26 @@
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item">
+							<a href="{% url 'tracking' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/3.svg' %}" alt="">
 									Отслеживание постов
 								</span>
 							</a>
-							<a href="#" class="dropdown-header__item">
+							<a href="{% url 'my_chanels' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/4.svg' %}" alt="">
 									Мои каналы
 								</span>
 							</a>
-							<a href="#" class="dropdown-header__item">
+							<a href="{% url 'analysis' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/5.svg' %}" alt="">
 									Анализ аудитории
 								</span>
 							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="{% static 'img/header/6.svg' %}" alt="">
-									Telegraph-статьи
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
+
+							<a href="{% url 'create' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/7.svg' %}" alt="">
 									Детальная статистика

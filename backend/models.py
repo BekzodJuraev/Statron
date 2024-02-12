@@ -35,6 +35,7 @@ class Chanel(models.Model):
     pictures=models.ImageField(verbose_name='Лого')
     subscribers=models.IntegerField()
     views=models.IntegerField()
+    update_date = models.DateTimeField(auto_now=True)
     created_at=models.DateTimeField(auto_now_add=True)
     add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE,null=True)
     username=models.CharField(max_length=140)

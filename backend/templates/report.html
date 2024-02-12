@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+</head>
+<body>
+    <h2>Daily Report</h2>
+    {% for report in daily_reports %}
+        <h3>{{ report.channel.name }}</h3>
+        <p>Total Subscribers: {{ report.total_subscribers }}</p>
+        <p>Total Views: {{ report.total_views }}</p>
+        <p>Total Channels: {{ report.total_channels }}</p>
+    {% endfor %}
+
+    <h2>Weekly Report</h2>
+    {% for report in weekly_reports %}
+        <h3>{{ report.channel.name }}</h3>
+        <p>Total Subscribers: {{ report.total_subscribers }}</p>
+        <p>Total Views: {{ report.total_views }}</p>
+        <p>Total Channels: {{ report.total_channels }}</p>
+    {% endfor %}
+
+    <h2>Monthly Report</h2>
+    {% for report in monthly_reports %}
+        <h3>{{ report.channel.name }}</h3>
+        <p>Total Subscribers: {{ report.total_subscribers }}</p>
+        <p>Total Views: {{ report.total_views }}</p>
+        <p>Total Channels: {{ report.total_channels }}</p>
+    {% endfor %}
+</body>
+</html>
