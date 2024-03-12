@@ -126,318 +126,27 @@
 														</tr>
 													</thead>
 													<tbody>
+													{% for item in hourly_data %}
 														<tr>
 															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
+																<div class="label-black">{{item.last_update}}</div>
 															</td>
 															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
+																<div class="label-blue label-blue_s20">{{item.subscribers}}</div>
 															</td>
 															<td>
-																<div class="label-green label-green_s20">+170</div>
+																{% if item.hourly < 0 %}
+																<div class="label-green label-green_s20" style="color:red">{{item.hourly}}</div>
+																{% else %}
+																<div class="label-green label-green_s20" >+{{item.hourly}}</div>
+																{% endif %}
+
 															</td>
 															<td></td>
 															<td></td>
 														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
-														<tr>
-															<td scope="row">
-																<div class="label-black">2022 апр 10 04:59</div>
-															</td>
-															<td>
-																<div class="label-blue label-blue_s20">8'586'161</div>
-															</td>
-															<td>
-																<div class="label-green label-green_s20">+170</div>
-															</td>
-															<td></td>
-															<td></td>
-														</tr>
+													{% endfor %}
+
 													</tbody>
 												</table>
 											</div>
@@ -569,37 +278,54 @@
 												</div>
 												<div class="item-subs-analitics__row-col-item">
 													<div class="label-black">Сегодня</div>
-													<div class="label-green label-green_s24">+5'916</div>
+													{% if day < 0 %}
+													<div class="label-green label-green_s24" style="color:red">{{day}}</div>
+													{% else %}
+													<div class="label-green label-green_s24" >+{{day}}</div>
+													{% endif %}
+
 												</div>
+
 												<div class="item-subs-analitics__row-col-item">
+
 													<div class="label-black">Неделя </div>
-													<div class="label-green label-green_s24">+35'329</div>
+													{% if week < 0 %}
+													<div class="label-green label-green_s24" style="color:red">{{week}}</div>
+													{% else %}
+													<div class="label-green label-green_s24" >+{{week}}</div>
+													 {% endif %}
 												</div>
+
 												<div class="item-subs-analitics__row-col-item">
 													<div class="label-black">Месяц</div>
-													<div class="label-green label-green_s24">+145'095</div>
+													{% if month < 0 %}
+													<div class="label-green label-green_s24" style="color:red">{{month}}</div>
+													{% else %}
+													<div class="label-green label-green_s24">+{{month}}</div>
+													{% endif %}
 												</div>
 											</div>
 											<div class="item-subs-analitics__row-inline">
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s24">Просмотров на пост</div>
-													<div class="label-blue label-blue_s20">2387956</div>
+													<div class="label-blue label-blue_s20">{{item.views}}</div>
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">За последние 24ч</div>
-													<div class="label-blue label-blue_s20">34500</div>
+													<div class="label-blue label-blue_s20">{{item.views}}</div>
 												</div>
 											</div>
 										</div>
+
 										<div class="analitics-tabs__item item-subs-analitics">
 											<div class="item-subs-analitics__row-inline">
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s24">ER</div>
-													<div class="label-blue label-blue_s20">0%</div>
+													<div class="label-blue label-blue_s20">{{er}}%</div>
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">Суточный</div>
-													<div class="label-blue label-blue_s20">0%</div>
+													<div class="label-blue label-blue_s20">{{er_daily}}%</div>
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">Упоминаний в ТГ</div>

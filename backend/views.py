@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from rest_framework import generics
+from django.core.cache import cache
+from datetime import date,timedelta
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
 from .models import Chanel,Profile,Add_chanel,Like
@@ -15,7 +17,7 @@ from django.urls import reverse_lazy
 from .forms import AddChanelForm
 from django.db.models import Sum
 from django.utils import timezone
-from datetime import timedelta
+
 class ChanelAPI(APIView):
     def get(self, request):
         chanel_links = Chanel.objects.all()
@@ -154,6 +156,54 @@ class DetailChanel(DetailView):
     template_name = 'detail.html'
     context_object_name = 'item'
 
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        er=(self.object.subscribers/self.object.views)*10
+        er_daily = (self.object.daily_subscribers / self.object.views) * 10
+        context['er']=round(er,1)
+        context['er_daily'] = round(er_daily, 1)
+
+        hourly_data = cache.get('hourly_data', [])
+
+        old_subscribers=cache.get('old_subscribers',0)
+
+        # Check if the last update date is different from today
+        if self.object.last_update.date() != date.today():
+            # Clear the 'hourly_data' list
+            hourly_data.clear()
+
+        # Check if the last update value is different
+
+        if old_subscribers != 0:
+            if self.object.last_update != cache.get('last_update', 0):
+                # Update the cache with the new last_update value
+
+                cache.set('last_update', self.object.last_update)
+                difference=self.object.subscribers-old_subscribers
+                cache.set('old_subscribers',self.object.subscribers)
+
+                # Append a dictionary representing the data for this hour
+                hourly_data.append({
+                    'hourly': difference,
+                    'subscribers': self.object.subscribers,
+                    'last_update': self.object.last_update,
+                })
+        else:
+            cache.set('old_subscribers',self.object.subscribers)
+
+
+
+        # Store the updated 'hourly_data' list in the cache
+        cache.set('hourly_data', hourly_data, timeout=24 * 60 * 60)
+
+        context['hourly_data'] = hourly_data
+
+        context['day'] = self.object.daily_subscribers
+        context['week'] = self.object.weekly_subscribers
+        context['month'] = self.object.weekly_monthy
+
+        return context
 
 class CreateChanel(LoginRequiredMixin,CreateView):
     model = Add_chanel
