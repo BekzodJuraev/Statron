@@ -39,17 +39,17 @@
 								<div class="analitics-tabs__main main-analitics">
 									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
 									<div class="main-analitics__info">
-										<a href="#" class="main-analitics__avatar">
+										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img id="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
 											</h1>
 											<p class="text">
-                                                {{item.add_chanel.description}}
+                                                {{item.description}}
 											</p>
 										</div>
 									</div>
@@ -2438,4 +2438,19 @@
 				</div>
 			</section>
 		</main>
+
+<script>
+	$(document).ready(function () {
+    $('#copyButton').click(function() {
+        var channelLink = $('.main-analitics__avatar').attr('href');
+        var tempInput = $('<input>');
+        $('body').append(tempInput);
+        tempInput.val(channelLink).select();
+        document.execCommand('copy');
+        tempInput.remove();
+        alert('Посилання скопійоване в буфер обміну!');
+   });
+   });
+
+</script>
 {% endblock %}

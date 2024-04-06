@@ -32,6 +32,7 @@ class Profile(models.Model):
 
 class Chanel(models.Model):
     chanel_link=models.CharField(max_length=150)
+    description = models.TextField()
     name=models.CharField(max_length=150,verbose_name="Называние канала")
     pictures=models.ImageField(verbose_name='Лого')
     subscribers=models.IntegerField()
@@ -40,6 +41,8 @@ class Chanel(models.Model):
     last_update=models.DateTimeField(auto_now=True)
     add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE)
     username=models.CharField(max_length=140)
+    posts=models.IntegerField(default=0)
+    mentioned=models.IntegerField(default=0)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
@@ -88,7 +91,7 @@ class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='profile')
     #category=models.ForeignKey('Category_chanels',on_delete=models.CASCADE)
     chanel_link = models.CharField(max_length=150)
-    description=models.TextField()
+
 
     def __str__(self):
         return self.username.username.username

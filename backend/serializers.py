@@ -4,9 +4,10 @@ from django.contrib.auth.models import User
 from phonenumber_field.serializerfields import PhoneNumberField
 class ChanelSerializer(serializers.ModelSerializer):
     pictures=serializers.ImageField(required=False)
+
     class Meta:
         model = Chanel
-        fields = ['chanel_link','name', 'subscribers','pictures','views']
+        fields = ['chanel_link','name', 'subscribers','pictures','views','posts','mentioned','description']
 
 
 

@@ -58,18 +58,28 @@ def add_chanel(chanel_link):
         with Client(name, api_id=api_id, api_hash=api_hash, phone_number=phone,session_string=session_data) as client:
             channel_link = chanel_link
             channel_username = channel_link.split('/')[-1]
-            chat = client.get_chat("@" + channel_username)
-            total_view = client.get_chat_history("@" + channel_username, limit=5)
+            chat = client.get_chat(channel_username)
+            total_view = client.get_chat_history(channel_username, limit=100)
             send_view = 0
+            posts=client.get_chat_history_count(channel_username)
+            mention=0
             for views in total_view:
+                if views.mentioned:
+                    print("hello world!")
+                    mention+=1
+
                 if views.views:
                     send_view += views.views
+
 
             payload = {
                 'name': chat.title,
                 'subscribers': str(chat.members_count),
                 'chanel_link': channel_link,
                 'views': str(send_view),
+                'posts':str(posts),
+                'mentioned':str(mention),
+                'description ':chat.description
             }
 
             if chat.photo is not None:
@@ -80,11 +90,10 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://6083-217-30-171-58.ngrok-free.app/chanel/', files=files)
+                response = requests.post('https://991b-5-133-120-92.ngrok-free.app/chanel/', files=files)
 
 
-                with open(file_path, "rb") as photo:
-                    client.send_photo("@lsbnvVm9TmhjZDNi", photo)
+
 
 
             if response.status_code == 200:

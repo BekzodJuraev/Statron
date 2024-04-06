@@ -85,6 +85,12 @@ class Main(ListView):
     context_object_name = "item"
     model = Chanel
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context =super().get_context_data(**kwargs)
+        context['total']=self.object_list.aggregate(total=Sum('posts'))['total']
+        context['mentioned'] = self.object_list.aggregate(total=Sum('mentioned'))['total']
+        return context
+
 class UpdateCabinet(LoginRequiredMixin,DetailView):
     model = Profile
     login_url = reverse_lazy('login_site')
