@@ -43,7 +43,10 @@ class Chanel(models.Model):
     username=models.CharField(max_length=140)
     posts=models.IntegerField(default=0)
     mentioned=models.IntegerField(default=0)
+    daily_views=models.IntegerField(default=0,blank=True,null=True)
+    yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
+    yesterday_subscribers=models.IntegerField(default=0,blank=True,null=True)
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
 
@@ -54,12 +57,22 @@ class Chanel(models.Model):
         if self.pk is not None:
             old_instance = Chanel.objects.get(pk=self.pk)
             old_subscribers = old_instance.subscribers
-            if old_subscribers != 0:
+            old_views=old_instance.views
+
+            if old_subscribers != 0 and old_views!=0:
                 difference = self.subscribers - old_subscribers
+                difference_views=self.views - old_views
                 if self.last_update.date() == date.today():
                     self.daily_subscribers += difference
+                    self.daily_views+=difference_views
                 else:
                     self.daily_subscribers = 0
+                    self.daily_views=0
+
+                if self.last_update.date() == date.today()-timedelta(days=1):
+                    self.yesterday_subscribers=old_subscribers
+                    self.yesterday_views=old_views
+
 
                 if self.last_update.date() >= (date.today() - timedelta(days=date.today().weekday())):
                     self.weekly_subscribers += difference

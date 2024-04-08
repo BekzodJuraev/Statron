@@ -49,93 +49,61 @@
 							</div>
 							<div data-tabs-body class="channels-tabs__content">
 								<div class="channels-tabs__body">
+									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/1.webp" type="image/webp"><img class="img-fluid" src="img/channels/1.png" alt=""></picture>
+										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Принцессы тиндера</a>
+											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
+												{{item.subscribers}}
 											</div>
 										</div>
-										<div class="label-blue">+12,556</div>
+										<div class="label-blue">+{{item.daily_subscribers}}</div>
 									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/2.webp" type="image/webp"><img class="img-fluid" src="img/channels/2.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">TON NFT | Animals Red List</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+6,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/3.webp" type="image/webp"><img class="img-fluid" src="img/channels/3.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Уголок психологии</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+15,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/4.webp" type="image/webp"><img class="img-fluid" src="img/channels/4.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Топор Live</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+7,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/5.webp" type="image/webp"><img class="img-fluid" src="img/channels/5.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Рифмы и панчи</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+10,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/6.webp" type="image/webp"><img class="img-fluid" src="img/channels/6.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">СВЕЖАК</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+13,556</div>
-									</div>
+									{% endfor %}
 									<div class="channel-tabs-channels__btn-wrap">
 										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">Посмотреть все</button></a>
 									</div>
 								</div>
+
+
+
 								<div class="channels-tabs__body">
-									Содержимое второго таба
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="img/icons/users-filling.svg" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										<div class="label-blue">+{{item.yesterday_subscribers}}</div>
+									</div>
+									{% endfor %}
 								</div>
 								<div class="channels-tabs__body">
-									Содержимое третьего таба
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="img/icons/users-filling.svg" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										<div class="label-blue">+{{item.weekly_subscribers}}</div>
+									</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
@@ -151,90 +119,55 @@
 							</div>
 							<div data-tabs-body class="channels-tabs__content">
 								<div class="channels-tabs__body">
+									{% for item in top_views %}
 									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/1.webp" type="image/webp"><img class="img-fluid" src="img/channels/1.png" alt=""></picture>
+										<a href="{{ item.chanel_link}}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Принцессы тиндера</a>
+											<a href="{{ item.chanel_link }}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
+												{{item.views}}
 											</div>
 										</div>
-										<div class="label-blue">+12,556</div>
+										{% if item.daily_views < 0 %}
+										<div class="label-blue">{{item.daily_views}}</div>
+										{% else %}
+										<div class="label-blue">+{{item.daily_views}}</div>
+										{% endif %}
+
 									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/2.webp" type="image/webp"><img class="img-fluid" src="img/channels/2.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">TON NFT | Animals Red List</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+6,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/3.webp" type="image/webp"><img class="img-fluid" src="img/channels/3.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Уголок психологии</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+15,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/4.webp" type="image/webp"><img class="img-fluid" src="img/channels/4.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Топор Live</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+7,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/5.webp" type="image/webp"><img class="img-fluid" src="img/channels/5.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">Рифмы и панчи</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+10,556</div>
-									</div>
-									<div class="channel-tabs-channels">
-										<a href="#" target="_blank" class="channel-tabs-channels__img">
-											<picture><source srcset="img/channels/6.webp" type="image/webp"><img class="img-fluid" src="img/channels/6.png" alt=""></picture>
-										</a>
-										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">СВЕЖАК</a>
-											<div class="channel-count label-grey">
-												<img src="img/icons/users-filling.svg" alt="">
-												3,451,556
-											</div>
-										</div>
-										<div class="label-blue">+13,556</div>
-									</div>
+									{% endfor %}
+
 									<div class="channel-tabs-channels__btn-wrap">
 										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">Посмотреть все</button></a>
 									</div>
 								</div>
+
+
+
 								<div class="channels-tabs__body">
-									Содержимое второго таба
+									{% for item in top_views %}
+									<div class="channel-tabs-channels">
+										<a href="{{ item.chanel_link}}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{{ item.chanel_link }}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="img/icons/users-filling.svg" alt="">
+												{{item.views}}
+											</div>
+										</div>
+										{% if item.yesterday_views < 0 %}
+										<div class="label-blue">{{item.yesterday_views}}</div>
+										{% else %}
+										<div class="label-blue">+{{item.yesterday_views}}</div>
+										{% endif %}
+
+									</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
@@ -265,7 +198,11 @@
 										</div>
 										<div class="charts-tabs__info-item">
 											<div class="label-black">Опубликованно сегодня</div>
-											<div class="label-blue label-blue_s24">+9,414</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
 										</div>
 									</div>
 								</div>

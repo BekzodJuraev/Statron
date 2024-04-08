@@ -87,6 +87,20 @@ class Main(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context =super().get_context_data(**kwargs)
+
+        today = cache.get('today', date(1960, 1, 1))
+
+        posts_today=cache.get('posts_today',0)
+        posts_today= self.object_list.aggregate(total=Sum('posts'))['total']-posts_today
+        if today != date.today():
+            today = date.today()
+            cache.set('posts_today',self.object_list.aggregate(total=Sum('posts'))['total'])
+            cache.set('today', today)
+
+
+        context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
+        context['top_views'] = self.object_list.all().order_by('-views')[:6]
+        context['posts_today']=posts_today
         context['total']=self.object_list.aggregate(total=Sum('posts'))['total']
         context['mentioned'] = self.object_list.aggregate(total=Sum('mentioned'))['total']
         return context
@@ -240,12 +254,15 @@ class Search(ListView):
 
     def get_queryset(self):
         search_query = self.request.GET.get('chanel_link')
-        select_category = self.request.GET.get('selected_category')
+        #select_category = self.request.GET.get('selected_category')
         chanel_name = self.request.GET.get('chanel_name')
         views_from = self.request.GET.get('views_from')
         views_to = self.request.GET.get('views_to')
         subscribers_from = self.request.GET.get('subscribers_from')
         subscribers_to = self.request.GET.get('subscribers_to')
+        mention_from=self.request.GET.get('mention_from')
+        mention_to=self.request.GET.get('mention_to')
+        description=self.request.GET.get('description')
         queryset = Chanel.objects.all()
 
         if search_query:
@@ -254,7 +271,14 @@ class Search(ListView):
         if chanel_name:
             queryset = queryset.filter(name__icontains=chanel_name)
 
-            # If no search parameters are provided, return all objects
+        if description:
+            queryset = queryset.filter(description__icontains=description)
+
+
+        if mention_from and mention_to:
+            queryset=queryset.filter(mentioned__range=[mention_from,mention_to])
+
+
 
         if views_from and views_to:
             queryset = queryset.filter(views__range=[views_from, views_to])

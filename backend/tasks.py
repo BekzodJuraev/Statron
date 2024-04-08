@@ -64,9 +64,16 @@ def add_chanel(chanel_link):
             posts=client.get_chat_history_count(channel_username)
             mention=0
             for views in total_view:
+                if views.text is not None:
+                    if "@" in views.text and f'@{channel_username}' not in views.text:
+
+                        mention += 1
+
                 if views.mentioned:
-                    print("hello world!")
-                    mention+=1
+                    print(views.text)
+
+
+
 
                 if views.views:
                     send_view += views.views
@@ -90,7 +97,7 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://991b-5-133-120-92.ngrok-free.app/chanel/', files=files)
+                response = requests.post('https://2768-217-30-171-58.ngrok-free.app/chanel/', files=files)
 
 
 
@@ -98,3 +105,6 @@ def add_chanel(chanel_link):
 
             if response.status_code == 200:
                 break
+
+
+#celery -A Statron worker -l info --pool=solo
