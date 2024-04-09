@@ -62,6 +62,10 @@ class Chanel(models.Model):
             if old_subscribers != 0 and old_views!=0:
                 difference = self.subscribers - old_subscribers
                 difference_views=self.views - old_views
+                if self.last_update.date() == date.today()-timedelta(days=1):
+                    self.yesterday_subscribers=self.daily_subscribers
+                    self.yesterday_views=self.daily_views
+
                 if self.last_update.date() == date.today():
                     self.daily_subscribers += difference
                     self.daily_views+=difference_views
@@ -69,9 +73,7 @@ class Chanel(models.Model):
                     self.daily_subscribers = 0
                     self.daily_views=0
 
-                if self.last_update.date() == date.today()-timedelta(days=1):
-                    self.yesterday_subscribers=old_subscribers
-                    self.yesterday_views=old_views
+
 
 
                 if self.last_update.date() >= (date.today() - timedelta(days=date.today().weekday())):

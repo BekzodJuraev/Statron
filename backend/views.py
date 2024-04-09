@@ -250,7 +250,7 @@ class Search(ListView):
     model = Chanel
     context_object_name = 'item'
     template_name = 'search.html'
-    paginate_by = 1
+    paginate_by = 8
 
     def get_queryset(self):
         search_query = self.request.GET.get('chanel_link')

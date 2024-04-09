@@ -128,8 +128,14 @@
 												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 											</button>
 											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
-												<a href="#" class="dropdown-header-lang__item">Сегодня 1</a>
-												<a href="#" class="dropdown-header-lang__item">Сегодня 2</a>
+												{% if request.GET.sub == "yesterday" or request.GET.sub == "weekly" or request.GET.sub == "monthly" %}
+   											 <a href="{% url 'search' %}" class="dropdown-header-lang__item">за сегодня</a>
+													{% endif %}
+												<a href="?sub=yesterday" class="dropdown-header-lang__item">за вчера</a>
+												<a href="?sub=weekly" class="dropdown-header-lang__item">за неделю</a>
+												<a href="?sub=monthly" class="dropdown-header-lang__item">за месяц</a>
+
+
 											</div>
 										</div>
 									</th>
@@ -142,7 +148,7 @@
 											</button>
 											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
 												<a href="#" class="dropdown-header-lang__item">На пост/вчера 1</a>
-												<a href="#" class="dropdown-header-lang__item">На пост/вчера 2</a>
+
 											</div>
 										</div>
 									</th>
@@ -164,7 +170,7 @@
 								<tr>
 									<td scope="row">
 										<div class="channel-tabs-channels__head">
-											<a href="#" target="_blank" class="channel-tabs-channels__img">
+											<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 												<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 											</a>
 											<div class="channel-tabs-channels__content">
@@ -206,10 +212,20 @@
 										<div class="label-blue label-blue_s24">{{item.subscribers}}</div>
 									</td>
 									<td>
-										<div class="label-green label-green_s24">+129</div>
+										{% if request.GET.sub == 'yesterday' %}
+										<div class="label-green label-green_s24">{{item.yesterday_subscribers}}</div>
+										{% elif request.GET.sub == 'weekly' %}
+										<div class="label-green label-green_s24">{{item.weekly_subscribers}}</div>
+										{% elif request.GET.sub == 'monthly' %}
+										<div class="label-green label-green_s24">{{item.weekly_monthy}}</div>
+										{% else %}
+										<div class="label-green label-green_s24">{{item.daily_subscribers}}</div>
+										{% endif %}
+
+
 									</td>
 									<td>
-										<div class="label-blue label-blue_s24">{{item.views}}</div>
+										<div class="label-blue label-blue_s24">{{item.yesterday_views}}</div>
 									</td>
 									<td>
 										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
@@ -218,7 +234,7 @@
 										<div class="search-channels__btns">
 											<button class="button button_no-bg" type="button">Описание</button>
 											<button class="button button_no-bg" type="button" data-popup="#popup-content">Контент</button>
-											<button class="button" type="button">Анализ</button>
+											<a href="{% url 'detail' item.pk %}"><button class="button" type="button">Анализ</button></a>
 										</div>
 									</td>
 								</tr>
@@ -277,7 +293,164 @@
 				</div>
 			</section>
 		</main>
-
+<div id="popup-content" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="img/icons/exit.svg" alt="">
+            </button>
+            <div class="popup__inner">
+                <div class="tabs-navigation popup__filters">
+                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button">По дате
+                    </button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По просмотрам</button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По пересылкам</button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По комментариям</button>
+                </div>
+                <div class="popup__list">
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="img/channels/7.webp" type="image/webp">
+                                    <img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">young 💸Trader💸</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/users-filling.svg" alt="">
+                                        3,451,556
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/eye.svg" alt="">
+                                        208,704
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-popup__btns">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Рекламные посты</button>
+                            </div>
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+                                    Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+                                </p>
+                                <p class="text">
+                                    Биткоин — это аполитичные деньги. <br>
+                                    Это деньги для ваших друзей. <br>
+                                    Это деньги для ваших врагов. <br>
+                                    Это деньги для всех" <br>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="img/icons/icon-img.webp" type="image/webp">
+                                <img src="img/icons/icon-img.png" alt=""></picture>
+                            Изображение
+                        </button>
+                    </div>
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="img/channels/7.webp" type="image/webp">
+                                    <img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">young 💸Trader💸</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/users-filling.svg" alt="">
+                                        3,451,556
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/eye.svg" alt="">
+                                        208,704
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-popup__btns">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Рекламные посты</button>
+                            </div>
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+                                    Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+                                </p>
+                                <p class="text">
+                                    Биткоин — это аполитичные деньги. <br>
+                                    Это деньги для ваших друзей. <br>
+                                    Это деньги для ваших врагов. <br>
+                                    Это деньги для всех" <br>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="img/icons/icon-img.webp" type="image/webp">
+                                <img src="img/icons/icon-img.png" alt=""></picture>
+                            Изображение
+                        </button>
+                    </div>
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="img/channels/7.webp" type="image/webp">
+                                    <img class="img-fluid" src="img/channels/7.png" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">young 💸Trader💸</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/users-filling.svg" alt="">
+                                        3,451,556
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="img/icons/eye.svg" alt="">
+                                        208,704
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-popup__btns">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Рекламные посты</button>
+                            </div>
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">2022-03-06 16:07:01</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+                                    Директор по развитию бизнеса криптобиржи Kraken Дэн Хелд и немного философии:
+                                </p>
+                                <p class="text">
+                                    Биткоин — это аполитичные деньги. <br>
+                                    Это деньги для ваших друзей. <br>
+                                    Это деньги для ваших врагов. <br>
+                                    Это деньги для всех" <br>
+                                </p>
+                            </div>
+                        </div>
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="img/icons/icon-img.webp" type="image/webp">
+                                <img src="img/icons/icon-img.png" alt=""></picture>
+                            Изображение
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 		$(document).ready(function () {
     	$('#copyButton').click(function() {
