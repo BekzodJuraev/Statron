@@ -53,6 +53,7 @@ class Chanel(models.Model):
 
 
 
+
     def save(self, *args, **kwargs):
         if self.pk is not None:
             old_instance = Chanel.objects.get(pk=self.pk)
