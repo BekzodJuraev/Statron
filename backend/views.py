@@ -94,37 +94,56 @@ class Main(ListView):
         six_posts_cache=cache.get('six_posts_cache',{})
 
 
+
+
         posts_today=cache.get('posts_today',0)
 
-        time=self.object_list.get(pk=27)
 
 
 
 
-        #if today == date.today()-timedelta(days=1):
-        for cache_dict in [daily_posts_cache, three_posts_cache, six_posts_cache]:
-            cache_dict[f'posts:{time.posts}'] = posts_today
 
-            # Set timeout for each individual record in daily_posts_cache with a timeout of 30 days
-        for key, valuet in daily_posts_cache.items():
-            cache.set(key, valuet, timeout=30)
+        if today == date.today()-timedelta(days=1):
 
-            # Set timeout for each individual record in three_posts_cache with a timeout of 90 days
-        for key, valuet in three_posts_cache.items():
-            cache.set(key, valuet, timeout=180)
+            for cache_dict in [daily_posts_cache, three_posts_cache, six_posts_cache]:
+                cache_dict[today.strftime("%Y-%m-%d")] = posts_today
 
-            # Set timeout for each individual record in six_posts_cache with a timeout of 180 days
-        for key, valuet in six_posts_cache.items():
-            cache.set(key, valuet, timeout=500)
+            for key, value in daily_posts_cache.items():
+                cache.set(key, value, timeout=60)
 
-            # Update the caches in the cache storage
-        cache.set('daily_posts_cache', daily_posts_cache,timeout=30)
-        cache.set('three_posts_cache', three_posts_cache,timeout=120)
-        cache.set('six_posts_cache', six_posts_cache,timeout=180)
+            for key, value in three_posts_cache.items():
+                cache.set(key, value, timeout=60)
 
-        print(daily_posts_cache,'month')
-        print(three_posts_cache,'3 months')
-        print(six_posts_cache,'6 months')
+            for key, value in six_posts_cache.items():
+                cache.set(key, value, timeout=60)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #print(daily_posts_cache,'month')
+        #print(three_posts_cache,'3 months')
+        #print(six_posts_cache,'6 months')
 
 
 
@@ -136,14 +155,14 @@ class Main(ListView):
 
         if today != date.today():
             today = date.today()
-            cache.set('posts_today',self.object_list.aggregate(total=Sum('posts'))['total'])
-            cache.set('today', today)
+            cache.set('posts_today',self.object_list.aggregate(total=Sum('posts'))['total'],timeout=30000)
+            cache.set('today', today,timeout=30000)
 
 
 
 
 
-
+        print(Chanel.today_posts())
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
         context['top_views'] = self.object_list.all().order_by('-views')[:6]
         context['posts_today']=posts_today

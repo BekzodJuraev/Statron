@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-from datetime import date,timedelta
+from datetime import date,timedelta,datetime
 import pytz
+from django.db.models import Q
+from django.db.models import Sum
 # Create your models here.
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
@@ -49,6 +51,24 @@ class Chanel(models.Model):
     yesterday_subscribers=models.IntegerField(default=0,blank=True,null=True)
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
+
+    @classmethod
+    def today_posts(cls):
+
+        # Calculate the count of posts added or updated today
+        posts_today=0
+
+
+
+
+
+
+
+        return posts_today
+
+
+
+
 
 
 

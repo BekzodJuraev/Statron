@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'backend',
     'rest_framework',
     'drf_yasg',
-    'mathfilters'
+    'mathfilters',
+    'debug_toolbar'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'Statron.urls'
@@ -136,7 +138,16 @@ STATICFILES_DIRS=[
 ]
 MEDIA_URL = ''
 MEDIA_ROOT = BASE_DIR / 'uploads'
-
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Redis server address
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        'KEY_PREFIX': 'my_cache_prefix',  # Optional: Prefix for cache keys
+    }
+}
 
 
 # Default primary key field type
@@ -147,3 +158,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
+    'SHOW_COLLAPSED': True,
+    'POSITION': 'bottom',
+}
