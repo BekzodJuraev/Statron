@@ -52,19 +52,36 @@ class Chanel(models.Model):
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
 
+
+    posts_today=0
+    today=date.today() - date.today()-timedelta(days=1)
+
     @classmethod
     def today_posts(cls):
 
-        # Calculate the count of posts added or updated today
-        posts_today=0
+
+        if cls.posts_today==0:
+            pass
+
+
+        else:
+            total=cls.objects.aggregate(total=Sum('posts'))['total'] - cls.posts_today
+
+
+        if cls.today != date.today():
+            cls.today = date.today()
+            cls.posts_today = cls.objects.aggregate(total=Sum('posts'))['total']
+            return 0
+
+
+
+        return total
 
 
 
 
 
 
-
-        return posts_today
 
 
 
@@ -76,6 +93,7 @@ class Chanel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk is not None:
+
             old_instance = Chanel.objects.get(pk=self.pk)
             old_subscribers = old_instance.subscribers
             old_views=old_instance.views

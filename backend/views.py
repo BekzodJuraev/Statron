@@ -96,9 +96,6 @@ class Main(ListView):
 
 
 
-        posts_today=cache.get('posts_today',0)
-
-
 
 
 
@@ -131,41 +128,13 @@ class Main(ListView):
 
 
 
-
-
-
-
-
-
-
-
-
-
-        #print(daily_posts_cache,'month')
-        #print(three_posts_cache,'3 months')
-        #print(six_posts_cache,'6 months')
-
-
-
-
-        if posts_today==0:
-            pass
-        else:
-            posts_today = self.object_list.aggregate(total=Sum('posts'))['total'] - posts_today
-
-        if today != date.today():
-            today = date.today()
-            cache.set('posts_today',self.object_list.aggregate(total=Sum('posts'))['total'],timeout=30000)
-            cache.set('today', today,timeout=30000)
-
-
-
-
+        cache.clear()
 
         print(Chanel.today_posts())
+
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
         context['top_views'] = self.object_list.all().order_by('-views')[:6]
-        context['posts_today']=posts_today
+        context['posts_today']=Chanel.today_posts()
         context['total']=self.object_list.aggregate(total=Sum('posts'))['total']
         context['mentioned'] = self.object_list.aggregate(total=Sum('mentioned'))['total']
         return context
