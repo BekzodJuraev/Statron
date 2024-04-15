@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts
 # Register your models here.
+@admin.register(Posts)
+class Posts(admin.ModelAdmin):
+    list_display = ['chanel','created_at','mention']
+
 @admin.register(Profile)
 class Profile(admin.ModelAdmin):
     list_display = ['username','created_at']

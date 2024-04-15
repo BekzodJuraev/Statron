@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <main class="page">
+
 			<section class="account-tabs analitics-tabs">
 				<div class="account-tabs__container">
 					<div data-tabs class="channels-tabs tabs-account">
@@ -46,7 +47,7 @@
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img id="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
 											</h1>
 											<p class="text">
                                                 {{item.description}}
@@ -573,17 +574,17 @@
 								<div class="analitics-tabs__main main-analitics">
 									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
 									<div class="main-analitics__info">
-										<a href="#" class="main-analitics__avatar">
+										<a href="{{item.chanel_link }}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
 											</h1>
 											<p class="text">
-												{{item.add_chanel.description}}
+												{{item.description}}
 											</p>
 										</div>
 									</div>
@@ -1156,17 +1157,17 @@
 								<div class="analitics-tabs__main main-analitics">
 									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
 									<div class="main-analitics__info">
-										<a href="#" class="main-analitics__avatar">
+										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
 											</h1>
 											<p class="text">
-                                                {{item.add_chanel.description}}
+                                                {{item.description}}
 											</p>
 										</div>
 									</div>
@@ -1782,17 +1783,17 @@
 								<div class="analitics-tabs__main main-analitics">
 									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
 									<div class="main-analitics__info">
-										<a href="#" class="main-analitics__avatar">
+										<a href="{{ item.chanel_link }}" class="main-analitics__avatar">
 											<picture><source srcset="/{{ item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{ item.pictures}}" alt=""></picture>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
-												Telegram Tips
+												{{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img  class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
 											</h1>
 											<p class="text">
-												{{item.add_chanel.description}}
+												{{item.description}}
 											</p>
 										</div>
 									</div>
@@ -2093,17 +2094,19 @@
 								<div class="analitics-tabs__main main-analitics">
 									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
 									<div class="main-analitics__info">
-										<a href="#" class="main-analitics__avatar">
+										<a href="{{item.chanel_link }}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
 												{{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+
 											</h1>
 											<p class="text">
-												{{item.add_chanel.description}}
+
+												{{item.description}}
 											</p>
 										</div>
 									</div>
@@ -2117,12 +2120,12 @@
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/repost.svg" alt="">
+													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
-													<img class="grey" src="img/icons/eye.svg" alt="">
-													<img class="black" src="img/icons/eye_black.svg" alt="">
+													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
+													<img class="black" src="{% static 'img/icons/eye_black.svg' %}" alt="">
 												</button>
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
@@ -2441,7 +2444,7 @@
 
 <script>
 	$(document).ready(function () {
-    $('#copyButton').click(function() {
+    $('.copyButton').click(function() {
         var channelLink = $('.main-analitics__avatar').attr('href');
         var tempInput = $('<input>');
         $('body').append(tempInput);
@@ -2451,6 +2454,7 @@
         alert('Посилання скопійоване в буфер обміну!');
    });
    });
+
 
 </script>
 {% endblock %}

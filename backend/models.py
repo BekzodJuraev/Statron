@@ -44,7 +44,6 @@ class Chanel(models.Model):
     add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE)
     username=models.CharField(max_length=140)
     posts=models.IntegerField(default=0)
-    mentioned=models.IntegerField(default=0)
     daily_views=models.IntegerField(default=0,blank=True,null=True)
     yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
@@ -53,29 +52,13 @@ class Chanel(models.Model):
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
 
 
-    posts_today=0
-    today=date.today() - date.today()-timedelta(days=1)
-
-    @classmethod
-    def today_posts(cls):
-
-
-        if cls.posts_today==0:
-            pass
-
-
-        else:
-            total=cls.objects.aggregate(total=Sum('posts'))['total'] - cls.posts_today
-
-
-        if cls.today != date.today():
-            cls.today = date.today()
-            cls.posts_today = cls.objects.aggregate(total=Sum('posts'))['total']
-            return 0
 
 
 
-        return total
+
+
+
+
 
 
 
@@ -139,7 +122,17 @@ class Chanel(models.Model):
         ordering=['-subscribers']
 
 
+class Posts(models.Model):
+    chanel=models.ForeignKey(Chanel,on_delete=models.CASCADE,related_name='post')
+    text=models.TextField()
+    view=models.IntegerField()
+    media=models.ImageField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    mention=models.BooleanField(default=False)
 
+
+    def __str__(self):
+        return self.chanel.name
 
 class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='profile')

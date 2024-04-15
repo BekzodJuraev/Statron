@@ -4,7 +4,7 @@ from django.core.cache import cache
 from datetime import date,timedelta
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like
+from .models import Chanel,Profile,Add_chanel,Like,Posts
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -86,57 +86,13 @@ class Main(ListView):
     model = Chanel
 
     def get_context_data(self, *, object_list=None, **kwargs):
+
         context =super().get_context_data(**kwargs)
-
-        today = cache.get('today', date(1960, 1, 1))
-        daily_posts_cache = cache.get('daily_posts_cache', {})
-        three_posts_cache=cache.get('three_posts_cache',{})
-        six_posts_cache=cache.get('six_posts_cache',{})
-
-
-
-
-
-
-
-
-        if today == date.today()-timedelta(days=1):
-
-            for cache_dict in [daily_posts_cache, three_posts_cache, six_posts_cache]:
-                cache_dict[today.strftime("%Y-%m-%d")] = posts_today
-
-            for key, value in daily_posts_cache.items():
-                cache.set(key, value, timeout=60)
-
-            for key, value in three_posts_cache.items():
-                cache.set(key, value, timeout=60)
-
-            for key, value in six_posts_cache.items():
-                cache.set(key, value, timeout=60)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        cache.clear()
-
-        print(Chanel.today_posts())
-
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
         context['top_views'] = self.object_list.all().order_by('-views')[:6]
-        context['posts_today']=Chanel.today_posts()
-        context['total']=self.object_list.aggregate(total=Sum('posts'))['total']
-        context['mentioned'] = self.object_list.aggregate(total=Sum('mentioned'))['total']
+        context['posts_today']=Posts.objects.filter(mention=True,created_at__date=date.today()).count()
+        context['total']=Posts.objects.all().count()
+        context['mentioned'] =Posts.objects.filter(mention=True).count()
         return context
 
 class UpdateCabinet(LoginRequiredMixin,DetailView):

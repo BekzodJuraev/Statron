@@ -5,7 +5,7 @@ from pyrogram import Client
 from pyrogram import filters
 import logging
 from django.db import transaction
-from .models import Add_userbot
+from .models import Add_userbot,Posts,Chanel
 from celery import shared_task
 import os
 import requests
@@ -62,31 +62,13 @@ def add_chanel(chanel_link):
             total_view = client.get_chat_history(channel_username, limit=100)
             send_view = 0
             posts=client.get_chat_history_count(channel_username)
-            mention=0
-            for views in total_view:
-                if views.text is not None:
-                    if "@" in views.text and f'@{channel_username}' not in views.text:
-
-                        mention += 1
-
-                if views.mentioned:
-                    print(views.text)
-
-
-
-
-                if views.views:
-                    send_view += views.views
-
-
             payload = {
                 'name': chat.title,
                 'subscribers': str(chat.members_count),
                 'chanel_link': channel_link,
-                'views': str(send_view),
-                'posts':str(posts),
-                'mentioned':str(mention),
-                'description ':chat.description
+                'views': 0,
+                'posts': str(posts),
+                'description ': chat.description
             }
 
             if chat.photo is not None:
@@ -97,7 +79,51 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://2768-217-30-171-58.ngrok-free.app/chanel/', files=files)
+                response = requests.post('https://05d2-217-30-171-58.ngrok-free.app/chanel/', files=files)
+
+
+
+            chanel_id = Chanel.objects.get(chanel_link=channel_link)
+
+            for views in total_view:
+                if views.text is not None:
+                    text=views.text
+                else:
+                    text=views.caption
+
+
+
+                if text is not None:
+                    if ("@" in text or "t.me/" in text) and f'@{channel_username}' not in text:
+                        Posts.objects.create(
+                            chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
+                            text=text,
+                            view=views.views,
+                            media=None,
+                            mention=True
+                        )
+                    else:
+
+                        Posts.objects.create(
+                            chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
+                            text=text,
+                            view=views.views,
+                            media=None,
+                            mention=False
+                        )
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

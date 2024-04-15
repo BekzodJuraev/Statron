@@ -7,7 +7,7 @@ class ChanelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chanel
-        fields = ['chanel_link','name', 'subscribers','pictures','views','posts','mentioned','description']
+        fields = ['chanel_link','name', 'subscribers','pictures','views','posts','description']
 
 
 
