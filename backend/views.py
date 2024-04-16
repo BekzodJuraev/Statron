@@ -17,6 +17,7 @@ from django.urls import reverse_lazy
 from .forms import AddChanelForm
 from django.db.models import Sum
 from django.utils import timezone
+from django.db.models import Q,Count
 
 class ChanelAPI(APIView):
     def get(self, request):
@@ -88,6 +89,40 @@ class Main(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
 
         context =super().get_context_data(**kwargs)
+        chart_month = Posts.objects.filter(
+            mention=True,
+            created_at__gte=date.today() - timedelta(days=29),
+            created_at__lte=timezone.now()
+        ).values('created_at__date').annotate(count=Count('id'))
+        #print(chart_month)
+        chart_three_month = Posts.objects.filter(
+            mention=True,
+            created_at__gte=date.today() - timedelta(days=89),
+            created_at__lte=timezone.now()
+        ).values('created_at__date').annotate(count=Count('id'))
+
+        chart_six_month = Posts.objects.filter(
+            mention=True,
+            created_at__gte=date.today() - timedelta(days=179),
+            created_at__lte=timezone.now()
+        ).values('created_at__date').annotate(count=Count('id'))
+
+
+
+        #dict_monthly = {item['created_at__date'].strftime("%Y-%m-%d"): item['count'] for item in chart_month}
+
+
+
+
+
+
+
+
+
+
+        context['chart_month']=chart_month
+        context['chart_three_month']=chart_three_month
+        context['chart_six_month']=chart_six_month
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
         context['top_views'] = self.object_list.all().order_by('-views')[:6]
         context['posts_today']=Posts.objects.filter(mention=True,created_at__date=date.today()).count()

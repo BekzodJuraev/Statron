@@ -189,7 +189,7 @@
 							<div data-tabs-body class="charts-tabs__content">
 								<div class="charts-tabs__body">
 									<div class="charts-tabs__chart">
-										<canvas id="chart1"></canvas>
+										<canvas id="chart_1"></canvas>
 									</div>
 									<div class="charts-tabs__info">
 										<div class="charts-tabs__info-item">
@@ -208,7 +208,7 @@
 								</div>
 								<div class="charts-tabs__body">
 									<div class="charts-tabs__chart">
-										<canvas id="chart2"></canvas>
+										<canvas id="chart_2"></canvas>
 									</div>
 									<div class="charts-tabs__info">
 										<div class="charts-tabs__info-item">
@@ -217,13 +217,17 @@
 										</div>
 										<div class="charts-tabs__info-item">
 											<div class="label-black">Опубликованно сегодня</div>
-											<div class="label-blue label-blue_s24">+9,414</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
 										</div>
 									</div>
 								</div>
 								<div class="charts-tabs__body">
 									<div class="charts-tabs__chart">
-										<canvas id="chart3"></canvas>
+										<canvas id="chart_3"></canvas>
 									</div>
 									<div class="charts-tabs__info">
 										<div class="charts-tabs__info-item">
@@ -232,7 +236,11 @@
 										</div>
 										<div class="charts-tabs__info-item">
 											<div class="label-black">Опубликованно сегодня</div>
-											<div class="label-blue label-blue_s24">+9,414</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
 										</div>
 									</div>
 								</div>
@@ -265,6 +273,111 @@
 				</div>
 			</section>
 		</main>
+<script>
+	$(document).ready(function() {
+    if ($("#chart_1").length) {
+        var ctx = $("#chart_1")[0].getContext("2d");
 
+        var views = [ // Array of count values
+        {% for item in chart_month %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in chart_month %}
+            "{{ item.created_at__date }}",
+        {% endfor %}
+    ];
+
+
+        // Assuming you have some dates as labels, you can use them
+        // Replace this with your actual date labels
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Пост",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+
+if ($("#chart_2").length) {
+        var ctx = $("#chart_2")[0].getContext("2d");
+
+        var views = [ // Array of count values
+        {% for item in chart_three_month %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in chart_three_month %}
+            "{{ item.created_at__date }}",
+        {% endfor %}
+    ];
+
+
+        // Assuming you have some dates as labels, you can use them
+        // Replace this with your actual date labels
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Пост",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+
+if ($("#chart_3").length) {
+        var ctx = $("#chart_3")[0].getContext("2d");
+
+        var views = [ // Array of count values
+        {% for item in chart_six_month %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in chart_six_month %}
+            "{{ item.created_at__date }}",
+        {% endfor %}
+    ];
+
+
+        // Assuming you have some dates as labels, you can use them
+        // Replace this with your actual date labels
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Пост",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+
+});
+</script>
 {% endblock %}
 
