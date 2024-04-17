@@ -4,7 +4,7 @@ from django.core.cache import cache
 from datetime import date,timedelta
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -209,40 +209,17 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
 
-        hourly_data = cache.get('hourly_data', [])
-
-        old_subscribers=cache.get('old_subscribers',0)
-
-        # Check if the last update date is different from today
-        if self.object.last_update.date() != date.today():
-            # Clear the 'hourly_data' list
-            hourly_data.clear()
-
-        # Check if the last update value is different
-
-        if old_subscribers != 0:
-            if self.object.last_update != cache.get('last_update', 0):
-                # Update the cache with the new last_update value
-
-                cache.set('last_update', self.object.last_update)
-                difference=self.object.subscribers-old_subscribers
-                cache.set('old_subscribers',self.object.subscribers)
-
-                # Append a dictionary representing the data for this hour
-                hourly_data.append({
-                    'hourly': difference,
-                    'subscribers': self.object.subscribers,
-                    'last_update': self.object.last_update,
-                })
-        else:
-            cache.set('old_subscribers',self.object.subscribers)
 
 
 
-        # Store the updated 'hourly_data' list in the cache
-        cache.set('hourly_data', hourly_data, timeout=24 * 60 * 60)
 
-        context['hourly_data'] = hourly_data
+
+
+        context['subperday']=SubPerday.objects.filter(chanel=self.object.pk)
+
+
+
+
 
         context['day'] = self.object.daily_subscribers
         context['week'] = self.object.weekly_subscribers

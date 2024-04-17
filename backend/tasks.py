@@ -60,7 +60,7 @@ def add_chanel(chanel_link):
             channel_username = channel_link.split('/')[-1]
             chat = client.get_chat(channel_username)
             total_view = client.get_chat_history(channel_username, limit=100)
-            send_view = 0
+
             posts=client.get_chat_history_count(channel_username)
             payload = {
                 'name': chat.title,

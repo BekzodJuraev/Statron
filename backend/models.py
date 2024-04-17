@@ -51,33 +51,9 @@ class Chanel(models.Model):
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def save(self, *args, **kwargs):
         if self.pk is not None:
-
-            old_instance = Chanel.objects.get(pk=self.pk)
+            old_instance = Chanel.objects.select_related('add_chanel').get(pk=self.pk)
             old_subscribers = old_instance.subscribers
             old_views=old_instance.views
 
@@ -88,12 +64,26 @@ class Chanel(models.Model):
                     self.yesterday_subscribers=self.daily_subscribers
                     self.yesterday_views=self.daily_views
 
+
                 if self.last_update.date() == date.today():
                     self.daily_subscribers += difference
                     self.daily_views+=difference_views
+                    existing_sub_per_day = SubPerday.objects.filter(chanel=old_instance,created_at__date=date.today()).first()
+
+                    if not existing_sub_per_day:
+                        SubPerday.objects.create(chanel=old_instance,subperday=self.subscribers,viewsperday=self.daily_views)
+                    else:
+                        existing_sub_per_day.subperday=self.subscribers
+                        existing_sub_per_day.viewsperday=self.daily_views
+                        existing_sub_per_day.save()
+
+
+
                 else:
-                    self.daily_subscribers = 0
-                    self.daily_views=0
+                    self.daily_subscribers = difference
+                    self.daily_views = difference_views
+
+
 
 
 
@@ -120,6 +110,17 @@ class Chanel(models.Model):
         verbose_name="Канал"
         verbose_name_plural="Канал"
         ordering=['-subscribers']
+
+class SubPerday(models.Model):
+    chanel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name='subperday')
+    created_at = models.DateTimeField(auto_now_add=True)
+    subperday=models.IntegerField()
+    viewsperday=models.IntegerField()
+
+    class Meta:
+        unique_together = ('chanel', 'created_at')
+    def __str__(self):
+        return self.chanel.name
 
 
 class Posts(models.Model):

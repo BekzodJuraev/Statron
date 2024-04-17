@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday
+@admin.register(SubPerday)
+class SubPerday(admin.ModelAdmin):
+    list_display = ['chanel','created_at','subperday']
 # Register your models here.
 @admin.register(Posts)
 class Posts(admin.ModelAdmin):
