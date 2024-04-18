@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from rest_framework import generics
+from django.db.models import Value,Case,When
 from django.core.cache import cache
-from datetime import date,timedelta
+from django.db.models.functions import TruncHour
+from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
 from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday
@@ -91,21 +93,32 @@ class Main(ListView):
         context =super().get_context_data(**kwargs)
         chart_month = Posts.objects.filter(
             mention=True,
-            created_at__gte=date.today() - timedelta(days=29),
-            created_at__lte=timezone.now()
+            created_at__gte=date.today() - timedelta(days=29)
         ).values('created_at__date').annotate(count=Count('id'))
         #print(chart_month)
         chart_three_month = Posts.objects.filter(
             mention=True,
-            created_at__gte=date.today() - timedelta(days=89),
-            created_at__lte=timezone.now()
+            created_at__gte=date.today() - timedelta(days=89)
         ).values('created_at__date').annotate(count=Count('id'))
 
         chart_six_month = Posts.objects.filter(
             mention=True,
-            created_at__gte=date.today() - timedelta(days=179),
-            created_at__lte=timezone.now()
+            created_at__gte=date.today() - timedelta(days=179)
         ).values('created_at__date').annotate(count=Count('id'))
+
+        daily=Posts.objects.filter(
+            created_at__gte=timezone.now() - timedelta(hours=24)
+
+        ).annotate(hour=TruncHour('created_at')).values("hour").annotate(count=Count('id')).order_by('hour')
+
+
+
+
+
+
+
+
+
 
 
 
@@ -121,6 +134,7 @@ class Main(ListView):
 
 
         context['chart_month']=chart_month
+        context['daily_chart']=daily
         context['chart_three_month']=chart_three_month
         context['chart_six_month']=chart_six_month
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
