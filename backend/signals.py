@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save,pre_save
-from .models import Chanel,Add_chanel,Add_userbot
+from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour
 from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
+from django.db.models import Sum,Q,Count
 from celery import shared_task
 
 
@@ -28,3 +29,13 @@ def handle_new_userbot(sender, instance,created, **kwargs):
             api_hash=instance.api_hash,
             phone=instance.phone_number
         )
+@receiver(post_save,sender=Posts)
+def create_views(sender,instance,created,*args,**kwargs):
+    if created:
+        total = instance.chanel.post.aggregate(total_views=Sum('view'))['total_views']
+        instance.chanel.views = total
+        instance.chanel.save()
+
+@receiver(post_save,sender=Chanel)
+def create_views(sender,instance,created,*args,**kwargs):
+    Subperhour.objects.create(chanel=instance, subperhour=instance.subscribers, difference=instance.daily_subscribers)

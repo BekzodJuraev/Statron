@@ -6,7 +6,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -17,9 +17,8 @@ from django.views.generic import View,ListView, CreateView, UpdateView, DeleteVi
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import AddChanelForm
-from django.db.models import Sum
+from django.db.models import Sum,Q,Count
 from django.utils import timezone
-from django.db.models import Q,Count
 
 class ChanelAPI(APIView):
     def get(self, request):
@@ -122,6 +121,13 @@ class Main(ListView):
 
 
 
+
+
+
+
+
+
+
         #dict_monthly = {item['created_at__date'].strftime("%Y-%m-%d"): item['count'] for item in chart_month}
 
 
@@ -138,7 +144,7 @@ class Main(ListView):
         context['chart_three_month']=chart_three_month
         context['chart_six_month']=chart_six_month
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
-        context['top_views'] = self.object_list.all().order_by('-views')[:6]
+        context['top_views'] =self.object_list.all().order_by('-views')
         context['posts_today']=Posts.objects.filter(mention=True,created_at__date=date.today()).count()
         context['total']=Posts.objects.all().count()
         context['mentioned'] =Posts.objects.filter(mention=True).count()
@@ -216,20 +222,18 @@ class DetailChanel(DetailView):
     context_object_name = 'item'
 
 
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
         er_daily = (self.object.daily_subscribers / self.object.views) * 10
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
-
-
-
-
-
-
-
+        context['subperhour'] = Subperhour.objects.filter(chanel=self.object.pk)[:50]
         context['subperday']=SubPerday.objects.filter(chanel=self.object.pk)
+
+
 
 
 

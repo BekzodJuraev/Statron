@@ -51,6 +51,14 @@ class Chanel(models.Model):
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
 
+
+
+
+
+
+
+
+
     def save(self, *args, **kwargs):
         if self.pk is not None:
             old_instance = Chanel.objects.select_related('add_chanel').get(pk=self.pk)
@@ -76,8 +84,6 @@ class Chanel(models.Model):
                         existing_sub_per_day.subperday=self.subscribers
                         existing_sub_per_day.viewsperday=self.daily_views
                         existing_sub_per_day.save()
-
-
 
                 else:
                     self.daily_subscribers = difference
@@ -110,6 +116,19 @@ class Chanel(models.Model):
         verbose_name="Канал"
         verbose_name_plural="Канал"
         ordering=['-subscribers']
+
+class Subperhour(models.Model):
+    chanel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name='subperhour')
+    created_at = models.DateTimeField(auto_now_add=True)
+    subperhour = models.IntegerField()
+    difference=models.IntegerField()
+
+    class Meta:
+        unique_together = ('chanel', 'created_at')
+    def __str__(self):
+        return self.chanel.name
+
+
 
 class SubPerday(models.Model):
     chanel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name='subperday')

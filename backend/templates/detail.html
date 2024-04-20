@@ -127,19 +127,19 @@
 														</tr>
 													</thead>
 													<tbody>
-													{% for item in hourly_data %}
+													{% for item in subperhour %}
 														<tr>
 															<td scope="row">
-																<div class="label-black">{{item.last_update}}</div>
+																<div class="label-black">{{item.created_at }}</div>
 															</td>
 															<td>
-																<div class="label-blue label-blue_s20">{{item.subscribers}}</div>
+																<div class="label-blue label-blue_s20">{{item.subperhour}}</div>
 															</td>
 															<td>
-																{% if item.hourly < 0 %}
-																<div class="label-green label-green_s20" style="color:red">{{item.hourly}}</div>
+																{% if item.difference < 0 %}
+																<div class="label-green label-green_s20" style="color:red">{{item.difference}}</div>
 																{% else %}
-																<div class="label-green label-green_s20" >+{{item.hourly}}</div>
+																<div class="label-green label-green_s20" >+{{item.difference}}</div>
 																{% endif %}
 
 															</td>
@@ -250,7 +250,7 @@
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">За последние 24ч</div>
-													<div class="label-blue label-blue_s20">{{item.views}}</div>
+													<div class="label-blue label-blue_s20">{{item.daily_views}}</div>
 												</div>
 											</div>
 										</div>
@@ -267,8 +267,14 @@
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">Упоминаний в ТГ</div>
+													{% if item.mentioned %}
 													<div class="label-blue label-blue_s20">{{item.mentioned}}</div>
 												</div>
+												 {% else %}
+												<div class="label-blue label-blue_s20">0</div>
+												</div>
+												{% endif %}
+
 											</div>
 										</div>
 										<section class="analitics-tabs__table-wrap analitics-tabs__table-wrap_auto">
