@@ -177,8 +177,8 @@
 												<div class="channel-tabs-channels__content">
 
 													<div class="channel-tabs-channels__title title">
-													<a href="{{item.chanel_link}}" class="img">{{item.name}}</a>
-														<img id="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="" >
+													<a href="{% url 'detail' item.pk %}" class="img">{{item.name}}</a>
+														<img class="copyButton"  src="{% static 'img/icons/copy.svg' %}" alt="" data-chanel-link="{{item.chanel_link }}">
 														</div>
 
 
@@ -452,16 +452,27 @@
     </div>
 </div>
 <script>
-		$(document).ready(function () {
-    	$('#copyButton').click(function() {
-        var channelLink = $('.img').attr('href');
+	$(document).ready(function () {
+    $('.copyButton').click(function() {
+        // Get the value of the data-chanel-link attribute
+        var channelLink = $(this).data('chanel-link');
+
+        // Create a temporary input element to copy the URL
         var tempInput = $('<input>');
         $('body').append(tempInput);
+
+        // Set the value of the input to the channel link and select it
         tempInput.val(channelLink).select();
+
+        // Copy the selected text to clipboard
         document.execCommand('copy');
+
+        // Remove the temporary input element
         tempInput.remove();
+
+        // Alert the user that the link has been copied
         alert('Посилання скопійоване в буфер обміну!');
    });
-   });
+});
 </script>
 {% endblock %}

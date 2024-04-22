@@ -58,14 +58,18 @@
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
 												<div class="main-analitics__btn">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/search.svg' %}" alt="">
 													<span>Рекламные посты</span>
+													</a>
 												</div>
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
+													</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -74,8 +78,10 @@
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
 													<span>Все посты</span>
+														</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -83,10 +89,14 @@
 												</button>
 											</div>
 										</div>
-										<form action="#" method="POST" class="main-analitics__form">
-											<input class="main-analitics__input" type="text" name="note" id="note" placeholder="Вы можете оставить заметку. Она будет видна только вам.">
+										{% if request.user.is_authenticated %}
+										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
+											{% csrf_token %}
+											{{form.node}}
 											<button class="button button_no-bg" type="submit">Сохранить</button>
 										</form>
+
+										{% endif %}
 									</div>
 								</div>
 								<div class="analitics-tabs__row">
@@ -535,14 +545,18 @@
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
 												<div class="main-analitics__btn">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/search.svg' %}" alt="">
 													<span>Рекламные посты</span>
+													</a>
 												</div>
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/repost.svg" alt="">
+													<a href="{% url 'posts' %}">
+													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
+													</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -551,8 +565,10 @@
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/posts.svg" alt="">
+													<a href="{% url 'posts' %}">
+													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
 													<span>Все посты</span>
+														</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -560,10 +576,14 @@
 												</button>
 											</div>
 										</div>
-										<form action="#" method="POST" class="main-analitics__form">
-											<input class="main-analitics__input" type="text" name="note" id="note" placeholder="Вы можете оставить заметку. Она будет видна только вам.">
+											{% if request.user.is_authenticated %}
+										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
+											{% csrf_token %}
+											{{form.node}}
 											<button class="button button_no-bg" type="submit">Сохранить</button>
 										</form>
+
+										{% endif %}
 									</div>
 								</div>
 								<section class="ad-analitics">
@@ -1118,14 +1138,18 @@
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
 												<div class="main-analitics__btn">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/search.svg' %}" alt="">
 													<span>Рекламные посты</span>
+													</a>
 												</div>
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/repost.svg" alt="">
+													<a href="{% url 'posts' %}">
+													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
+													</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -1134,8 +1158,10 @@
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/posts.svg" alt="">
+													<a href="{% url 'posts' %}">
+													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
 													<span>Все посты</span>
+														</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -1143,10 +1169,14 @@
 												</button>
 											</div>
 										</div>
-										<form action="#" method="POST" class="main-analitics__form">
-											<input class="main-analitics__input" type="text" name="note" id="note" placeholder="Вы можете оставить заметку. Она будет видна только вам.">
+											{% if request.user.is_authenticated %}
+										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
+											{% csrf_token %}
+											{{form.node}}
 											<button class="button button_no-bg" type="submit">Сохранить</button>
 										</form>
+
+										{% endif %}
 									</div>
 								</div>
 								<section class="dynamic-charts">
@@ -1744,14 +1774,18 @@
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
 												<div class="main-analitics__btn">
+												<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/search.svg' %}" alt="">
 													<span>Рекламные посты</span>
+													</a>
 												</div>
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
+													</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -1760,8 +1794,10 @@
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
 													<span>Все посты</span>
+														</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -1769,10 +1805,14 @@
 												</button>
 											</div>
 										</div>
-										<form action="#" method="POST" class="main-analitics__form">
-											<input class="main-analitics__input" type="text" name="note" id="note" placeholder="Вы можете оставить заметку. Она будет видна только вам.">
+											{% if request.user.is_authenticated %}
+										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
+											{% csrf_token %}
+											{{form.node}}
 											<button class="button button_no-bg" type="submit">Сохранить</button>
 										</form>
+
+										{% endif %}
 									</div>
 								</div>
 								<section class="dynamic-charts">
@@ -2057,14 +2097,18 @@
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
 												<div class="main-analitics__btn">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/search.svg' %}" alt="">
 													<span>Рекламные посты</span>
+													</a>
 												</div>
 											</button>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
+													<a href="{% url 'posts' %}">
 													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
 													<span>Упоминания</span>
+													</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -2073,8 +2117,10 @@
 											</div>
 											<div class="main-analitics__btn-wrap title title_s20">
 												<button class="main-analitics__btn" type="button">
-													<img src="img/analitics/posts.svg" alt="">
+													<a href="{% url 'posts' %}">
+													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
 													<span>Все посты</span>
+														</a>
 												</button>
 												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
 													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
@@ -2082,10 +2128,13 @@
 												</button>
 											</div>
 										</div>
-										<form action="#" method="POST" class="main-analitics__form">
-											<input class="main-analitics__input" type="text" name="note" id="note" placeholder="Вы можете оставить заметку. Она будет видна только вам.">
+										{% if request.user.is_authenticated %}
+										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
+											{% csrf_token %}
+											{{form.node}}
 											<button class="button button_no-bg" type="submit">Сохранить</button>
 										</form>
+										{% endif %}
 									</div>
 								</div>
 								<section class="dynamic-analitics">
@@ -2274,7 +2323,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart__6"></canvas>
+													<canvas id="chart_6"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -2336,6 +2385,36 @@
    });
    if ($("#chart_5").length) {
         var ctx = $("#chart_5")[0].getContext("2d");
+
+        var views = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.subperday }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in subperday %}
+            "{{ item.created_at|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Пост",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+    if ($("#chart_6").length) {
+        var ctx = $("#chart_6")[0].getContext("2d");
 
         var views = [ // Array of count values
         {% for item in subperday %}

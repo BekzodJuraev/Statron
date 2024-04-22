@@ -12,11 +12,11 @@ from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate,login,logout
-from django.views.generic import View,ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
+from django.views.generic import View,ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView,FormView
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from .forms import AddChanelForm
+from .forms import AddChanelForm,LikeForm
 from django.db.models import Sum,Q,Count
 from django.utils import timezone
 
@@ -221,9 +221,6 @@ class DetailChanel(DetailView):
     template_name = 'detail.html'
     context_object_name = 'item'
 
-
-
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
@@ -232,6 +229,7 @@ class DetailChanel(DetailView):
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object.pk)[:50]
         context['subperday']=SubPerday.objects.filter(chanel=self.object.pk)
+        context['form']=LikeForm
 
 
 
@@ -244,6 +242,17 @@ class DetailChanel(DetailView):
         context['month'] = self.object.weekly_monthy
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = LikeForm(request.POST)
+        if form.is_valid():
+            form.instance.username=self.request.user.profile
+            form.instance.chanel_name=self.get_object()
+            form.save()
+            return redirect('like')
+
+
+
 
 class CreateChanel(LoginRequiredMixin,CreateView):
     model = Add_chanel
@@ -330,7 +339,8 @@ class Like_chanel(LoginRequiredMixin,ListView):
     template_name = 'like_chanel.html'
     login_url = reverse_lazy('login_site')
     context_object_name = 'item'
-    paginate_by = 1
+    model = Like
+    paginate_by = 6
 
     def get_queryset(self):
         search_query = self.request.GET.get('chanel_link')
@@ -341,7 +351,7 @@ class Like_chanel(LoginRequiredMixin,ListView):
         subscribers_to = self.request.GET.get('subscribers_to')
         cost_from = self.request.GET.get('cost_from')
         cost_to = self.request.GET.get('cost_to')
-        like = Like.objects.filter(username=self.request.user)
+        like = Like.objects.filter(username__username=self.request.user)
         if search_query:
             like = like.filter(chanel_name__chanel_link__icontains=search_query)
 
@@ -360,7 +370,36 @@ class Like_chanel(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        search_query = self.request.GET.get('chanel_link')
+        chanel_name = self.request.GET.get('chanel_name')
+        views_from = self.request.GET.get('views_from')
+        views_to = self.request.GET.get('views_to')
+        subscribers_from = self.request.GET.get('subscribers_from')
+        subscribers_to = self.request.GET.get('subscribers_to')
+        cost_from = self.request.GET.get('cost_from')
+        cost_to = self.request.GET.get('cost_to')
+        note=self.object_list.filter(username__username=self.request.user).exclude(node='')
+
+        if search_query:
+            note = note.filter(chanel_name__chanel_link__icontains=search_query)
+
+        if chanel_name:
+            note = note.filter(chanel_name__name__icontains=chanel_name)
+
+            # If no search parameters are provided, return all objects
+
+        if views_from and views_to:
+            note = note.filter(chanel_name__views__range=[views_from, views_to])
+
+        if subscribers_from and subscribers_to:
+            note = note.filter(chanel_name__subscribers__range=[subscribers_from, subscribers_to])
+
+
+
         context['count'] = self.get_queryset().count()
+        context['node']=note
+        context['count_node']=note.count()
+
         return context
 
 

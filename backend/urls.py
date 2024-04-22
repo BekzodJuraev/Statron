@@ -20,6 +20,5 @@ urlpatterns=[
  path('tracking-posts/', views.TrackingPosts.as_view(), name='tracking'),
  path('posts/',views.Ad_posts.as_view(), name='posts'),
  path('note/',views.Like_chanel.as_view(),name='like'),
- path('report/',views.ReportView.as_view(),name='report'),
  path('',views.Main.as_view(),name='main')
 ]

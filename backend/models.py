@@ -155,7 +155,7 @@ class Posts(models.Model):
         return self.chanel.name
 
 class Add_chanel(models.Model):
-    username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='profile')
+    username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel')
     #category=models.ForeignKey('Category_chanels',on_delete=models.CASCADE)
     chanel_link = models.CharField(max_length=150)
 
@@ -173,12 +173,13 @@ class Category_chanels(models.Model):
 
 
 class Like(models.Model):
-    username=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='like')
     chanel_name=models.ForeignKey(Chanel,on_delete=models.CASCADE,null=True)
+    node=models.CharField(max_length=255,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.username.username
+        return self.username.username.username
 
 
 class Add_userbot(models.Model):
