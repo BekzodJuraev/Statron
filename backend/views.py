@@ -225,6 +225,7 @@ class DetailChanel(DetailView):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
         er_daily = (self.object.daily_subscribers / self.object.views) * 10
+        context['mention']=Posts.objects.filter(mention=True,text__icontains=self.object.chanel_link)
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object.pk)[:50]
@@ -379,6 +380,7 @@ class Like_chanel(LoginRequiredMixin,ListView):
         cost_from = self.request.GET.get('cost_from')
         cost_to = self.request.GET.get('cost_to')
         note=self.object_list.filter(username__username=self.request.user).exclude(node='')
+
 
         if search_query:
             note = note.filter(chanel_name__chanel_link__icontains=search_query)
