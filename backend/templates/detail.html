@@ -1034,7 +1034,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart7"></canvas>
+													<canvas id="chart_7"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -1054,83 +1054,21 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr>
+														{% for item in subperday %}
+														<tr>
 																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
+																	<div class="label-black label-black_s20">
+																		{{ item.created_at|date:"Y-m-d" }}</div>
 																</td>
 																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
+																	<div class="label-blue label-blue_s20">{{item.subperday}}</div>
 																</td>
 																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
+																	<div class="label-green label-green_s20">{{item.viewsperday}}</div>
 																</td>
 															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
+														{% endfor %}
+
 														</tbody>
 													</table>
 												</div>
@@ -1148,7 +1086,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart8"></canvas>
+													<canvas id="chart_8"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -1168,83 +1106,20 @@
 															</tr>
 														</thead>
 														<tbody>
-															<tr>
+														{% for item in subperday %}
+														<tr>
 																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
+																	<div class="label-black label-black_s20">{{ item.created_at|date:"Y-m-d" }}</div>
 																</td>
 																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
+																	<div class="label-blue label-blue_s20">{{item.subperday}}</div>
 																</td>
 																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
+																	<div class="label-green label-green_s20">{{item.viewsperday}}</div>
 																</td>
 															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
-															<tr>
-																<td scope="row">
-																	<div class="label-black label-black_s20">2022-04-15</div>
-																</td>
-																<td>
-																	<div class="label-blue label-blue_s20">7 564 789</div>
-																</td>
-																<td>
-																	<div class="label-green label-green_s20">2 456 786</div>
-																</td>
-															</tr>
+														{% endfor %}
+
 														</tbody>
 													</table>
 												</div>
@@ -1262,7 +1137,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart9"></canvas>
+													<canvas id="chart_9"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -1376,7 +1251,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart10"></canvas>
+													<canvas id="chart_10"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -1490,7 +1365,7 @@
 										<div data-tabs-body class="charts-tabs__content">
 											<div class="charts-tabs__body">
 												<div class="charts-tabs__chart">
-													<canvas id="chart11"></canvas>
+													<canvas id="chart_11"></canvas>
 												</div>
 											</div>
 											<div class="charts-tabs__body">
@@ -2286,7 +2161,171 @@
             }
         });
     }
+	if ($("#chart_7").length) {
+        var ctx = $("#chart_7")[0].getContext("2d");
 
+        var views = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.viewsperday }},
+        {% endfor %}
+    ];
+    var subperday = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.subperday }},
+        {% endfor %}
+    ];
+
+
+    var labels = [ // Array of created_at__date values
+        {% for item in subperday %}
+            "{{ item.created_at|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Охват публикаций за 24ч",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                },
+                {
+                    label: "число подписчиков",
+                    data: subperday, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                }
+                ]
+            }
+        });
+    }
+    if ($("#chart_8").length) {
+        var ctx = $("#chart_8")[0].getContext("2d");
+
+        var er = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.er }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in subperday %}
+            "{{ item.created_at|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Суточный ER по дням",
+                    data: er, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+
+    if ($("#chart_9").length) {
+        var ctx = $("#chart_9")[0].getContext("2d");
+
+        var er = [ // Array of count values
+        {% for item in posts %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in posts %}
+            "{{ item.created_at__date|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Публикаций в день",
+                    data: er, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+
+    if ($("#chart_10").length) {
+        var ctx = $("#chart_10")[0].getContext("2d");
+
+        var er = [ // Array of count values
+        {% for item in posts_ads %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in posts_ads %}
+            "{{ item.created_at__date|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Рекламных записей в день",
+                    data: er, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
+    if ($("#chart_11").length) {
+        var ctx = $("#chart_11")[0].getContext("2d");
+
+        var er = [ // Array of count values
+        {% for item in posts_ads %}
+            {{ item.count }},
+        {% endfor %}
+    ];
+
+    var labels = [ // Array of created_at__date values
+        {% for item in posts_ads %}
+            "{{ item.created_at__date|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Рекламных упоминаний",
+                    data: er, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                }]
+            }
+        });
+    }
 });
 
 

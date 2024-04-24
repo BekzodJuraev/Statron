@@ -17,7 +17,7 @@ from django.views.generic import View,ListView, CreateView, UpdateView, DeleteVi
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import AddChanelForm,LikeForm
-from django.db.models import Sum,Q,Count
+from django.db.models import Sum,Q,Count,F
 from django.utils import timezone
 
 class ChanelAPI(APIView):
@@ -228,8 +228,11 @@ class DetailChanel(DetailView):
         context['mention']=Posts.objects.filter(mention=True,text__icontains=self.object.chanel_link)
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
-        context['subperhour'] = Subperhour.objects.filter(chanel=self.object.pk)[:50]
-        context['subperday']=SubPerday.objects.filter(chanel=self.object.pk)
+        context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
+        context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday'))
+        context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
+        context['posts_ads'] = Posts.objects.filter(chanel=self.object,mention=True).values('created_at__date').annotate(
+            count=Count('id'))
         context['form']=LikeForm
 
 
