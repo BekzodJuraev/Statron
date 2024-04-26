@@ -34,6 +34,7 @@ class Profile(models.Model):
 
 class Chanel(models.Model):
     chanel_link=models.CharField(max_length=150)
+    chanel_id=models.IntegerField(default=0)
     description = models.TextField()
     name=models.CharField(max_length=150,verbose_name="Называние канала")
     pictures=models.ImageField(verbose_name='Лого')
@@ -43,7 +44,6 @@ class Chanel(models.Model):
     last_update=models.DateTimeField(auto_now=True)
     add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE)
     username=models.CharField(max_length=140)
-    posts=models.IntegerField(default=0)
     daily_views=models.IntegerField(default=0,blank=True,null=True)
     yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
@@ -149,6 +149,7 @@ class Posts(models.Model):
     media=models.ImageField()
     created_at = models.DateTimeField(auto_now_add=True)
     mention=models.BooleanField(default=False)
+    id_channel_forward_from=models.IntegerField(null=True)
 
 
     def __str__(self):

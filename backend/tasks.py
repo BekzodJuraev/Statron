@@ -56,18 +56,14 @@ def add_chanel(chanel_link):
         phone = userbot.phone_number
 
         with Client(name, api_id=api_id, api_hash=api_hash, phone_number=phone,session_string=session_data) as client:
-            channel_link = chanel_link
-            channel_username = channel_link.split('/')[-1]
+            channel_username = chanel_link.split('/')[-1]
             chat = client.get_chat(channel_username)
             total_view = client.get_chat_history(channel_username, limit=100)
-
-            posts=client.get_chat_history_count(channel_username)
             payload = {
                 'name': chat.title,
                 'subscribers': str(chat.members_count),
-                'chanel_link': channel_link,
-                'views': 0,
-                'posts': str(posts),
+                'chanel_id':chat.id,
+                'chanel_link':chanel_link,
                 'description ': chat.description
             }
 
@@ -79,11 +75,11 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://05d2-217-30-171-58.ngrok-free.app/chanel/', files=files)
+                response = requests.post('https://38a5-5-133-120-92.ngrok-free.app/chanel/', files=files)
 
 
 
-            chanel_id = Chanel.objects.get(chanel_link=channel_link)
+            chanel_id = Chanel.objects.get(chanel_link=chanel_link)
 
             for views in total_view:
                 if views.text is not None:
@@ -93,13 +89,16 @@ def add_chanel(chanel_link):
 
 
 
+
                 if text is not None:
                     if ("@" in text or "t.me/" in text) and f'@{channel_username}' not in text:
+
                         Posts.objects.create(
                             chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
                             text=text,
                             view=views.views,
                             media=None,
+                            id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                             mention=True
                         )
                     else:
@@ -109,6 +108,7 @@ def add_chanel(chanel_link):
                             text=text,
                             view=views.views,
                             media=None,
+                            id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                             mention=False
                         )
 
