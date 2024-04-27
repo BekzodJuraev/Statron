@@ -47,7 +47,7 @@
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
                                                 {{item.description}}
@@ -377,7 +377,7 @@
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
 												{{item.description}}
@@ -436,43 +436,43 @@
 											<div class="ad-analitics__posts-item">
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black text_wf500 label-black_s20">Всего</div>
-													<div class="label-blue label-blue_s20">5</div>
+													<div class="label-blue label-blue_s20">{{count_all}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Репостов</div>
-													<div class="label-blue label-blue_s20">2</div>
+													<div class="label-blue label-blue_s20">{{count_repost}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Подборок</div>
-													<div class="label-blue label-blue_s20">0</div>
+													<div class="label-blue label-blue_s20">{{count_mention}}</div>
 												</div>
 											</div>
 											<div class="ad-analitics__posts-item">
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black text_wf500 label-black_s20">За неделю</div>
-													<div class="label-blue label-blue_s20">5</div>
+													<div class="label-blue label-blue_s20">{{count_all_week}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Репостов</div>
-													<div class="label-blue label-blue_s20">2</div>
+													<div class="label-blue label-blue_s20">{{count_repost_week}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Подборок</div>
-													<div class="label-blue label-blue_s20">0</div>
+													<div class="label-blue label-blue_s20">{{count_mention_week}}</div>
 												</div>
 											</div>
 											<div class="ad-analitics__posts-item">
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black text_wf500 label-black_s20">За месяц</div>
-													<div class="label-blue label-blue_s20">5</div>
+													<div class="label-blue label-blue_s20">{{count_all_month}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Репостов</div>
-													<div class="label-blue label-blue_s20">2</div>
+													<div class="label-blue label-blue_s20">{{count_repost_month}}</div>
 												</div>
 												<div class="ad-analitics__posts-item-row">
 													<div class="label-black label-black_s20">Подборок</div>
-													<div class="label-blue label-blue_s20">0</div>
+													<div class="label-blue label-blue_s20">{{count_mention_month}}</div>
 												</div>
 											</div>
 										</div>
@@ -522,22 +522,28 @@
 													</tr>
 												</thead>
 												<tbody>
+												{% for item in mention %}
 													<tr>
 														<td scope="row">
 															<div class="channel-tabs-channels__head">
-																<a href="#" target="_blank" class="channel-tabs-channels__img">
-																	<picture><source srcset="img/channels/1.webp" type="image/webp"><img class="img-fluid" src="img/channels/1.png" alt=""></picture>
+																<a href="{% url 'detail' item.chanel.pk %}" target="_blank" class="channel-tabs-channels__img">
+																	<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="{{item.chanel.pictures}}" alt=""></picture>
 																</a>
 																<div class="channel-tabs-channels__content">
-																	<a href="#" class="channel-tabs-channels__title title title_s20">
-																		Принцессы тиндера
-																		<img src="img/icons/copy.svg" alt="">
-																	</a>
+																	<div class="channel-tabs-channels__title title title_s20">
+																	<a href="{% url 'detail' item.chanel.pk %}" class="channel-tabs-channels__title title title_s20" >
+																		{{item.chanel.name}}
+																		</a>
+
+																		<img class="copyButton" src="{% static 'img/icons/copy.svg' %}"  data-chanel-link="{{item.chanel.chanel_link}}" alt="">
+																	</div>
+
+
 																</div>
 															</div>
 														</td>
 														<td>
-															<div class="label-black">2021-04-29 14:18:05</div>
+															<div class="label-black">{{item.created_at}}</div>
 														</td>
 														<td>
 															<div class="label-black">N/А</div>
@@ -546,12 +552,13 @@
 															<div class="label-black">N/А</div>
 														</td>
 														<td>
-															<div class="label-blue">2 476 460</div>
+															<div class="label-blue">{{item.view}}</div>
 														</td>
 														<td>
-															<div class="label-black">2</div>
+															<div class="label-black">0</div>
 														</td>
 													</tr>
+												{% endfor %}
 												</tbody>
 											</table>
 										</div>
@@ -970,7 +977,7 @@
 											<h1 class="main-analitics__title title title_w500">
                                                 {{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
                                                 {{item.description}}
@@ -1481,7 +1488,7 @@
 											<h1 class="main-analitics__title title title_w500">
 												{{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img  class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
 												{{item.description}}
@@ -1569,7 +1576,7 @@
 											<h1 class="main-analitics__title title title_w500">
 												{{item.name}}
 												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" alt="">
+												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 
 											</h1>
 											<p class="text">
@@ -1661,16 +1668,17 @@
 													</tr>
 												</thead>
 												<tbody>
+												{% for item in post %}
 													<tr>
 														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
+															<div class="label-black">{{item.created_at}}</div>
 														</td>
 														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
+															<div class="label-blue label-blue_s20">{{item.view}}</div>
 														</td>
 														<td class="content-center">
 															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
+																<picture><source srcset="{% static 'img/analitics/chart.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/analitics/chart.png' %}" alt=""></picture>
 															</div>
 														</td>
 														<td>
@@ -1680,119 +1688,11 @@
 															<div class="label-black">6268</div>
 														</td>
 														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
+															<button data-popup="#popup-content_{{item.pk}}" class="button button_no-bg" type="button" title="Показать пост">Пост</button>
 														</td>
 													</tr>
-													<tr>
-														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
-														<td class="content-center">
-															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
-															</div>
-														</td>
-														<td>
-															<div class="label-blue">0</div>
-														</td>
-														<td>
-															<div class="label-black">6268</div>
-														</td>
-														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
-														</td>
-													</tr>
-													<tr>
-														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
-														<td class="content-center">
-															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
-															</div>
-														</td>
-														<td>
-															<div class="label-blue">0</div>
-														</td>
-														<td>
-															<div class="label-black">6268</div>
-														</td>
-														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
-														</td>
-													</tr>
-													<tr>
-														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
-														<td class="content-center">
-															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
-															</div>
-														</td>
-														<td>
-															<div class="label-blue">0</div>
-														</td>
-														<td>
-															<div class="label-black">6268</div>
-														</td>
-														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
-														</td>
-													</tr>
-													<tr>
-														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
-														<td class="content-center">
-															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
-															</div>
-														</td>
-														<td>
-															<div class="label-blue">0</div>
-														</td>
-														<td>
-															<div class="label-black">6268</div>
-														</td>
-														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
-														</td>
-													</tr>
-													<tr>
-														<td scope="row">
-															<div class="label-black">2022-03-24 11:16 </div>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
-														<td class="content-center">
-															<div class="dynamic-analitics__img">
-																<picture><source srcset="img/analitics/chart.webp" type="image/webp"><img class="img-fluid" src="img/analitics/chart.png" alt=""></picture>
-															</div>
-														</td>
-														<td>
-															<div class="label-blue">0</div>
-														</td>
-														<td>
-															<div class="label-black">6268</div>
-														</td>
-														<td class="content-center">
-															<button class="button button_no-bg" type="button" title="Показать пост">Пост</button>
-														</td>
-													</tr>
+												{% endfor %}
+
 												</tbody>
 											</table>
 										</div>
@@ -1856,18 +1756,85 @@
 				</div>
 			</section>
 		</main>
+{% for item in post %}
+<div id="popup-content_{{item.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
 
+                <div class="popup__list">
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="/{{item.chanel.pictures }}" type="image/webp">
+                                    <img class="img-fluid" src="/{{item.chanel.pictures }}" width="100px" height="100px" style="border-radius: 50%;" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">{{item.chanel.name}}</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+                                        {{item.chanel.subscribers}}
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{item.chanel.views}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-popup__btns">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Рекламные посты</button>
+                            </div>
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">{{item.created_at}}</div>
+                            <div class="item-popup__text">
+                                <p class="text">
+                                    {{item.text}}
+                                </p>
+                            </div>
+                        </div>
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+                            Изображение
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 <script>
 	$(document).ready(function () {
-    $('.copyButton').click(function() {
-        var channelLink = $('.main-analitics__avatar').attr('href');
+   $('.copyButton').click(function() {
+        // Get the value of the data-chanel-link attribute
+        var channelLink = $(this).data('chanel-link');
+
+        // Create a temporary input element to copy the URL
         var tempInput = $('<input>');
         $('body').append(tempInput);
+
+        // Set the value of the input to the channel link and select it
         tempInput.val(channelLink).select();
+
+        // Copy the selected text to clipboard
         document.execCommand('copy');
+
+        // Remove the temporary input element
         tempInput.remove();
+
+        // Alert the user that the link has been copied
         alert('Посилання скопійоване в буфер обміну!');
    });
+
    if ($("#chart_5").length) {
         var ctx = $("#chart_5")[0].getContext("2d");
 
