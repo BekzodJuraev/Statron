@@ -138,16 +138,7 @@ STATICFILES_DIRS=[
 ]
 MEDIA_URL = ''
 MEDIA_ROOT = BASE_DIR / 'uploads'
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # Redis server address
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
-        'KEY_PREFIX': 'my_cache_prefix',  # Optional: Prefix for cache keys
-    }
-}
+
 
 
 # Default primary key field type

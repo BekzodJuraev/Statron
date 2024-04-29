@@ -277,8 +277,8 @@
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">Упоминаний в ТГ</div>
-													{% if item.mentioned %}
-													<div class="label-blue label-blue_s20">{{item.mentioned}}</div>
+													{% if count %}
+													<div class="label-blue label-blue_s20">{{count}}</div>
 												</div>
 												 {% else %}
 												<div class="label-blue label-blue_s20">0</div>
@@ -328,15 +328,15 @@
 															<td scope="row">
 																<div class="channel-tabs-channels__head">
 																	<a href="#" target="_blank" class="channel-tabs-channels__img">
-																		<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel.pictures}} alt=""></picture>
+																		<picture><source srcset="/{{item.chanel__pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel__pictures}} alt=""></picture>
 																	</a>
 																	<div class="channel-tabs-channels__content">
 																		<div class="channel-tabs-channels__content">
-																			<a href="{% url 'detail' item.chanel.pk %}" class="channel-tabs-channels__title title title_s20">{{item.chanel.name}}</a>
+																			<a href="{% url 'detail' item.chanel__pk %}" class="channel-tabs-channels__title title title_s20">{{item.chanel__name}}</a>
 																			<div class="channel-count label-blue label-blue_s20">
 																				<span>
 																					<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-																					{{item.chanel.subscribers}}
+																					{{item.chanel__subscribers}}
 																				</span>
 																				<button class="channel-count__btn" type="button">
 																					<img class="img-fluid" src="{% static 'img/analitics/posts_blue.svg' %}" alt="">
@@ -347,11 +347,11 @@
 																</div>
 															</td>
 															<td>
-																<div class="label-blue label-blue_s24">1</div>
+																<div class="label-blue label-blue_s24">{{item.count}}</div>
 															</td>
 															<td>
 																<div class="channel-tabs-channels__date-wrap">
-																	<input class="channel-tabs-channels__date" data-datepicker type="text" placeholder="{{ item.created_at|date:"Y-m-d" }}">
+																	<input class="channel-tabs-channels__date" data-datepicker type="text" placeholder="">
 
 																	<img class="arrow" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
 																</div>
@@ -526,16 +526,16 @@
 													<tr>
 														<td scope="row">
 															<div class="channel-tabs-channels__head">
-																<a href="{% url 'detail' item.chanel.pk %}" target="_blank" class="channel-tabs-channels__img">
-																	<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="{{item.chanel.pictures}}" alt=""></picture>
+																<a href="{% url 'detail' item.chanel__pk %}" target="_blank" class="channel-tabs-channels__img">
+																	<picture><source srcset="/{{item.chanel__pictures}}" type="image/webp"><img class="img-fluid" src="{{item.chanel__pictures}}" alt=""></picture>
 																</a>
 																<div class="channel-tabs-channels__content">
 																	<div class="channel-tabs-channels__title title title_s20">
-																	<a href="{% url 'detail' item.chanel.pk %}" class="channel-tabs-channels__title title title_s20" >
-																		{{item.chanel.name}}
+																	<a href="{% url 'detail' item.chanel__pk %}" class="channel-tabs-channels__title title title_s20" >
+																		{{item.chanel__name}}
 																		</a>
 
-																		<img class="copyButton" src="{% static 'img/icons/copy.svg' %}"  data-chanel-link="{{item.chanel.chanel_link}}" alt="">
+																		<img class="copyButton" src="{% static 'img/icons/copy.svg' %}"  data-chanel-link="{{item.chanel__chanel_link}}" alt="">
 																	</div>
 
 
@@ -543,7 +543,7 @@
 															</div>
 														</td>
 														<td>
-															<div class="label-black">{{item.created_at}}</div>
+															<div class="label-black"></div>
 														</td>
 														<td>
 															<div class="label-black">N/А</div>

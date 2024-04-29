@@ -232,8 +232,10 @@ class DetailChanel(DetailView):
                 Q(text__icontains=f"t.me/{channel_link_suffix}") |
                 Q(text__icontains=channel_link_suffix)
         )
-        mention = Posts.objects.filter(mention=True).filter(mention_filter)
+        mention = Posts.objects.filter(mention=True).filter(mention_filter).values('chanel__name','chanel__pk','chanel__subscribers','chanel__pictures','chanel__chanel_link').annotate(
+            count=Count('id')).annotate("created_at")
         repost = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id)
+        get_posts=Posts.objects.filter(chanel=self.object)
 
 
         count_repost=repost.count()
@@ -260,19 +262,6 @@ class DetailChanel(DetailView):
         context['count_mention_month'] = count_mention_month
         context['count_repost_month'] = count_repost_month
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         context['count_all'] = count_all
         context['count_repost'] = count_repost
         context['count_mention'] = count_mention
@@ -282,7 +271,8 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
-        context['post'] = Posts.objects.filter(chanel=self.object)[:30]
+        context['post'] = get_posts[:30]
+        context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday'))
         context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
         context['posts_ads'] = Posts.objects.filter(chanel=self.object,mention=True).values('created_at__date').annotate(
@@ -518,6 +508,7 @@ class ReportView(View):
         return reports
 
 def login_user(request):
+    logout(request)
     return render(request,'login.html')
 
 def register(request):
