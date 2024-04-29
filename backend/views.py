@@ -273,7 +273,6 @@ class DetailChanel(DetailView):
 
 
 
-
         context['count_all'] = count_all
         context['count_repost'] = count_repost
         context['count_mention'] = count_mention

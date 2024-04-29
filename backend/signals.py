@@ -4,8 +4,8 @@ from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
 from django.db.models import Sum,Q,Count
 from celery import shared_task
-
-
+from datetime import date, timedelta, datetime
+from django.utils import timezone
 
 
 @receiver(post_save,sender=Add_chanel)
@@ -38,4 +38,19 @@ def create_views(sender,instance,created,*args,**kwargs):
 
 @receiver(post_save,sender=Chanel)
 def create_views(sender,instance,created,*args,**kwargs):
-    Subperhour.objects.create(chanel=instance, subperhour=instance.subscribers, difference=instance.daily_subscribers)
+    hour=timezone.now() - timedelta(hours=1)
+
+    try:
+        obj = Subperhour.objects.get(chanel=instance, created_at__gte=hour)
+        obj.subperhour = instance.subscribers
+        obj.difference = instance.daily_subscribers  # Corrected line
+        obj.save()
+    except Subperhour.DoesNotExist:
+        Subperhour.objects.create(
+            chanel=instance,
+            subperhour=instance.subscribers,
+            difference=instance.daily_subscribers
+        )
+
+
+
