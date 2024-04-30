@@ -351,7 +351,7 @@
 															</td>
 															<td>
 																<div class="channel-tabs-channels__date-wrap">
-																	<input class="channel-tabs-channels__date" data-datepicker type="text" placeholder="">
+																	<input class="channel-tabs-channels__date" data-datepicker type="text" placeholder="{{ item.created_at|date:"Y-m-d" }}">
 
 																	<img class="arrow" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
 																</div>

@@ -9,6 +9,8 @@ from .models import Add_userbot,Posts,Chanel
 from celery import shared_task
 import os
 import requests
+from django.core.files import File
+from django.core.files.base import ContentFile
 
 
 @shared_task
@@ -71,11 +73,13 @@ def add_chanel(chanel_link):
                 file_path = client.download_media(chat.photo.big_file_id, file_name="channel_photo.jpg")
                 files = {'pictures': open(file_path, 'rb')}
 
+
+
                 # Add the payload as form fields
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://38a5-5-133-120-92.ngrok-free.app/chanel/', files=files)
+                response = requests.post('http://127.0.0.1:8000/chanel/', files=files)
 
 
 
@@ -87,30 +91,34 @@ def add_chanel(chanel_link):
                 else:
                     text=views.caption
 
+                photo_file = None
+                if views.photo:
+                    try:
+
+                        file_open = client.download_media(views.photo.file_id,file_name="post_photo.jpg")
+
+
+
+                        # Process the downloaded photo as needed
+
+                    except Exception as e:
+                        print(f"Error downloading photo: {e}")
+
+
 
 
 
                 if text is not None:
-                    if ("@" in text or "t.me/" in text) and f'@{channel_username}' not in text:
-
-                        Posts.objects.create(
-                            chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
-                            text=text,
-                            view=views.views,
-                            media=None,
-                            id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
-                            mention=True
-                        )
-                    else:
-
-                        Posts.objects.create(
-                            chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
-                            text=text,
-                            view=views.views,
-                            media=None,
-                            id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
-                            mention=False
-                        )
+                    text=text.lower()
+                    Posts.objects.create(
+                        chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
+                        text=text,
+                        view=views.views,
+                        media=None,
+                        id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
+                        mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
+                                    f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)
+                    )
 
 
 

@@ -17,7 +17,7 @@ from django.views.generic import View,ListView, CreateView, UpdateView, DeleteVi
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import AddChanelForm,LikeForm
-from django.db.models import Sum,Q,Count,F
+from django.db.models import Sum,Q,Count,F,Max
 from django.utils import timezone
 
 class ChanelAPI(APIView):
@@ -233,7 +233,7 @@ class DetailChanel(DetailView):
                 Q(text__icontains=channel_link_suffix)
         )
         mention = Posts.objects.filter(mention=True).filter(mention_filter).values('chanel__name','chanel__pk','chanel__subscribers','chanel__pictures','chanel__chanel_link').annotate(
-            count=Count('id')).annotate("created_at")
+            count=Count('id'),created_at=Max('created_at'))
         repost = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id)
         get_posts=Posts.objects.filter(chanel=self.object)
 
@@ -271,7 +271,7 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
-        context['post'] = get_posts[:35]
+        context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday'))
         context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
