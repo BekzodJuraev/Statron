@@ -271,7 +271,7 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
-        context['post'] = get_posts[:30]
+        context['post'] = get_posts[:35]
         context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday'))
         context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
