@@ -91,18 +91,14 @@ def add_chanel(chanel_link):
                 else:
                     text=views.caption
 
-                photo_file = None
+                media = ""
                 if views.photo:
-                    try:
+                    media="photo"
+                elif views.video:
+                    media="video"
+                elif views.animation:
+                    media="animation"
 
-                        file_open = client.download_media(views.photo.file_id,file_name="post_photo.jpg")
-
-
-
-                        # Process the downloaded photo as needed
-
-                    except Exception as e:
-                        print(f"Error downloading photo: {e}")
 
 
 
@@ -114,7 +110,8 @@ def add_chanel(chanel_link):
                         chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
                         text=text,
                         view=views.views,
-                        media=None,
+                        media=media,
+                        date=views.date,
                         id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                         mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
                                     f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)

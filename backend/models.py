@@ -146,9 +146,10 @@ class Posts(models.Model):
     chanel=models.ForeignKey(Chanel,on_delete=models.CASCADE,related_name='post')
     text=models.TextField()
     view=models.IntegerField()
-    media=models.ImageField()
+    media=models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     mention=models.BooleanField(default=False)
+    date=models.DateTimeField(default=None)
     id_channel_forward_from=models.IntegerField(null=True)
 
 

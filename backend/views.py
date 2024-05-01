@@ -233,9 +233,16 @@ class DetailChanel(DetailView):
                 Q(text__icontains=channel_link_suffix)
         )
         mention = Posts.objects.filter(mention=True).filter(mention_filter).values('chanel__name','chanel__pk','chanel__subscribers','chanel__pictures','chanel__chanel_link').annotate(
-            count=Count('id'),created_at=Max('created_at'))
+            count=Count('id'),date=Max('date'))
         repost = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id)
+        mention_repost=Posts.objects.filter(mention=True).filter(mention_filter)
+
+
+
         get_posts=Posts.objects.filter(chanel=self.object)
+
+
+
 
 
         count_repost=repost.count()
