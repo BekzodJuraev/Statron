@@ -236,6 +236,16 @@ class DetailChanel(DetailView):
             count=Count('id'),date=Max('date'))
         repost = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id)
         mention_repost=Posts.objects.filter(mention=True).filter(mention_filter)
+        #chanel_all=Chanel.objects.all().values('chanel_link')
+        x="uzbekistanofficial"
+        mention_filter_ads = (
+                Q(text__icontains=f"@{x}") |
+                Q(text__icontains=f"t.me/{x}") |
+                Q(text__icontains=x)
+        )
+        chanel_ads=Posts.objects.filter(mention=True).filter(mention_filter_ads)
+        print(chanel_ads)
+        #Chanel.objects.filter(post__text__icontains=)
 
 
 
