@@ -1,5 +1,5 @@
 from django.db.models.signals import post_save,pre_save
-from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour
+from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions
 from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
 from django.db.models import Sum,Q,Count
@@ -51,6 +51,22 @@ def create_views(sender,instance,created,*args,**kwargs):
             subperhour=instance.subscribers,
             difference=instance.daily_subscribers
         )
+
+@receiver(post_save,sender=Posts)
+def create_mention(sender,instance,created,*args,**kwargs):
+    if instance.mention:
+        chanel_all = Chanel.objects.all()
+        text=instance.text.lower()
+        for item in chanel_all:
+            chanel_link_split = item.chanel_link.split('/')[-1].lower()
+            if chanel_link_split in text or  f'@{chanel_link_split}' in  text or f"t.me/{chanel_link_split}" in text:
+                Mentions.objects.create(mentioned_channel=item, post=instance)
+
+
+
+
+
+
 
 
 

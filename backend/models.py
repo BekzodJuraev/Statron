@@ -175,17 +175,11 @@ class Category_chanels(models.Model):
 
 
 class Mentions(models.Model):
-    id_post = models.IntegerField()
-    id_channel = models.IntegerField()
-    created_at=models.DateTimeField(auto_now_add=True)
-
-
-    # Foreign key relationships
     mentioned_channel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name="mentions")
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="mentions")
 
     def __str__(self):
-        self.mentioned_channel.name
+        return self.mentioned_channel.name
 
 
 class Like(models.Model):

@@ -3,7 +3,7 @@ from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,
 
 @admin.register(Mentions)
 class Mentions(admin.ModelAdmin):
-    list_display = ['mentioned_channel','created_at']
+    list_display = ['mentioned_channel']
 @admin.register(Subperhour)
 class Subperhour(admin.ModelAdmin):
     list_display = ['chanel','created_at']

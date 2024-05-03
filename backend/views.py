@@ -6,7 +6,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -232,22 +232,28 @@ class DetailChanel(DetailView):
                 Q(text__icontains=f"t.me/{channel_link_suffix}") |
                 Q(text__icontains=channel_link_suffix)
         )
-        mention = Posts.objects.filter(mention=True).filter(mention_filter).values('chanel__name','chanel__pk','chanel__subscribers','chanel__pictures','chanel__chanel_link').annotate(
-            count=Count('id'),date=Max('date'))
-        repost = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id)
-        mention_repost=Posts.objects.filter(mention=True).filter(mention_filter)
-        #chanel_all=Chanel.objects.all().values('chanel_link')
-        x="uzbekistanofficial"
-        mention_filter_ads = (
-                Q(text__icontains=f"@{x}") |
-                Q(text__icontains=f"t.me/{x}") |
-                Q(text__icontains=x)
-        )
-        chanel_ads=Posts.objects.filter(mention=True).filter(mention_filter_ads)
-        print(chanel_ads)
-        #Chanel.objects.filter(post__text__icontains=)
 
 
+        mention= Mentions.objects.filter(mentioned_channel=self.object).values('post__chanel__pictures','post__chanel__name','post__chanel__pk','post__chanel__subscribers',).annotate(
+            count=Count('id'),date=Max('post__date'))
+
+
+
+
+
+        repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False)
+
+
+
+
+
+
+        #mention_repost=Posts.objects.filter(mention=True).filter(mention_filter)
+
+        #mention_repost=Mentions.objects.filter(mentioned_channel=self.object)
+
+        chanel_ads=Mentions.objects.filter(post__chanel=self.object).values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
+            count=Count('id'),date=Max('post__date'),views=Max('post__view'))
 
         get_posts=Posts.objects.filter(chanel=self.object)
 
@@ -256,15 +262,15 @@ class DetailChanel(DetailView):
 
 
         count_repost=repost.count()
-        count_mention=mention.count()
+        count_mention=get_posts.filter(mention=True).count()
         count_all=count_repost+count_mention
 
         count_repost_week = repost.filter(created_at__gt=timezone.now() - timedelta(days=6)).count()
-        count_mention_week=mention.filter(created_at__gt=timezone.now() - timedelta(days=6)).count()
+        count_mention_week=get_posts.filter(mention=True,created_at__gt=timezone.now() - timedelta(days=6)).count()
         count_all_week=count_repost_week+count_mention_week
 
         count_repost_month = repost.filter(created_at__gt=timezone.now() - timedelta(days=29)).count()
-        count_mention_month= mention.filter(created_at__gt=timezone.now() - timedelta(days=29)).count()
+        count_mention_month= get_posts.filter(mention=True,created_at__gt=timezone.now() - timedelta(days=29)).count()
         count_all_month = count_repost_month + count_mention_month
 
 
@@ -284,6 +290,8 @@ class DetailChanel(DetailView):
         context['count_mention'] = count_mention
         context['mention'] = mention
         context['repost'] = repost
+
+        context['chanel_ads']=chanel_ads
 
         context['er']=round(er,1)
         context['er_daily'] = round(er_daily, 1)

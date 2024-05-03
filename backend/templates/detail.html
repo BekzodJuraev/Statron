@@ -327,16 +327,16 @@
 														<tr>
 															<td scope="row">
 																<div class="channel-tabs-channels__head">
-																	<a href="#" target="_blank" class="channel-tabs-channels__img">
-																		<picture><source srcset="/{{item.chanel__pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel__pictures}} alt=""></picture>
+																	<a href="" target="_blank" class="channel-tabs-channels__img">
+																		<picture><source srcset="/{{item.post__chanel__pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.post__chanel__pictures}} alt=""></picture>
 																	</a>
 																	<div class="channel-tabs-channels__content">
 																		<div class="channel-tabs-channels__content">
-																			<a href="{% url 'detail' item.chanel__pk %}" class="channel-tabs-channels__title title title_s20">{{item.chanel__name}}</a>
+																			<a href="{% url 'detail' item.post__chanel__pk %}" class="channel-tabs-channels__title title title_s20">{{item.post__chanel__name}}</a>
 																			<div class="channel-count label-blue label-blue_s20">
 																				<span>
 																					<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-																					{{item.chanel__subscribers}}
+																					{{item.post__chanel__subscribers}}
 																				</span>
 																				<button class="channel-count__btn" type="button">
 																					<img class="img-fluid" src="{% static 'img/analitics/posts_blue.svg' %}" alt="">
@@ -522,20 +522,20 @@
 													</tr>
 												</thead>
 												<tbody>
-												{% for item in mention %}
+												{% for item in chanel_ads %}
 													<tr>
 														<td scope="row">
 															<div class="channel-tabs-channels__head">
-																<a href="{% url 'detail' item.chanel__pk %}" target="_blank" class="channel-tabs-channels__img">
-																	<picture><source srcset="/{{item.chanel__pictures}}" type="image/webp"><img class="img-fluid" src="{{item.chanel__pictures}}" alt=""></picture>
+																<a href="{% url 'detail' item.mentioned_channel__pk %}" target="_blank" class="channel-tabs-channels__img">
+																	<picture><source srcset="/{{item.mentioned_channel__pictures}}" type="image/webp"><img class="img-fluid" src="{{item.mentioned_channel__pictures}}" alt=""></picture>
 																</a>
 																<div class="channel-tabs-channels__content">
 																	<div class="channel-tabs-channels__title title title_s20">
-																	<a href="{% url 'detail' item.chanel__pk %}" class="channel-tabs-channels__title title title_s20" >
-																		{{item.chanel__name}}
+																	<a href="{% url 'detail' item.mentioned_channel__pk %}" class="channel-tabs-channels__title title title_s20" >
+																		{{item.mentioned_channel__name}}
 																		</a>
 
-																		<img class="copyButton" src="{% static 'img/icons/copy.svg' %}"  data-chanel-link="{{item.chanel__chanel_link}}" alt="">
+																		<img class="copyButton" src="{% static 'img/icons/copy.svg' %}"  data-chanel-link="{{item.mentioned_channel__chanel_link}}" alt="">
 																	</div>
 
 
@@ -552,7 +552,7 @@
 															<div class="label-black">N/А</div>
 														</td>
 														<td>
-															<div class="label-blue">{{item.view}}</div>
+															<div class="label-blue">{{item.views}}</div>
 														</td>
 														<td>
 															<div class="label-black">{{item.count}}</div>
