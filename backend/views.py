@@ -243,14 +243,23 @@ class DetailChanel(DetailView):
 
         repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False)
 
+        mention_repost = Posts.objects.filter(
+            Q(mentions_post__mentioned_channel=self.object) |
+            Q(id_channel_forward_from=self.object.chanel_id)
+        ).annotate(
+            filter_used=Case(
+                When(mentions_post__mentioned_channel=self.object, then=Value(1)),
+                When(id_channel_forward_from=self.object.chanel_id, then=Value(2)),
+                default=Value(0),
+            )
+        )
+
+        print(mention_repost)
 
 
 
 
 
-        #mention_repost=Posts.objects.filter(mention=True).filter(mention_filter)
-
-        #mention_repost=Mentions.objects.filter(mentioned_channel=self.object)
 
         chanel_ads=Mentions.objects.filter(post__chanel=self.object).values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
             count=Count('id'),date=Max('post__date'),views=Max('post__view'))
@@ -294,6 +303,7 @@ class DetailChanel(DetailView):
         context['chanel_ads']=chanel_ads
 
         context['er']=round(er,1)
+        context['mention_repost']=mention_repost
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
         context['post'] = get_posts[:30]

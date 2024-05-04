@@ -583,34 +583,29 @@
 												</thead>
 												<tbody>
 
-													{% for item in mention %}
+													{% for item in mention_repost %}
+
+
+
 													<tr>
 														<td scope="row">
-															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">2022 апр 10 04:59</a>
+															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{item.date}}</a>
 														</td>
 														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
+															<div class="label-blue label-blue_s20">{{item.subscribers}}</div>
 														</td>
+														{% if item.filter_used == 1 %}
 														<td scope="row">
 															<span class="label-black label-black_s20 label-black_underline">
 																Упоминание
 															</span>
 															<span class="label-black label-black_s20"> в </span>
-															<a href="#" class="label-blue label-blue_s20">{{item.chanel__name}}</a>
+															<a href="#" class="label-blue label-blue_s20">{{item.chanel.name}}</a>
 														</td>
-														<td>
-															<div class="label-green label-green_s20">+170</div>
-														</td>
-													</tr>
-													{% endfor %}
-													{% for item in repost %}
-													<tr>
-														<td scope="row">
-															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{item.date|date:"H"}}</a>
-														</td>
-														<td>
-															<div class="label-blue label-blue_s20">8'586'161</div>
-														</td>
+														{% endif %}
+
+
+														{% if item.filter_used == 2 %}
 														<td scope="row">
 															<span class="label-black label-black_s20 label-black_underline">
 																Репост
@@ -618,10 +613,13 @@
 															<span class="label-black label-black_s20"> в </span>
 															<a href="#" class="label-blue label-blue_s20">{{item.chanel.name}}</a>
 														</td>
+														{% endif %}
+
 														<td>
 															<div class="label-green label-green_s20">+170</div>
 														</td>
 													</tr>
+
 													{% endfor %}
 
 												</tbody>

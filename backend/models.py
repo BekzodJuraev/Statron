@@ -176,7 +176,7 @@ class Category_chanels(models.Model):
 
 class Mentions(models.Model):
     mentioned_channel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name="mentions")
-    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="mentions")
+    post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="mentions_post")
 
     def __str__(self):
         return self.mentioned_channel.name
