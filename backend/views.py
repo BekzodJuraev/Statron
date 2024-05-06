@@ -225,23 +225,49 @@ class DetailChanel(DetailView):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
         er_daily = (self.object.daily_subscribers / self.object.views) * 10
-        channel_link_suffix = self.object.chanel_link.split('/')[-1]
 
-        mention_filter = (
-                Q(text__icontains=f"@{channel_link_suffix}") |
-                Q(text__icontains=f"t.me/{channel_link_suffix}") |
-                Q(text__icontains=channel_link_suffix)
-        )
+        repost_param=self.request.GET.get('repost')
+        chanel_name=self.request.GET.get('chanel_name')
 
 
-        mention= Mentions.objects.filter(mentioned_channel=self.object).values('post__chanel__pictures','post__chanel__name','post__chanel__pk','post__chanel__subscribers',).annotate(
-            count=Count('id'),date=Max('post__date'))
+
+
+        if repost_param=="true":
+            mention = Mentions.objects.filter(mentioned_channel=self.object,
+                                              post__id_channel_forward_from=self.object.chanel_id).values(
+                'post__chanel__pictures', 'post__chanel__name', 'post__chanel__pk',
+                'post__chanel__subscribers', ).annotate(
+                count=Count('id'), date=Max('post__date'))
+
+        else:
+            mention = Mentions.objects.filter(mentioned_channel=self.object).values('post__chanel__pictures',
+                                                                                    'post__chanel__name',
+                                                                                    'post__chanel__pk',
+                                                                                    'post__chanel__subscribers', ).annotate(
+                count=Count('id'), date=Max('post__date'))
+
+
+        if chanel_name:
+            mention = Mentions.objects.filter(mentioned_channel=self.object,post__chanel__name__icontains=chanel_name).values('post__chanel__pictures',
+                                                                                    'post__chanel__name',
+                                                                                    'post__chanel__pk',
+                                                                                    'post__chanel__subscribers', ).annotate(
+                count=Count('id'), date=Max('post__date'))
+
+
+
+
+
+
 
 
 
 
 
         repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False)
+
+
+
 
         mention_repost = Posts.objects.filter(
             Q(mentions_post__mentioned_channel=self.object) |
@@ -254,7 +280,8 @@ class DetailChanel(DetailView):
             )
         )
 
-        print(mention_repost)
+
+
 
 
 
@@ -286,6 +313,9 @@ class DetailChanel(DetailView):
 
 
 
+
+
+
         context['count_all_week']=count_all_week
         context['count_repost_week'] = count_repost_week
         context['count_mention_week'] = count_mention_week
@@ -297,13 +327,18 @@ class DetailChanel(DetailView):
         context['count_all'] = count_all
         context['count_repost'] = count_repost
         context['count_mention'] = count_mention
-        context['mention'] = mention
+
         context['repost'] = repost
+
+        context['mention'] = mention
+
+
+
 
         context['chanel_ads']=chanel_ads
 
         context['er']=round(er,1)
-        context['mention_repost']=mention_repost
+
         context['er_daily'] = round(er_daily, 1)
         context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
         context['post'] = get_posts[:30]
@@ -413,9 +448,37 @@ class Search(ListView):
 class TrackingPosts(TemplateView):
     template_name = 'tracking-posts.html'
 
-class Ad_posts(LoginRequiredMixin,TemplateView):
+class Ad_posts(LoginRequiredMixin,ListView):
     template_name = 'ad-posts.html'
+    model = Posts
+    context_object_name = 'obj'
+    paginate_by = 6
     login_url = reverse_lazy('login_site')
+
+    def get_queryset(self):
+        queryset=self.model.objects.all()
+        mention=self.request.GET.get("mention")
+        text=self.request.GET.get("text")
+        chanel=self.request.GET.get('chanel')
+        period=self.request.GET.get('period')
+        view_from=self.request.GET.get('view_from')
+        view_to=self.request.GET.get('view_to')
+
+        if text:
+            queryset=queryset.filter(text__icontains=text)
+
+
+
+        return queryset
+
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['count']=self.object_list.count()
+        return context
+
 
 
 class Like_chanel(LoginRequiredMixin,ListView):

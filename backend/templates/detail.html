@@ -296,13 +296,23 @@
 														<img class="black" src="{% static 'img/icons/eye_black.svg' %}" alt="">
 													</button>
 												</h2>
+												{% if request.GET.repost == "true" %}
+												<div class="checkbox">
+													<input id="c_2" data-error="Ошибка" class="checkbox__input" type="checkbox" value="1" name="form[]" checked>
+													<label for="c_2" class="checkbox__label">С репостами</label>
+												</div>
+												{% else %}
 												<div class="checkbox">
 													<input id="c_2" data-error="Ошибка" class="checkbox__input" type="checkbox" value="1" name="form[]">
 													<label for="c_2" class="checkbox__label">С репостами</label>
 												</div>
+												{% endif %}
+
+
+
 											</div>
-											<form action="#" class="header__search header__search_w" method="POST">
-												<input placeholder="Поиск..." class="header__input header__input_w" type="text">
+											<form action="{% url 'detail' item.pk %}" class="header__search header__search_w" method="GET">
+												<input  name="chanel_name" placeholder="Поиск..." class="header__input header__input_w" type="text" value="{{request.GET.chanel_name }}">
 												<button class="header__search-btn" type="submit">
 													<img class="img-fluid" src="{% static 'img/icons/search.svg' %}" alt="">
 												</button>
@@ -589,10 +599,10 @@
 
 													<tr>
 														<td scope="row">
-															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{item.date}}</a>
+															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{item.date|date:"Y-m-d H:i"}}</a>
 														</td>
 														<td>
-															<div class="label-blue label-blue_s20">{{item.subscribers}}</div>
+															<div class="label-blue label-blue_s20">0</div>
 														</td>
 														{% if item.filter_used == 1 %}
 														<td scope="row">
@@ -1492,6 +1502,22 @@
     </div>
 </div>
 {% endfor %}
+<script>
+	$(document).ready(function() {
+    $('#c_2').change(function() {
+        const isChecked = $(this).prop('checked');
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        if (isChecked) {
+            url.searchParams.set('repost', 'true');
+        } else {
+            url.searchParams.delete('repost');
+        }
+        window.location.href = url.toString();
+    });
+});
+</script>
+</script>
 <script>
 	$(document).ready(function () {
    $('.copyButton').click(function() {

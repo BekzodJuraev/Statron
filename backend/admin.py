@@ -13,7 +13,7 @@ class SubPerday(admin.ModelAdmin):
 # Register your models here.
 @admin.register(Posts)
 class Posts(admin.ModelAdmin):
-    list_display = ['chanel','created_at','mention','id_channel_forward_from']
+    list_display = ['chanel','created_at','mention','id_channel_forward_from','date']
 
 @admin.register(Profile)
 class Profile(admin.ModelAdmin):
