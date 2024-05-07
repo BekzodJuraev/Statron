@@ -60,7 +60,7 @@ def add_chanel(chanel_link):
         with Client(name, api_id=api_id, api_hash=api_hash, phone_number=phone,session_string=session_data) as client:
             channel_username = chanel_link.split('/')[-1]
             chat = client.get_chat(channel_username)
-            total_view = client.get_chat_history(channel_username, limit=100)
+            total_view = client.get_chat_history(channel_username, limit=10)
             payload = {
                 'name': chat.title,
                 'subscribers': str(chat.members_count),
@@ -111,7 +111,7 @@ def add_chanel(chanel_link):
                         text=text,
                         view=views.views,
                         media=media,
-                        date=views.date,
+                        date=timezone.make_aware(views.date),
                         id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                         mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
                                     f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)

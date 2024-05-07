@@ -1,6 +1,7 @@
 from pyrogram import Client
 import aiohttp
 import asyncio
+from django.utils import timezone
 import requests
 from pyrogram.enums import ChatAction,ParseMode
 from pyrogram.handlers import MessageHandler
@@ -38,7 +39,7 @@ async def update(client):
 
                 try:
                     chat = await client.get_chat(chanel_link)
-                    total_view =   client.get_chat_history(chanel_link, limit=100)
+                    total_view =   client.get_chat_history(chanel_link, limit=10)
 
                     # Update ORM asynchronously
                     chanel_get = await sync_to_async(Chanel.objects.get)(chanel_link=i.chanel_link)
@@ -46,8 +47,12 @@ async def update(client):
                     await sync_to_async(chanel_get.save)()
 
                     post_query = await sync_to_async(Posts.objects.filter)(chanel=chanel_get)
-                    Post_get = await sync_to_async(post_query.last)()
-                    print(Post_get.date)
+                    Post_get = await sync_to_async(post_query.order_by('-date').first)()
+
+
+
+
+
 
 
                     async for views in total_view:
@@ -64,20 +69,19 @@ async def update(client):
                         elif views.animation:
                             media = "animation"
 
+
                         if text is not None:
                             text = text.lower()
-
-
-                            if Post_get is None or views.date is None or views.date > Post_get.date:
+                            if Post_get is None or timezone.make_aware(views.date) > Post_get.date:
                                 await sync_to_async(Posts.objects.create)(
                                     chanel=chanel_get,  # Assuming chanel_id is the ID of the channel
                                     text=text,
                                     view=views.views,
                                     media=media,
-                                    date=views.date,
+                                    date=timezone.make_aware(views.date),
                                     id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                                     mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
-                                            f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)
+                                            f'@{chanel_link}' not in text and f't.me/{chanel_link}' not in text and f'https://t.me/{chanel_link}' not in text)
                                 )
 
 
@@ -91,7 +95,7 @@ async def update(client):
                 except Exception as e:
                     print(f"Error updating channel {chanel_link}: {e}")
 
-            await asyncio.sleep(30)
+            await asyncio.sleep(600)
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")

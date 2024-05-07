@@ -232,6 +232,9 @@ class DetailChanel(DetailView):
 
 
 
+
+
+
         if repost_param=="true":
             mention = Mentions.objects.filter(mentioned_channel=self.object,
                                               post__id_channel_forward_from=self.object.chanel_id).values(
@@ -464,8 +467,19 @@ class Ad_posts(LoginRequiredMixin,ListView):
         view_from=self.request.GET.get('view_from')
         view_to=self.request.GET.get('view_to')
 
+
+
+        if mention:
+            queryset=queryset.filter(mentions_post__mentioned_channel__name=mention)
+
         if text:
             queryset=queryset.filter(text__icontains=text)
+
+        if chanel:
+            queryset=queryset.filter(chanel__name__icontains=chanel)
+
+        if view_from and view_to:
+            queryset=queryset.filter(view__range=[view_from,view_to])
 
 
 
