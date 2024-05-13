@@ -283,6 +283,24 @@ class DetailChanel(DetailView):
             )
         )
 
+        #mention_chanel=Subperhour.objects.filter(chanel=self.object).values('created_at','subperhour','difference').\
+         #   annotate(mention_chanel=Case(
+          #  When(created_at=F('chanel__mentions__post__date'),
+        #))
+
+
+        mention_chanel=Subperhour.objects.filter(chanel=self.object)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -343,7 +361,7 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
 
         context['er_daily'] = round(er_daily, 1)
-        context['subperhour'] = Subperhour.objects.filter(chanel=self.object)[:50]
+        context['subperhour'] = mention_chanel
         context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)

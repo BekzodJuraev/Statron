@@ -138,9 +138,10 @@
 													</thead>
 													<tbody>
 													{% for item in subperhour %}
+
 														<tr>
 															<td scope="row">
-																<div class="label-black">{{item.created_at }}</div>
+																<div class="label-black">{{item.created_at|date:"Y-m-d H:i" }}</div>
 															</td>
 															<td>
 																<div class="label-blue label-blue_s20">{{item.subperhour}}</div>
