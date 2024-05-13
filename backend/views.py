@@ -283,13 +283,28 @@ class DetailChanel(DetailView):
             )
         )
 
-        #mention_chanel=Subperhour.objects.filter(chanel=self.object).values('created_at','subperhour','difference').\
-         #   annotate(mention_chanel=Case(
-          #  When(created_at=F('chanel__mentions__post__date'),
-        #))
-
-
         mention_chanel=Subperhour.objects.filter(chanel=self.object)
+
+        for item in mention_chanel:
+            print(item.created_at, item.chanel.name)
+            for post in item.chanel.mentions.all():
+                if item.created_at.hour == post.post.date.hour:  # Compare the hours
+                    print("УПОМИНАНИЕ", post.post.chanel.name, post.post.date)
+
+            all_posts = Posts.objects.filter(id_channel_forward_from=item.chanel.chanel_id,
+        date__hour=item.created_at.hour)
+
+
+
+            # Filter and print reposts
+            for i in all_posts:
+                print("РЕПОСТ", i.chanel.name, i.date)
+
+
+
+
+
+       # mention_chanel=Subperhour.objects.filter(chanel=self.object)
 
 
 
@@ -361,6 +376,7 @@ class DetailChanel(DetailView):
         context['er']=round(er,1)
 
         context['er_daily'] = round(er_daily, 1)
+        context['all_posts']=all_posts
         context['subperhour'] = mention_chanel
         context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
