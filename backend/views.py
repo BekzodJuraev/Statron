@@ -267,7 +267,7 @@ class DetailChanel(DetailView):
 
 
 
-        repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False)
+        repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False).select_related('chanel')
 
 
 
@@ -283,22 +283,16 @@ class DetailChanel(DetailView):
             )
         )
 
-        mention_chanel=Subperhour.objects.filter(chanel=self.object)
+        mention_chanel=Subperhour.objects.filter(chanel=self.object).select_related('chanel').prefetch_related('chanel__mentions')
 
-        for item in mention_chanel:
-            print(item.created_at, item.chanel.name)
-            for post in item.chanel.mentions.all():
-                if item.created_at.hour == post.post.date.hour:  # Compare the hours
-                    print("УПОМИНАНИЕ", post.post.chanel.name, post.post.date)
-
-            all_posts = Posts.objects.filter(id_channel_forward_from=item.chanel.chanel_id,
-        date__hour=item.created_at.hour)
+        all_posts = Posts.objects.filter(
+            id_channel_forward_from=self.object.chanel_id
+        ).select_related('chanel')
 
 
 
-            # Filter and print reposts
-            for i in all_posts:
-                print("РЕПОСТ", i.chanel.name, i.date)
+
+
 
 
 
@@ -327,7 +321,19 @@ class DetailChanel(DetailView):
         chanel_ads=Mentions.objects.filter(post__chanel=self.object).values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
             count=Count('id'),date=Max('post__date'),views=Max('post__view'))
 
-        get_posts=Posts.objects.filter(chanel=self.object)
+        chanel_filter_ads=chanel_ads.values_list('mentioned_channel__name')
+
+        mention_chanel_ads=Subperhour.objects.filter(chanel__name__in=chanel_filter_ads).select_related('chanel').prefetch_related('chanel__mentions')
+
+
+        for item in mention_chanel_ads:
+            print(item.chanel.name , item.created_at)
+
+
+
+
+
+        get_posts=Posts.objects.filter(chanel=self.object).select_related('chanel')
 
 
 

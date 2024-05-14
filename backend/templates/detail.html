@@ -160,7 +160,7 @@
 														</tr>
 													 	{% if item.chanel.mentions.exists %}
 															{% for mention in item.chanel.mentions.all %}
-																{% if item.created_at.hour == mention.post.date.hour %}
+																{% if item.created_at.day == mention.post.date.day and item.created_at.hour == mention.post.date.hour %}
 
 													<tr>
 															<td scope="row">
@@ -178,6 +178,34 @@
 														</tr>
 
 															{% endif %}
+															{% endfor %}
+													    {% endif %}
+
+
+
+													{% if all_posts %}
+														{% for repost in all_posts %}
+													{% if item.created_at.day == repost.date.day  and item.created_at.hour == repost.date.hour %}
+
+
+													<tr>
+															<td scope="row">
+																<div class="label-black">{{repost.date|date:"Y-m-d H:i" }}</div>
+															</td>
+															<td>
+																<div class="label-blue label-blue_s20"></div>
+															</td>
+															<td>
+
+															</td>
+
+															<td>РЕПОСТ в <a href="{% url 'detail' repost.chanel.pk %}">{{repost.chanel.name}}</a></td>
+															<td></td>
+														</tr>
+
+													{% endif %}
+
+
 															{% endfor %}
 													    {% endif %}
 
