@@ -629,8 +629,9 @@
 											</table>
 										</div>
 									</div>
+									{% for item in chanel_ads %}
 									<section class="analitics-tabs__table-wrap ad-analitics__table-wrap">
-										<h2 class="title">Реклама канала <a href="{% url 'detail' item.pk %}f" target="_blank" class="label-blue label-blue_s24 label-blue_underline">{{item.name}}</a></h2>
+										<h2 class="title">Реклама канала <a href="" target="_blank" class="label-blue label-blue_s24 label-blue_underline">{{item.mentioned_channel__name}}</a></h2>
 										<div class="analitics-tabs__table-wrap-container ad-analitics__table-wrap-container">
 											<table class="table search-channels__table analitics-tabs__table">
 												<thead>
@@ -648,6 +649,13 @@
 													</tr>
 												</thead>
 												<tbody>
+
+												{% for subperhour in item.mentioned_channel__subperhour.all %}
+													<li>
+														Subperhour: {{ subperhour.subperhour }}<br>
+														Difference: {{ subperhour.difference }}<br>
+													</li>
+												{% endfor %}
 
 													{% for item in mention_repost %}
 
@@ -692,7 +700,11 @@
 											</table>
 										</div>
 									</section>
+
+									{% endfor %}
+
 								</section>
+
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">

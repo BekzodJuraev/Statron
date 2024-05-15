@@ -318,16 +318,21 @@ class DetailChanel(DetailView):
 
 
 
-        chanel_ads=Mentions.objects.filter(post__chanel=self.object).values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
+        chanel_ads=Mentions.objects.filter(post__chanel=self.object).prefetch_related('mentioned_channel__subperhour').values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
             count=Count('id'),date=Max('post__date'),views=Max('post__view'))
 
-        chanel_filter_ads=chanel_ads.values_list('mentioned_channel__name')
-
-        mention_chanel_ads=Subperhour.objects.filter(chanel__name__in=chanel_filter_ads).select_related('chanel').prefetch_related('chanel__mentions')
 
 
-        for item in mention_chanel_ads:
-            print(item.chanel.name , item.created_at)
+        chanel_ads_new=Mentions.objects.filter(post__chanel=self.object).select_related('mentioned_channel').prefetch_related('mentioned_channel__subperhour').annotate(
+            count=Count('mentioned_channel'),date=Max('post__date'),views=Max('post__view'))
+        print(chanel_ads_new.query)
+        for item in chanel_ads_new:
+            print(item.count)
+
+
+
+
+
 
 
 
