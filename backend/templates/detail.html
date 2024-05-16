@@ -629,9 +629,9 @@
 											</table>
 										</div>
 									</div>
-									{% for item in chanel_ads %}
+									{% for item in chanel_ads_new %}
 									<section class="analitics-tabs__table-wrap ad-analitics__table-wrap">
-										<h2 class="title">Реклама канала <a href="" target="_blank" class="label-blue label-blue_s24 label-blue_underline">{{item.mentioned_channel__name}}</a></h2>
+										<h2 class="title">Реклама канала <a href="" target="_blank" class="label-blue label-blue_s24 label-blue_underline">{{item.name}}</a></h2>
 										<div class="analitics-tabs__table-wrap-container ad-analitics__table-wrap-container">
 											<table class="table search-channels__table analitics-tabs__table">
 												<thead>
@@ -650,49 +650,54 @@
 												</thead>
 												<tbody>
 
-												{% for subperhour in item.mentioned_channel__subperhour.all %}
-													<li>
-														Subperhour: {{ subperhour.subperhour }}<br>
-														Difference: {{ subperhour.difference }}<br>
-													</li>
-												{% endfor %}
 
-													{% for item in mention_repost %}
 
+
+
+
+													{% for sup in item.subperhour.all %}
+													<tr>
+														<td scope="row">
+															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{sup.created_at|date:"Y-m-d H:i"}}</a>
+														</td>
+														<td>
+															<div class="label-blue label-blue_s20">{{sup.subperhour}}</div>
+														</td>
+
+
+														<td scope="row">
+
+														</td>
+
+
+														<td>
+															<div class="label-green label-green_s20">{{sup.difference}}</div>
+														</td>
+													</tr>
+													 {% if item.mentions.exists %}
+													 {% for mention in item.mentions.all %}
+
+													{% if sup.created_at.day == mention.post.date.day and sup.created_at.hour == mention.post.date.hour %}
 
 
 													<tr>
 														<td scope="row">
-															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{item.date|date:"Y-m-d H:i"}}</a>
+															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{mention.post.date|date:"Y-m-d H:i"}}</a>
 														</td>
-														<td>
-															<div class="label-blue label-blue_s20">0</div>
-														</td>
-														{% if item.filter_used == 1 %}
-														<td scope="row">
+													<td scope="row">
 															<span class="label-black label-black_s20 label-black_underline">
-																Упоминание
+																Умпоминание
 															</span>
 															<span class="label-black label-black_s20"> в </span>
-															<a href="#" class="label-blue label-blue_s20">{{item.chanel.name}}</a>
+															<a href="#" class="label-blue label-blue_s20">{{mention.post.chanel.name}}</a>
 														</td>
-														{% endif %}
+													{% endif %}
+													{% endfor %}
+													{% endif %}
 
 
-														{% if item.filter_used == 2 %}
-														<td scope="row">
-															<span class="label-black label-black_s20 label-black_underline">
-																Репост
-															</span>
-															<span class="label-black label-black_s20"> в </span>
-															<a href="#" class="label-blue label-blue_s20">{{item.chanel.name}}</a>
-														</td>
-														{% endif %}
 
-														<td>
-															<div class="label-green label-green_s20">+170</div>
-														</td>
-													</tr>
+
 
 													{% endfor %}
 

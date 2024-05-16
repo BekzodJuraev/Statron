@@ -17,7 +17,7 @@ from django.views.generic import View,ListView, CreateView, UpdateView, DeleteVi
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from .forms import AddChanelForm,LikeForm
-from django.db.models import Sum,Q,Count,F,Max
+from django.db.models import Sum,Q,Count,F,Max,Prefetch
 from django.utils import timezone
 
 class ChanelAPI(APIView):
@@ -289,45 +289,44 @@ class DetailChanel(DetailView):
             id_channel_forward_from=self.object.chanel_id
         ).select_related('chanel')
 
-
-
-
-
-
-
-
-
-
-       # mention_chanel=Subperhour.objects.filter(chanel=self.object)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        chanel_ads=Mentions.objects.filter(post__chanel=self.object).prefetch_related('mentioned_channel__subperhour').values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link').annotate(
+        chanel_ads=Mentions.objects.filter(post__chanel=self.object).prefetch_related('mentioned_channel__subperhour').values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link','mentioned_channel__chanel_id').annotate(
             count=Count('id'),date=Max('post__date'),views=Max('post__view'))
 
+        channel_names = chanel_ads.values_list('mentioned_channel__name', flat=True).distinct()
+        channel_id=chanel_ads.values_list('mentioned_channel__chanel_id',flat=True)
 
 
-        chanel_ads_new=Mentions.objects.filter(post__chanel=self.object).select_related('mentioned_channel').prefetch_related('mentioned_channel__subperhour').annotate(
-            count=Count('mentioned_channel'),date=Max('post__date'),views=Max('post__view'))
-        print(chanel_ads_new.query)
+        chanel_ads_new = Chanel.objects.filter(name__in=channel_names).prefetch_related(
+            'subperhour',
+            Prefetch('mentions', queryset=Mentions.objects.select_related('post__chanel')),
+            Prefetch('post', queryset=Posts.objects.all())
+        )
+        all_posts_new = Posts.objects.filter(
+            id_channel_forward_from__in=channel_id
+        ).select_related('chanel')
+        print(all_posts_new)
+
         for item in chanel_ads_new:
-            print(item.count)
+
+            for x in item.post.all():
+                print(x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -366,6 +365,9 @@ class DetailChanel(DetailView):
         context['count_all_week']=count_all_week
         context['count_repost_week'] = count_repost_week
         context['count_mention_week'] = count_mention_week
+        context['chanel_ads_new']=chanel_ads_new
+
+
 
         context['count_all_month'] = count_all_month
         context['count_mention_month'] = count_mention_month
