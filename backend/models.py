@@ -125,6 +125,7 @@ class Subperhour(models.Model):
 
     class Meta:
         unique_together = ('chanel', 'created_at')
+        ordering=['-created_at']
     def __str__(self):
         return self.chanel.name
 
@@ -153,6 +154,13 @@ class Posts(models.Model):
     id_channel_forward_from=models.IntegerField(null=True)
 
 
+    class Meta:
+        ordering=['-date']
+
+
+
+
+
     def __str__(self):
         return self.chanel.name
 
@@ -177,6 +185,10 @@ class Category_chanels(models.Model):
 class Mentions(models.Model):
     mentioned_channel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name="mentions")
     post = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="mentions_post")
+
+
+    class Meta:
+        ordering=['-post__date']
 
     def __str__(self):
         return self.mentioned_channel.name

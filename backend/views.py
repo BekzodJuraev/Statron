@@ -299,17 +299,17 @@ class DetailChanel(DetailView):
         chanel_ads_new = Chanel.objects.filter(name__in=channel_names).prefetch_related(
             'subperhour',
             Prefetch('mentions', queryset=Mentions.objects.select_related('post__chanel')),
-            Prefetch('post', queryset=Posts.objects.all())
         )
         all_posts_new = Posts.objects.filter(
             id_channel_forward_from__in=channel_id
         ).select_related('chanel')
-        print(all_posts_new)
 
-        for item in chanel_ads_new:
 
-            for x in item.post.all():
-                print(x)
+
+
+
+
+
 
 
 
@@ -354,6 +354,8 @@ class DetailChanel(DetailView):
         count_repost_month = repost.filter(created_at__gt=timezone.now() - timedelta(days=29)).count()
         count_mention_month= get_posts.filter(mention=True,created_at__gt=timezone.now() - timedelta(days=29)).count()
         count_all_month = count_repost_month + count_mention_month
+
+        context['all_posts_new']=all_posts_new
 
 
 

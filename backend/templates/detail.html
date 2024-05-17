@@ -651,10 +651,6 @@
 												<tbody>
 
 
-
-
-
-
 													{% for sup in item.subperhour.all %}
 													<tr>
 														<td scope="row">
@@ -674,6 +670,7 @@
 															<div class="label-green label-green_s20">{{sup.difference}}</div>
 														</td>
 													</tr>
+
 													 {% if item.mentions.exists %}
 													 {% for mention in item.mentions.all %}
 
@@ -689,11 +686,29 @@
 																Умпоминание
 															</span>
 															<span class="label-black label-black_s20"> в </span>
-															<a href="#" class="label-blue label-blue_s20">{{mention.post.chanel.name}}</a>
+															<a href="{% url 'detail' mention.post.chanel.pk %}" class="label-blue label-blue_s20">{{mention.post.chanel.name}}</a>
 														</td>
 													{% endif %}
 													{% endfor %}
 													{% endif %}
+													{% if all_posts_new %}
+														{% for repost in all_posts_new %}
+														{% if item.chanel_id == repost.id_channel_forward_from and sup.created_at.hour == repost.date.hour and sup.created_at.day == repost.date.day %}
+														<tr>
+														<td scope="row">
+															<a href="#" target="_blank" title="Показать пост" class="label-black hhv-blue hhv-underline">{{repost.date|date:"Y-m-d H:i"}}</a>
+														</td>
+													<td scope="row">
+															<span class="label-black label-black_s20 label-black_underline">
+																Репост
+															</span>
+															<span class="label-black label-black_s20"> в </span>
+															<a href="{% url 'detail' repost.chanel.pk %}" class="label-blue label-blue_s20">{{repost.chanel.name}}</a>
+														</td>
+														{% endif %}
+														{% endfor %}
+													{% endif %}
+
 
 
 
