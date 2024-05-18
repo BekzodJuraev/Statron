@@ -34,7 +34,7 @@ def create_views(sender,instance,created,*args,**kwargs):
     if created:
         total = instance.chanel.post.aggregate(total_views=Sum('view'))['total_views']
         instance.chanel.views = total
-        instance.chanel.save()
+        instance.chanel.save(update_fields=['views'])
 
 @receiver(post_save,sender=Chanel)
 def create_views(sender,instance,created,*args,**kwargs):
@@ -44,7 +44,7 @@ def create_views(sender,instance,created,*args,**kwargs):
         obj = Subperhour.objects.get(chanel=instance, created_at__gte=hour)
         obj.subperhour = instance.subscribers
         obj.difference = instance.daily_subscribers  # Corrected line
-        obj.save()
+        obj.save(update_fields=['subperhour','difference'])
     except Subperhour.DoesNotExist:
         Subperhour.objects.create(
             chanel=instance,

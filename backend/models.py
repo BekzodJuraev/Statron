@@ -83,7 +83,7 @@ class Chanel(models.Model):
                     else:
                         existing_sub_per_day.subperday=self.subscribers
                         existing_sub_per_day.viewsperday=self.daily_views
-                        existing_sub_per_day.save()
+                        existing_sub_per_day.save(update_fields=['subperday','viewsperday'])
 
                 else:
                     self.daily_subscribers = difference
