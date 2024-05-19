@@ -19,6 +19,7 @@ urlpatterns=[
  path('search/',views.Search.as_view(),name='search'),
  path('tracking-posts/', views.TrackingPosts.as_view(), name='tracking'),
  path('posts/',views.Ad_posts.as_view(), name='posts'),
+ path('telegram_webhook/', views.telegram_webhook, name='telegram_webhook'),
  path('note/',views.Like_chanel.as_view(),name='like'),
  path('',views.Main.as_view(),name='main')
 ]

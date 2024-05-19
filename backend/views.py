@@ -19,7 +19,30 @@ from django.urls import reverse_lazy
 from .forms import AddChanelForm,LikeForm
 from django.db.models import Sum,Q,Count,F,Max,Prefetch
 from django.utils import timezone
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
 
+
+
+@csrf_exempt
+@require_POST
+def telegram_webhook(request):
+    if request.method == 'POST':
+        try:
+            json_data = json.loads(request.body)
+            message_text = json_data['message']['text']
+            print(f"Received message: {message_text}")
+            # Implement your bot's logic here
+            # ...
+
+            return HttpResponse(status=200)
+        except KeyError as e:
+            print(f"Error processing JSON: {e}")
+            return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=405)
 class ChanelAPI(APIView):
     def get(self, request):
         chanel_links = Chanel.objects.all()
