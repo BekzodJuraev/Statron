@@ -23,26 +23,52 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
+import telegram
+from aiogram import Bot, Dispatcher, executor, types
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from asgiref.sync import sync_to_async
 
 
+TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
+bot = telegram.Bot(TOKEN)
+#dp = Dispatcher(bot)
+#dp.middleware.setup(LoggingMiddleware())
 
 @csrf_exempt
 @require_POST
 def telegram_webhook(request):
     if request.method == 'POST':
-        try:
-            json_data = json.loads(request.body)
-            message_text = json_data['message']['text']
-            print(f"Received message: {message_text}")
-            # Implement your bot's logic here
-            # ...
+        json_data = json.loads(request.body.decode('utf-8'))
+        chat_id = json_data['message']['chat']['id']
+        message_text = json_data['message']['text']
+        chanel_link=Chanel.objects.all().values_list('chanel_link',flat=True)
 
-            return HttpResponse(status=200)
-        except KeyError as e:
-            print(f"Error processing JSON: {e}")
-            return HttpResponse(status=400)
+
+        if message_text == '/start':
+            chat_username=json_data['message']['chat']['username']
+            bot.send_message(chat_id, f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:")
+
+        else:
+            if message_text in chanel_link:
+                chanel_get=Chanel.objects.get(chanel_link=message_text)
+                bot.send_message(chat_id, f"Мы нашли {message_text}")
+
+            else:
+                bot.send_message(chat_id, f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
+
+
+
+
+
+
+        return HttpResponse(status=200)
     else:
         return HttpResponse(status=405)
+
+
+
+
+
 class ChanelAPI(APIView):
     def get(self, request):
         chanel_links = Chanel.objects.all()
