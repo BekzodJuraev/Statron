@@ -23,7 +23,9 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
+
 import telegram
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from asgiref.sync import sync_to_async
@@ -50,11 +52,44 @@ def telegram_webhook(request):
 
         else:
             if message_text in chanel_link:
-                chanel_get=Chanel.objects.get(chanel_link=message_text)
-                bot.send_message(chat_id, f"Мы нашли {message_text}")
+                chanel_get=SubPerday.objects.filter(chanel__chanel_link=message_text).values('created_at','subperday')
+
+                analytics_data = '\n'.join(
+                    [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
+
+                # Construct the final text message
+                text = (
+                    f"👆Выше Вы сможете просмотреть подробную аналитику за запрашиваемый канал {message_text} / Спасибо за запрос ❤️\n"
+                    f"📅Подписок за месяц по дням:\n{analytics_data}"
+                )
+
+                inline_keyboard = [
+                    [InlineKeyboardButton("📊Анализ на сайте", callback_data='analytics')],
+                    [InlineKeyboardButton("📌Упоминаний - 4", callback_data='analytics')],
+                    [InlineKeyboardButton("📈Рекламы на канале - 2", callback_data='analytics')],
+                ]
+                # Convert inline keyboard to InlineKeyboardMarkup
+                inline_markup = InlineKeyboardMarkup(inline_keyboard,resize_keyboard=True)
+
+                reply_keyboard = [
+                    [KeyboardButton("🔗Наш сайт")],
+                ]
+
+                reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
+
+                bot.send_message(chat_id=chat_id,text=text,reply_markup=inline_markup)
+                #bot.send_message(chat_id=chat_id,text=text,reply_markup=reply_markup)
+
+            elif message_text == "🔗Наш сайт":
+                bot.send_message(chat_id=chat_id, text="https://statron.ru")
+
 
             else:
-                bot.send_message(chat_id, f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
+                bot.send_message(chat_id,
+                                 f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
+
+
+
 
 
 
