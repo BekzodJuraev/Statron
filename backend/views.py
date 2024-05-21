@@ -23,76 +23,48 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
-
+import asyncio
 import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from asgiref.sync import sync_to_async
-
-
+import time
+my_id="531080457"
 TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
 bot = telegram.Bot(TOKEN)
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
+async def some():
+    await asyncio.sleep(1)
+class HelloWorldView(View):
+
+
+    async def get(self, request):
+        start_time = time.time()
+
+
+        await asyncio.sleep(60)  # Simulate an asynchronous taskF
+        await some()
+
+
+        end_time = time.time()
+
+        duration = end_time - start_time
+        print(f"Request processed asynchronously in {duration} seconds")
+
+        return HttpResponse('Hello, async world!')
+
 
 @csrf_exempt
 @require_POST
 def telegram_webhook(request):
     if request.method == 'POST':
         json_data = json.loads(request.body.decode('utf-8'))
-        chat_id = json_data['message']['chat']['id']
-        message_text = json_data['message']['text']
-        chanel_link=Chanel.objects.all().values_list('chanel_link',flat=True)
-
-
-        if message_text == '/start':
-            chat_username=json_data['message']['chat']['username']
-            bot.send_message(chat_id, f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:")
-
-        else:
-            if message_text in chanel_link:
-                chanel_get=SubPerday.objects.filter(chanel__chanel_link=message_text).values('created_at','subperday')
-
-                analytics_data = '\n'.join(
-                    [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
-
-                # Construct the final text message
-                text = (
-                    f"👆Выше Вы сможете просмотреть подробную аналитику за запрашиваемый канал {message_text} / Спасибо за запрос ❤️\n"
-                    f"📅Подписок за месяц по дням:\n{analytics_data}"
-                )
-
-                inline_keyboard = [
-                    [InlineKeyboardButton("📊Анализ на сайте", callback_data='analytics')],
-                    [InlineKeyboardButton("📌Упоминаний - 4", callback_data='analytics')],
-                    [InlineKeyboardButton("📈Рекламы на канале - 2", callback_data='analytics')],
-                ]
-                # Convert inline keyboard to InlineKeyboardMarkup
-                inline_markup = InlineKeyboardMarkup(inline_keyboard,resize_keyboard=True)
-
-                reply_keyboard = [
-                    [KeyboardButton("🔗Наш сайт")],
-                ]
-
-                reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
-
-                bot.send_message(chat_id=chat_id,text=text,reply_markup=inline_markup)
-                #bot.send_message(chat_id=chat_id,text=text,reply_markup=reply_markup)
-
-            elif message_text == "🔗Наш сайт":
-                bot.send_message(chat_id=chat_id, text="https://statron.ru")
-
-
-            else:
-                bot.send_message(chat_id,
-                                 f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
-
-
-
-
-
-
+        if 'message' in json_data:
+            process_message(json_data)
+        elif 'callback_query' in json_data:
+            process_callback_query(json_data)
 
 
 
@@ -102,6 +74,64 @@ def telegram_webhook(request):
 
 
 
+def process_message(json_data):
+    chat_id = json_data['message']['chat']['id']
+    message_text = json_data['message'].get('text')
+    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', 0)
+    chat_username = json_data['message']['chat'].get('username', '')
+
+    if message_text == '/start':
+        reply_keyboard = [
+            [KeyboardButton("🔗Наш сайт")],
+        ]
+        reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
+        bot.send_message(chat_id=chat_id, text=f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:", reply_markup=reply_markup)
+    elif message_text == "🔗Наш сайт":
+        bot.send_message(chat_id=chat_id, text="https://statron.ru")
+    else:
+        chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
+        chanel_id = Chanel.objects.all().values_list('chanel_id', flat=True)
+
+        if message_text in chanel_link or forward_id in chanel_id:
+            chanel_get = SubPerday.objects.filter(Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id)).values('created_at', 'subperday')
+            Mention_count = Posts.objects.filter(Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id), mention=True).count()
+            chanel = Chanel.objects.get(Q(chanel_link=message_text) | Q(chanel_id=forward_id)).pk
+
+            analytics_data = '\n'.join(
+                [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
+
+            text = (
+                f"👆Выше Вы сможете просмотреть подробную аналитику за запрашиваемый канал / Спасибо за запрос ❤️\n"
+                f"📅Подписок за месяц по дням:\n{analytics_data}"
+            )
+
+            inline_keyboard = [
+                [InlineKeyboardButton("📊Анализ на сайте",
+                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
+                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
+                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+            ]
+            # Convert inline keyboard to InlineKeyboardMarkup
+            inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
+
+            bot.send_message(chat_id=chat_id, text=text, reply_markup=inline_markup)
+        else:
+            bot.send_message(chat_id, f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
+            inline_keyboard = [
+                [InlineKeyboardButton("✅Добавить", callback_data='add'), InlineKeyboardButton("❌Отклонить", callback_data='reject')],
+            ]
+            inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
+            bot.send_message(my_id, text=f"🔥Пользователь {chat_username}  пытался проанализировать канал  {message_text}, но его нету в базе каналов. Добавим?", reply_markup=inline_markup)
+
+def process_callback_query(json_data):
+    query = json_data['callback_query']
+    chat_id = query['message']['chat']['id']
+    callback_data = query['data']
+    message_id=query['message']['message_id']
+    if callback_data == 'reject':
+        bot.delete_message(chat_id=my_id, message_id=message_id)
 
 
 class ChanelAPI(APIView):
@@ -356,16 +386,7 @@ class DetailChanel(DetailView):
 
 
 
-        mention_repost = Posts.objects.filter(
-            Q(mentions_post__mentioned_channel=self.object) |
-            Q(id_channel_forward_from=self.object.chanel_id)
-        ).annotate(
-            filter_used=Case(
-                When(mentions_post__mentioned_channel=self.object, then=Value(1)),
-                When(id_channel_forward_from=self.object.chanel_id, then=Value(2)),
-                default=Value(0),
-            )
-        )
+
 
         mention_chanel=Subperhour.objects.filter(chanel=self.object).select_related('chanel').prefetch_related('chanel__mentions')
 
@@ -387,36 +408,6 @@ class DetailChanel(DetailView):
         all_posts_new = Posts.objects.filter(
             id_channel_forward_from__in=channel_id
         ).select_related('chanel')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

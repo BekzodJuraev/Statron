@@ -8,6 +8,7 @@ from datetime import date, timedelta, datetime
 from django.utils import timezone
 
 
+
 @receiver(post_save,sender=Add_chanel)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
