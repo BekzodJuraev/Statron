@@ -75,8 +75,8 @@ def telegram_webhook(request):
 def process_message(json_data):
     chat_id = json_data['message']['chat']['id']
     message_text = json_data['message'].get('text')
-    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', 0)
-    chat_username = json_data['message']['chat'].get('username', '')
+    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', 1)
+    chat_username = json_data['message']['chat'].get('first_name', 'Someone')
 
     if message_text or forward_id:
         if message_text == '/start':
@@ -90,8 +90,10 @@ def process_message(json_data):
         elif message_text == "🔗Наш сайт":
             bot.send_message(chat_id=chat_id, text="https://statron.ru")
         else:
-            chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
             chanel_id = Chanel.objects.all().values_list('chanel_id', flat=True)
+            chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
+
+
 
             if message_text in chanel_link or forward_id in chanel_id:
                 chanel_get = SubPerday.objects.filter(
@@ -149,6 +151,17 @@ def process_callback_query(json_data):
     message_id=query['message']['message_id']
     if callback_data == 'reject':
         bot.delete_message(chat_id=my_id, message_id=message_id)
+    if callback_data == "add":
+        add,created=Add_chanel.objects.get_or_create(username_id=1,chanel_link="asd")
+        if created:
+            bot.send_message(chat_id=my_id,text="✅Канал https://t.me/userchannel успешно добавлен в базу!")
+            bot.send_message(chat_id=chat_id, text="🤝Здравствуйте. Вы недавно пытались найти анализ на канал https://t.me/userchannel. Теперь мы его добавили в нашу базу и Вы сможете каждый день проверять статистику этого канала в нашем боте и сайте")
+        else:
+            bot.send_message(chat_id=my_id, text="Ошибка не получился!")
+
+
+
+
 
 
 class ChanelAPI(APIView):
