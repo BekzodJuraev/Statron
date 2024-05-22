@@ -66,8 +66,6 @@ def telegram_webhook(request):
         elif 'callback_query' in json_data:
             process_callback_query(json_data)
 
-
-
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=405)
@@ -80,50 +78,69 @@ def process_message(json_data):
     forward_id = json_data['message'].get('forward_from_chat', {}).get('id', 0)
     chat_username = json_data['message']['chat'].get('username', '')
 
-    if message_text == '/start':
-        reply_keyboard = [
-            [KeyboardButton("🔗Наш сайт")],
-        ]
-        reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
-        bot.send_message(chat_id=chat_id, text=f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:", reply_markup=reply_markup)
-    elif message_text == "🔗Наш сайт":
-        bot.send_message(chat_id=chat_id, text="https://statron.ru")
-    else:
-        chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
-        chanel_id = Chanel.objects.all().values_list('chanel_id', flat=True)
-
-        if message_text in chanel_link or forward_id in chanel_id:
-            chanel_get = SubPerday.objects.filter(Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id)).values('created_at', 'subperday')
-            Mention_count = Posts.objects.filter(Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id), mention=True).count()
-            chanel = Chanel.objects.get(Q(chanel_link=message_text) | Q(chanel_id=forward_id)).pk
-
-            analytics_data = '\n'.join(
-                [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
-
-            text = (
-                f"👆Выше Вы сможете просмотреть подробную аналитику за запрашиваемый канал / Спасибо за запрос ❤️\n"
-                f"📅Подписок за месяц по дням:\n{analytics_data}"
-            )
-
-            inline_keyboard = [
-                [InlineKeyboardButton("📊Анализ на сайте",
-                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
-                [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
-                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
-                [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
-                                      web_app=WebAppInfo(f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+    if message_text or forward_id:
+        if message_text == '/start':
+            reply_keyboard = [
+                [KeyboardButton("🔗Наш сайт")],
             ]
-            # Convert inline keyboard to InlineKeyboardMarkup
-            inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
-
-            bot.send_message(chat_id=chat_id, text=text, reply_markup=inline_markup)
+            reply_markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True, resize_keyboard=True)
+            bot.send_message(chat_id=chat_id,
+                             text=f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:",
+                             reply_markup=reply_markup)
+        elif message_text == "🔗Наш сайт":
+            bot.send_message(chat_id=chat_id, text="https://statron.ru")
         else:
-            bot.send_message(chat_id, f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
-            inline_keyboard = [
-                [InlineKeyboardButton("✅Добавить", callback_data='add'), InlineKeyboardButton("❌Отклонить", callback_data='reject')],
-            ]
-            inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
-            bot.send_message(my_id, text=f"🔥Пользователь {chat_username}  пытался проанализировать канал  {message_text}, но его нету в базе каналов. Добавим?", reply_markup=inline_markup)
+            chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
+            chanel_id = Chanel.objects.all().values_list('chanel_id', flat=True)
+
+            if message_text in chanel_link or forward_id in chanel_id:
+                chanel_get = SubPerday.objects.filter(
+                    Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id)).values('created_at',
+                                                                                                  'subperday')
+                Mention_count = Posts.objects.filter(
+                    Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id), mention=True).count()
+                chanel = Chanel.objects.get(Q(chanel_link=message_text) | Q(chanel_id=forward_id)).pk
+
+                analytics_data = '\n'.join(
+                    [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
+
+                text = (
+                    f"👆Выше Вы сможете просмотреть подробную аналитику за запрашиваемый канал / Спасибо за запрос ❤️\n"
+                    f"📅Подписок за месяц по дням:\n{analytics_data}"
+                )
+
+                inline_keyboard = [
+                    [InlineKeyboardButton("📊Анализ на сайте",
+                                          web_app=WebAppInfo(
+                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                    [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
+                                          web_app=WebAppInfo(
+                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                    [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
+                                          web_app=WebAppInfo(
+                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                ]
+                # Convert inline keyboard to InlineKeyboardMarkup
+                inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
+
+                bot.send_message(chat_id=chat_id, text=text, reply_markup=inline_markup)
+            else:
+                bot.send_message(chat_id,
+                                 f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
+                inline_keyboard = [
+                    [InlineKeyboardButton("✅Добавить", callback_data='add'),
+                     InlineKeyboardButton("❌Отклонить", callback_data='reject')],
+                ]
+                inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
+                bot.send_message(my_id,
+                                 text=f"🔥Пользователь {chat_username}  пытался проанализировать канал  {message_text}, но его нету в базе каналов. Добавим?",
+                                 reply_markup=inline_markup)
+
+    else:
+        bot.send_message(chat_id=chat_id,
+                         text="Неправильный ввод. Чтобы проанализировать канал, просто отправьте сюда его адрес или юзернейм. Например, https://t.me/statron или @telemetr_me или stattron.")
+
+
 
 def process_callback_query(json_data):
     query = json_data['callback_query']
@@ -342,10 +359,6 @@ class DetailChanel(DetailView):
 
         repost_param=self.request.GET.get('repost')
         chanel_name=self.request.GET.get('chanel_name')
-
-
-
-
 
 
 
