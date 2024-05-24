@@ -25,6 +25,7 @@ from django.views.decorators.http import require_POST
 import json
 import asyncio
 import telegram
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
@@ -127,11 +128,16 @@ def process_message(json_data):
 
                 bot.send_message(chat_id=chat_id, text=text, reply_markup=inline_markup)
             else:
+
+
+
+                # Convert dictionary to JSON string
+
                 bot.send_message(chat_id,
                                  f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
                 inline_keyboard = [
-                    [InlineKeyboardButton("✅Добавить", callback_data='add'),
-                     InlineKeyboardButton("❌Отклонить", callback_data='reject')],
+                    [InlineKeyboardButton("✅Добавить", callback_data=f'add:{message_text}:{chat_id}'),
+                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject:{message_text}:{chat_id}')],
                 ]
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
                 bot.send_message(my_id,
@@ -147,11 +153,12 @@ def process_message(json_data):
 def process_callback_query(json_data):
     query = json_data['callback_query']
     chat_id = query['message']['chat']['id']
-    callback_data = query['data']
+    callback_data = query['data'].split(":")
+    callback_data_message=callback_data[0]
     message_id=query['message']['message_id']
-    if callback_data == 'reject':
+    if callback_data_message == 'reject':
         bot.delete_message(chat_id=my_id, message_id=message_id)
-    if callback_data == "add":
+    if callback_data_message == "add":
         add,created=Add_chanel.objects.get_or_create(username_id=1,chanel_link="asd")
         if created:
             bot.send_message(chat_id=my_id,text="✅Канал https://t.me/userchannel успешно добавлен в базу!")
