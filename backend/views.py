@@ -27,9 +27,7 @@ import asyncio
 import telegram
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from asgiref.sync import sync_to_async
+
 import time
 my_id="531080457"
 TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
@@ -76,8 +74,9 @@ def telegram_webhook(request):
 def process_message(json_data):
     chat_id = json_data['message']['chat']['id']
     message_text = json_data['message'].get('text')
-    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', 1)
+    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', "")
     chat_username = json_data['message']['chat'].get('first_name', 'Someone')
+    channel_username=f"https:/t.me/{message_text}"
 
     if message_text or forward_id:
         if message_text == '/start':
@@ -115,13 +114,13 @@ def process_message(json_data):
                 inline_keyboard = [
                     [InlineKeyboardButton("📊Анализ на сайте",
                                           web_app=WebAppInfo(
-                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://94fa-213-230-92-192.ngrok-free.app/detail/{chanel}'))],
                     [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://94fa-213-230-92-192.ngrok-free.appdetail/{chanel}'))],
                     [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://15b1-5-133-120-92.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://94fa-213-230-92-192.ngrok-free.app/detail/{chanel}'))],
                 ]
                 # Convert inline keyboard to InlineKeyboardMarkup
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
@@ -136,8 +135,8 @@ def process_message(json_data):
                 bot.send_message(chat_id,
                                  f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
                 inline_keyboard = [
-                    [InlineKeyboardButton("✅Добавить", callback_data=f'add:{message_text}:{chat_id}'),
-                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject:{message_text}:{chat_id}')],
+                    [InlineKeyboardButton("✅Добавить", callback_data=f'add#{message_text or forward_id }#{chat_id}'),
+                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject#{message_text or forward_id}#{chat_id}')],
                 ]
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
                 bot.send_message(my_id,
@@ -153,16 +152,18 @@ def process_message(json_data):
 def process_callback_query(json_data):
     query = json_data['callback_query']
     chat_id = query['message']['chat']['id']
-    callback_data = query['data'].split(":")
+    callback_data = query['data'].split("#")
     callback_data_message=callback_data[0]
+    callback_data_link_or_id=callback_data[1]
+    callback_data_chat_id=callback_data[2]
     message_id=query['message']['message_id']
     if callback_data_message == 'reject':
         bot.delete_message(chat_id=my_id, message_id=message_id)
     if callback_data_message == "add":
-        add,created=Add_chanel.objects.get_or_create(username_id=1,chanel_link="asd")
+        add,created=Add_chanel.objects.get_or_create(username_id=1,chanel_link=callback_data_link_or_id)
         if created:
-            bot.send_message(chat_id=my_id,text="✅Канал https://t.me/userchannel успешно добавлен в базу!")
-            bot.send_message(chat_id=chat_id, text="🤝Здравствуйте. Вы недавно пытались найти анализ на канал https://t.me/userchannel. Теперь мы его добавили в нашу базу и Вы сможете каждый день проверять статистику этого канала в нашем боте и сайте")
+            bot.send_message(chat_id=my_id,text=f"✅Канал {callback_data_link_or_id} успешно добавлен в базу!")
+            bot.send_message(chat_id=callback_data_chat_id, text=f"🤝Здравствуйте. Вы недавно пытались найти анализ на канал {callback_data_link_or_id}. Теперь мы его добавили в нашу базу и Вы сможете каждый день проверять статистику этого канала в нашем боте и сайте")
         else:
             bot.send_message(chat_id=my_id, text="Ошибка не получился!")
 

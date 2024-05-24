@@ -166,8 +166,9 @@ class Posts(models.Model):
 
 class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel')
+    chanel_id = models.IntegerField(default=0)
     #category=models.ForeignKey('Category_chanels',on_delete=models.CASCADE)
-    chanel_link = models.CharField(max_length=150)
+    chanel_link = models.CharField(default=None,max_length=150)
 
 
     def __str__(self):
