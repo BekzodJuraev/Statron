@@ -74,9 +74,26 @@ def telegram_webhook(request):
 def process_message(json_data):
     chat_id = json_data['message']['chat']['id']
     message_text = json_data['message'].get('text')
-    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', "")
+    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', "1")
     chat_username = json_data['message']['chat'].get('first_name', 'Someone')
-    channel_username=f"https:/t.me/{message_text}"
+
+    if message_text.startswith("@"):
+        try:
+            chat = bot.get_chat(chat_id=message_text)
+            message_text = f"https://t.me/{chat.username}" if chat.username else chat.invite_link
+        except:
+            bot.send_message(chat_id,"Мы не нашли ваш канал")
+            return
+
+
+
+
+
+
+
+
+
+
 
     if message_text or forward_id:
         if message_text == '/start':
