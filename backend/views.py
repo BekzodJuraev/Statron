@@ -73,13 +73,14 @@ def telegram_webhook(request):
 
 def process_message(json_data):
     chat_id = json_data['message']['chat']['id']
-    message_text = json_data['message'].get('text')
-    forward_id = json_data['message'].get('forward_from_chat', {}).get('id', "1")
+    message_text = json_data['message'].get('text',"")
+    forward_id = json_data['message'].get('forward_from_chat', {}).get('id')
     chat_username = json_data['message']['chat'].get('first_name', 'Someone')
 
-    if message_text.startswith("@"):
+    if message_text.startswith("@") or message_text.startswith("-") or forward_id:
         try:
-            chat = bot.get_chat(chat_id=message_text)
+            chanel_chanel_id = message_text if message_text else forward_id
+            chat = bot.get_chat(chat_id=chanel_chanel_id)
             message_text = f"https://t.me/{chat.username}" if chat.username else chat.invite_link
         except:
             bot.send_message(chat_id,"Мы не нашли ваш канал")
@@ -95,7 +96,8 @@ def process_message(json_data):
 
 
 
-    if message_text or forward_id:
+
+    if message_text:
         if message_text == '/start':
             reply_keyboard = [
                 [KeyboardButton("🔗Наш сайт")],
@@ -107,18 +109,17 @@ def process_message(json_data):
         elif message_text == "🔗Наш сайт":
             bot.send_message(chat_id=chat_id, text="https://statron.ru")
         else:
-            chanel_id = Chanel.objects.all().values_list('chanel_id', flat=True)
+
             chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
 
 
 
-            if message_text in chanel_link or forward_id in chanel_id:
+            if message_text in chanel_link:
                 chanel_get = SubPerday.objects.filter(
-                    Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id)).values('created_at',
-                                                                                                  'subperday')
+                    chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
-                    Q(chanel__chanel_link=message_text) | Q(chanel__chanel_id=forward_id), mention=True).count()
-                chanel = Chanel.objects.get(Q(chanel_link=message_text) | Q(chanel_id=forward_id)).pk
+                    chanel__chanel_link=message_text, mention=True).count()
+                chanel = Chanel.objects.get(chanel_link=message_text).pk
 
                 analytics_data = '\n'.join(
                     [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
@@ -152,8 +153,8 @@ def process_message(json_data):
                 bot.send_message(chat_id,
                                  f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
                 inline_keyboard = [
-                    [InlineKeyboardButton("✅Добавить", callback_data=f'add#{message_text or forward_id }#{chat_id}'),
-                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject#{message_text or forward_id}#{chat_id}')],
+                    [InlineKeyboardButton("✅Добавить", callback_data=f'add#{message_text}#{chat_id}'),
+                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject#{message_text}#{chat_id}')],
                 ]
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
                 bot.send_message(my_id,
