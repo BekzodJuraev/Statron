@@ -12,7 +12,7 @@ from django.utils import timezone
 @receiver(post_save,sender=Add_chanel)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
-        #add_chanel.delay(instance.chanel_link)
+        add_chanel.delay(instance.chanel_link)
         Chanel.objects.create(username=instance.username,add_chanel=instance,chanel_link=instance.chanel_link,subscribers=0,views=0)
 
 
@@ -58,10 +58,12 @@ def create_mention(sender,instance,created,*args,**kwargs):
     if instance.mention:
         chanel_all = Chanel.objects.all()
         text=instance.text.lower()
+        chanel_instance =instance.chanel.chanel_link.split('/')[-1].lower()
         for item in chanel_all:
             chanel_link_split = item.chanel_link.split('/')[-1].lower()
-            if chanel_link_split in text or  f'@{chanel_link_split}' in  text or f"t.me/{chanel_link_split}" in text:
+            if (chanel_link_split in text or  f'@{chanel_link_split}' in  text or f"t.me/{chanel_link_split}" in text or  f'https://t.me/{chanel_link_split}' in text) and (chanel_instance not in text and f'@{chanel_instance}' not in text and f"t.me/{chanel_instance}"  not in text and f'https://t.me/{chanel_instance}' not in text):
                 Mentions.objects.create(mentioned_channel=item, post=instance)
+
 
 
 

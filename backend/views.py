@@ -29,7 +29,7 @@ import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 
 import time
-my_id="531080457"
+my_id="763127756"
 TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
 bot = telegram.Bot(TOKEN)
 #dp = Dispatcher(bot)
@@ -132,13 +132,13 @@ def process_message(json_data):
                 inline_keyboard = [
                     [InlineKeyboardButton("📊Анализ на сайте",
                                           web_app=WebAppInfo(
-                                              f'https://94fa-213-230-92-192.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
                     [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://94fa-213-230-92-192.ngrok-free.appdetail/{chanel}'))],
+                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
                     [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://94fa-213-230-92-192.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
                 ]
                 # Convert inline keyboard to InlineKeyboardMarkup
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
