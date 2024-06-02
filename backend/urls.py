@@ -17,6 +17,7 @@ urlpatterns=[
  path('analysis/',views.AnalisChanel.as_view(),name='analysis'),
  path('mychanels/',views.MyChanels.as_view(),name='my_chanels'),
  path('search/',views.Search.as_view(),name='search'),
+ path('search_view/', views.search_view, name='search_view'),
  path('tracking-posts/', views.TrackingPosts.as_view(), name='tracking'),
  path('posts/',views.Ad_posts.as_view(), name='posts'),
  path('telegram_webhook/', views.telegram_webhook, name='telegram_webhook'),

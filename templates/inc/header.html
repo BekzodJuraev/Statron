@@ -6,13 +6,20 @@
 						<picture><source srcset="{% static 'img/logo.webp'%}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/logo.png' %}" alt=""></picture>
 						<picture><source srcset="{% static 'img/logo_mob.webp' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/logo_mob.png' %}" alt=""></picture>
 					</a>
-					<form action="#" class="header__search" method="POST">
-						<input placeholder="Поиск..." class="header__input" type="text">
+					<form action="{% url 'search' %}" class="header__search" method="GET">
+						<input placeholder="Поиск..."  name="chanel_name" id="search-input" class="header__input" type="text">
 						<button class="header__search-btn" type="submit">
 							<img class="img-fluid" src="{% static 'img/icons/search.svg' %}" alt="">
 						</button>
+						<div id="search-results" class="search-results-container"></div>
+
+
+
 					</form>
+
+
 				</div>
+
 				<div class="header__column">
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header">
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
@@ -95,4 +102,6 @@
 					</div>
 				</div>
 			</div>
+
 		</header>
+

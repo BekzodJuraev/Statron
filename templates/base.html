@@ -15,9 +15,44 @@
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
+ <style>
+        .search-results-container {
+          position: absolute;
+            top: 100%; /* Places the div directly below the input field */
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            width: 100%; /* Same width as the input field */
+            max-height: 300px; /* Adjust based on your layout */
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .search-result-item img {
+            max-width: 50px;
+            max-height: 50px;
+            margin-right: 10px;
+        }
+        .search-result-item button {
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        .search-result-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
 
 <body>
+
 <div class="wrapper">
 
 
@@ -30,7 +65,11 @@
 
 
 
-    {% block content %}{% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
     </div>
     </body>
     {% include 'inc/footer.html' %}
@@ -42,7 +81,34 @@
 
 	<script src="{% static 'js/app.min.js' %}"></script>
 
-
+      <script>
+        $(document).ready(function() {
+            $('#search-input').on('keyup', function() {
+                var query = $(this).val();
+                if (query.length > 2) {  // Start searching after 3 characters
+                    $.ajax({
+                        url: '{% url "search_view" %}',
+                        data: {'q': query},
+                        success: function(data) {
+                            $('#search-results').empty();
+                            $.each(data, function(index, item) {
+                                $('#search-results').append(
+                                  '<a href="/detail/' + item.id + '">' +
+                                '<div class="search-result-item">' +
+                                    '<img src="' + item.pictures + '" alt="' + item.name + '">' +
+                                    '<button>' + item.name + '</button>' +
+                                '</div>' +
+                            '</a>'
+                                );
+                            });
+                        }
+                    });
+                } else {
+                    $('#search-results').empty();
+                }
+            });
+        });
+    </script>
     <!--================ End Header Menu Area =================-->
 
 

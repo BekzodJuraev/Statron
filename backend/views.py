@@ -549,7 +549,22 @@ class DetailChanel(DetailView):
             return redirect('like')
 
 
+def search_view(request):
+    query = request.GET.get('q', '')
+    if query:
+        results = Chanel.objects.filter(name__icontains=query)
+    else:
+        results = Chanel.objects.none()
 
+    data = []
+    for obj in results:
+        data.append({
+            'id': obj.id,
+            'name': obj.name,
+            'pictures': obj.pictures.url if obj.pictures else ''  # Use obj.pictures.url if it's an ImageField
+        })
+
+    return JsonResponse(data, safe=False)
 
 class CreateChanel(LoginRequiredMixin,CreateView):
     model = Add_chanel

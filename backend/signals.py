@@ -12,7 +12,7 @@ from django.utils import timezone
 @receiver(post_save,sender=Add_chanel)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
-        add_chanel.delay(instance.chanel_link)
+        #add_chanel.delay(instance.chanel_link)
         Chanel.objects.create(username=instance.username,add_chanel=instance,chanel_link=instance.chanel_link,subscribers=0,views=0)
 
 
