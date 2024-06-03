@@ -6,6 +6,7 @@ import pytz
 from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
+
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     phone_number = PhoneNumberField()
