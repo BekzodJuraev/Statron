@@ -52,11 +52,11 @@
 								<div class="channels-tabs__body">
 									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
-										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 												{{item.subscribers}}
@@ -75,11 +75,11 @@
 								<div class="channels-tabs__body">
 									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
-										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 												{{item.subscribers}}
@@ -92,11 +92,11 @@
 								<div class="channels-tabs__body">
 									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
-										<a href="{{item.chanel_link }}" target="_blank" class="channel-tabs-channels__img">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="#" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 												{{item.subscribers}}
@@ -109,6 +109,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="container-50p__item">
 						<div data-tabs class="channels-tabs">
 							<div class="tabs-head">
@@ -122,11 +123,11 @@
 								<div class="channels-tabs__body">
 									{% for item in top_views %}
 									<div class="channel-tabs-channels">
-										<a href="{{ item.chanel_link}}" target="_blank" class="channel-tabs-channels__img">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="{{ item.chanel_link }}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 												{{item.views}}
@@ -151,11 +152,11 @@
 								<div class="channels-tabs__body">
 									{% for item in top_views %}
 									<div class="channel-tabs-channels">
-										<a href="{{ item.chanel_link}}" target="_blank" class="channel-tabs-channels__img">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
 										</a>
 										<div class="channel-tabs-channels__content">
-											<a href="{{ item.chanel_link }}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 												{{item.views}}

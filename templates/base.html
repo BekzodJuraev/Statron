@@ -109,6 +109,22 @@
         });
     </script>
     <!--================ End Header Menu Area =================-->
+<script>
+    $(document).ready(function() {
+        let isOpen = false;
 
+        // Toggle the list item on button click
+        $('#toggleButton').click(function(e) {
+            e.preventDefault(); // Prevent the default action of the anchor tag
+
+            if (isOpen) {
+                $('#toggleLi').slideUp();
+            } else {
+                $('#toggleLi').slideDown();
+            }
+            isOpen = !isOpen;
+        });
+    });
+</script>
 
 </html>

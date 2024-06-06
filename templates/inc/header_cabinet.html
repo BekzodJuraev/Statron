@@ -62,12 +62,7 @@
 									Мои каналы
 								</span>
 							</a>
-							<a href="{% url 'analysis' %}" class="dropdown-header__item">
-								<span>
-									<img src="{% static 'img/header/5.svg' %}" alt="">
-									Анализ аудитории
-								</span>
-							</a>
+
 
 							<a href="{% url 'create' %}" class="dropdown-header__item">
 								<span>
@@ -94,7 +89,9 @@
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
 							<div class="dropdown-header__btn dropdown-header__btn_desc">
 							{% if user.profile.photo %}
-							<picture><source srcset="/{{user.profile.photo}}" type="image/webp"><img class="dropdown-header__avatar" src="/{{user.profile.photo}}" alt=""></picture>
+							<picture><source srcset="/{{user.profile.photo}}" type="image/webp"><img class="dropdown-header__avatar" src="/{{user.profile.photo}}" alt="" style="border-radius: 50%; /* Makes the image round */
+        width: 40px; /* Adjust size as needed */
+        height: 40px"></picture>
 							{% else %}
 							<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="dropdown-header__avatar" src="{% static 'img/account/1.png' %}" alt=""></picture>
 							{% endif %}

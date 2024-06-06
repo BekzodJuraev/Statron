@@ -323,9 +323,25 @@ class Main(ListView):
 class UpdateCabinet(LoginRequiredMixin,DetailView):
     model = Profile
     login_url = reverse_lazy('login_site')
-    success_url = reverse_lazy('updatecabinet')
     template_name = 'cabinet.html'
     context_object_name = 'item'
+
+
+
+
+
+
+
+
+
+    def dispatch(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        if request.user != instance.username:
+            # If not, you can redirect to a 403 Forbidden page or handle it as you wish
+            return self.handle_no_permission()
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UpdateView(LoginRequiredMixin,View):

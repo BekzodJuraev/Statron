@@ -4,46 +4,42 @@
 				<div class="footer__list">
 					<ul class="footer__list footer__list_sub">
 						<li class="footer__item">
-							<a href="#" class="footer__link">Stattron</a>
+							<a href="{% url 'main'  %}" class="footer__link">Stattron</a>
 						</li>
 						<li class="footer__item">
-							<a href="#" class="footer__link">О проекте</a>
+						<a href="mailto:stattron.online@gmail.com" class="footer__link">Напишите нам</a>
 						</li>
-						<li class="footer__item">
-							<a href="#" class="footer__link">Напишите нам</a>
-						</li>
-						<li class="footer__item">
-							<a href="#" class="footer__link">Пользовательское соглашение сервиса Stattron</a>
-						</li>
-						<li class="footer__item">
-							<a href="#" class="footer__link">Правила пользования</a>
-						</li>
+
+
 					</ul>
 					<div data-da=".footer,992.98" class="footer__copy">2019-2022 ©Stattron</div>
 				</div>
 				<ul class="footer__list">
 					<li class="footer__item">
-						<a href="#" class="footer__link">Сообщество</a>
+						<a href="https://t.me/stattron_online" class="footer__link">Сообщество</a>
 					</li>
 
 					<li class="footer__item">
-						<a href="#" class="footer__link">Наш Telegram-канал</a>
+						<a href="https://t.me/stattron_online" class="footer__link">Наш Telegram-канал</a>
 					</li>
+					{% if request.user.is_authenticated %}
 					<li class="footer__item">
-						<a href="#" class="footer__link">Партнерская программа</a>
+						<a href="{% url 'updatecabinet' request.user.profile.pk  %}" class="footer__link">Партнерская программа</a>
 					</li>
+					{% else %}
+					<li class="footer__item">
+						<a href="{% url 'login_site'  %}" class="footer__link">Партнерская программа</a>
+					</li>
+					{% endif %}
+
 
 				</ul>
 				<ul class="footer__list">
+
 					<li class="footer__item">
-						<a href="#" class="footer__link">Помощь</a>
+						<a href="https://t.me/Kigapii" class="footer__link">Поддержка</a>
 					</li>
-					<li class="footer__item">
-						<a href="#" class="footer__link">FAQ</a>
-					</li>
-					<li class="footer__item">
-						<a href="#" class="footer__link">Поддержка</a>
-					</li>
+
 				</ul>
 			</div>
 		</footer>
