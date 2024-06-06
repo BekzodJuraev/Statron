@@ -622,11 +622,12 @@ class Search(ListView):
         description=self.request.GET.get('description')
         queryset = Chanel.objects.all()
 
+
         if search_query:
             queryset = queryset.filter(chanel_link__icontains=search_query)
 
         if chanel_name:
-            queryset = queryset.filter(name__icontains=chanel_name)
+            queryset = queryset.filter(name__iregex=chanel_name)
 
         if description:
             queryset = queryset.filter(description__icontains=description)

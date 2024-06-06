@@ -11,7 +11,7 @@
 						<li class="home-mainscreen__item item-mainscreen">
 							<div class="item-mainscreen__head">
 								<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__img">
-									<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+									<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}"  style="border-radius: 50%; " alt=""></picture>
 								</a>
 								<div class="item-mainscreen__content">
 									<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">{{item.name}}</a>
@@ -88,6 +88,9 @@
 										<div class="label-blue">+{{item.yesterday_subscribers}}</div>
 									</div>
 									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">Посмотреть все</button></a>
+									</div>
 								</div>
 								<div class="channels-tabs__body">
 									{% for item in top_sub %}
@@ -104,7 +107,11 @@
 										</div>
 										<div class="label-blue">+{{item.weekly_subscribers}}</div>
 									</div>
+
 									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">Посмотреть все</button></a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -136,7 +143,7 @@
 										{% if item.daily_views < 0 %}
 										<div class="label-blue">{{item.daily_views}}</div>
 										{% else %}
-										<div class="label-blue">+{{item.daily_views}}</div>
+										<div class="label-blue">{{item.daily_views}}</div>
 										{% endif %}
 
 									</div>
@@ -165,11 +172,14 @@
 										{% if item.yesterday_views < 0 %}
 										<div class="label-blue">{{item.yesterday_views}}</div>
 										{% else %}
-										<div class="label-blue">+{{item.yesterday_views}}</div>
+										<div class="label-blue">{{item.yesterday_views}}</div>
 										{% endif %}
 
 									</div>
 									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">Посмотреть все</button></a>
+									</div>
 								</div>
 							</div>
 						</div>
