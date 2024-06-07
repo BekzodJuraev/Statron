@@ -131,9 +131,7 @@
 																	</div>
 																</div>
 															</th>
-															<th>
-																<img class="analitics-tabs__calendar" src="{% static 'img/analitics/calendar.svg' %}" alt="">
-															</th>
+
 														</tr>
 													</thead>
 													<tbody>
@@ -391,6 +389,7 @@
 													<tbody>
 														{% for item in mention %}
 														<tr>
+
 															<td scope="row">
 																<div class="channel-tabs-channels__head">
 																	<a href="" target="_blank" class="channel-tabs-channels__img">
@@ -404,9 +403,10 @@
 																					<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
 																					{{item.post__chanel__subscribers}}
 																				</span>
-																				<button class="channel-count__btn" type="button">
+																				<a href="{% url 'detail' item.post__chanel__pk %}">
+																				<button class="channel-count__btn" type="button" >
 																					<img class="img-fluid" src="{% static 'img/analitics/posts_blue.svg' %}" alt="">
-																				</button>
+																				</button></a>
 																			</div>
 																		</div>
 																	</div>

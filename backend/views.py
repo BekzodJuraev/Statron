@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
+import re
+from django.db import connection
+
 from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
@@ -314,7 +317,7 @@ class Main(ListView):
         context['chart_three_month']=chart_three_month
         context['chart_six_month']=chart_six_month
         context['top_sub']=self.object_list.all().order_by('-subscribers')[:6]
-        context['top_views'] =self.object_list.all().order_by('-views')
+        context['top_views'] =self.object_list.all().order_by('-views')[:6]
         context['posts_today']=Posts.objects.filter(mention=True,created_at__date=date.today()).count()
         context['total']=Posts.objects.all().count()
         context['mentioned'] =Posts.objects.filter(mention=True).count()
@@ -623,6 +626,10 @@ class Search(ListView):
         queryset = Chanel.objects.all()
 
 
+
+
+
+
         if search_query:
             queryset = queryset.filter(chanel_link__icontains=search_query)
 
@@ -630,19 +637,44 @@ class Search(ListView):
             queryset = queryset.filter(name__iregex=chanel_name)
 
         if description:
-            queryset = queryset.filter(description__icontains=description)
+            queryset = queryset.filter(description__iregex=description)
+
+
 
 
         if mention_from and mention_to:
             queryset=queryset.filter(mentioned__range=[mention_from,mention_to])
+
+        elif mention_from:
+            queryset = queryset.filter(mentioned__gte=mention_from)
+        elif mention_from:
+            queryset = queryset.filter(mentioned__lte=mention_from)
+
+
 
 
 
         if views_from and views_to:
             queryset = queryset.filter(views__range=[views_from, views_to])
 
+        elif views_from:
+            queryset = queryset.filter(views__gte=views_from)
+        elif views_to:
+            queryset = queryset.filter(views__lte=views_to)
+
+
+
+
+
         if subscribers_from and subscribers_to:
             queryset = queryset.filter(subscribers__range=[subscribers_from, subscribers_to])
+
+        elif subscribers_from:
+            queryset = queryset.filter(subscribers__gte=subscribers_from)
+        elif subscribers_to:
+            queryset = queryset.filter(subscribers__lte=subscribers_to)
+
+
 
 
 
