@@ -331,10 +331,15 @@
                                     </div>
                                 </div>
                             </div>
+							{% if post.mention %}
                             <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.name }}">
                                 <button class="button button_no-bg" type="button">Упоминания</button>
-                                <button class="button button_no-bg" type="button">Рекламные посты</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
                             </div>
+							{% endif %}
                         </div>
                         <div class="item-popup__content">
                             <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
