@@ -710,16 +710,20 @@ class Ad_posts(LoginRequiredMixin,ListView):
 
 
         if mention:
-            queryset=queryset.filter(mentions_post__mentioned_channel__name=mention)
+            queryset=queryset.filter(mentions_post__mentioned_channel__name__iregex=mention)
 
         if text:
             queryset=queryset.filter(text__icontains=text)
 
         if chanel:
-            queryset=queryset.filter(chanel__name__icontains=chanel)
+            queryset=queryset.filter(chanel__name__iregex=chanel)
 
         if view_from and view_to:
             queryset=queryset.filter(view__range=[view_from,view_to])
+
+        if period:
+            period_from, period_to = period.split(" - ")
+            queryset = queryset.filter(date__range=(period_from, period_to))
 
 
 

@@ -24,7 +24,7 @@
 							</div>
 							<div class="search-form__item">
 								<label for="period" class="label-black">За период:</label>
-								<input data-datepicker type="text" id="period" name="period" placeholder="23-04-2021 - 19-11-2022" class="form__input" value="{{ request.GET.period }}">
+								<input data-datepicker type="text" id="period" name="period" placeholder="2021-23-04 - 2022-11-04" class="form__input" value="{{ request.GET.period }}">
 								<img class="search-form__calendar" src="{% static 'img/analitics/calendar.svg' %}" alt="">
 							</div>
 						</div>
@@ -32,13 +32,7 @@
 							<div class="search-form__item search-form__item_select">
 								<div class="search-form__item-content">
 									<div class="search-form__item">
-										<label for="text-search" class="label-black">Тип поиска по тексту:</label>
-										<select name="text-search" id="text-search" data-class-modif="custom-select">
-											<option value="1" selected>По всему тексту</option>
-											<option value="2">По всему тексту 1</option>
-											<option value="3">По всему тексту 2</option>
-											<option value="4">По всему тексту 3</option>
-										</select>
+
 									</div>
 									<div class="search-form__item">
 										<label for="sort" class="label-black">Сортировка:</label>
@@ -115,10 +109,12 @@
 										</div>
 									</div>
 								</div>
+								{% if item.mention %}
 								<div class="item-popup__btns">
 									<button class="button button_no-bg" type="button">Упоминания</button>
 									<button class="button button_no-bg" type="button">Рекламные посты</button>
 								</div>
+								{% endif %}
 							</div>
 							<div class="item-popup__content">
 								<div class="label-blue label-blue_s14">{{item.date|date:"Y-m-d H:i"}}</div>

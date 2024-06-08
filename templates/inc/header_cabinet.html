@@ -41,15 +41,32 @@
 									<img src="{% static 'img/header/1.svg' %}" alt="">
 									Каталог каналов
 								</span>
-								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+
 							</a>
-							<a href="{% url 'posts' %}" class="dropdown-header__item">
+							<a href="{% url 'posts' %}" id="toggleButton" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/2.svg' %}" alt="">
 									Поиск постов
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
+							<ul id="toggleLi" style="display: none;">
+								<li><a href=""><span>
+
+									Рекламные посты
+								</span></a>
+									</li>
+								<li><a href=""><span>
+
+									Посты в закладках
+								</span></a></li>
+								<li>
+								<a href="{% url 'posts' %}"><span>
+
+									Все посты
+								</span></a></li>
+
+								</ul>
 							<a href="{% url 'tracking' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/3.svg' %}" alt="">
