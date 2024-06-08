@@ -92,8 +92,14 @@
 					<div data-tabs class="channels-tabs">
 						<div class="tabs-head">
 							<nav data-tabs-titles class="tabs-navigation">
+								{% if node %}
 								<button type="button" class="tabs-navigation__title _tab-active">С заметками </button>
-								<button type="button" class="tabs-navigation__title">Все папки</button>
+								<button type="button" class="tabs-navigation__title ">Все папки</button>
+								{% else %}
+								<button type="button" class="tabs-navigation__title _tab-active">Все папки</button>
+								{% endif %}
+
+
 							</nav>
 						</div>
 						<div data-tabs-body class="channels-tabs__content">
@@ -616,7 +622,7 @@
         tempInput.remove();
 
         // Alert the user that the link has been copied
-        alert('Посилання скопійоване в буфер обміну!');
+        alert('Ссылка скопирована в буфер обмена!');
    });
 });
 </script>

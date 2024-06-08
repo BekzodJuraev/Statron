@@ -128,7 +128,7 @@
 							</div>
 							<div data-tabs-body class="channels-tabs__content">
 								<div class="channels-tabs__body">
-									{% for item in top_views %}
+									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
 										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
@@ -137,7 +137,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.views}}
+												{{item.subscribers}}
 											</div>
 										</div>
 										{% if item.daily_views < 0 %}
@@ -157,7 +157,7 @@
 
 
 								<div class="channels-tabs__body">
-									{% for item in top_views %}
+									{% for item in top_sub %}
 									<div class="channel-tabs-channels">
 										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
@@ -166,7 +166,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.views}}
+												{{item.subscribers}}
 											</div>
 										</div>
 										{% if item.yesterday_views < 0 %}
