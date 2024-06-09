@@ -10,9 +10,10 @@
 								<div class="info-account__img-wrap">
 									<div class="info-account__img">
 										{% if item.photo %}
-										<picture><source srcset="/{{item.photo}}" type="image/webp"><img class="img-fluid" src="/{{item.photo}}" alt="" style="border-radius: 50%; /* Makes the image round */
-        width: 100px; /* Adjust size as needed */
-        height: 100px"></picture>
+										<picture><source srcset="/{{item.photo}}" type="image/webp"><img class="img-fluid" src="/{{item.photo}}" alt="" style="width: 100%; /* Adjust size as needed */
+    height: 50%; /* Adjust size as needed */
+    border-radius: 50%; /* Adjust size as needed */
+        "></picture>
 										{% else %}
 										<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/account/1.png' %}" alt=""></picture>
 										{% endif %}

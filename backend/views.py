@@ -625,6 +625,12 @@ class Search(ListView):
         description=self.request.GET.get('description')
         queryset = Chanel.objects.all()
 
+        if search_query is not None and search_query.startswith("@"):
+            search_query = search_query.strip("@")
+            search_query = f'https://t.me/{search_query}'
+
+
+
 
 
 
