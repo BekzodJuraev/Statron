@@ -3,8 +3,8 @@
 			<div class="header__container">
 				<div class="header__column">
 					<a href="{% url 'main' %}" class="header__logo">
-						<picture><source srcset="{% static 'img/logo.webp' %}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/logo.png' %}" alt=""></picture>
-						<picture><source srcset="{% static 'img/logo_mob.webp' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/logo_mob.png' %}" alt=""></picture>
+						<picture><source srcset="{% static 'img/main_logo.png' %}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/main_logo.png' %}" alt="" width="40%" height="40%"></picture>
+						<picture><source srcset="{% static 'img/main_logo.png' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/main_logo.png' %}" alt=""></picture>
 					</a>
 					<form action="{% url 'search' %}" class="header__search" method="GET">
 						<input placeholder="Поиск..."  name="chanel_name" id="search-input" class="header__input" type="text">

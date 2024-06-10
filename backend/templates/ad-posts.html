@@ -67,7 +67,7 @@
 						<div class="search-channels__tabs-head">
 							<div class="search-channels__nums tabs-navigation">
 						{% for p in page_obj.paginator.page_range %}
-					{% if p <= 3 or p >= page_obj.paginator.num_pages|sub:1 or p >= page_obj.number|sub:1 and p <= page_obj.number|add:1 %}
+						{% if p <= page_obj.number|add:1  and  p >= page_obj.number|sub:1 or p >= page_obj.paginator.num_pages or p <= 1 %}
 						{% if page_obj.number == p %}
 							<a href="?page={{ p }}">
 								<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{ p }}</button>
@@ -77,9 +77,13 @@
 								<button class="search-channels__num tabs-navigation__title" type="button">{{ p }}</button>
 							</a>
 						{% endif %}
-					{% elif p == 4 or page_obj.number > 3 and p == page_obj.number|sub:1 %}
-						<span>...</span>
-					{% endif %}
+
+						{% elif p == page_obj.number|add:2 or p == page_obj.number|sub:2  %}
+								<span>...</span>
+						{% endif %}
+
+
+
 				{% endfor %}
 							</div>
 							<div class="search-channels__head-text">
