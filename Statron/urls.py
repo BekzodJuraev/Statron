@@ -21,6 +21,7 @@ from django.urls import path,include,re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.conf.urls.i18n import i18n_patterns
 admin.site.site_header="Statron"
 admin.site.site_title="Statron"
 admin.site.index_title="Statron Adminstration Dashboard"
@@ -38,14 +39,19 @@ import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('backend.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('__debug__/', include(debug_toolbar.urls))
+
 ]
 
+urlpatterns += i18n_patterns( # Include your app's URLs
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('', include('backend.urls')),
+    prefix_default_language=False
 
+)
 
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

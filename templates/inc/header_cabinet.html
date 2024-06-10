@@ -228,12 +228,21 @@
 
 					<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
 						<button data-dropdown-btn class="dropdown-header__btn" type="button">
+							{% if request.LANGUAGE_CODE == 'en' %}
+							<span>En</span>
+							{% else %}
 							<span>Ru</span>
-							<img class="arrow" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
+							{% endif %}
+
+							<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 						</button>
 						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
-							<a href="#" class="dropdown-header-lang__item">En</a>
-							<a href="#" class="dropdown-header-lang__item">De</a>
+							{% if request.LANGUAGE_CODE == 'en' %}
+							<a href="/" class="dropdown-header-lang__item">Ru</a>
+							{% else %}
+							<a href="/en/" class="dropdown-header-lang__item">En</a>
+							{% endif %}
+
 						</div>
 					</div>
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_mobi-dn">
