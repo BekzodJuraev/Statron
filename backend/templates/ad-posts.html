@@ -114,11 +114,14 @@
 									</div>
 								</div>
 								{% if item.mention %}
-								<div class="item-popup__btns">
-									<button class="button button_no-bg" type="button">Упоминания</button>
-									<button class="button button_no-bg" type="button">Рекламные посты</button>
-								</div>
-								{% endif %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.chanel.name }}">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.chanel.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+                            </div>
+							{% endif %}
 							</div>
 							<div class="item-popup__content">
 								<div class="label-blue label-blue_s14">{{item.date|date:"Y-m-d H:i"}}</div>
