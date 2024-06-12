@@ -59,11 +59,15 @@
 										<option value="3">Закрытый</option>
 
 									</select>
-									<select name="channel-type" id="channel-type" data-class-modif="custom-select">
+									<select name="selected_category" id="channel-type" data-class-modif="custom-select">
+										{% if request.GET %}
+										<option value="{{request.GET.selected_category}}"selected>{{request.GET.selected_category}}</option>
+										{% else %}
 										<option value="1" selected>Категории</option>
-										<option value="2">Категории 1</option>
-										<option value="3">Категории 2</option>
-										<option value="4">Категории 3</option>
+										{% endif %}
+										{% for item in category %}
+										<option value="{{item.name}}">{{item.name}}</option>
+										{% endfor %}
 									</select>
 								</div>
 							</div>

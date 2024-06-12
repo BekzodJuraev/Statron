@@ -9,7 +9,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -614,7 +614,7 @@ class Search(ListView):
 
     def get_queryset(self):
         search_query = self.request.GET.get('chanel_link')
-        #select_category = self.request.GET.get('selected_category')
+        select_category = self.request.GET.get('selected_category')
         chanel_name = self.request.GET.get('chanel_name')
         views_from = self.request.GET.get('views_from')
         views_to = self.request.GET.get('views_to')
@@ -632,7 +632,8 @@ class Search(ListView):
 
 
 
-
+        if select_category:
+            queryset=queryset.filter(add_chanel__category__name=select_category)
 
 
 
@@ -688,6 +689,7 @@ class Search(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['category']=Category_chanels.objects.all()
         context['lists'] = self.get_queryset().count()
         context['count'] = Chanel.objects.select_related('add_chanel').prefetch_related('add_chanel__cost_formats')
 
