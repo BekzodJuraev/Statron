@@ -157,7 +157,7 @@
 														</tr>
 													 	{% if item.chanel.mentions.exists %}
 															{% for mention in item.chanel.mentions.all %}
-																{% if item.created_at.day == mention.post.date.day and item.created_at.hour == mention.post.date.hour %}
+																{% if  item.created_at.month == mention.post.date.month and item.created_at.day == mention.post.date.day and item.created_at.hour == mention.post.date.hour %}
 
 													<tr>
 															<td scope="row">
@@ -184,7 +184,7 @@
 
 													{% if all_posts %}
 														{% for repost in all_posts %}
-													{% if item.created_at.day == repost.date.day  and item.created_at.hour == repost.date.hour %}
+													{% if item.created_at.month == repost.date.month  and  item.created_at.day == repost.date.day  and item.created_at.hour == repost.date.hour %}
 
 
 													<tr>
