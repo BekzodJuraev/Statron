@@ -1697,41 +1697,32 @@
                         <div class="item-popup__head">
                             <div class="item-popup__img">
                                 <picture>
-                                    <source srcset="/{{item.chanel.pictures }}" type="image/webp">
-                                    <img class="img-fluid" src="/{{item.chanel.pictures }}" width="100px" height="100px" style="border-radius: 50%;" alt=""></picture>
+                                    <source srcset="/{{mention.post.chanel.pictures }}" type="image/webp">
+                                    <img class="img-fluid" src="/{{mention.post.chanel.pictures }}" width="100px" height="100px" style="border-radius: 50%;" alt=""></picture>
                             </div>
                             <div class="item-popup__content">
-                                <div class="label_black">{{item.chanel.name}}</div>
+                                <div class="label_black">{{mention.post.chanel.name}}</div>
                                 <div class="item-mainscreen__info">
                                     <div class="channel-count item-mainscreen__count label-grey">
                                         <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-                                        {{item.chanel.subscribers}}
+                                        {{mention.post.chanel.subscribers}}
                                     </div>
                                     <div class="channel-count item-mainscreen__count label-grey">
                                         <img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{item.chanel.views}}
+										{{mention.post.view}}
                                     </div>
                                 </div>
                             </div>
-                            {% if item.mention %}
-                            <div class="item-popup__btns">
-								<a href="{% url 'posts' %}?chanel={{ item.chanel.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
-                                </a>
-
-								<a href="{% url 'posts' %}?mention={{ item.chanel.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
-                            </div>
-							{% endif %}
-                        </div>
+						</div>
                         <div class="item-popup__content">
-                            <div class="label-blue label-blue_s14">{{ item.date|date:"Y-m-d H:i" }}</div>
+                            <div class="label-blue label-blue_s14">{{ mention.post.date|date:"Y-m-d H:i" }}</div>
                             <div class="item-popup__text">
                                 <p class="text">
-                                    {{item.text}}
+                                    {{mention.post.text}}
                                 </p>
                             </div>
                         </div>
-						{% if item.media == 'photo' %}
+						{% if mention.post.media == 'photo' %}
                         <button class="item-popup__btn button button_no-bg" type="button">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
@@ -1739,7 +1730,7 @@
                             Изображение
                         </button>
 						{% endif %}
-						{% if item.media == 'video' %}
+						{% if mention.post.media == 'video' %}
                         <button class="item-popup__btn button button_no-bg" type="button">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
@@ -1747,7 +1738,7 @@
                             Видео
                         </button>
 						{% endif %}
-						{% if item.media == 'animation' %}
+						{% if mention.post.media == 'animation' %}
                         <button class="item-popup__btn button button_no-bg" type="button">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
