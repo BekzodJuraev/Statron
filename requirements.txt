@@ -61,10 +61,6 @@ pyasn1==0.6.0
 pyasn1_modules==0.4.0
 pycountry==22.3.5
 pycparser==2.21
-pydantic==1.10.13
-pydantic-extra-types==2.1.0
-pydantic-settings==2.0.3
-pydantic_core==2.10.1
 PyJWT==2.8.0
 pyOpenSSL==24.1.0
 pyreadline3==3.4.1
