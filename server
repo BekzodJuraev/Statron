@@ -1,0 +1,18 @@
+python -m celery -A TgNativee worker -l info --pool=solo
+python -m celery -A Statron worker -l info --pool=solo
+
+
+
+
+
+source venv/bin/activate
+sudo systemctl restart nginx
+gunicorn Statron.wsgi:application
+nohup python manage.py run_bot &
+ps aux | grep webhook.py
+
+
+
+
+sudo systemctl restart nginx
+sudo systemctl restart nginx
