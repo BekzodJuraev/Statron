@@ -528,6 +528,7 @@ class DetailChanel(DetailView):
         context['repost'] = repost
 
         context['mention'] = mention
+        context['mention_popup']=Mentions.objects.filter(mentioned_channel=self.object).select_related('post__chanel')
 
 
 
