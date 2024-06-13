@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 <main class="page">
-
 			<section class="account-tabs analitics-tabs">
 				<div class="account-tabs__container">
 					<div data-tabs class="channels-tabs tabs-account">
@@ -1846,7 +1845,7 @@
     });
 });
 </script>
-</script>
+
 <script>
 	$(document).ready(function () {
    $('.copyButton').click(function() {
@@ -1952,7 +1951,6 @@
     ];
 
 
-
         new Chart(ctx, {
             type: "line",
             data: {
@@ -1978,7 +1976,11 @@
 
         var er = [ // Array of count values
         {% for item in subperday %}
+            {% if item.er > 0 %}
             {{ item.er }},
+            {% else %}
+            0,
+            {% endif %}
         {% endfor %}
     ];
 
