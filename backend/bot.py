@@ -190,7 +190,7 @@ async def run_userbots():
     # Run the update task for each client concurrently
 
 
-#celery -A TgNativee worker -l info --pool=solo
+#celery -A Statron worker -l info --pool=solo
 
 #celery -A your_project worker -l info -c 4 -n worker3@%h
 

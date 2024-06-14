@@ -154,10 +154,10 @@
 												{{item.subscribers}}
 											</div>
 										</div>
-										{% if item.daily_views < 0 %}
+										{% if item.daily_views > 0 %}
 										<div class="label-blue">{{item.daily_views}}</div>
 										{% else %}
-										<div class="label-blue">{{item.daily_views}}</div>
+										<div class="label-blue">0</div>
 										{% endif %}
 
 									</div>
@@ -183,10 +183,10 @@
 												{{item.subscribers}}
 											</div>
 										</div>
-										{% if item.yesterday_views < 0 %}
+										{% if item.yesterday_views > 0 %}
 										<div class="label-blue">{{item.yesterday_views}}</div>
 										{% else %}
-										<div class="label-blue">{{item.yesterday_views}}</div>
+										<div class="label-blue">0</div>
 										{% endif %}
 
 									</div>

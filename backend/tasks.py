@@ -11,7 +11,7 @@ import os
 import requests
 from django.core.files import File
 from django.core.files.base import ContentFile
-
+from django.db.models.signals import post_save
 
 @shared_task
 @transaction.atomic
@@ -106,7 +106,7 @@ def add_chanel(chanel_link):
 
                 if text is not None:
                     text=text.lower()
-                    Posts.objects.create(
+                    instance=Posts.objects.create(
                         chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
                         text=text,
                         view=views.views,
@@ -116,6 +116,7 @@ def add_chanel(chanel_link):
                         mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
                                     f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)
                     )
+                    #post_save.send(sender=Posts,instance=instance,created=True)
 
 
 

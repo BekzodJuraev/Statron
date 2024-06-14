@@ -35,7 +35,7 @@ def create_views(sender,instance,created,*args,**kwargs):
     if created:
         total = instance.chanel.post.aggregate(total_views=Sum('view'))['total_views']
         instance.chanel.views = total
-        instance.chanel.save()
+        instance.chanel.save(update_fields=['views','daily_views','yesterday_views'])
 
 @receiver(post_save,sender=Chanel)
 def create_views(sender,instance,created,*args,**kwargs):
