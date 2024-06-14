@@ -62,7 +62,12 @@
 												{{item.subscribers}}
 											</div>
 										</div>
+										{% if item.daily_subscribers > 0 %}
 										<div class="label-blue">+{{item.daily_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.daily_subscribers}}</div>
+										{% endif %}
+
 									</div>
 									{% endfor %}
 									<div class="channel-tabs-channels__btn-wrap">
@@ -85,7 +90,12 @@
 												{{item.subscribers}}
 											</div>
 										</div>
+										{% if item.yesterday_subscribers > 0 %}
 										<div class="label-blue">+{{item.yesterday_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.yesterday_subscribers}}</div>
+										{% endif %}
+
 									</div>
 									{% endfor %}
 									<div class="channel-tabs-channels__btn-wrap">
@@ -105,7 +115,11 @@
 												{{item.subscribers}}
 											</div>
 										</div>
+										{% if item.weekly_subscribers > 0 %}
 										<div class="label-blue">+{{item.weekly_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.weekly_subscribers}}</div>
+										{% endif %}
 									</div>
 
 									{% endfor %}
