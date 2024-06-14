@@ -79,7 +79,7 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('http://194.163.177.119/chanel/', files=files)
+                response = requests.post('https://stattron.ru/chanel/', files=files)
 
 
 

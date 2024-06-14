@@ -9,8 +9,11 @@ source venv/bin/activate
 sudo systemctl restart nginx
 gunicorn Statron.wsgi:application
 nohup python manage.py run_bot &
+nohup python3 webhook.py &
 ps aux | grep webhook.py
+nohup celery -A Statron worker -l info &
 
+pkill -f "python manage.py run_bot"
 
 
 

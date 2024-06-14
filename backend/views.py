@@ -110,7 +110,7 @@ def process_message(json_data):
                              text=f"✌️Привет, {chat_username} Добро пожаловать на сервис STATTRON. Тут можно легко и просто получить подробную статистику на канал. Отправьте ссылку/id на канал, либо перешлите пост из канала, чтобы мы могли его проанализировать:",
                              reply_markup=reply_markup)
         elif message_text == "🔗Наш сайт":
-            bot.send_message(chat_id=chat_id, text="https://statron.ru")
+            bot.send_message(chat_id=chat_id, text="https://stattron.ru")
         else:
 
             chanel_link = Chanel.objects.all().values_list('chanel_link', flat=True)
@@ -135,13 +135,13 @@ def process_message(json_data):
                 inline_keyboard = [
                     [InlineKeyboardButton("📊Анализ на сайте",
                                           web_app=WebAppInfo(
-                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://stattron.ru/detail/{chanel}'))],
                     [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://stattron.ru/detail/{chanel}'))],
                     [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://479d-213-230-86-78.ngrok-free.app/detail/{chanel}'))],
+                                              f'https://stattron.ru/detail/{chanel}'))],
                 ]
                 # Convert inline keyboard to InlineKeyboardMarkup
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
