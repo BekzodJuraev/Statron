@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from django.contrib.auth import views as auth_views
 
 urlpatterns=[
  path('chanel/',views.ChanelAPI.as_view(),name="chanel"),
@@ -22,6 +22,11 @@ urlpatterns=[
  path('posts/',views.Ad_posts.as_view(), name='posts'),
  path('telegram_webhook/', views.telegram_webhook, name='telegram_webhook'),
  path('note/',views.Like_chanel.as_view(),name='like'),
+ path('posts_ads/',views.Ads_posts.as_view(), name='posts_ads'),
  path('hello/',views.HelloWorldView.as_view(),name='hello'),
- path('',views.Main.as_view(),name='main')
+ path('',views.Main.as_view(),name='main'),
+ path('password-reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+ path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+ path('password-reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+ path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]

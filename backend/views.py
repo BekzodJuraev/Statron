@@ -9,7 +9,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -122,7 +122,10 @@ def process_message(json_data):
                     chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
                     chanel__chanel_link=message_text, mention=True).count()
-                chanel = Chanel.objects.get(chanel_link=message_text).pk
+                chanel = Chanel.objects.get(chanel_link=message_text).values('pk','name')
+
+                chanel_pk = chanel['pk']
+                chanel_name = chanel['name']
 
                 analytics_data = '\n'.join(
                     [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])
@@ -135,13 +138,13 @@ def process_message(json_data):
                 inline_keyboard = [
                     [InlineKeyboardButton("📊Анализ на сайте",
                                           web_app=WebAppInfo(
-                                              f'https://stattron.ru/detail/{chanel}'))],
+                                              f'https://stattron.ru/detail/{chanel_pk}'))],
                     [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://stattron.ru/detail/{chanel}'))],
+                                              f'https://stattron.ru/posts/?chanel={chanel_name}'))],
                     [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://stattron.ru/detail/{chanel}'))],
+                                              f'https://stattron.ru/posts/?mention={chanel_name}'))],
                 ]
                 # Convert inline keyboard to InlineKeyboardMarkup
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
@@ -258,7 +261,7 @@ class RegistrationAPIView(generics.CreateAPIView):
 class Main(ListView):
     template_name = 'main.html'
     context_object_name = "item"
-    model = Chanel
+    model = Chanel_img
 
     def get_context_data(self, *, object_list=None, **kwargs):
 
@@ -406,7 +409,7 @@ class UpdatePassword(LoginRequiredMixin,View):
        # return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 class DetailChanel(DetailView):
-    model = Chanel
+    model = Chanel_img
     template_name = 'detail.html'
     context_object_name = 'item'
 
@@ -472,7 +475,7 @@ class DetailChanel(DetailView):
         channel_id=chanel_ads.values_list('mentioned_channel__chanel_id',flat=True)
 
 
-        chanel_ads_new = Chanel.objects.filter(name__in=channel_names).prefetch_related(
+        chanel_ads_new = Chanel_img.objects.filter(name__in=channel_names).prefetch_related(
             'subperhour',
             Prefetch('mentions', queryset=Mentions.objects.select_related('post__chanel')),
         )
@@ -536,12 +539,13 @@ class DetailChanel(DetailView):
         context['chanel_ads']=chanel_ads
 
         context['er']=round(er,1)
-
+        context['like']=Like.objects.filter(username=self.request.user.profile,chanel_name=self.object)
         context['er_daily'] = round(er_daily, 1)
         context['all_posts']=all_posts
         context['subperhour'] = mention_chanel
         context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
+        context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
         context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
         context['posts_ads'] = Posts.objects.filter(chanel=self.object,mention=True).values('created_at__date').annotate(
@@ -572,9 +576,9 @@ class DetailChanel(DetailView):
 def search_view(request):
     query = request.GET.get('q', '')
     if query:
-        results = Chanel.objects.filter(name__icontains=query)
+        results = Chanel_img.objects.filter(name__icontains=query)
     else:
-        results = Chanel.objects.none()
+        results = Chanel_img.objects.none()
 
     data = []
     for obj in results:
@@ -608,7 +612,7 @@ class MyChanels(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
 
 class Search(ListView):
-    model = Chanel
+    model = Chanel_img
     context_object_name = 'item'
     template_name = 'search.html'
     paginate_by = 8
@@ -624,7 +628,7 @@ class Search(ListView):
         mention_from=self.request.GET.get('mention_from')
         mention_to=self.request.GET.get('mention_to')
         description=self.request.GET.get('description')
-        queryset = Chanel.objects.all()
+        queryset = Chanel_img.objects.all()
 
         if search_query is not None and search_query.startswith("@"):
             search_query = search_query.strip("@")
@@ -692,7 +696,7 @@ class Search(ListView):
         context = super().get_context_data(**kwargs)
         context['category']=Category_chanels.objects.all()
         context['lists'] = self.get_queryset().count()
-        context['count'] = Chanel.objects.select_related('add_chanel').prefetch_related('add_chanel__cost_formats')
+        context['count'] = Chanel_img.objects.select_related('add_chanel').prefetch_related('add_chanel__cost_formats')
 
 
         return context
@@ -746,6 +750,55 @@ class Ad_posts(LoginRequiredMixin,ListView):
         context['count']=self.object_list.count()
         return context
 
+
+class Ads_posts(LoginRequiredMixin,ListView):
+    template_name = 'ads-posts.html'
+    model = Posts
+    context_object_name = 'obj'
+    paginate_by = 6
+    login_url = reverse_lazy('login_site')
+
+
+
+
+    def get_queryset(self):
+        queryset=self.model.objects.filter(mention=True)
+        mention=self.request.GET.get("mention")
+        text=self.request.GET.get("text")
+        chanel=self.request.GET.get('chanel')
+        period=self.request.GET.get('period')
+        view_from=self.request.GET.get('view_from')
+        view_to=self.request.GET.get('view_to')
+
+
+
+        if mention:
+            queryset=queryset.filter(mentions_post__mentioned_channel__name__iregex=mention)
+
+        if text:
+            queryset=queryset.filter(text__icontains=text)
+
+        if chanel:
+            queryset=queryset.filter(chanel__name__iregex=chanel)
+
+        if view_from and view_to:
+            queryset=queryset.filter(view__range=[view_from,view_to])
+
+        if period:
+            period_from, period_to = period.split(" - ")
+            queryset = queryset.filter(date__range=(period_from, period_to))
+
+
+
+        return queryset
+
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['count']=self.object_list.count()
+        return context
 
 
 class Like_chanel(LoginRequiredMixin,ListView):

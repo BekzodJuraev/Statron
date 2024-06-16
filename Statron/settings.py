@@ -166,3 +166,4 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_COLLAPSED': True,
     'POSITION': 'bottom',
 }
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

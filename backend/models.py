@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
 
+
+
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     phone_number = PhoneNumberField()
@@ -51,8 +53,6 @@ class Chanel(models.Model):
     yesterday_subscribers=models.IntegerField(default=0,blank=True,null=True)
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
-
-
 
 
 
@@ -119,6 +119,17 @@ class Chanel(models.Model):
         verbose_name="Канал"
         verbose_name_plural="Канал"
         ordering=['-subscribers']
+class Chanel_img(Chanel):
+    class Meta:
+        proxy=True
+    class Chanel_manager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(pictures__isnull=False).exclude(pictures='')
+
+    objects = Chanel_manager()
+
+
+
 
 class Subperhour(models.Model):
     chanel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name='subperhour')
@@ -220,3 +231,4 @@ class Add_userbot(models.Model):
 
     def __str__(self):
         return self.name
+

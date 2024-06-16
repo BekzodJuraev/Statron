@@ -13,13 +13,13 @@
 							<input type="text" name="email" placeholder="Ваш email" class="auth-form__input">
 						</div>
 						<div class="auth-form__item">
-							<input type="text" name="phone_number" placeholder="+998" class="auth-form__input">
-							<a href="https://collaborator.pro/ua/privacy-policy" class="auth-form__policy hhv-blue">
+							<input type="text" name="phone_number" id="phone"  placeholder="+7"  type="tel" class="auth-form__input">
+
 							</a>
 						</div>
 						<div class="auth-form__item">
 							<input type="password" name="password" placeholder="Пароль" class="auth-form__input">
-							<a href="https://collaborator.pro/ua/privacy-policy" class="auth-form__policy hhv-blue">
+
 							</a>
 						</div>
 
@@ -35,7 +35,7 @@
 						<div class="label-white label-white_s16 label-white_fw700">или продолжить с</div>
 						<div class="place-ad__btns">
 							<button class="button button_sm button_no-bg" type="button">
-								<picture><source srcset="img/icons/tg.webp" type="image/webp"><img src="img/icons/tg.png" alt=""></picture>
+								<picture><source srcset="{% static 'img/icons/tg.webp' %}" type="image/webp"><img src="{% static 'img/icons/tg.png' %}" alt=""></picture>
 								Telegram
 							</button>
 						</div>
@@ -81,5 +81,16 @@
             });
         });
     </script>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js?_v=20240118214023"></script>
+
+	<script>
+		const inputinputPhone1 = document.querySelector("#phone");
+		window.intlTelInput(inputinputPhone1, {
+			initialCountry: "ru",
+			separateDialCode: true,
+			utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+		});
+	</script>
 {% endblock %}
 
