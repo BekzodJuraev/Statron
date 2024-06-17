@@ -735,8 +735,11 @@ class Ad_posts(LoginRequiredMixin,ListView):
             queryset=queryset.filter(view__range=[view_from,view_to])
 
         if period:
-            period_from, period_to = period.split(" - ")
-            queryset = queryset.filter(date__range=(period_from, period_to))
+            try:
+                period_from, period_to = period.split(" - ")
+                queryset = queryset.filter(date__range=(period_from, period_to))
+            except:
+                pass
 
 
 
