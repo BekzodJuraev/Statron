@@ -235,8 +235,9 @@
 										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
 									</td>
 									<td>
+
 										<div class="search-channels__btns">
-											<button class="button button_no-bg" type="button">Описание</button>
+											<button class="button button_no-bg" data-popup="#popup-description{{item.pk}}" type="button">Описание</button>
 											<button class="button button_no-bg" type="button" data-popup="#popup-content{{item.pk}}">Контент</button>
 											<a href="{% url 'detail' item.pk %}"><button class="button" type="button">Анализ</button></a>
 										</div>
@@ -387,8 +388,35 @@
     </div>
 </div>
 {% endfor %}
+{% for item in object_list %}
+<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
+
+                <div class="popup__list">
+                    <div class="item-popup">
+
+                        <div class="item-popup__content">
+                            <div class="item-popup__text">
+                                <p class="text">
+                                    {{item.description}}
+                                </p>
+                            </div>
+                        </div>
 
 
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
 <script>
 	$(document).ready(function () {
     $('.copyButton').click(function() {

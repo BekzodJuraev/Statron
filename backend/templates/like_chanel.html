@@ -249,8 +249,8 @@
 									</td>
 									<td>
 										<div class="search-channels__btns">
-											<button class="button button_no-bg" type="button">Описание</button>
-											<button class="button button_no-bg" type="button" data-popup="#popup-content">Контент</button>
+											<button class="button button_no-bg" data-popup="#popup-description{{item.chanel_name.pk }}" type="button">Описание</button>
+											<button class="button button_no-bg" type="button" data-popup="#popup-content{{item.chanel_name.pk}}">Контент</button>
 											<a href="{% url 'detail' item.chanel_name.pk %} "><button class="button" type="button">Анализ</button></a>
 										</div>
 									</td>
@@ -412,8 +412,8 @@
 									</td>
 									<td>
 										<div class="search-channels__btns">
-											<button class="button button_no-bg" type="button">Описание</button>
-											<button class="button button_no-bg" type="button" data-popup="#popup-content{{item.pk}}">Контент</button>
+											<button class="button button_no-bg" data-popup="#popup-description{{item.chanel_name.pk }}" type="button">Описание</button>
+											<button class="button button_no-bg" type="button" data-popup="#popup-content{{item.chanel_name.pk}}">Контент</button>
 											<a href="{% url 'detail' item.chanel_name.pk %} "><button class="button" type="button">Анализ</button></a>
 										</div>
 									</td>
@@ -445,7 +445,7 @@
 		</main>
 
 {% for item in item %}
-<div id="popup-content{{item.pk}}" aria-hidden="true" class="popup ">
+<div id="popup-content{{item.chanel_name.pk}}" aria-hidden="true" class="popup ">
     <div class="popup__wrapper">
         <div class="popup__content">
             <button data-close type="button" class="popup__close">
@@ -533,7 +533,35 @@
     </div>
 </div>
 {% endfor %}
+{% for item in item %}
+<div id="popup-description{{item.chanel_name.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
 
+                <div class="popup__list">
+                    <div class="item-popup">
+
+                        <div class="item-popup__content">
+                            <div class="item-popup__text">
+                                <p class="text">
+                                    {{item.chanel_name.description}}
+                                </p>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
 
 
 

@@ -37,7 +37,8 @@
 						<div data-tabs-body class="analitics-tabs__content">
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+									<p class="main-analitics__medal" data-popup="#popup-rank{{item.pk}}">{{rank.rank}}</p>
+									<!-- <img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt=""> -->
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
@@ -1561,6 +1562,37 @@
 				</div>
 			</section>
 		</main>
+
+
+<div id="popup-rank{{item.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
+
+                <div class="popup__list">
+                    <div class="item-popup">
+
+                        <div class="item-popup__content">
+                            <div class="item-popup__text">
+                                <p class="text">
+                                    Канал занимает {{rank.rank}} место по числу подписчиков.
+                                </p>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% for item in post %}
 <div id="popup-content_{{item.pk}}" aria-hidden="true" class="popup ">
     <div class="popup__wrapper">

@@ -483,6 +483,16 @@ class DetailChanel(DetailView):
             id_channel_forward_from__in=channel_id
         ).select_related('chanel')
 
+        rank = (
+            Chanel.objects
+                .filter(subscribers__gt=self.object.subscribers)
+                .aggregate(rank=Count('id') + 1)
+
+        )
+        context['rank']=rank
+
+
+
 
 
 
@@ -539,7 +549,10 @@ class DetailChanel(DetailView):
         context['chanel_ads']=chanel_ads
 
         context['er']=round(er,1)
-        context['like']=Like.objects.filter(username=self.request.user.profile,chanel_name=self.object)
+        if self.request.user.is_authenticated:
+            context['like'] = Like.objects.filter(username=self.request.user.profile, chanel_name=self.object)
+
+
         context['er_daily'] = round(er_daily, 1)
         context['all_posts']=all_posts
         context['subperhour'] = mention_chanel
@@ -576,7 +589,7 @@ class DetailChanel(DetailView):
 def search_view(request):
     query = request.GET.get('q', '')
     if query:
-        results = Chanel_img.objects.filter(name__icontains=query)
+        results = Chanel_img.objects.filter(name__iregex=query)
     else:
         results = Chanel_img.objects.none()
 
