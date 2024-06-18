@@ -168,7 +168,7 @@
 							{% for item in object_list  %}
 
 							{% with last_cost_format=item.add_chanel.cost_formats.last %}
-							{% with er=item.views|div:item.subscribers|mul:100 %}
+							{% with er=item.subscribers|div:item.views|mul:100 %}
 
 
 								<tr>

@@ -40,17 +40,20 @@ def create_views(sender,instance,created,*args,**kwargs):
 @receiver(post_save,sender=Chanel)
 def create_views(sender,instance,created,*args,**kwargs):
     hour=timezone.now() - timedelta(hours=1)
+    first = Subperhour.objects.filter(chanel=instance, created_at__lte=hour).first()
+
 
     try:
         obj = Subperhour.objects.get(chanel=instance, created_at__gte=hour)
+
         obj.subperhour = instance.subscribers
-        obj.difference = instance.daily_subscribers  # Corrected line
+        obj.difference = instance.subscribers - first.subperhour   # Corrected line
         obj.save(update_fields=['subperhour','difference'])
     except Subperhour.DoesNotExist:
         Subperhour.objects.create(
             chanel=instance,
             subperhour=instance.subscribers,
-            difference=instance.daily_subscribers
+            difference=instance.subscribers - first.subperhour
         )
 
 @receiver(post_save,sender=Posts)
