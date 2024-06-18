@@ -122,10 +122,10 @@ def process_message(json_data):
                     chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
                     chanel__chanel_link=message_text, mention=True).count()
-                chanel = Chanel.objects.get(chanel_link=message_text).values('pk','name')
+                chanel = Chanel.objects.get(chanel_link=message_text)
 
-                chanel_pk = chanel['pk']
-                chanel_name = chanel['name']
+                chanel_pk = chanel.pk
+                chanel_name = chanel.name
 
                 analytics_data = '\n'.join(
                     [f"📅 {data['created_at'].strftime('%Y-%m-%d')}: {data['subperday']}" for data in chanel_get])

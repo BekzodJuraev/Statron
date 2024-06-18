@@ -62,6 +62,7 @@ class Chanel(models.Model):
 
     def save(self, *args, **kwargs):
         if self.pk is not None:
+
             old_instance = Chanel.objects.select_related('add_chanel').get(pk=self.pk)
             old_subscribers = old_instance.subscribers
             old_views=old_instance.views
