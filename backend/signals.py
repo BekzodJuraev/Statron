@@ -47,14 +47,29 @@ def create_views(sender,instance,created,*args,**kwargs):
         obj = Subperhour.objects.get(chanel=instance, created_at__gte=hour)
 
         obj.subperhour = instance.subscribers
-        obj.difference = instance.subscribers - first.subperhour   # Corrected line
+        if first:
+            obj.difference = instance.subscribers - first.subperhour
+        else:
+            obj.difference = 0
+
+            # Corrected line
         obj.save(update_fields=['subperhour','difference'])
     except Subperhour.DoesNotExist:
-        Subperhour.objects.create(
-            chanel=instance,
-            subperhour=instance.subscribers,
-            difference=instance.subscribers - first.subperhour
-        )
+        if first:
+            Subperhour.objects.create(
+                chanel=instance,
+                subperhour=instance.subscribers,
+                difference=instance.subscribers - first.subperhour
+            )
+        else:
+            Subperhour.objects.create(
+                chanel=instance,
+                subperhour=instance.subscribers,
+                difference=0
+            )
+
+
+
 
 @receiver(post_save,sender=Posts)
 def create_mention(sender,instance,created,*args,**kwargs):
