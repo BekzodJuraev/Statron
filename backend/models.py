@@ -75,7 +75,7 @@ class Chanel(models.Model):
 
 
                 if self.last_update.date() == date.today():
-                    print('hello')
+
                     self.daily_subscribers += difference
                     self.daily_views+=difference_views
                     existing_sub_per_day = SubPerday.objects.filter(chanel=old_instance,created_at__date=date.today()).first()
