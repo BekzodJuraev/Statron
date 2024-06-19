@@ -79,7 +79,7 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://stattron.ru/chanel/', files=files)
+                response = requests.post('http://127.0.0.1:8000/chanel/', files=files)
 
 
 
@@ -105,10 +105,12 @@ def add_chanel(chanel_link):
 
 
                 if text is not None:
+                    view_text=text
                     text=text.lower()
+                    channel_username=channel_username.lower()
                     instance=Posts.objects.create(
                         chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
-                        text=text,
+                        text=view_text,
                         view=views.views,
                         media=media,
                         date=timezone.make_aware(views.date),

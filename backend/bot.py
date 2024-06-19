@@ -71,11 +71,13 @@ async def update(client):
 
 
                         if text is not None:
+                            view_text = text
                             text = text.lower()
+                            chanel_link=chanel_link.lower()
                             if Post_get is None or timezone.make_aware(views.date) > Post_get.date:
                                 await sync_to_async(Posts.objects.create)(
                                     chanel=chanel_get,  # Assuming chanel_id is the ID of the channel
-                                    text=text,
+                                    text=view_text,
                                     view=views.views,
                                     media=media,
                                     date=timezone.make_aware(views.date),

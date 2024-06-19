@@ -13,7 +13,7 @@
 							<input type="text" name="email" placeholder="Ваш email" class="auth-form__input">
 						</div>
 						<div class="auth-form__item">
-							<input type="text" name="phone_number" id="phone"  placeholder="+7"  type="tel" class="auth-form__input">
+							<input name="phone_number" id="phone"  value="+7" class="auth-form__input">
 
 							</a>
 						</div>
@@ -88,7 +88,7 @@
 		const inputinputPhone1 = document.querySelector("#phone");
 		window.intlTelInput(inputinputPhone1, {
 			initialCountry: "ru",
-			separateDialCode: true,
+			separateDialCode: false,
 			utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
 		});
 	</script>

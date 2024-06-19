@@ -122,6 +122,7 @@ def process_message(json_data):
                     chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
                     chanel__chanel_link=message_text, mention=True).count()
+
                 chanel = Chanel.objects.get(chanel_link=message_text)
 
                 chanel_pk = chanel.pk
@@ -642,6 +643,8 @@ class Search(ListView):
         mention_to=self.request.GET.get('mention_to')
         description=self.request.GET.get('description')
         queryset = Chanel_img.objects.all()
+        #print(views_from,views_to)
+        #print(subscribers_from,subscribers_to)
 
         if search_query is not None and search_query.startswith("@"):
             search_query = search_query.strip("@")
@@ -666,14 +669,16 @@ class Search(ListView):
 
 
 
+        try:
+            if mention_from and mention_to:
+                queryset = queryset.filter(mentioned__range=[mention_from, mention_to])
 
-        if mention_from and mention_to:
-            queryset=queryset.filter(mentioned__range=[mention_from,mention_to])
-
-        elif mention_from:
-            queryset = queryset.filter(mentioned__gte=mention_from)
-        elif mention_from:
-            queryset = queryset.filter(mentioned__lte=mention_from)
+            elif mention_from:
+                queryset = queryset.filter(mentioned__gte=mention_from)
+            elif mention_from:
+                queryset = queryset.filter(mentioned__lte=mention_from)
+        except:
+            pass
 
 
 
