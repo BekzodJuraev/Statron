@@ -122,6 +122,7 @@ def process_message(json_data):
                     chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
                     chanel__chanel_link=message_text, mention=True).count()
+                Ads_count=Mentions.objects.filter(post__chanel__name=message_text).count()
 
                 chanel = Chanel.objects.get(chanel_link=message_text)
 
@@ -143,7 +144,7 @@ def process_message(json_data):
                     [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
                                           web_app=WebAppInfo(
                                               f'https://stattron.ru/posts/?chanel={chanel_name}'))],
-                    [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
+                    [InlineKeyboardButton(f"📈Рекламы на канале - {Ads_count}",
                                           web_app=WebAppInfo(
                                               f'https://stattron.ru/posts/?mention={chanel_name}'))],
                 ]
@@ -557,6 +558,8 @@ class DetailChanel(DetailView):
         context['er_daily'] = round(er_daily, 1)
         context['all_posts']=all_posts
         context['subperhour'] = mention_chanel
+        context['post_all'] = get_posts
+        context['post_mention']=get_posts.filter(mention=True)
         context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
