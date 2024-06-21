@@ -14,8 +14,8 @@ ps aux | grep webhook.py
 nohup celery -A Statron worker -l info &
 
 pkill -f "python manage.py run_bot"
-
-
-
+pkill -f "gunicorn"
+pkill -f 'celery'
+pkill -f 'webhook.py'
 sudo systemctl restart nginx
 sudo systemctl restart nginx
