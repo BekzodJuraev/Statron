@@ -122,7 +122,7 @@ def process_message(json_data):
                     chanel__chanel_link=message_text ).values('created_at', 'subperday')
                 Mention_count = Posts.objects.filter(
                     chanel__chanel_link=message_text, mention=True).count()
-                Ads_count=Mentions.objects.filter(mentioned_channel__name=message_text).count()
+                Ads_count=Mentions.objects.filter(mentioned_channel__chanel_link=message_text).count()
 
                 chanel = Chanel.objects.get(chanel_link=message_text)
 
