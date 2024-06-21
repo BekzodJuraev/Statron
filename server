@@ -7,6 +7,7 @@ python -m celery -A Statron worker -l info --pool=solo
 
 source venv/bin/activate
 sudo systemctl restart nginx
+
 gunicorn Statron.wsgi:application
 nohup python manage.py run_bot &
 nohup python3 webhook.py &

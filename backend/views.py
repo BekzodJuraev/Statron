@@ -141,12 +141,12 @@ def process_message(json_data):
                     [InlineKeyboardButton("📊Анализ на сайте",
                                           web_app=WebAppInfo(
                                               f'https://stattron.ru/detail/{chanel_pk}'))],
-                    [InlineKeyboardButton(f"📌Упоминаний - {Mention_count}",
+                    [InlineKeyboardButton(f"📌Упоминаний - {Ads_count}",
                                           web_app=WebAppInfo(
                                               f'https://stattron.ru/posts/?mention={chanel_name}'))],
                     [InlineKeyboardButton(f"📈Рекламы на канале - {Mention_count}",
                                           web_app=WebAppInfo(
-                                              f'https://stattron.ru/posts_ads/?mention={chanel_name}'))],
+                                              f'https://stattron.ru/posts_ads/?chanel={chanel_name}'))],
                 ]
                 # Convert inline keyboard to InlineKeyboardMarkup
                 inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
