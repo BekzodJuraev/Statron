@@ -415,6 +415,13 @@ class DetailChanel(DetailView):
     template_name = 'detail.html'
     context_object_name = 'item'
 
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Customize the queryset here
+        return queryset.annotate(v=F('views')/Count('post'))
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
