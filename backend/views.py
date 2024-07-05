@@ -314,7 +314,7 @@ class Main(ListView):
 
 
 
-
+        context['main']=self.object_list.all().annotate(v=F('views')/Count('post')).order_by('-subscribers')[:6]
 
 
         context['chart_month']=chart_month
