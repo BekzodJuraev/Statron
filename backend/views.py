@@ -570,7 +570,6 @@ class DetailChanel(DetailView):
         context['post'] = get_posts[:30]
         context['count']=get_posts.filter(mention=True).count()
         context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
-        context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
         context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
         context['posts_ads'] = Posts.objects.filter(chanel=self.object,mention=True).values('created_at__date').annotate(
             count=Count('id'))
