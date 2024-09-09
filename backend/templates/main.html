@@ -1,10 +1,314 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load static %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="home-mainscreen">
+				<div class="home-mainscreen__container">
+					<h2 class="home-mainscreen__title title">Top active Telegram channels</h2>
+
+
+					<ul class="home-mainscreen__list">
+						{% for item in main|slice:":6" %}
+						<li class="home-mainscreen__item item-mainscreen">
+							<div class="item-mainscreen__head">
+								<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__img">
+									<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}"  style="border-radius: 50%; " alt=""></picture>
+								</a>
+								<div class="item-mainscreen__content">
+									<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__title title hhv-blue title_w500">{{item.name}}</a>
+									<div class="item-mainscreen__label label-grey"></div>
+								</div>
+								<div class="item-mainscreen__info">
+									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
+										<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+										{{ item.subscribers}}
+									</div>
+									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
+										<img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{ item.v }}
+									</div>
+								</div>
+							</div>
+							<a href="{% url 'detail' item.pk %}" target="_blank" class="item-mainscreen__btn button button_no-bg">More details</a>
+						</li>
+						{% endfor %}
+
+
+					</ul>
+				</div>
+			</section>
+			<section class="channels">
+				<div class="channels__container container-50p">
+					<div class="container-50p__item">
+						<div data-tabs class="channels-tabs">
+							<div class="tabs-head">
+								<h4 class="channels-tabs__title title">New subscribers</h4>
+								<nav data-tabs-titles class="tabs-navigation">
+									<button type="button" class="tabs-navigation__title _tab-active">Today</button>
+									<button type="button" class="tabs-navigation__title">Yesterday</button>
+									<button type="button" class="tabs-navigation__title">This week</button>
+								</nav>
+							</div>
+							<div data-tabs-body class="channels-tabs__content">
+								<div class="channels-tabs__body">
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										{% if item.daily_subscribers > 0 %}
+										<div class="label-blue">+{{item.daily_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.daily_subscribers}}</div>
+										{% endif %}
+
+									</div>
+									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">View all</button></a>
+									</div>
+								</div>
+
+
+
+								<div class="channels-tabs__body">
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										{% if item.yesterday_subscribers > 0 %}
+										<div class="label-blue">+{{item.yesterday_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.yesterday_subscribers}}</div>
+										{% endif %}
+
+									</div>
+									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">View all</button></a>
+									</div>
+								</div>
+								<div class="channels-tabs__body">
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										{% if item.weekly_subscribers > 0 %}
+										<div class="label-blue">+{{item.weekly_subscribers}}</div>
+										{% else %}
+										<div class="label-blue">{{item.weekly_subscribers}}</div>
+										{% endif %}
+									</div>
+
+									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">View all</button></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="container-50p__item">
+						<div data-tabs class="channels-tabs">
+							<div class="tabs-head">
+								<h4 class="channels-tabs__title title">Views/Subscribers</h4>
+								<nav data-tabs-titles class="tabs-navigation">
+									<button type="button" class="tabs-navigation__title _tab-active">Today</button>
+									<button type="button" class="tabs-navigation__title">Yesterday</button>
+								</nav>
+							</div>
+							<div data-tabs-body class="channels-tabs__content">
+								<div class="channels-tabs__body">
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										{% if item.daily_views > 0 %}
+										<div class="label-blue">{{item.daily_views}}</div>
+										{% else %}
+										<div class="label-blue">0</div>
+										{% endif %}
+
+									</div>
+									{% endfor %}
+
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">View all</button></a>
+									</div>
+								</div>
+
+
+
+								<div class="channels-tabs__body">
+									{% for item in top_sub %}
+									<div class="channel-tabs-channels">
+										<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+										</a>
+										<div class="channel-tabs-channels__content">
+											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
+											<div class="channel-count label-grey">
+												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+												{{item.subscribers}}
+											</div>
+										</div>
+										{% if item.yesterday_views > 0 %}
+										<div class="label-blue">{{item.yesterday_views}}</div>
+										{% else %}
+										<div class="label-blue">0</div>
+										{% endif %}
+
+									</div>
+									{% endfor %}
+									<div class="channel-tabs-channels__btn-wrap">
+										<a href="{% url 'search' %}"><button class="channel-tabs-channels__btn button" type="button">View all</button></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="charts">
+				<div class="charts__container container-50p">
+					<div class="container-50p__item">
+						<div data-tabs class="charts-tabs">
+							<div class="tabs-head">
+								<h4 class="channels-tabs__title title">Advertising posts by day</h4>
+								<nav data-tabs-titles class="tabs-navigation">
+									<button type="button" class="tabs-navigation__title _tab-active">1 month</button>
+									<button type="button" class="tabs-navigation__title">3 month</button>
+									<button type="button" class="tabs-navigation__title">6 month</button>
+								</nav>
+							</div>
+							<div data-tabs-body class="charts-tabs__content">
+								<div class="charts-tabs__body">
+									<div class="charts-tabs__chart">
+										<canvas id="chart_1"></canvas>
+									</div>
+									<div class="charts-tabs__info">
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Advertising posts in the database</div>
+											<div class="label-blue label-blue_s24">{{mentioned}}</div>
+										</div>
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Published today</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								<div class="charts-tabs__body">
+									<div class="charts-tabs__chart">
+										<canvas id="chart_2"></canvas>
+									</div>
+									<div class="charts-tabs__info">
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Advertising posts in the database</div>
+											<div class="label-blue label-blue_s24">{{mentioned}}</div>
+										</div>
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Published today</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+								<div class="charts-tabs__body">
+									<div class="charts-tabs__chart">
+										<canvas id="chart_3"></canvas>
+									</div>
+									<div class="charts-tabs__info">
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Advertising posts in the database</div>
+											<div class="label-blue label-blue_s24">{{mentioned}}</div>
+										</div>
+										<div class="charts-tabs__info-item">
+											<div class="label-black">Published today</div>
+											 {% if posts_today < 0 %}
+											<div class="label-blue label-blue_s24">{{posts_today}}</div>
+											{% else %}
+											<div class="label-blue label-blue_s24">+{{posts_today}}</div>
+											{% endif %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="container-50p__item">
+						<div data-tabs class="charts-tabs">
+							<div class="tabs-head">
+								<h4 class="channels-tabs__title title">Publications by hour, %</h4>
+								<nav data-tabs-titles class="tabs-navigation">
+									<button type="button" class="tabs-navigation__title _tab-active" style="display: none;">1 month</button>
+								</nav>
+							</div>
+							<div data-tabs-body class="charts-tabs__content">
+								<div class="charts-tabs__body">
+									<div class="charts-tabs__chart">
+										<canvas id="chart_4"></canvas>
+									</div>
+									<div class="charts-tabs__info">
+										<div class="charts-tabs__info-item charts-tabs__info-item_auto">
+											<div class="label-black">Total publications</div>
+											<div class="label-blue label-blue_s24">{{total}}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+{% else %}
 <main class="page">
 			<section class="home-mainscreen">
 				<div class="home-mainscreen__container">
 					<h2 class="home-mainscreen__title title">ТОП активных телеграмм каналов</h2>
+
 
 					<ul class="home-mainscreen__list">
 						{% for item in main|slice:":6" %}
@@ -299,6 +603,7 @@
 				</div>
 			</section>
 		</main>
+{% endif %}
 <script>
 	$(document).ready(function() {
      if ($("#chart_1").length) {

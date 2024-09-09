@@ -1,4 +1,134 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<header class="header">
+			<div class="header__container">
+				<div class="header__column">
+					<a href="{% url 'main' %}" class="header__logo">
+						<picture><source srcset="{% static 'img/main_logo.png' %}" type="image/webp"><img class="img-fluid logo-desc" src="{% static 'img/main_logo.png' %}" alt="" width="40%" height="40%"></picture>
+						<picture><source srcset="{% static 'img/main_logo.png' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/main_logo.png' %}" alt=""></picture>
+					</a>
+					<form action="{% url 'search' %}" class="header__search" method="GET">
+						<input placeholder="Поиск..."  name="chanel_name" id="search-input" class="header__input" type="text">
+						<button class="header__search-btn" type="submit">
+							<img class="img-fluid" src="{% static 'img/icons/search.svg' %}" alt="">
+						</button>
+						<div id="search-results" class="search-results-container"></div>
+
+
+
+					</form>
+
+
+				</div>
+
+				<div class="header__column">
+					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header">
+						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
+							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								<span>Services</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</div>
+							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
+								<span></span>
+							</div>
+						</button>
+						<div class="dropdown-header__list">
+							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span></span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="{% url 'register_site' %}" class="dropdown-header__item dropdown-header__item_icon-right">
+								<span>Sign up</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<a href="{% url 'search' %}" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/1.svg' %}" alt="">
+									Channel directory
+								</span>
+
+							</a>
+							<a href=""  id="toggleButton" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/2.svg' %}" alt="">
+									Channel catalog
+								</span>
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+							</a>
+							<ul id="toggleLi" style="display: none;">
+								<li><a href="{% url 'posts_ads' %}"><span>
+
+									Sponsored posts
+								</span></a>
+									</li>
+								<li><a href="{% url 'like' %}"><span>
+
+									Promotional posts
+								</span></a></li>
+								<li>
+								<a href="{% url 'posts' %}"><span>
+
+									All posts
+								</span></a></li>
+
+								</ul>
+							<a href="{% url 'tracking' %}" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/3.svg' %}" alt="">
+									Post tracking
+								</span>
+							</a>
+							<a href="{% url 'my_chanels' %}" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/4.svg' %}" alt="">
+									My channels
+								</span>
+							</a>
+
+
+							<a href="{% url 'create' %}" class="dropdown-header__item">
+								<span>
+									<img src="{% static 'img/header/7.svg' %}" alt="">
+									Detailed statistics
+								</span>
+							</a>
+
+
+						</div>
+					</div>
+					<div class="header__btns">
+						<a href="{% url 'register_site' %}" class="header__btn button">Signup</a>
+						<a data-da=".dropdown-header__item span,767.98" href="{% url 'login_site' %}" class="header__btn_no-bg">
+							Login
+							<img src="{% static 'img/icons/login.svg' %}" alt="">
+						</a>
+					</div>
+					<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+						<button data-dropdown-btn class="dropdown-header__btn" type="button">
+							{% if request.LANGUAGE_CODE == 'en' %}
+							<span>En</span>
+							{% else %}
+							<span>Ru</span>
+							{% endif %}
+
+							<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+						</button>
+						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
+							{% if request.LANGUAGE_CODE == 'en' %}
+							<a href="/" class="dropdown-header-lang__item">Ru</a>
+							{% else %}
+							<a href="/en/" class="dropdown-header-lang__item">En</a>
+							{% endif %}
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</header>
+{% else %}
 <header class="header">
 			<div class="header__container">
 				<div class="header__column">
@@ -125,4 +255,6 @@
 			</div>
 
 		</header>
+{% endif %}
+
 

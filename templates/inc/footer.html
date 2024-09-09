@@ -1,4 +1,50 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__list">
+					<ul class="footer__list footer__list_sub">
+						<li class="footer__item">
+							<a href="{% url 'main'  %}" class="footer__link">Stattron</a>
+						</li>
+						<li class="footer__item">
+						<a href="mailto:stattron.online@gmail.com" class="footer__link">Contact us</a>
+						</li>
+
+
+					</ul>
+					<div data-da=".footer,992.98" class="footer__copy">2019-2022 ©Stattron</div>
+				</div>
+				<ul class="footer__list">
+
+
+					<li class="footer__item">
+						<a href="https://t.me/stattron_online" class="footer__link">Our Telegram channel</a>
+					</li>
+					{% if request.user.is_authenticated %}
+					<li class="footer__item">
+						<a href="{% url 'updatecabinet' request.user.profile.pk  %}" class="footer__link"> Partner program</a>
+					</li>
+					{% else %}
+					<li class="footer__item">
+						<a href="{% url 'login_site'  %}" class="footer__link"> Partner program</a>
+					</li>
+					{% endif %}
+
+
+				</ul>
+				<ul class="footer__list">
+
+					<li class="footer__item">
+						<a href="https://t.me/Kigapii" class="footer__link">Support</a>
+					</li>
+
+				</ul>
+			</div>
+		</footer>
+{% else %}
 <footer class="footer">
 			<div class="footer__container">
 				<div class="footer__list">
@@ -15,7 +61,7 @@
 					<div data-da=".footer,992.98" class="footer__copy">2019-2022 ©Stattron</div>
 				</div>
 				<ul class="footer__list">
-					
+
 
 					<li class="footer__item">
 						<a href="https://t.me/stattron_online" class="footer__link">Наш Telegram-канал</a>
@@ -41,3 +87,4 @@
 				</ul>
 			</div>
 		</footer>
+{% endif %}
