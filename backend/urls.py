@@ -21,6 +21,7 @@ urlpatterns=[
  path('tracking-posts/', views.TrackingPosts.as_view(), name='tracking'),
  path('posts/',views.Ad_posts.as_view(), name='posts'),
  path('telegram_webhook/', views.telegram_webhook, name='telegram_webhook'),
+ path('telegram_auth/', views.telegram_auth, name='telegram_auth'),
  path('note/',views.Like_chanel.as_view(),name='like'),
  path('posts_ads/',views.Ads_posts.as_view(), name='posts_ads'),
  path('hello/',views.HelloWorldView.as_view(),name='hello'),

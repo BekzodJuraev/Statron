@@ -60,6 +60,14 @@ class HelloWorldView(View):
 
 @csrf_exempt
 @require_POST
+def telegram_auth(request):
+    if request.method == 'POST':
+        json_data = json.loads(request.body.decode('utf-8'))
+        print(json_data)
+        return HttpResponse(status=200)
+
+@csrf_exempt
+@require_POST
 def telegram_webhook(request):
     if request.method == 'POST':
         json_data = json.loads(request.body.decode('utf-8'))
