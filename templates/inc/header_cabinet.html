@@ -10,7 +10,7 @@
 						<picture><source srcset="{% static 'img/main_logo.png' %}" type="image/webp"><img class="img-fluid logo-mob" src="{% static 'img/main_logo.png' %}" alt=""></picture>
 					</a>
 					<form action="{% url 'search' %}" class="header__search" method="GET">
-						<input placeholder="Поиск..."  name="chanel_name" id="search-input" class="header__input" type="text">
+						<input placeholder="Search..."  name="chanel_name" id="search-input" class="header__input" type="text">
 						<button class="header__search-btn" type="submit">
 							<img class="img-fluid" src="{% static 'img/icons/search.svg' %}" alt="">
 						</button>
@@ -43,44 +43,44 @@
 							<a href="{% url 'search' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/1.svg' %}" alt="">
-									Каталог каналов
+									Channel directory
 								</span>
 
 							</a>
 							<a href="{% url 'posts' %}" id="toggleButton" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/2.svg' %}" alt="">
-									Поиск постов
+									Channel catalog
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
 							<ul id="toggleLi" style="display: none;">
 								<li><a href="{% url 'posts_ads' %}"><span>
 
-									Рекламные посты
+									Sponsored posts
 								</span></a>
 									</li>
 								<li><a href="{% url 'like' %}"><span>
 
-									Посты в закладках
+								Promotional posts
 								</span></a></li>
 								<li>
 								<a href="{% url 'posts' %}"><span>
 
-									Все посты
+								All posts
 								</span></a></li>
 
 								</ul>
 							<a href="{% url 'tracking' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/3.svg' %}" alt="">
-									Отслеживание постов
+									Post tracking
 								</span>
 							</a>
 							<a href="{% url 'my_chanels' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/4.svg' %}" alt="">
-									Мои каналы
+										My channels
 								</span>
 							</a>
 
@@ -88,7 +88,7 @@
 							<a href="{% url 'create' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/7.svg' %}" alt="">
-									Детальная статистика
+									Detailed statistics
 								</span>
 							</a>
 
@@ -277,41 +277,41 @@
 								</a>
 								<div class="dropdown-header__head-content">
 									<div class="dropdown-header__head-email">{{user.email}}</div>
-									<div class="dropdown-header__head-status label-red">Демо-доступ</div>
+									<div class="dropdown-header__head-status label-red">Demo access</div>
 									<!-- <div class="dropdown-header__head-status label-green">Премиум-доступ</div> -->
 								</div>
 							</div>
 							<a href="{% url 'updatecabinet' user.profile.pk %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/1.svg' %}" alt="">
-									Профиль
+									Profile
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
 							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/2.svg' %}" alt="">
-									Реф.баланс: 0 руб.
+									Referral balance: 0 руб.
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
 							<a href="https://t.me/Kigapii" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/3.svg' %}" alt="">
-									Поддержка
+									Support
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
 							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/4.svg' %}" alt="">
-									<span class="color-red">Продление доступа</span>
+									<span class="color-red">Access renewal</span>
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
 							<div class="dropdown-header__bottom">
 
-								<a href="{% url 'logout' %}"><button class="button" type="button">Выйти</button></a>
+								<a href="{% url 'logout' %}"><button class="button" type="button">Log out</button></a>
 							</div>
 						</div>
 					</div>

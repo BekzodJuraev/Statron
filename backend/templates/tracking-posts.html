@@ -1,9 +1,87 @@
-
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+	<main class="page">
+			<section class="tracking-posts">
+				<div class="tracking-posts__container">
+					<div class="dynamic-analitics__dynamic">
+						<h2 class="title">Tracking management</h2>
+						<div class="dynamic-analitics__content">
+							<div>
+								<p class="text text_s20">
+In this section, you can subscribe to notifications in your Telegram for new posts mentioning your brand/account or any word/phrase.
+								</p>
+								<p class="text text_s20">
+Since you have an unpaid account, you are limited to 2 active tracking alerts at a time. To increase the limit to 15, please purchase a subscription.								</p>
+								<p class="text text_s20">
+Once your subscription ends, all your notifications will be suspended.								</p>
+							</div>
+							<div>
+								<p class="tex text_s20">
+									To set up notifications, click the button below, and in the dialog with the bot that appears, click  <span class="text_fw500">START</span>, then refresh this page.
+								</p>
+							</div>
+							<div class="btn-wrap">
+								<a href="https://t.me/Tgnative_bot">
+								<button class="button" type="button">Log in using Telegram</button></a>
+							</div>
+						</div>
+					</div>
+			</section>
+			<section class="tracking-form">
+				<div class="tracking-form__container">
+					<h2 class="title">Add Tracking</h2>
+					<form class="tracking-form__form" action="#" method="POST">
+						<div class="tracking-form__items">
+							<div class="tracking-form__item">
+								<label for="what-search" class="label-black">Что ищем:</label>
+								<select name="what-search" id="what-search" data-class-modif="custom-select">
+									<option value="1" selected>Упоминания канала</option>
+									<option value="2">Упоминания канала 1</option>
+									<option value="3">Упоминания канала 2</option>
+									<option value="4">Упоминания канала 3</option>
+								</select>
+							</div>
+							<div class="tracking-form__item">
+								<label for="channel" class="label-black">Упоминаемый канал:</label>
+								<input type="text" id="channel" name="channel" placeholder="Ссылка на канал или юзернейм" class="form__input">
+							</div>
+						</div>
+						<div class="tracking-form__item-btn">
+							<button type="submit" class="button">Запустить отслеживание</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="last-messages">
+				<div class="last-messages__container">
+					<h2 class="title">Последние уведомления</h2>
+					<div class="last-messages__list">
+						<div class="last-messages__item">
+							<h4 class="label-black">Фраза или канал</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Ссылка</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Где</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Дата</h4>
+						</div>
+						<div class="last-messages__item">
+							<h4 class="label-black">Обнаружено</h4>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
 
 
+{% else %}
 	<main class="page">
 			<section class="tracking-posts">
 				<div class="tracking-posts__container">
@@ -81,5 +159,5 @@
 				</div>
 			</section>
 		</main>
-
+{% endif %}
 {% endblock %}

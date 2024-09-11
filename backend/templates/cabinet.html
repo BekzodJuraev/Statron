@@ -1,6 +1,191 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="account-mainscreen">
+				<div class="account-mainscreen__container">
+					<div class="info-account">
+						<div class="info-account__item">
+							<div class="info-account__head">
+								<div class="info-account__img-wrap">
+									<div class="info-account__img">
+										{% if item.photo %}
+										<picture><source srcset="/{{item.photo}}" type="image/webp"><img class="img-fluid" src="/{{item.photo}}" alt="" style="width: 100%; /* Adjust size as needed */
+    height: 50%; /* Adjust size as needed */
+    border-radius: 50%; /* Adjust size as needed */
+        "></picture>
+										{% else %}
+										<picture><source srcset="{% static 'img/account/1.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/account/1.png' %}" alt=""></picture>
+										{% endif %}
+									</div>
+									<button class="info-account__label hhv-blue" type="button" id="changePhoto">Change photo</button>
+									    <input type="file" id="photoInput" name="photo" style="display: none;" accept="image/*">
+								</div>
+								<div class="info-account__head-content">
+									<div class="info-account__head-list">
+										<div class="info-account__head-list-item">
+											<div class="info-account__icon">
+												<img class="img-fluid" src="{% static 'img/account/pig.svg' %}" alt="">
+											</div>
+											<div class="info-account__item-content">
+												<div class="label-black">Ref. balance</div>
+												<div class="label-blue label-blue_s24">{{item.balance}} rub.</div>
+											</div>
+										</div>
+										<div class="info-account__head-list-item">
+											<div class="info-account__icon">
+												<img class="img-fluid" src="{% static 'img/account/member.svg' %}" alt="">
+											</div>
+											<div class="info-account__item-content">
+												<div class="label-black">Referrals</div>
+												<div class="label-blue label-blue_s24">О</div>
+											</div>
+										</div>
+									</div>
+									<div class="info-account__head-email">
+										<span>Email:</span>
+										<a href="mailto:{{item.email}}">{{item.email}}</a>
+									</div>
+								</div>
+							</div>
+							<div class="text">
+								The referral balance earned from inviting users can be used to extend premium access or withdraw to a Qiwi wallet.
+							</div>
+						</div>
+						<div class="info-account__item info-account__item_text">
+							<p class="text">
+								To remove all restrictions,  <a href="#" class="red">purchase full access </a>to all the service's features without limitations.
+								 purchase full access
+							</p>
+						</div>
+					</div>
+					<div class="settings-account account-mainscreen__item">
+						<h4 class="title">Settings</h4>
+						<div class="settings-account__content">
+							<div class="settings-account__item">
+								<div class="label-black">Telegram:</div>
+								<button class="button button_no-bg" type="button">Attach</button>
+							</div>
+
+							<div class="settings-account__item">
+								<div class="settings-account__email">
+									<span>Email:</span>
+									<a href="mailto:{{item.email}}">{{item.email}}</a>
+									<a class="label-blue" href="#">[?]</a>
+								</div>
+							</div>
+							<div></div>
+							<div></div>
+							<div></div>
+
+						</div>
+					</div>
+					<div class="change-pass account-mainscreen__item">
+						<h4 class="title">Change password</h4>
+						<form action="#" id="changePasswordForm" class="form form-pass" method="POST">
+							{% csrf_token %}
+							<div class="search-form__item">
+								<label for="current-pass" class="label-black">Enter the current password:</label>
+								<input type="password" id="current-pass" name="current-pass" placeholder="Current password" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="new-pass" class="label-black">Enter the new password:</label>
+								<input type="password" id="new-pass" name="new-pass" placeholder="Current password" class="form__input">
+							</div>
+							<div class="search-form__item">
+								<label for="new-pass-repeat" class="label-black">Repeat your new password:</label>
+								<input type="password" id="new-pass-repeat" name="new-pass-repeat" placeholder="Current password" class="form__input">
+							</div>
+							<button id="changePasswordButton" class="button" type="button">Change</button>
+						</form>
+						<div class="message"></div>
+					</div>
+				</div>
+			</section>
+			<section class="account-tabs">
+				<div class="account-tabs__container">
+					<div data-tabs class="channels-tabs tabs-account">
+						<div class="tabs-account__head">
+							<nav data-tabs-titles class="tabs-navigation tabs-account__navigation">
+								<button type="button" class="tabs-navigation__title _tab-active">
+									<img class="grey" src="{% static 'img/tabs-account/management_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/management_black.svg' %}" alt="">
+									Referral system
+								</button>
+								<button type="button" class="tabs-navigation__title">
+									<img class="grey" src="{% static 'img/tabs-account/pay_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/pay_black.svg' %}" alt="">
+									Balance payouts
+								</button>
+								<button type="button" class="tabs-navigation__title">
+									<img class="grey" src="{% static 'img/tabs-account/doc_grey.svg' %}" alt="">
+									<img class="black" src="{% static 'img/tabs-account/doc_black.svg' %}" alt="">
+									History
+								</button>
+							</nav>
+						</div>
+						<div data-tabs-body class="tabs-account__content">
+							<div class="tabs-account__body">
+								<p class="text">
+									Our service offers you the opportunity to earn with us!
+The main rules and principles of the referral program are simple:
+								</p>
+								<ul class="tabs-account__list">
+									<li class="tabs-account__item tabs-account__item_ok">
+										You will receive 10% of the amount spent by users who registered through your referral links on access extensions.
+									</li>
+									<li class="tabs-account__item tabs-account__item_ok">
+										If you generate a good number of payments, we can increase your percentage. All terms are personalized and discussed through support.
+									</li>
+									<li class="tabs-account__item tabs-account__item_ok">
+Once a user registers through your link, they will be permanently linked to you – and you will receive your commission from each payment the user makes for extending access to the service.									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+Spam in any form is prohibited. Violations will result in a complete account ban without payouts.									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+Registering and paying through your own referral links is prohibited. This will result in a ban on all accounts without payouts.									</li>
+									<li class="tabs-account__item tabs-account__item_warning">
+Advertising the service using branded queries such as Telemetr, Telemetr.me, or Телеметр is prohibited.									</li>
+								</ul>
+							</div>
+							<div class="tabs-account__body">
+								Содержимое второго таба
+							</div>
+							<div class="tabs-account__body">
+								Содержимое третьего таба
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="account-table">
+				<div class="account-table__container">
+					<div class="account-table__item">
+						<h4 class="label-black">Link</h4>
+						<form action="#" method="POST" class="link-form">
+							<div class="search-form__item">
+								<input type="text" id="link-gen" name="link-gen" placeholder="https://stattron.me/r/EwtQHe5/" class="form__input">
+								<button class="button" type="submit">Generate another link</button>
+							</div>
+						</form>
+					</div>
+					<div class="account-table__list">
+						<div class="account-table__item">
+							<h4 class="label-black">Number of registrations</h4>
+						</div>
+						<div class="account-table__item">
+							<h4 class="label-black">Number of payments</h4>
+						</div>
+						<div class="account-table__item">
+							<h4 class="label-black">Commission</h4>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+{% else %}
 <main class="page">
 			<section class="account-mainscreen">
 				<div class="account-mainscreen__container">
@@ -184,6 +369,8 @@
 				</div>
 			</section>
 		</main>
+{% endif %}
+
 
 <script>
 	$(document).ready(function() {

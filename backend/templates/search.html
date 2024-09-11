@@ -1,7 +1,426 @@
 {% extends 'base.html' %}
 {% load mathfilters %}
+{% load i18n %}
 {% load static %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="search">
+				<div class="search__container">
+					<form action="{% url 'search' %}" class="search-form form" method="GET">
+						<div class="search-form__column search-form__column_1">
+							<div class="search-form__item">
+								<label for="search-link" class="label-black">Link:</label>
+								<input type="text" id="search-link" name="chanel_link" placeholder="https://telemetr.me/channels/" class="form__input" value="{{ request.GET.chanel_link }}">
+							</div>
+							<div class="search-form__item">
+								<label for="search-name" class="label-black">Channel name:</label>
+								<input type="text" id="search-name" name="chanel_name" placeholder="Marketing Science" class="form__input" value="{{ request.GET.chanel_name }}">
+							</div>
+							<div class="search-form__item">
+								<label for="search-desc" class="label-black">Description:</label>
+								<input type="text" id="search-desc" name="description" placeholder="Marketing" class="form__input" value="{{ request.GET.description }}">
+							</div>
+						</div>
+						<div class="search-form__column search-form__column_2">
+							<div class="search-form__item">
+								<label for="form-subs-from" class="label-black">Subscribers:</label>
+								<div class="search-form__item-content">
+									<label for="orm-subs-from" class="label-black">From</label>
+									<input type="number" id="form-subs-from" name="subscribers_from" placeholder="1000" class="form__input" value="{{ request.GET.subscribers_from }}">
+									<label for="form-subs-to" class="label-black">To</label>
+									<input type="number" id="form-subs-to" name="subscribers_to" placeholder="1000" class="form__input" value="{{ request.GET.subscribers_to }}">
+								</div>
+							</div>
+							<div class="search-form__item">
+								<label for="post-visible-from" class="label-black">Views per post:</label>
+								<div class="search-form__item-content">
+									<label for="post-visible-from" class="label-black">From</label>
+									<input type="number" id="post-visible-from" name="views_from" placeholder="1000" class="form__input" value="{{ request.GET.views_from }}">
+									<label for="post-visible-from-to" class="label-black">To</label>
+									<input type="number" id="post-visible-from-to" name="views_to" placeholder="1000" class="form__input" value="{{ request.GET.views_to }}">
+								</div>
+							</div>
+							<div class="search-form__item">
+								<label for="repost-week-from" class="label-black">Mentions for the week:</label>
+								<div class="search-form__item-content">
+									<label for="repost-week-from" class="label-black">From</label>
+									<input type="number" id="repost-week-from" name="mention_from" placeholder="1000" class="form__input" value="{{ request.GET.mention_from }}">
+									<label for="repost-week-to" class="label-black">To</label>
+									<input type="number" id="repost-week-to" name="mention_to" placeholder="1000" class="form__input" value="{{request.GET.mention_to}}">
+								</div>
+							</div>
+						</div>
+						<div data-da=".search-form__column_1,992.98" class="search-form__column">
+							<div class="search-form__item search-form__item_select">
+								<label for="channel-type" class="label-black">Channel type:</label>
+								<div class="search-form__item-content">
+									<select name="channel-type" id="channel-type" data-class-modif="custom-select">
+										<option value="1" selected>No preference</option>
+										<option value="2">Open channel </option>
+										<option value="3">Closed channel</option>
+
+									</select>
+									<select name="selected_category" id="channel-type" data-class-modif="custom-select">
+										{% if request.GET.selected_category %}
+										<option value="{{request.GET.selected_category}}"selected>{{request.GET.selected_category}}</option>
+										{% else %}
+										<option value="" selected>Categories</option>
+										{% endif %}
+										{% for item in category %}
+										<option value="{{item.name}}">{{item.name}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+
+							<div data-da=".search-form__column_2,992.98" class="search-form__item search-form__item_center">
+								<label for="er-from" class="label-black search-form__label">ER:</label>
+								<div class="search-form__item-content search-form__item-content_center">
+									<label for="er-from" class="label-black">From</label>
+									<input type="number" id="er-from" name="er-from" placeholder="100" class="form__input">
+									<label for="er-to" class="label-black">To</label>
+									<input type="number" id="er-to" name="er-to" placeholder="1000" class="form__input">
+								</div>
+							</div>
+						</div>
+						<div data-da=".search-form__column_2,992.98" class="search-form__column search-form__column_btn">
+							<button class="button" type="submit">Discover Channels</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="search-channels">
+				<div class="search-channels__container">
+					<div class="search-channels__head">
+						<div class="search-channels__tabs-head">
+							<div class="search-channels__nums tabs-navigation">
+								  {% for p in page_obj.paginator.page_range %}
+
+
+								 	{% if page_obj.number == p %}
+									<a href="?page={{ p }}">
+									<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{p}}</button>
+									</a>
+										{% else %}
+								<a href="?page={{ p }}">
+									<button class="search-channels__num tabs-navigation__title" type="button">{{ p }}</button>
+									</a>
+									{% endif %}
+									{% endfor %}
+							</div>
+
+
+							<div class="search-channels__head-text">
+								 <span>{{lists}}</span> channels found
+							</div>
+						</div>
+					</div>
+					<div class="analitics-tabs__table-wrap-container analitics-tabs__table-wrap-container_auto">
+						<table class="table search-channels__table">
+							<thead>
+								<tr>
+									<th scope="col">
+										<div class="label-black">Title</div>
+									</th>
+									<th scope="col">
+										<div class="label-black">Subscribers</div>
+									</th>
+									<th scope="col">
+										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+											<button data-dropdown-btn class="dropdown-header__btn" type="button">
+												<img src="{% static 'img/icons/users-filling-black.svg' %}" alt="">
+												<span>Today</span>
+												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+											</button>
+											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
+												{% if request.GET.sub == "yesterday" or request.GET.sub == "weekly" or request.GET.sub == "monthly" %}
+   											 <a href="{% url 'search' %}" class="dropdown-header-lang__item">за сегодня</a>
+													{% endif %}
+												<a href="?sub=yesterday" class="dropdown-header-lang__item">за вчера</a>
+												<a href="?sub=weekly" class="dropdown-header-lang__item">за неделю</a>
+												<a href="?sub=monthly" class="dropdown-header-lang__item">за месяц</a>
+
+
+											</div>
+										</div>
+									</th>
+									<th scope="col">
+										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+											<button data-dropdown-btn class="dropdown-header__btn" type="button">
+												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
+												<span>Per post / yesterday</span>
+												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
+											</button>
+											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
+												<a href="#" class="dropdown-header-lang__item">Per post / yesterday</a>
+
+											</div>
+										</div>
+									</th>
+									<th>
+										<div class="label-black">ER</div>
+									</th>
+									<th>
+
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for item in object_list  %}
+
+							{% with last_cost_format=item.add_chanel.cost_formats.last %}
+							{% with er=item.subscribers|div:item.views|mul:100 %}
+
+
+								<tr>
+									<td scope="row">
+										<div class="channel-tabs-channels__head">
+											<a href="{% url 'detail' item.pk %}" target="_blank" class="channel-tabs-channels__img">
+												<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											</a>
+											<div class="channel-tabs-channels__content">
+												<div class="channel-tabs-channels__content">
+
+													<div class="channel-tabs-channels__title title">
+													<a href="{% url 'detail' item.pk %}" class="img">{{item.name}}</a>
+														<img class="copyButton"  src="{% static 'img/icons/copy.svg' %}" alt="" data-chanel-link="{{item.chanel_link }}">
+														</div>
+
+
+
+
+													<div class="channel-count label-blue label-blue_s20">
+
+
+														<span>
+															<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+															{{item.subscribers}}
+														</span>
+														<div class="channel-count__btns">
+															<button class="channel-count__btn" type="button">
+																<img class="img-fluid" src="{% static 'img/analitics/posts_blue.svg' %}" alt="">
+															</button>
+															<button class="channel-count__btn" type="button">
+																<img class="img-fluid" src="{% static 'img/icons/note.svg' %}" alt="">
+															</button>
+															<button class="channel-count__btn" id="like" type="button">
+																<img class="img-fluid not-fill" src="{% static 'img/icons/like.svg' %}" alt="">
+																<img class="img-fluid fill" src="{% static 'img/icons/like-fill.svg' %}" alt="">
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="label-blue label-blue_s24">{{item.subscribers}}</div>
+									</td>
+									<td>
+										{% if request.GET.sub == 'yesterday' %}
+										<div class="label-green label-green_s24">{{item.yesterday_subscribers}}</div>
+										{% elif request.GET.sub == 'weekly' %}
+										<div class="label-green label-green_s24">{{item.weekly_subscribers}}</div>
+										{% elif request.GET.sub == 'monthly' %}
+										<div class="label-green label-green_s24">{{item.weekly_monthy}}</div>
+										{% else %}
+										<div class="label-green label-green_s24">{{item.daily_subscribers}}</div>
+										{% endif %}
+
+
+									</td>
+									<td>
+										<div class="label-blue label-blue_s24">{{item.yesterday_views}}</div>
+									</td>
+									<td>
+										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
+									</td>
+									<td>
+
+										<div class="search-channels__btns">
+											<button class="button button_no-bg" data-popup="#popup-description{{item.pk}}" type="button">Overview</button>
+											<button class="button button_no-bg" type="button" data-popup="#popup-content{{item.pk}}">Content</button>
+											<a href="{% url 'detail' item.pk %}"><button class="button" type="button">Analysis</button></a>
+										</div>
+									</td>
+								</tr>
+							{% endwith %}
+                			{% endwith %}
+
+
+
+                			{% endfor %}
+
+							</tbody>
+						</table>
+					</div>
+					<div class="channels-tabs__bottom">
+						<div class="search-channels__nums tabs-navigation">
+							{% for p in page_obj.paginator.page_range %}
+
+
+								 	{% if page_obj.number == p %}
+									<a href="?page={{ p }}">
+									<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{p}}</button>
+									</a>
+										{% else %}
+								<a href="?page={{ p }}">
+									<button class="search-channels__num tabs-navigation__title" type="button">{{ p }}</button>
+									</a>
+									{% endif %}
+									{% endfor %}
+						</div>
+						<div class="channels-tabs__arrows">
+							{% if page_obj.has_previous %}
+							<a href="?page={{page_obj.previous_page_number}}">
+							<button class="channels-tabs__arrow channels-tabs__arrow_left" type="button">
+								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
+							</button></a>
+							{% else %}
+							<a href="?page={{page_obj.number}}">
+							<button class="channels-tabs__arrow channels-tabs__arrow_left" type="button">
+								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
+							</button></a>
+							{% endif %}
+							 {% if page_obj.has_next %}
+							<a href="?page={{ page_obj.next_page_number }}">
+							<button class="channels-tabs__arrow channels-tabs__arrow_right" type="button">
+								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
+							</button></a>
+							{% else %}
+							<a href="?page={{page_obj.number}}">
+							<button class="channels-tabs__arrow channels-tabs__arrow_right" type="button">
+								<img class="img-fluid" src="{% static 'img/icons/arrow-down.svg' %}" alt="">
+							</button></a>
+							{% endif %}
+
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+{% for item in object_list %}
+<div id="popup-content{{item.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
+            <div class="popup__inner">
+                <div class="tabs-navigation popup__filters">
+                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button">По дате
+                    </button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По просмотрам</button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По пересылкам</button>
+                    <button class="search-channels__num tabs-navigation__title" type="button">По комментариям</button>
+                </div>
+                <div class="popup__list">
+					{% for post in item.post.all %}
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="/{{item.pictures}}" type="image/webp">
+                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">{{item.name}}</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+										{{item.subscribers}}
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{post.view}}
+                                    </div>
+                                </div>
+                            </div>
+							{% if post.mention %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.name }}">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+                            </div>
+							{% endif %}
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+									{{post.text}}
+                                </p>
+
+                            </div>
+                        </div>
+                        {% if post.media == 'photo' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+                            Изображение
+                        </button>
+						{% endif %}
+						{% if post.media == 'video' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Видео
+                        </button>
+						{% endif %}
+						{% if post.media == 'animation' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Гифка
+                        </button>
+						{% endif %}
+                    </div>
+                   {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% for item in object_list %}
+<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup ">
+    <div class="popup__wrapper">
+        <div class="popup__content">
+            <button data-close type="button" class="popup__close">
+                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+            </button>
+
+                <div class="popup__list">
+                    <div class="item-popup">
+
+                        <div class="item-popup__content">
+                            <div class="item-popup__text">
+                                <p class="text">
+                                    {{item.description}}
+                                </p>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
 <main class="page">
 			<section class="search">
 				<div class="search__container">
@@ -417,6 +836,8 @@
         </div>
     </div>
 {% endfor %}
+{% endif %}
+
 <script>
 	$(document).ready(function () {
     $('.copyButton').click(function() {
