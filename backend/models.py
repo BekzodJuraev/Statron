@@ -21,7 +21,8 @@ class Profile(models.Model):
     photo=models.ImageField()
     is_online = models.BooleanField(default=False)
     last_visited = models.DateTimeField(auto_now=True)
-    qiwi=models.CharField(max_length=200)
+    telegram_id=models.IntegerField()
+    telegram_bio=models.CharField(max_length=150)
     timezone = models.CharField(max_length=63, choices=[(tz, tz) for tz in pytz.all_timezones], default='UTC')
 
     def save(self, *args, **kwargs):

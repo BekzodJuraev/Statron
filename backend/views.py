@@ -4,7 +4,7 @@ from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
 from django.db import connection
-
+from django.contrib.auth.models import User
 from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
@@ -61,9 +61,20 @@ class HelloWorldView(View):
 @csrf_exempt
 @require_POST
 def telegram_auth(request):
+    token_bot = '7304038568:AAHrDrL4u7k7d6oIfdLiThSEgVgKnyFKXU4'
+    bot_auth = telegram.Bot(token=token_bot)
     if request.method == 'POST':
         json_data = json.loads(request.body.decode('utf-8'))
-        print(json_data)
+        id=json_data['message']['chat']['id']
+        nickname=json_data['message']['chat']['username']
+        first_name=json_data['message']['chat']['first_name']
+        user, created = User.objects.get_or_create(username=id,first_name=first_name)
+        if created:
+            bot_auth.send_message(id,"Created")
+        else:
+            bot_auth.send_message(id, "Has account")
+
+
         return HttpResponse(status=200)
 
 @csrf_exempt
