@@ -3,6 +3,9 @@ from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
+from django.contrib.sessions.models import Session
+
+from django.shortcuts import get_object_or_404
 from django.db import connection
 from django.contrib.auth.models import User
 from django.db.models.functions import TruncHour
@@ -37,25 +40,30 @@ TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
 bot = telegram.Bot(TOKEN)
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
-async def some():
-    await asyncio.sleep(1)
-class HelloWorldView(View):
 
+def authenticate_user_with_session(request):
+    session_key = request.GET.get('session_key')
 
-    async def get(self, request):
-        start_time = time.time()
+    if session_key:
+        # Retrieve the session using the session key
+        try:
+            session = get_object_or_404(Session, session_key=session_key)
+        except:
+            return redirect('main')
+        session_data = session.get_decoded()
 
+        # Get the user_id from the session data
+        user_id = session_data.get('user_id')
 
-        await asyncio.sleep(60)  # Simulate an asynchronous taskF
-        await some()
+        if user_id:
+            # Authenticate and log the user in
+            user = get_object_or_404(User, id=user_id)
+            login(request, user)
 
+            # Redirect the user to the dashboard or another authenticated page
+            return redirect('main')
 
-        end_time = time.time()
-
-        duration = end_time - start_time
-        print(f"Request processed asynchronously in {duration} seconds")
-
-        return HttpResponse('Hello, async world!')
+    return HttpResponse("Invalid session", status=400)
 
 
 @csrf_exempt
@@ -70,9 +78,27 @@ def telegram_auth(request):
         first_name=json_data['message']['chat']['first_name']
         user, created = User.objects.get_or_create(username=id,first_name=first_name)
         if created:
+            Profile.objects.create(username=user,first_name=first_name,telegram_bio=nickname)
             bot_auth.send_message(id,"Created")
         else:
             bot_auth.send_message(id, "Has account")
+
+
+
+        request.session['user_id'] = user.id
+        request.session['username'] = user.username
+
+        # Optionally, set a session expiration time (in seconds)
+        request.session.set_expiry(3600)  # Expires after 1 hour
+        request.session.save()
+        # Get the session key to send to the user
+        session_key = request.session.session_key
+
+        # Construct the URL with the session key
+        url_with_session = f"https://2047-213-230-86-193.ngrok-free.app/telegram/login/?session_key={session_key}"
+
+        # Send the URL with the session key via the Telegram bot
+        bot_auth.send_message(id, f"Visit this link to authenticate: {url_with_session}")
 
 
         return HttpResponse(status=200)
