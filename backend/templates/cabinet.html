@@ -248,7 +248,11 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 						<div class="settings-account__content">
 							<div class="settings-account__item">
 								<div class="label-black">Telegram:</div>
-								<button class="button button_no-bg" type="button">Прикрепить</button>
+								{% if item.telegram_id %}
+								{{ item.telegram_id }}
+								{% else %}
+								<a href="https://t.me/Stattron_auth_bot?start=profile_{{item.id}}"><button class="button button_no-bg" type="button">Прикрепить</button></a>
+								{% endif %}
 							</div>
 
 							<div class="settings-account__item">
