@@ -317,8 +317,36 @@ class ChanelAPI(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class GetReferralCodeView(View):
+
+    def get(self, request, *args, **kwargs):
+        referral_code = request.session.get('referral_code', 'No referral code set')
+
+        return HttpResponse(f"Referral Code: {referral_code}")
+class Ref(View):
+
+    def get(self, request, *args, **kwargs):
+        referral_code = kwargs.get('referral_code')
+
+        if referral_code:
+            # Store the referral code in the session
+            request.session['referral_code'] = referral_code
+            request.session.set_expiry(3600)
+            request.session.save()
+
+
+
+
+        return redirect(reverse_lazy('main'))
+
+
+
+
 class LoginAPIView(APIView):
+
+
     def post(self, request, *args, **kwargs):
+
         next_url = request.data.get('next')
         form = LoginFormSerializer(data=request.data)
 
@@ -344,6 +372,7 @@ class RegistrationAPIView(generics.CreateAPIView):
     serializer_class = RegistrationSerializer
 
     def create(self, request, *args, **kwargs):
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -383,28 +412,6 @@ class Main(ListView):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #dict_monthly = {item['created_at__date'].strftime("%Y-%m-%d"): item['count'] for item in chart_month}
-
-
-
-
-
-
-
         context['main']=self.object_list.all().annotate(v=F('views')/Count('post')).order_by('-subscribers')[:6]
 
 
@@ -427,6 +434,12 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
 
 
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        ref=Profile.objects.filter(recommended_by__profile=self.object).count()
+        context['ref']=ref
+
+        return context
 
 
 
@@ -448,7 +461,8 @@ class UpdateView(LoginRequiredMixin,View):
 
     def post(self, request, *args, **kwargs):
         try:
-            qiwi = request.POST.get('qiwi')
+
+
             photo = request.FILES.get('photo')
             instance_id = self.request.user.profile.id  # Assuming you pass the instance ID in the request
 
@@ -457,9 +471,6 @@ class UpdateView(LoginRequiredMixin,View):
             if instance_id:
                 # If instance_id is provided, update the existing instance
                 instance = Profile.objects.get(pk=instance_id)
-                if qiwi:
-                    instance.qiwi = qiwi
-                    instance.save()
                 if photo:
                     instance.photo = photo
                     instance.save()
@@ -510,7 +521,7 @@ class DetailChanel(DetailView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        #323
+
         return queryset.annotate(v=F('views')/Count('post'))
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -1047,12 +1058,14 @@ class ReportView(View):
         return reports
 
 def login_user(request):
-    logout(request)
+    if request.user.is_authenticated:
+        logout(request)
     return render(request,'login.html')
 
 def register(request):
-    logout(request)
-    return render(request,'register.html')
+    if request.user.is_authenticated:
+        logout(request)
+    return render(request, 'register.html')
 
 
 

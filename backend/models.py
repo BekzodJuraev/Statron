@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
 
-
+import uuid
 
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
@@ -21,9 +21,11 @@ class Profile(models.Model):
     photo=models.ImageField()
     is_online = models.BooleanField(default=False)
     last_visited = models.DateTimeField(auto_now=True)
-    telegram_bio=models.CharField(max_length=150,default=None)
+    telegram_bio=models.CharField(max_length=150,null=True, blank=True, default=None)
     telegram_id = models.BigIntegerField(unique=True, null=True, blank=True, default=None)
     timezone = models.CharField(max_length=63, choices=[(tz, tz) for tz in pytz.all_timezones], default='UTC')
+    recommended_by = models.ForeignKey('Ref', on_delete=models.CASCADE, related_name='recommended_profiles',
+                                       null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Update the associated User's email before saving
@@ -34,6 +36,13 @@ class Profile(models.Model):
     def __str__(self):
         return self.username.username
 
+class Ref(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='referal')
+    code = models.UUIDField(default=uuid.uuid4, unique=True)
+
+
+    def __str__(self):
+        return self.profile.username.username
 
 
 class Chanel(models.Model):

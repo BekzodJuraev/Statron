@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Chanel,Profile
+from .models import Chanel,Profile,Ref
 from django.contrib.auth.models import User
 from phonenumber_field.serializerfields import PhoneNumberField
 class ChanelSerializer(serializers.ModelSerializer):
@@ -54,15 +54,31 @@ class RegistrationSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password'],
         )
+        request = self.context.get('request')
+        referral_code = request.session.get('referral_code') if request else None
 
-        Profile.objects.create(
-            username=user,
-            first_name=user.username,
-            last_name=user.last_name,
-            email=user.email,
-            phone_number=phone_number
-        )
 
+        if referral_code:
+            ref=Ref.objects.get(code=referral_code)
+            Profile.objects.create(
+                username=user,
+                first_name=user.username,
+                last_name=user.last_name,
+                email=user.email,
+                phone_number=phone_number,
+                recommended_by=ref
+            )
+        else:
+            Profile.objects.create(
+                username=user,
+                first_name=user.username,
+                last_name=user.last_name,
+                email=user.email,
+                phone_number=phone_number
+            )
+
+        if referral_code:
+            del request.session['referral_code']
         return user
 
 
