@@ -357,6 +357,8 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 							<div class="search-form__item">
 								{% for item in ref_code %}
 								<input type="text" id="link-gen" name="link-gen" value="https://stattron.ru/r/{{item.code}}/" class="form__input">
+								{{ item.recommended_profiles.all|length }}
+
 
 								{% endfor %}
 

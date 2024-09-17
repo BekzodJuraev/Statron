@@ -436,7 +436,8 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         ref=Profile.objects.filter(recommended_by__profile=self.object).count()
-        context['ref_code']=Ref.objects.filter(profile=self.object)
+
+        context['ref_code']=Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles')
 
         context['ref']=ref
 
