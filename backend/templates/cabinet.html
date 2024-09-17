@@ -352,16 +352,24 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 				<div class="account-table__container">
 					<div class="account-table__item">
 						<h4 class="label-black">Ссылка</h4>
-						<form action="#" method="POST" class="link-form">
+						<form  method="POST" class="link-form">
+							{% csrf_token %}
 							<div class="search-form__item">
-								<input type="text" id="link-gen" name="link-gen" placeholder="https://stattron.me/r/EwtQHe5/" class="form__input">
+								{% for item in ref_code %}
+								<input type="text" id="link-gen" name="link-gen" value="https://stattron.ru/r/{{item.code}}/" class="form__input">
+
+								{% endfor %}
+
 								<button class="button" type="submit">Сгенерировать еще одну ссылку</button>
 							</div>
+
+
 						</form>
 					</div>
 					<div class="account-table__list">
 						<div class="account-table__item">
 							<h4 class="label-black">Регистраций</h4>
+
 						</div>
 						<div class="account-table__item">
 							<h4 class="label-black">Оплат</h4>

@@ -60,7 +60,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
         if referral_code:
             ref=Ref.objects.get(code=referral_code)
-            Profile.objects.create(
+            profile=Profile.objects.create(
                 username=user,
                 first_name=user.username,
                 last_name=user.last_name,
@@ -69,13 +69,15 @@ class RegistrationSerializer(serializers.ModelSerializer):
                 recommended_by=ref
             )
         else:
-            Profile.objects.create(
+            profile=Profile.objects.create(
                 username=user,
                 first_name=user.username,
                 last_name=user.last_name,
                 email=user.email,
                 phone_number=phone_number
             )
+
+        Ref.objects.create(profile=profile)
 
         if referral_code:
             del request.session['referral_code']

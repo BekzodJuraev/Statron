@@ -12,7 +12,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -323,21 +323,7 @@ class GetReferralCodeView(View):
         referral_code = request.session.get('referral_code', 'No referral code set')
 
         return HttpResponse(f"Referral Code: {referral_code}")
-class Ref(View):
 
-    def get(self, request, *args, **kwargs):
-        referral_code = kwargs.get('referral_code')
-
-        if referral_code:
-            # Store the referral code in the session
-            request.session['referral_code'] = referral_code
-            request.session.set_expiry(3600)
-            request.session.save()
-
-
-
-
-        return redirect(reverse_lazy('main'))
 
 
 
@@ -434,9 +420,24 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
 
 
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        profile = self.object
+        Ref.objects.create(profile=self.object)
+
+
+
+        # Redirect back to the current page (refresh the page)
+        return redirect(request.path)
+
+
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         ref=Profile.objects.filter(recommended_by__profile=self.object).count()
+        context['ref_code']=Ref.objects.filter(profile=self.object)
+
         context['ref']=ref
 
         return context
@@ -1072,3 +1073,20 @@ def register(request):
 def logout_view(request):
     logout(request)
     return redirect('main')
+
+
+class Ref_View(View):
+
+    def get(self, request, *args, **kwargs):
+        referral_code = kwargs.get('referral_code')
+
+        if referral_code:
+            # Store the referral code in the session
+            request.session['referral_code'] = referral_code
+            request.session.set_expiry(3600)
+            request.session.save()
+
+
+
+
+        return redirect(reverse_lazy('main'))
