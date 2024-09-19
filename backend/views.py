@@ -845,6 +845,17 @@ class TrackingPosts(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'tracking-posts.html'
 
+    def post(self, request, *args, **kwargs):
+        profile = request.user.profile
+        fields_to_clear = ['notify_id', 'notify_bio', 'notify_name']
+        for field in fields_to_clear:
+            setattr(profile, field, None)
+        profile.save(update_fields=fields_to_clear)
+
+        # Redirect back to the current page (refresh the page)
+        return redirect(request.path)
+
+
 class Ad_posts(LoginRequiredMixin,ListView):
     template_name = 'ad-posts.html'
     model = Posts

@@ -105,11 +105,15 @@ Once your subscription ends, all your notifications will be suspended.								</
 								</p>
 							</div>
 							{% if request.user.profile.notify_id %}
+							<form method="POST">
+								{% csrf_token %}
 											<div class="btn-wrap">
 								<a href="https://t.me/{{request.user.profile.notify_bio}}">{{user.profile.notify_name}}</a>
-								<button class="button" type="button">Отвзять</button>
+								<button class="button" type="submit">Отвзять</button>
+
 							</div>
 						</div>
+						</form>
 							{% else %}
 							<div class="btn-wrap">
 								<a href="https://t.me/Stattron_notify_bot">
