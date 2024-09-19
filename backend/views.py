@@ -65,6 +65,15 @@ def authenticate_user_with_session(request):
 
     return HttpResponse("Invalid session", status=400)
 
+@csrf_exempt
+@require_POST
+def telegram_notify(request):
+    token_bot = '8190267916:AAHoonn96-rljlFMprruM-wKKONhGUCvNHM'
+    bot_notify = telegram.Bot(token=token_bot)
+    if request.method == "POST":
+        pass
+
+
 
 @csrf_exempt
 @require_POST
@@ -832,7 +841,8 @@ class Search(ListView):
 
         return context
 
-class TrackingPosts(TemplateView):
+class TrackingPosts(LoginRequiredMixin,TemplateView):
+    login_url = reverse_lazy('login_site')
     template_name = 'tracking-posts.html'
 
 class Ad_posts(LoginRequiredMixin,ListView):

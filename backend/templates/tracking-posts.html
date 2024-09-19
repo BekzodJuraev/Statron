@@ -104,10 +104,18 @@ Once your subscription ends, all your notifications will be suspended.								</
 									Для того, чтобы настроить уведомления, нажмите кнопку ниже и в появившемся диалоге с ботом нажмите <span class="text_fw500">START</span>, затем обновите на эту страницу.
 								</p>
 							</div>
+							{% if request.user.profile.notify_id %}
+											<div class="btn-wrap">
+								<a href="https://t.me/{{request.user.profile.notify_bio}}">{{user.profile.notify_name}}</a>
+								<button class="button" type="button">Отвзять</button>
+							</div>
+						</div>
+							{% else %}
 							<div class="btn-wrap">
-								<a href="https://t.me/Tgnative_bot">
+								<a href="https://t.me/Stattron_notify_bot">
 								<button class="button" type="button">Авторизоваться с помощью Telegram</button></a>
 							</div>
+						{% endif %}
 						</div>
 					</div>
 			</section>

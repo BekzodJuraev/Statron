@@ -16,7 +16,6 @@ class Profile(models.Model):
     last_name=models.CharField(max_length=140)
     email=models.EmailField()
     balance = models.DecimalField(max_digits=10, decimal_places=2,default=0)
-    currency=models.CharField(max_length=10)
     created_at=models.DateTimeField(auto_now_add=True)
     photo=models.ImageField()
     is_online = models.BooleanField(default=False)
@@ -26,6 +25,12 @@ class Profile(models.Model):
     timezone = models.CharField(max_length=63, choices=[(tz, tz) for tz in pytz.all_timezones], default='UTC')
     recommended_by = models.ForeignKey('Ref', on_delete=models.CASCADE, related_name='recommended_profiles',
                                        null=True, blank=True)
+    is_premium = models.BooleanField(default=False)
+    notify_bio=models.CharField(max_length=150,null=True, blank=True, default=None)
+    notify_name=models.CharField(max_length=150,null=True, blank=True, default=None)
+    notify_id=models.BigIntegerField(unique=True, null=True, blank=True, default=None)
+
+
 
     def save(self, *args, **kwargs):
         # Update the associated User's email before saving

@@ -415,7 +415,11 @@
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_tablet-dn">
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
 							<div class="dropdown-header__btn dropdown-header__btn_desc">
+								{% if user.profile.is_premium %}
+								<span>Премиум-доступ</span>
+								{% else %}
 								<span>Демо-доступ</span>
+								{% endif %}
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</div>
 							<div class="dropdown-header__btn dropdown-header__btn_mob icon-menu">
@@ -594,7 +598,11 @@
 								</a>
 								<div class="dropdown-header__head-content">
 									<div class="dropdown-header__head-email">{{user.email}}</div>
+									{% if user.profile.is_premium %}
+									<div class="dropdown-header__head-status label-green">Премиум-доступ</div>
+									{% else %}
 									<div class="dropdown-header__head-status label-red">Демо-доступ</div>
+									{% endif %}
 									<!-- <div class="dropdown-header__head-status label-green">Премиум-доступ</div> -->
 								</div>
 							</div>
