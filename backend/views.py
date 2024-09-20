@@ -561,9 +561,10 @@ class UpdatePassword(LoginRequiredMixin,View):
 
        # return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
-class DetailChanel(DetailView):
+class DetailChanel(LoginRequiredMixin,DetailView):
     model = Chanel_img
     template_name = 'detail.html'
+    login_url = reverse_lazy('login_site')
     context_object_name = 'item'
 
 
@@ -785,10 +786,11 @@ class MyChanels(LoginRequiredMixin,TemplateView):
     template_name = 'my-channels.html'
     login_url = reverse_lazy('login_site')
 
-class Search(ListView):
+class Search(LoginRequiredMixin,ListView):
     model = Chanel_img
     context_object_name = 'item'
     template_name = 'search.html'
+    login_url = reverse_lazy('login_site')
     paginate_by = 8
 
     def get_queryset(self):
@@ -1065,58 +1067,7 @@ class Like_chanel(LoginRequiredMixin,ListView):
 
 
 
-class ReportView(View):
-    template_name = 'report.html'
 
-    def get(self, request, *args, **kwargs):
-        # Get daily report for each channel
-        daily_reports = self.get_report('day')
-
-        # Get weekly report for each channel
-        weekly_reports = self.get_report('week')
-
-        # Get monthly report for each channel
-        monthly_reports = self.get_report('month')
-
-        context = {
-            'daily_reports': daily_reports,
-            'weekly_reports': weekly_reports,
-            'monthly_reports': monthly_reports,
-        }
-
-        return render(request, self.template_name, context)
-
-    def get_report(self, period):
-        now = timezone.now()
-
-        if period == 'day':
-            start_date = now - timedelta(days=1)
-        elif period == 'week':
-            start_date = now - timedelta(weeks=1)
-        elif period == 'month':
-            start_date = now - timedelta(days=30)  # Approximating a month
-
-        end_date = now
-
-        reports = []
-        channels = Chanel.objects.all()
-
-        for channel in channels:
-            queryset = Chanel.objects.filter(
-                update_date__range=(start_date, end_date),
-                id=channel.id
-            )
-
-            report = {
-                'channel': channel,
-                'total_subscribers': queryset.aggregate(Sum('subscribers'))['subscribers__sum'] or 0,
-                'total_views': queryset.aggregate(Sum('views'))['views__sum'] or 0,
-                'total_channels': queryset.count(),
-            }
-
-            reports.append(report)
-
-        return reports
 
 def login_user(request):
     if request.user.is_authenticated:
