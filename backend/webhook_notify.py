@@ -4,7 +4,7 @@ import logging
 
 TOKEN = '8190267916:AAHoonn96-rljlFMprruM-wKKONhGUCvNHM'
 #ngrok_url = 'https://stattron.ru/telegram_auth/'  # Replace with your NGROK URL
-ngrok_url = 'https://9f4b-5-133-120-92.ngrok-free.app/notify/'
+ngrok_url = 'https://df7a-5-133-120-92.ngrok-free.app/notify/'
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)

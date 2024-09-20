@@ -20,6 +20,7 @@ urlpatterns=[
  path('search_view/', views.search_view, name='search_view'),
  path('tracking-posts/', views.TrackingPosts.as_view(), name='tracking'),
  path('posts/',views.Ad_posts.as_view(), name='posts'),
+ path('notify/', views.telegram_notify, name='telegram_notify'),
  path('telegram_webhook/', views.telegram_webhook, name='telegram_webhook'),
  path('telegram_auth/', views.telegram_auth, name='telegram_auth'),
  path('r/<str:referral_code>/',views.Ref_View.as_view(),name='ref_session'),

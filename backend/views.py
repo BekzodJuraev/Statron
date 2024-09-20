@@ -71,7 +71,45 @@ def telegram_notify(request):
     token_bot = '8190267916:AAHoonn96-rljlFMprruM-wKKONhGUCvNHM'
     bot_notify = telegram.Bot(token=token_bot)
     if request.method == "POST":
-        pass
+        json_data = json.loads(request.body.decode('utf-8'))
+        chat_info = json_data['message']['chat']
+        text = json_data['message'].get('text', '')
+
+        id = chat_info.get('id')
+        bio = chat_info.get('username')
+        first_name = chat_info.get('first_name')
+
+        if text.startswith('/start profile_'):
+            profile_id = text.split('profile_')[1]
+            try:
+                profile = Profile.objects.get(id=profile_id)
+
+                if not profile.notify_id:
+
+                    profile.notify_id = id
+                    profile.notify_name = first_name
+                    profile.notify_bio = bio
+                    profile.save(update_fields=['notify_id', 'notify_name', 'notify_bio'])
+
+
+                    bot_notify.send_message(id,
+                                            'Отлично, ваш аккаунт привязан, вернитесь на страницу - https://stattron.ru/tracking-posts/')
+                else:
+
+                    bot_notify.send_message(id,
+                                            f"Упс, этот аккаунт Телеграм ({id}) уже привязан к другому аккаунту в сервисе")
+
+            except Profile.DoesNotExist:
+
+                bot_notify.send_message(id, "Указанный профиль не найден.")
+                return JsonResponse({'status': 'Profile not found'}, status=404)
+
+        return JsonResponse({'status': 'Success'})
+
+
+
+
+
 
 
 
