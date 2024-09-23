@@ -75,6 +75,7 @@ class Chanel(models.Model):
 
 
 
+
     def save(self, *args, **kwargs):
         if self.pk is not None:
 
@@ -183,6 +184,7 @@ class Posts(models.Model):
     mention=models.BooleanField(default=False)
     date=models.DateTimeField(default=None)
     id_channel_forward_from=models.IntegerField(null=True)
+    forwards_count=models.BigIntegerField(null=True, blank=True, default=None)
 
 
     class Meta:

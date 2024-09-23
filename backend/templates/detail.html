@@ -3570,7 +3570,11 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 															<div class="label-blue">0</div>
 														</td>
 														<td>
-															<div class="label-black">6268</div>
+															{% if item.forwards_count %}
+															<div class="label-black">{{item.forwards_count}}</div>
+															{% else %}
+															<div class="label-black">0</div>
+															{% endif %}
 														</td>
 														<td class="content-center">
 															<button data-popup="#popup-content_{{item.pk}}" class="button button_no-bg" type="button" title="Показать пост">Пост</button>
