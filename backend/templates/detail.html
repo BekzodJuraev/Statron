@@ -3567,7 +3567,12 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 															</div>
 														</td>
 														<td>
-															<div class="label-blue">0</div>
+															{% for  r in repost_count %}
+															{% if item.text == r.text %}
+															<div class="label-blue">{{r.repost_count}}</div>
+															{% endif %}
+															{% endfor %}
+
 														</td>
 														<td>
 															{% if item.forwards_count %}

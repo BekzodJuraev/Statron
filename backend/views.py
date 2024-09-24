@@ -584,6 +584,10 @@ class DetailChanel(LoginRequiredMixin,DetailView):
 
 
 
+
+
+
+
         if repost_param=="true":
             mention = Mentions.objects.filter(mentioned_channel=self.object,
                                               post__id_channel_forward_from=self.object.chanel_id).values(
@@ -652,12 +656,16 @@ class DetailChanel(LoginRequiredMixin,DetailView):
         )
         context['rank']=rank
 
+        get_posts = Posts.objects.filter(chanel=self.object).select_related('chanel')
 
+        text=Posts.objects.filter(chanel=self.object).values_list('text')
 
+        repost_count=Posts.objects.filter(id_channel_forward_from=self.object.chanel_id,text__in=text).values('text').annotate(
+    repost_count=Count('id')
+)
 
+        context['repost_count']=repost_count
 
-
-        get_posts=Posts.objects.filter(chanel=self.object).select_related('chanel')
 
 
 
