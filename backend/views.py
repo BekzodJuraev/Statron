@@ -12,7 +12,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -894,14 +894,34 @@ class TrackingPosts(LoginRequiredMixin,TemplateView):
     template_name = 'tracking-posts.html'
 
     def post(self, request, *args, **kwargs):
-        profile = request.user.profile
-        fields_to_clear = ['notify_id', 'notify_bio', 'notify_name']
-        for field in fields_to_clear:
-            setattr(profile, field, None)
-        profile.save(update_fields=fields_to_clear)
+        action_type = request.POST.get('action_type')
 
-        # Redirect back to the current page (refresh the page)
+        if action_type == 'connect_account':
+            # Logic for clearing profile fields
+            profile = request.user.profile
+            fields_to_clear = ['notify_id', 'notify_bio', 'notify_name']
+            for field in fields_to_clear:
+                setattr(profile, field, None)
+            profile.save(update_fields=fields_to_clear)
+
+        elif action_type == 'create_notify':
+            # Logic for creating a Notify object
+            profile = request.user.profile
+            word = request.POST.get('word')
+            if word:
+                Notify.objects.create(profile=profile, word=word, start=False)
+
         return redirect(request.path)
+
+
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['notify']=Notify.objects.filter(profile=self.request.user.profile)
+
+
+        return context
 
 
 class Ad_posts(LoginRequiredMixin,ListView):

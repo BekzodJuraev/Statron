@@ -79,8 +79,8 @@ def add_chanel(chanel_link):
                 for key, value in payload.items():
                     files[key] = (None, str(value))
 
-                response = requests.post('https://stattron.ru/chanel/', files=files)
-                #response = requests.post('http://127.0.0.1:8000/chanel/', files=files)
+                #response = requests.post('https://stattron.ru/chanel/', files=files)
+                response = requests.post('http://127.0.0.1:8000/chanel/', files=files)
 
 
 
@@ -115,6 +115,7 @@ def add_chanel(chanel_link):
                         view=views.views,
                         media=media,
                         forwards_count=views.forwards,
+                        link=views.link,
                         date=timezone.make_aware(views.date),
                         id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                         mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (

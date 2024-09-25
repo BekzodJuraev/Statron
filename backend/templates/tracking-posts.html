@@ -105,8 +105,9 @@ Once your subscription ends, all your notifications will be suspended.								</
 								</p>
 							</div>
 							{% if request.user.profile.notify_id %}
-							<form method="POST">
+							<form method="POST" >
 								{% csrf_token %}
+								<input type="hidden" name="action_type" value="connect_account">
 											<div class="btn-wrap">
 								<a href="https://t.me/{{request.user.profile.notify_bio}}">{{user.profile.notify_name}}</a>
 								<button class="button" type="submit">Отвзять</button>
@@ -123,10 +124,13 @@ Once your subscription ends, all your notifications will be suspended.								</
 						</div>
 					</div>
 			</section>
+
 			<section class="tracking-form">
 				<div class="tracking-form__container">
 					<h2 class="title">Добавить отслеживание</h2>
-					<form class="tracking-form__form" action="#" method="POST">
+					<form class="tracking-form__form" method="POST">
+						{% csrf_token %}
+						<input type="hidden" name="action_type" value="create_notify">
 						<div class="tracking-form__items">
 							<div class="tracking-form__item">
 								<label for="what-search" class="label-black">Что ищем:</label>
@@ -139,7 +143,7 @@ Once your subscription ends, all your notifications will be suspended.								</
 							</div>
 							<div class="tracking-form__item">
 								<label for="channel" class="label-black">Упоминаемый канал:</label>
-								<input type="text" id="channel" name="channel" placeholder="Ссылка на канал или юзернейм" class="form__input">
+								<input type="text" id="channel" name="word" placeholder="Ссылка на канал или юзернейм" class="form__input">
 							</div>
 						</div>
 						<div class="tracking-form__item-btn">
@@ -148,6 +152,9 @@ Once your subscription ends, all your notifications will be suspended.								</
 					</form>
 				</div>
 			</section>
+		{% for item in notify %}
+		Фраза______________{{item.word}}
+		{% endfor %}
 			<section class="last-messages">
 				<div class="last-messages__container">
 					<h2 class="title">Последние уведомления</h2>

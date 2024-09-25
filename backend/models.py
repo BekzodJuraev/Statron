@@ -184,6 +184,7 @@ class Posts(models.Model):
     mention=models.BooleanField(default=False)
     date=models.DateTimeField(default=None)
     id_channel_forward_from=models.IntegerField(null=True)
+    link=models.CharField(null=True, blank=True, default=None,max_length=250)
     forwards_count=models.BigIntegerField(null=True, blank=True, default=None)
 
 
@@ -196,6 +197,17 @@ class Posts(models.Model):
 
     def __str__(self):
         return self.chanel.name
+
+class Notify(models.Model):
+    profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='notify_profile')
+    word=models.CharField(max_length=250)
+    start=models.BooleanField(default=False)
+    check_date = models.DateTimeField(null=True, blank=True,default=None)
+
+
+    def __str__(self):
+        return self.word
+
 
 class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel')
