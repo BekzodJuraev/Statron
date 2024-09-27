@@ -63,7 +63,7 @@
 					<div class="search-channels__head ad-posts__head">
 						<div class="search-channels__tabs-head">
 							<div class="search-channels__nums tabs-navigation">
-						{% for p in page_obj.paginator.page_range %}
+						{% for p in page_range  %}
 						{% if p <= page_obj.number|add:1  and  p >= page_obj.number|sub:1 or p >= page_obj.paginator.num_pages or p <= 1 %}
 						{% if page_obj.number == p %}
 							<a href="?page={{ p }}">

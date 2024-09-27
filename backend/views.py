@@ -4,7 +4,7 @@ from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
 from django.contrib.sessions.models import Session
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.db import connection
 from django.contrib.auth.models import User
@@ -578,6 +578,7 @@ class DetailChanel(LoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         er=(self.object.subscribers/self.object.views)*10
         er_daily = (self.object.daily_subscribers / self.object.views) * 10
+        profile_is=self.request.user.profile
 
         repost_param=self.request.GET.get('repost')
         chanel_name=self.request.GET.get('chanel_name')
@@ -625,9 +626,14 @@ class DetailChanel(LoginRequiredMixin,DetailView):
 
 
 
-
-
-        mention_chanel=Subperhour.objects.filter(chanel=self.object).select_related('chanel').prefetch_related('chanel__mentions')
+        if profile_is.is_premium:
+            mention_chanel = Subperhour.objects.filter(chanel=self.object).select_related('chanel').prefetch_related(
+                'chanel__mentions')
+        else:
+            mention_chanel = Subperhour.objects.filter(
+                chanel=self.object,
+                created_at__gte=timezone.now() - timedelta(days=7)
+            ).select_related('chanel').prefetch_related('chanel__mentions')
 
         all_posts = Posts.objects.filter(
             id_channel_forward_from=self.object.chanel_id
@@ -802,6 +808,7 @@ class Search(LoginRequiredMixin,ListView):
     paginate_by = 8
 
     def get_queryset(self):
+
         search_query = self.request.GET.get('chanel_link')
         select_category = self.request.GET.get('selected_category')
         chanel_name = self.request.GET.get('chanel_name')
@@ -970,6 +977,24 @@ class Ad_posts(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        is_demo_user = not self.request.user.profile.is_premium
+
+        # Handle pagination manually
+        paginator = Paginator(self.get_queryset(), self.paginate_by)
+        page = self.request.GET.get('page')
+
+        if is_demo_user:
+            limited_page_range = paginator.page_range[:5]
+        else:
+            limited_page_range = paginator.page_range
+
+            # Pass the modified page range to the context
+        context['page_range'] = limited_page_range
+
+
+
+
+
         context['count']=self.object_list.count()
         return context
 
@@ -1020,6 +1045,19 @@ class Ads_posts(LoginRequiredMixin,ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        is_demo_user = not self.request.user.profile.is_premium
+
+        # Handle pagination manually
+        paginator = Paginator(self.get_queryset(), self.paginate_by)
+        page = self.request.GET.get('page')
+
+        if is_demo_user:
+            limited_page_range = paginator.page_range[:5]
+        else:
+            limited_page_range = paginator.page_range
+
+            # Pass the modified page range to the context
+        context['page_range'] = limited_page_range
         context['count']=self.object_list.count()
         return context
 
