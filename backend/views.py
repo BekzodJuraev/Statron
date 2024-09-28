@@ -577,18 +577,23 @@ class DetailChanel(LoginRequiredMixin,DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         profile_is = self.request.user.profile
-        time_threshold = timezone.now() - timedelta(hours=24)
-        demo_chanel_count=Demo.objects.filter(profile=profile_is,created_at__gte=time_threshold)
+        if not profile_is.is_premium and  profile_is.created_at <= timezone.now() - timedelta(days=21):
+            context['day_limit']=True
+            return context
+
+        today = timezone.now().date()
+
+        demo_chanel_count=Demo.objects.filter(profile=profile_is,created_at__date=today)
         if not profile_is.is_premium and demo_chanel_count.count() >= 0 and  demo_chanel_count.count() < 4:
 
             demo, created = Demo.objects.get_or_create(
                 chanel=self.object,
                 profile=profile_is,
-                created_at__gte=time_threshold
+                created_at__date=today
             )
         try:
             if not profile_is.is_premium:
-                chanel_saved = Demo.objects.get(chanel=self.object, created_at__gte=time_threshold)
+                chanel_saved = Demo.objects.get(profile=profile_is,chanel=self.object, created_at__date=today)
 
             er = (self.object.subscribers / self.object.views) * 10
             er_daily = (self.object.daily_subscribers / self.object.views) * 10
