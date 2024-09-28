@@ -12,7 +12,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -576,182 +576,172 @@ class DetailChanel(LoginRequiredMixin,DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        er=(self.object.subscribers/self.object.views)*10
-        er_daily = (self.object.daily_subscribers / self.object.views) * 10
-        profile_is=self.request.user.profile
+        profile_is = self.request.user.profile
+        time_threshold = timezone.now() - timedelta(hours=24)
+        demo_chanel_count=Demo.objects.filter(profile=profile_is,created_at__gte=time_threshold)
+        if not profile_is.is_premium and demo_chanel_count.count() >= 0 and  demo_chanel_count.count() < 4:
 
-        repost_param=self.request.GET.get('repost')
-        chanel_name=self.request.GET.get('chanel_name')
-
-
-
-
-
-
-
-        if repost_param=="true":
-            mention = Mentions.objects.filter(mentioned_channel=self.object,
-                                              post__id_channel_forward_from=self.object.chanel_id).values(
-                'post__chanel__pictures', 'post__chanel__name', 'post__chanel__pk',
-                'post__chanel__subscribers', ).annotate(
-                count=Count('id'), date=Max('post__date'))
-
-        else:
-            mention = Mentions.objects.filter(mentioned_channel=self.object).values('post__chanel__pictures',
-                                                                                    'post__chanel__name',
-                                                                                    'post__chanel__pk',
-                                                                                    'post__chanel__subscribers', ).annotate(
-                count=Count('id'), date=Max('post__date'))
-
-
-        if chanel_name:
-            mention = Mentions.objects.filter(mentioned_channel=self.object,post__chanel__name__icontains=chanel_name).values('post__chanel__pictures',
-                                                                                    'post__chanel__name',
-                                                                                    'post__chanel__pk',
-                                                                                    'post__chanel__subscribers', ).annotate(
-                count=Count('id'), date=Max('post__date'))
-
-
-
-
-
-
-
-
-
-
-
-        repost = Posts.objects.filter(chanel=self.object,id_channel_forward_from__isnull=False).select_related('chanel')
-
-
-
-
-        if profile_is.is_premium:
-            mention_chanel = Subperhour.objects.filter(chanel=self.object).select_related('chanel').prefetch_related(
-                'chanel__mentions')
-        else:
-            mention_chanel = Subperhour.objects.filter(
+            demo, created = Demo.objects.get_or_create(
                 chanel=self.object,
-                created_at__gte=timezone.now() - timedelta(days=7)
-            ).select_related('chanel').prefetch_related('chanel__mentions')
+                profile=profile_is,
+                created_at__gte=time_threshold
+            )
+        try:
+            if not profile_is.is_premium:
+                chanel_saved = Demo.objects.get(chanel=self.object, created_at__gte=time_threshold)
 
-        all_posts = Posts.objects.filter(
-            id_channel_forward_from=self.object.chanel_id
-        ).select_related('chanel')
+            er = (self.object.subscribers / self.object.views) * 10
+            er_daily = (self.object.daily_subscribers / self.object.views) * 10
 
-        chanel_ads=Mentions.objects.filter(post__chanel=self.object).prefetch_related('mentioned_channel__subperhour').values('mentioned_channel__name','mentioned_channel__pk','mentioned_channel__pictures','mentioned_channel__chanel_link','mentioned_channel__chanel_id').annotate(
-            count=Count('id'),date=Max('post__date'),views=Max('post__view'))
+            repost_param = self.request.GET.get('repost')
+            chanel_name = self.request.GET.get('chanel_name')
 
-        channel_names = chanel_ads.values_list('mentioned_channel__name', flat=True).distinct()
-        channel_id=chanel_ads.values_list('mentioned_channel__chanel_id',flat=True)
+            if repost_param == "true":
+                mention = Mentions.objects.filter(mentioned_channel=self.object,
+                                                  post__id_channel_forward_from=self.object.chanel_id).values(
+                    'post__chanel__pictures', 'post__chanel__name', 'post__chanel__pk',
+                    'post__chanel__subscribers', ).annotate(
+                    count=Count('id'), date=Max('post__date'))
+
+            else:
+                mention = Mentions.objects.filter(mentioned_channel=self.object).values('post__chanel__pictures',
+                                                                                        'post__chanel__name',
+                                                                                        'post__chanel__pk',
+                                                                                        'post__chanel__subscribers', ).annotate(
+                    count=Count('id'), date=Max('post__date'))
+
+            if chanel_name:
+                mention = Mentions.objects.filter(mentioned_channel=self.object,
+                                                  post__chanel__name__icontains=chanel_name).values(
+                    'post__chanel__pictures',
+                    'post__chanel__name',
+                    'post__chanel__pk',
+                    'post__chanel__subscribers', ).annotate(
+                    count=Count('id'), date=Max('post__date'))
+
+            repost = Posts.objects.filter(chanel=self.object, id_channel_forward_from__isnull=False).select_related(
+                'chanel')
+
+            if profile_is.is_premium:
+                mention_chanel = Subperhour.objects.filter(chanel=self.object).select_related(
+                    'chanel').prefetch_related(
+                    'chanel__mentions')
+            else:
+                mention_chanel = Subperhour.objects.filter(
+                    chanel=self.object,
+                    created_at__gte=timezone.now() - timedelta(days=7)
+                ).select_related('chanel').prefetch_related('chanel__mentions')
+
+            all_posts = Posts.objects.filter(
+                id_channel_forward_from=self.object.chanel_id
+            ).select_related('chanel')
+
+            chanel_ads = Mentions.objects.filter(post__chanel=self.object).prefetch_related(
+                'mentioned_channel__subperhour').values('mentioned_channel__name', 'mentioned_channel__pk',
+                                                        'mentioned_channel__pictures', 'mentioned_channel__chanel_link',
+                                                        'mentioned_channel__chanel_id').annotate(
+                count=Count('id'), date=Max('post__date'), views=Max('post__view'))
+
+            channel_names = chanel_ads.values_list('mentioned_channel__name', flat=True).distinct()
+            channel_id = chanel_ads.values_list('mentioned_channel__chanel_id', flat=True)
+
+            chanel_ads_new = Chanel_img.objects.filter(name__in=channel_names).prefetch_related(
+                'subperhour',
+                Prefetch('mentions', queryset=Mentions.objects.select_related('post__chanel')),
+            )
+            all_posts_new = Posts.objects.filter(
+                id_channel_forward_from__in=channel_id
+            ).select_related('chanel')
+
+            rank = (
+                Chanel.objects
+                    .filter(subscribers__gt=self.object.subscribers)
+                    .aggregate(rank=Count('id') + 1)
+
+            )
+            context['rank'] = rank
+
+            get_posts = Posts.objects.filter(chanel=self.object).select_related('chanel')
+
+            text = Posts.objects.filter(chanel=self.object).values_list('text')
+
+            repost_count = Posts.objects.filter(id_channel_forward_from=self.object.chanel_id, text__in=text).values(
+                'text').annotate(
+                repost_count=Count('id')
+            )
+
+            context['repost_count'] = repost_count
+
+            count_repost = repost.count()
+            count_mention = get_posts.filter(mention=True).count()
+            count_all = count_repost + count_mention
+
+            count_repost_week = repost.filter(created_at__gt=timezone.now() - timedelta(days=6)).count()
+            count_mention_week = get_posts.filter(mention=True,
+                                                  created_at__gt=timezone.now() - timedelta(days=6)).count()
+            count_all_week = count_repost_week + count_mention_week
+
+            count_repost_month = repost.filter(created_at__gt=timezone.now() - timedelta(days=29)).count()
+            count_mention_month = get_posts.filter(mention=True,
+                                                   created_at__gt=timezone.now() - timedelta(days=29)).count()
+            count_all_month = count_repost_month + count_mention_month
+
+            context['all_posts_new'] = all_posts_new
+
+            context['count_all_week'] = count_all_week
+            context['count_repost_week'] = count_repost_week
+            context['count_mention_week'] = count_mention_week
+            context['chanel_ads_new'] = chanel_ads_new
+
+            context['count_all_month'] = count_all_month
+            context['count_mention_month'] = count_mention_month
+            context['count_repost_month'] = count_repost_month
+
+            context['count_all'] = count_all
+            context['count_repost'] = count_repost
+            context['count_mention'] = count_mention
+
+            context['repost'] = repost
+
+            context['mention'] = mention
+            context['mention_popup'] = Mentions.objects.filter(mentioned_channel=self.object).select_related(
+                'post__chanel')
+
+            context['chanel_ads'] = chanel_ads
+
+            context['er'] = round(er, 1)
+            if self.request.user.is_authenticated:
+                context['like'] = Like.objects.filter(username=self.request.user.profile, chanel_name=self.object)
+
+            context['er_daily'] = round(er_daily, 1)
+            context['all_posts'] = all_posts
+            context['subperhour'] = mention_chanel
+            context['post_all'] = get_posts
+            context['post_mention'] = get_posts.filter(mention=True)
+            context['post'] = get_posts[:30]
+            context['count'] = get_posts.filter(mention=True).count()
+            context['subperday'] = SubPerday.objects.filter(chanel=self.object).annotate(
+                er=F('subperday') / F('viewsperday') * 10)
+            context['posts'] = Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(
+                count=Count('id'))
+            context['posts_ads'] = Posts.objects.filter(chanel=self.object, mention=True).values(
+                'created_at__date').annotate(
+                count=Count('id'))
+            context['form'] = LikeForm
+
+            context['day'] = self.object.daily_subscribers
+            context['week'] = self.object.weekly_subscribers
+            context['month'] = self.object.weekly_monthy
+
+            return context
+
+        except:
+            context['limit'] =' Вы не можете смотреть эту страницу, поскольку достигли дневное ограничение тарифа.'
+            return context
 
 
-        chanel_ads_new = Chanel_img.objects.filter(name__in=channel_names).prefetch_related(
-            'subperhour',
-            Prefetch('mentions', queryset=Mentions.objects.select_related('post__chanel')),
-        )
-        all_posts_new = Posts.objects.filter(
-            id_channel_forward_from__in=channel_id
-        ).select_related('chanel')
-
-        rank = (
-            Chanel.objects
-                .filter(subscribers__gt=self.object.subscribers)
-                .aggregate(rank=Count('id') + 1)
-
-        )
-        context['rank']=rank
-
-        get_posts = Posts.objects.filter(chanel=self.object).select_related('chanel')
-
-        text=Posts.objects.filter(chanel=self.object).values_list('text')
-
-        repost_count=Posts.objects.filter(id_channel_forward_from=self.object.chanel_id,text__in=text).values('text').annotate(
-    repost_count=Count('id')
-)
-
-        context['repost_count']=repost_count
 
 
-
-
-
-
-        count_repost=repost.count()
-        count_mention=get_posts.filter(mention=True).count()
-        count_all=count_repost+count_mention
-
-        count_repost_week = repost.filter(created_at__gt=timezone.now() - timedelta(days=6)).count()
-        count_mention_week=get_posts.filter(mention=True,created_at__gt=timezone.now() - timedelta(days=6)).count()
-        count_all_week=count_repost_week+count_mention_week
-
-        count_repost_month = repost.filter(created_at__gt=timezone.now() - timedelta(days=29)).count()
-        count_mention_month= get_posts.filter(mention=True,created_at__gt=timezone.now() - timedelta(days=29)).count()
-        count_all_month = count_repost_month + count_mention_month
-
-        context['all_posts_new']=all_posts_new
-
-
-
-
-
-
-
-
-        context['count_all_week']=count_all_week
-        context['count_repost_week'] = count_repost_week
-        context['count_mention_week'] = count_mention_week
-        context['chanel_ads_new']=chanel_ads_new
-
-
-
-        context['count_all_month'] = count_all_month
-        context['count_mention_month'] = count_mention_month
-        context['count_repost_month'] = count_repost_month
-
-        context['count_all'] = count_all
-        context['count_repost'] = count_repost
-        context['count_mention'] = count_mention
-
-        context['repost'] = repost
-
-        context['mention'] = mention
-        context['mention_popup']=Mentions.objects.filter(mentioned_channel=self.object).select_related('post__chanel')
-
-
-
-
-        context['chanel_ads']=chanel_ads
-
-        context['er']=round(er,1)
-        if self.request.user.is_authenticated:
-            context['like'] = Like.objects.filter(username=self.request.user.profile, chanel_name=self.object)
-
-
-        context['er_daily'] = round(er_daily, 1)
-        context['all_posts']=all_posts
-        context['subperhour'] = mention_chanel
-        context['post_all'] = get_posts
-        context['post_mention']=get_posts.filter(mention=True)
-        context['post'] = get_posts[:30]
-        context['count']=get_posts.filter(mention=True).count()
-        context['subperday']=SubPerday.objects.filter(chanel=self.object).annotate(er=F('subperday') / F('viewsperday') * 10)
-        context['posts']=Posts.objects.filter(chanel=self.object).values('created_at__date').annotate(count=Count('id'))
-        context['posts_ads'] = Posts.objects.filter(chanel=self.object,mention=True).values('created_at__date').annotate(
-            count=Count('id'))
-        context['form']=LikeForm
-
-
-
-
-
-
-
-        context['day'] = self.object.daily_subscribers
-        context['week'] = self.object.weekly_subscribers
-        context['month'] = self.object.weekly_monthy
-
-        return context
 
     def post(self, request, *args, **kwargs):
         form = LikeForm(request.POST)

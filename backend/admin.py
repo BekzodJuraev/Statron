@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo
+
+@admin.register(Demo)
+class Demo(admin.ModelAdmin):
+    list_display = ['profile','chanel']
+
 
 @admin.register(Notify)
 class Notify(admin.ModelAdmin):

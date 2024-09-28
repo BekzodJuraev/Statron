@@ -2080,6 +2080,8 @@ To see the hourly dynamics of post coverage, click on the number of views of the
     </div>
 </div>
 {% else %}
+{% if limit %}
+{% else %}
 <main class="page">
 			<section class="account-tabs analitics-tabs">
 				<div class="account-tabs__container">
@@ -4168,6 +4170,7 @@ To see the hourly dynamics of post coverage, click on the number of views of the
     </div>
 </div>
 {% endif %}
+{% endif %}
 
 
 
@@ -4545,4 +4548,5 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 
 
 </script>
+
 {% endblock %}

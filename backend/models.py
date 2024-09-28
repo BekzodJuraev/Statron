@@ -137,6 +137,16 @@ class Chanel(models.Model):
         verbose_name="Канал"
         verbose_name_plural="Канал"
         ordering=['-subscribers']
+
+
+class Demo(models.Model):
+    chanel = models.ForeignKey(Chanel, on_delete=models.CASCADE, related_name='demo_chanel')
+    profile=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='demo_profile')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.chanel.name
+
 class Chanel_img(Chanel):
     class Meta:
         proxy=True
