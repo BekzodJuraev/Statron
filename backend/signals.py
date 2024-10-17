@@ -1,13 +1,18 @@
 from django.db.models.signals import post_save,pre_save
-from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions
+from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment
 from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
-from django.db.models import Sum,Q,Count
+from django.db.models import Sum,Q,Count,F
 from celery import shared_task
 from datetime import date, timedelta, datetime
 from django.utils import timezone
 
-
+@receiver(post_save,sender=Payment)
+def create_payment(sender,instance,created,*args,**kwargs):
+    if created:
+        profile=instance.profile
+        profile.balance=F('balance') + instance.amount
+        profile.save(update_fields=['balance'])
 
 @receiver(post_save,sender=Add_chanel)
 def create_chanel(sender,instance,created,*args,**kwargs):

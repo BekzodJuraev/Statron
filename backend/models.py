@@ -50,6 +50,9 @@ class Ref(models.Model):
         return self.profile.username.username
 
 
+
+
+
 class Chanel(models.Model):
     chanel_link=models.CharField(max_length=150)
     chanel_id=models.IntegerField(default=0)
@@ -272,4 +275,15 @@ class Add_userbot(models.Model):
 
     def __str__(self):
         return self.name
+
+class Payment(models.Model):
+    profile=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='withdraw')
+    created_at=models.DateTimeField(auto_now_add=True)
+    wallet=models.CharField(max_length=200)
+    amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+
+
+
+    def __str__(self):
+        return self.profile.first_name
 

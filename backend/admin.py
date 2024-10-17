@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment
+
+@admin.register(Payment)
+class Payment(admin.ModelAdmin):
+    list_display = ['profile','wallet','amount']
 
 @admin.register(Demo)
 class Demo(admin.ModelAdmin):
