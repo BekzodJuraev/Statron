@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe
+@admin.register(Subscribe)
+class Subscribe(admin.ModelAdmin):
+    pass
+@admin.register(Type_sub)
+class Type_sub(admin.ModelAdmin):
+    pass
 
 @admin.register(Payment)
 class Payment(admin.ModelAdmin):

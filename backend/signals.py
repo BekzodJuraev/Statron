@@ -6,14 +6,20 @@ from django.db.models import Sum,Q,Count,F
 from celery import shared_task
 from datetime import date, timedelta, datetime
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
-@receiver(post_save,sender=Payment)
-def create_payment(sender,instance,created,*args,**kwargs):
-    if created:
-        profile=instance.profile
-        profile.balance=F('balance') + instance.amount
-        profile.save(update_fields=['balance'])
-
+# @receiver(pre_save, sender=Payment)
+# def create_payment(sender, instance, *args, **kwargs):
+#     profile = instance.profile
+#
+#     # Check if the profile has enough balance
+#     if profile.balance < instance.amount:
+#         # Prevent the payment from proceeding by marking it
+#         return ""
+#     else:
+#         # Update the profile balance if there's enough money
+#         profile.balance = F('balance') - instance.amount
+#         profile.save(update_fields=['balance'])
 @receiver(post_save,sender=Add_chanel)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
