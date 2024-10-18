@@ -1,5 +1,5 @@
 from django.db.models.signals import post_save,pre_save
-from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment
+from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment,Profile,Commission
 from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
 from django.db.models import Sum,Q,Count,F
@@ -7,6 +7,13 @@ from celery import shared_task
 from datetime import date, timedelta, datetime
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+
+
+@receiver(post_save,sender=Profile)
+def create_balance(sender, instance, *args, **kwargs):
+    if instance.balance and instance.recommended_by:
+        Commission.objects.create(code=instance.recommended_by,amount=instance.balance)
+
 
 # @receiver(pre_save, sender=Payment)
 # def create_payment(sender, instance, *args, **kwargs):

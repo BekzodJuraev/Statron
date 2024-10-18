@@ -6,7 +6,7 @@ import pytz
 from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
-
+from decimal import Decimal
 import uuid
 
 class Profile(models.Model):
@@ -302,5 +302,19 @@ class Subscribe(models.Model):
 
     def __str__(self):
         return self.type_sub.name
+
+
+class Commission(models.Model):
+    code=models.ForeignKey(Ref,on_delete=models.CASCADE)
+    amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+
+
+    def save(self, *args, **kwargs):
+        # Only apply the commission rate when the instance is first created
+        if self._state.adding:  # Check if it's a new instance
+            self.amount = self.amount * Decimal('0.1')  # Use Decimal instead of float
+
+        super().save(*args, **kwargs)
+
 
 

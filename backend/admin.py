@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe,Commission
+
+@admin.register(Commission)
+class Commission(admin.ModelAdmin):
+    pass
 @admin.register(Subscribe)
 class Subscribe(admin.ModelAdmin):
     pass
@@ -39,7 +43,7 @@ class Posts(admin.ModelAdmin):
 
 @admin.register(Profile)
 class Profile(admin.ModelAdmin):
-    list_display = ['username','created_at']
+    list_display = ['username','created_at','recommended_by']
 
 
 @admin.register(Chanel)
