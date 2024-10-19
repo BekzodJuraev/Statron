@@ -484,7 +484,9 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         ref=Profile.objects.filter(recommended_by__profile=self.object).count()
 
-        context['ref_code']=Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles')
+        context['ref_code']=Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles','commission').annotate(count_commission=Count('commission',distinct=True),total_commission_amount=Sum('commission__amount',distinct=True),count_register=Count('recommended_profiles',distinct=True))
+        #prefetch_related('commission').annotate(count_commission=Count('commission'),total_commission_amount=Sum('commission__amount'))
+
 
         context['ref']=ref
 
