@@ -314,35 +314,326 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 						</div>
 						<div data-tabs-body class="tabs-account__content">
 							<div class="tabs-account__body">
-								<p class="text">
-									Наш сервис предлагает вам зарабатывать вместе с нами! <br> Основные правила и принципы реферальной программы просты:
-								</p>
-								<ul class="tabs-account__list">
-									<li class="tabs-account__item tabs-account__item_ok">
-										Вы будете получать 10% от суммы трат пользователей, зарегистрировавшихся по вашим реферальным ссылкам, на продление доступа.
-									</li>
-									<li class="tabs-account__item tabs-account__item_ok">
-										При условии хорошего количества оплат от вас мы можем увеличить ваш процент. Все условия индивидуальны и обсуждаются через поддержку.
-									</li>
-									<li class="tabs-account__item tabs-account__item_ok">
-										Как только пользователь регистрируется по вашей ссылке, он будет закреплен за вами навсегда - и вы будете получать свою комиссию с каждой оплаты пользователя за продление доступа к сервису.
-									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-										Запрещен спам в любых его проявлениях. За это - бан всего аккаунта без выплат.
-									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-										Запрещена регистрация и оплата по своим же ссылкам. За это - бан всех аккаунтов без выплат.
-									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-										Запрещено рекламировать сервис брендовыми запросами: Telemetr, Telemetr.me, Телеметр.
-									</li>
-								</ul>
+								<div class="tabs-account__body-hasBg">
+									<p class="text">
+										Наш сервис предлагает вам зарабатывать вместе с нами! <br> Основные правила и
+										принципы реферальной программы просты:
+									</p>
+									<ul class="tabs-account__list">
+										<li class="tabs-account__item tabs-account__item_ok">
+											Вы будете получать 10% от суммы трат пользователей, зарегистрировавшихся по
+											вашим реферальным ссылкам, на продление доступа.
+										</li>
+										<li class="tabs-account__item tabs-account__item_ok">
+											При условии хорошего количества оплат от вас мы можем увеличить ваш процент.
+											Все
+											условия индивидуальны и обсуждаются через поддержку.
+										</li>
+										<li class="tabs-account__item tabs-account__item_ok">
+											Как только пользователь регистрируется по вашей ссылке, он будет закреплен
+											за
+											вами навсегда - и вы будете получать свою комиссию с каждой оплаты
+											пользователя
+											за продление доступа к сервису.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Запрещен спам в любых его проявлениях. За это - бан всего аккаунта без
+											выплат.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Запрещена регистрация и оплата по своим же ссылкам. За это - бан всех
+											аккаунтов
+											без выплат.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Запрещено рекламировать сервис брендовыми запросами: Telemetr, Telemetr.me,
+											Телеметр.
+										</li>
+									</ul>
+								</div>
+
+
+
 							</div>
-							<div class="tabs-account__body">
-								Содержимое второго таба
+							<div class="tabs-account__body balans-tab">
+								<div class="tabs-account__offer-amount">
+									<form action="" class="tabs-account__form form">
+										<label for="tabs-account__offer-amount-field">
+											Введите сумму для заказа выплаты:
+										</label>
+										<div class="tabs__account-body-box">
+											<input type="text" name="tabs-account__offer-amount-field"
+												id="tabs-account__offer-amount-field" class="form__input">
+											<button class="button tabs-account__offer-amount-btn">Заказать</button>
+										</div>
+									</form>
+								</div>
+								<div class="analitics-tabs__table-wrap-container">
+									<table class="table search-channels__table">
+										<thead>
+											<tr class="tabs__account-head-column">
+												<th scope="col">
+													<div class="label-black">Дата и время:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Сумма:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Кошелек:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Статус:</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button status__fail"
+														type="button">Отменено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>11.02.2024</span>
+														<span>11:23:12</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+233 000</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
-							<div class="tabs-account__body">
-								Содержимое третьего таба
+							<div class="tabs-account__body history-tab">
+								<div class="analitics-tabs__table-wrap-container">
+									<table class="table search-channels__table">
+										<thead>
+											<tr class="tabs__account-head-column">
+												<th scope="col">
+													<div class="label-black">Дата:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black text-left">Время:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Описание:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Статус:</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button status__fail"
+														type="button">Отменено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button status__fail"
+														type="button">Отменено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">11.02.2024</div>
+												</td>
+												<td>
+													<div class="label-black text-left">11:23:13</div>
+												</td>
+												<td>
+													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+												</td>
+												<td class="text-right">
+													<button class="status__button" type="button">Выполнено</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
