@@ -1,10 +1,10 @@
 (() => {
     var __webpack_modules__ = {
         448: module => {
-            !function(e, t) {
+            !function (e, t) {
                 true ? module.exports = t() : 0;
-            }(window, (function() {
-                return function(e) {
+            }(window, (function () {
+                return function (e) {
                     var t = {};
                     function n(a) {
                         if (t[a]) return t[a].exports;
@@ -15,69 +15,69 @@
                         };
                         return e[a].call(r.exports, r, r.exports, n), r.l = !0, r.exports;
                     }
-                    return n.m = e, n.c = t, n.d = function(e, t, a) {
+                    return n.m = e, n.c = t, n.d = function (e, t, a) {
                         n.o(e, t) || Object.defineProperty(e, t, {
                             enumerable: !0,
                             get: a
                         });
-                    }, n.r = function(e) {
+                    }, n.r = function (e) {
                         "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
                             value: "Module"
                         }), Object.defineProperty(e, "__esModule", {
                             value: !0
                         });
-                    }, n.t = function(e, t) {
+                    }, n.t = function (e, t) {
                         if (1 & t && (e = n(e)), 8 & t) return e;
                         if (4 & t && "object" == typeof e && e && e.__esModule) return e;
                         var a = Object.create(null);
                         if (n.r(a), Object.defineProperty(a, "default", {
                             enumerable: !0,
                             value: e
-                        }), 2 & t && "string" != typeof e) for (var r in e) n.d(a, r, function(t) {
+                        }), 2 & t && "string" != typeof e) for (var r in e) n.d(a, r, function (t) {
                             return e[t];
                         }.bind(null, r));
                         return a;
-                    }, n.n = function(e) {
-                        var t = e && e.__esModule ? function() {
+                    }, n.n = function (e) {
+                        var t = e && e.__esModule ? function () {
                             return e.default;
-                        } : function() {
+                        } : function () {
                             return e;
                         };
                         return n.d(t, "a", t), t;
-                    }, n.o = function(e, t) {
+                    }, n.o = function (e, t) {
                         return Object.prototype.hasOwnProperty.call(e, t);
                     }, n.p = "", n(n.s = 0);
-                }([ function(e, t, n) {
+                }([function (e, t, n) {
                     "use strict";
                     n.r(t);
-                    var a = [], r = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ], i = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ], o = {
+                    var a = [], r = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], i = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], o = {
                         t: "top",
                         r: "right",
                         b: "bottom",
                         l: "left",
                         c: "centered"
                     };
-                    function s() {}
-                    var l = [ "click", "focusin", "keydown", "input" ];
+                    function s() { }
+                    var l = ["click", "focusin", "keydown", "input"];
                     function d(e) {
-                        l.forEach((function(t) {
+                        l.forEach((function (t) {
                             e.addEventListener(t, e === document ? L : Y);
                         }));
                     }
                     function c(e) {
-                        return Array.isArray(e) ? e.map(c) : "[object Object]" === x(e) ? Object.keys(e).reduce((function(t, n) {
+                        return Array.isArray(e) ? e.map(c) : "[object Object]" === x(e) ? Object.keys(e).reduce((function (t, n) {
                             return t[n] = c(e[n]), t;
                         }), {}) : e;
                     }
                     function u(e, t) {
                         var n = e.calendar.querySelector(".qs-overlay"), a = n && !n.classList.contains("qs-hidden");
-                        t = t || new Date(e.currentYear, e.currentMonth), e.calendar.innerHTML = [ h(t, e, a), f(t, e, a), v(e, a) ].join(""), 
-                        a && window.requestAnimationFrame((function() {
-                            M(!0, e);
-                        }));
+                        t = t || new Date(e.currentYear, e.currentMonth), e.calendar.innerHTML = [h(t, e, a), f(t, e, a), v(e, a)].join(""),
+                            a && window.requestAnimationFrame((function () {
+                                M(!0, e);
+                            }));
                     }
                     function h(e, t, n) {
-                        return [ '<div class="qs-controls' + (n ? " qs-blur" : "") + '">', '<div class="qs-arrow qs-left"></div>', '<div class="qs-month-year' + (t.disableYearOverlay ? " qs-disabled-year-overlay" : "") + '">', '<span class="qs-month">' + t.months[e.getMonth()] + "</span>", '<span class="qs-year">' + e.getFullYear() + "</span>", "</div>", '<div class="qs-arrow qs-right"></div>', "</div>" ].join("");
+                        return ['<div class="qs-controls' + (n ? " qs-blur" : "") + '">', '<div class="qs-arrow qs-left"></div>', '<div class="qs-month-year' + (t.disableYearOverlay ? " qs-disabled-year-overlay" : "") + '">', '<span class="qs-month">' + t.months[e.getMonth()] + "</span>", '<span class="qs-year">' + e.getFullYear() + "</span>", "</div>", '<div class="qs-arrow qs-right"></div>', "</div>"].join("");
                     }
                     function f(e, t, n) {
                         var a = t.currentMonth, r = t.currentYear, i = t.dateSelected, o = t.maxDate, s = t.minDate, l = t.showAllDates, d = t.days, c = t.disabledDates, u = t.startDay, h = t.weekendIndices, f = t.events, v = t.getRange ? t.getRange() : {}, m = +v.start, y = +v.end, p = g(new Date(e).setDate(1)), w = p.getDay() - u, D = w < 0 ? 7 : 0;
@@ -86,46 +86,46 @@
                         S += (w + b) % 7 ? 7 : 0;
                         for (var M = 1; M <= S; M++) {
                             var E = (M - 1) % 7, x = d[E], C = M - (w >= 0 ? w : 7 + w), L = new Date(r, a, C), Y = f[+L], j = C < 1 || C > b, O = j ? C < 1 ? -1 : 1 : 0, P = j && !l, k = P ? "" : L.getDate(), N = +L == +i, _ = E === h[0] || E === h[1], I = m !== y, A = "qs-square " + x;
-                            Y && !P && (A += " qs-event"), j && (A += " qs-outside-current-month"), !l && j || (A += " qs-num"), 
-                            N && (A += " qs-active"), (c[+L] || t.disabler(L) || _ && t.noWeekends || s && +L < +s || o && +L > +o) && !P && (A += " qs-disabled"), 
-                            +g(new Date) == +L && (A += " qs-current"), +L === m && y && I && (A += " qs-range-start"), 
-                            +L > m && +L < y && (A += " qs-range-middle"), +L === y && m && I && (A += " qs-range-end"), 
-                            P && (A += " qs-empty", k = ""), q.push('<div class="' + A + '" data-direction="' + O + '">' + k + "</div>");
+                            Y && !P && (A += " qs-event"), j && (A += " qs-outside-current-month"), !l && j || (A += " qs-num"),
+                                N && (A += " qs-active"), (c[+L] || t.disabler(L) || _ && t.noWeekends || s && +L < +s || o && +L > +o) && !P && (A += " qs-disabled"),
+                                +g(new Date) == +L && (A += " qs-current"), +L === m && y && I && (A += " qs-range-start"),
+                                +L > m && +L < y && (A += " qs-range-middle"), +L === y && m && I && (A += " qs-range-end"),
+                                P && (A += " qs-empty", k = ""), q.push('<div class="' + A + '" data-direction="' + O + '">' + k + "</div>");
                         }
-                        var R = d.map((function(e) {
+                        var R = d.map((function (e) {
                             return '<div class="qs-square qs-day">' + e + "</div>";
                         })).concat(q);
-                        return R.unshift('<div class="qs-squares' + (n ? " qs-blur" : "") + '">'), R.push("</div>"), 
-                        R.join("");
+                        return R.unshift('<div class="qs-squares' + (n ? " qs-blur" : "") + '">'), R.push("</div>"),
+                            R.join("");
                     }
                     function v(e, t) {
                         var n = e.overlayPlaceholder, a = e.overlayButton;
-                        return [ '<div class="qs-overlay' + (t ? "" : " qs-hidden") + '">', "<div>", '<input class="qs-overlay-year" placeholder="' + n + '" inputmode="numeric" />', '<div class="qs-close">&#10005;</div>', "</div>", '<div class="qs-overlay-month-container">' + e.overlayMonths.map((function(e, t) {
+                        return ['<div class="qs-overlay' + (t ? "" : " qs-hidden") + '">', "<div>", '<input class="qs-overlay-year" placeholder="' + n + '" inputmode="numeric" />', '<div class="qs-close">&#10005;</div>', "</div>", '<div class="qs-overlay-month-container">' + e.overlayMonths.map((function (e, t) {
                             return '<div class="qs-overlay-month" data-month-num="' + t + '">' + e + "</div>";
-                        })).join("") + "</div>", '<div class="qs-submit qs-disabled">' + a + "</div>", "</div>" ].join("");
+                        })).join("") + "</div>", '<div class="qs-submit qs-disabled">' + a + "</div>", "</div>"].join("");
                     }
                     function m(e, t, n) {
                         var a = t.el, r = t.calendar.querySelector(".qs-active"), i = e.textContent, o = t.sibling;
-                        (a.disabled || a.readOnly) && t.respectDisabledReadOnly || (t.dateSelected = n ? void 0 : new Date(t.currentYear, t.currentMonth, i), 
-                        r && r.classList.remove("qs-active"), n || e.classList.add("qs-active"), p(a, t, n), 
-                        n || q(t), o && (y({
-                            instance: t,
-                            deselect: n
-                        }), t.first && !o.dateSelected && (o.currentYear = t.currentYear, o.currentMonth = t.currentMonth, 
-                        o.currentMonthName = t.currentMonthName), u(t), u(o)), t.onSelect(t, n ? void 0 : new Date(t.dateSelected)));
+                        (a.disabled || a.readOnly) && t.respectDisabledReadOnly || (t.dateSelected = n ? void 0 : new Date(t.currentYear, t.currentMonth, i),
+                            r && r.classList.remove("qs-active"), n || e.classList.add("qs-active"), p(a, t, n),
+                            n || q(t), o && (y({
+                                instance: t,
+                                deselect: n
+                            }), t.first && !o.dateSelected && (o.currentYear = t.currentYear, o.currentMonth = t.currentMonth,
+                                o.currentMonthName = t.currentMonthName), u(t), u(o)), t.onSelect(t, n ? void 0 : new Date(t.dateSelected)));
                     }
                     function y(e) {
                         var t = e.instance.first ? e.instance : e.instance.sibling, n = t.sibling;
-                        t === e.instance ? e.deselect ? (t.minDate = t.originalMinDate, n.minDate = n.originalMinDate) : n.minDate = t.dateSelected : e.deselect ? (n.maxDate = n.originalMaxDate, 
-                        t.maxDate = t.originalMaxDate) : t.maxDate = n.dateSelected;
+                        t === e.instance ? e.deselect ? (t.minDate = t.originalMinDate, n.minDate = n.originalMinDate) : n.minDate = t.dateSelected : e.deselect ? (n.maxDate = n.originalMaxDate,
+                            t.maxDate = t.originalMaxDate) : t.maxDate = n.dateSelected;
                     }
                     function p(e, t, n) {
                         if (!t.nonInput) return n ? e.value = "" : t.formatter !== s ? t.formatter(e, t.dateSelected, t) : void (e.value = t.dateSelected.toDateString());
                     }
                     function w(e, t, n, a) {
-                        n || a ? (n && (t.currentYear = +n), a && (t.currentMonth = +a)) : (t.currentMonth += e.contains("qs-right") ? 1 : -1, 
-                        12 === t.currentMonth ? (t.currentMonth = 0, t.currentYear++) : -1 === t.currentMonth && (t.currentMonth = 11, 
-                        t.currentYear--)), t.currentMonthName = t.months[t.currentMonth], u(t), t.onMonthChange(t);
+                        n || a ? (n && (t.currentYear = +n), a && (t.currentMonth = +a)) : (t.currentMonth += e.contains("qs-right") ? 1 : -1,
+                            12 === t.currentMonth ? (t.currentMonth = 0, t.currentYear++) : -1 === t.currentMonth && (t.currentMonth = 11,
+                                t.currentYear--)), t.currentMonthName = t.months[t.currentMonth], u(t), t.onMonthChange(t);
                     }
                     function D(e) {
                         if (!e.noPosition) {
@@ -145,18 +145,18 @@
                         }
                     }
                     function q(e) {
-                        e.disabled || !e.calendarContainer.classList.contains("qs-hidden") && !e.alwaysShow && ("overlay" !== e.defaultView && M(!0, e), 
-                        e.calendarContainer.classList.add("qs-hidden"), e.onHide(e));
+                        e.disabled || !e.calendarContainer.classList.contains("qs-hidden") && !e.alwaysShow && ("overlay" !== e.defaultView && M(!0, e),
+                            e.calendarContainer.classList.add("qs-hidden"), e.onHide(e));
                     }
                     function S(e) {
-                        e.disabled || (e.calendarContainer.classList.remove("qs-hidden"), "overlay" === e.defaultView && M(!1, e), 
-                        D(e), e.onShow(e));
+                        e.disabled || (e.calendarContainer.classList.remove("qs-hidden"), "overlay" === e.defaultView && M(!1, e),
+                            D(e), e.onShow(e));
                     }
                     function M(e, t) {
                         var n = t.calendar, a = n.querySelector(".qs-overlay"), r = a.querySelector(".qs-overlay-year"), i = n.querySelector(".qs-controls"), o = n.querySelector(".qs-squares");
-                        e ? (a.classList.add("qs-hidden"), i.classList.remove("qs-blur"), o.classList.remove("qs-blur"), 
-                        r.value = "") : (a.classList.remove("qs-hidden"), i.classList.add("qs-blur"), o.classList.add("qs-blur"), 
-                        r.focus());
+                        e ? (a.classList.add("qs-hidden"), i.classList.remove("qs-blur"), o.classList.remove("qs-blur"),
+                            r.value = "") : (a.classList.remove("qs-hidden"), i.classList.add("qs-blur"), o.classList.add("qs-blur"),
+                                r.focus());
                     }
                     function E(e, t, n, a) {
                         var r = isNaN(+(new Date).setFullYear(t.value || void 0)), i = r ? null : t.value;
@@ -166,13 +166,13 @@
                         return {}.toString.call(e);
                     }
                     function C(e) {
-                        a.forEach((function(t) {
+                        a.forEach((function (t) {
                             t !== e && q(t);
                         }));
                     }
                     function L(e) {
                         if (!e.__qs_shadow_dom) {
-                            var t = e.which || e.keyCode, n = e.type, r = e.target, o = r.classList, s = a.filter((function(e) {
+                            var t = e.which || e.keyCode, n = e.type, r = e.target, o = r.classList, s = a.filter((function (e) {
                                 return e.calendar.contains(r) || e.el === r;
                             }))[0], l = s && s.calendar.contains(r);
                             if (!(s && s.isMobile && s.disableMobile)) if ("click" === n) {
@@ -184,9 +184,9 @@
                                     if (o.contains("qs-num")) {
                                         var b = r.textContent, g = +r.dataset.direction, x = new Date(s.currentYear, s.currentMonth + g, b);
                                         if (g) {
-                                            s.currentYear = x.getFullYear(), s.currentMonth = x.getMonth(), s.currentMonthName = i[s.currentMonth], 
-                                            u(s);
-                                            for (var L, Y = s.calendar.querySelectorAll('[data-direction="0"]'), j = 0; !L; ) {
+                                            s.currentYear = x.getFullYear(), s.currentMonth = x.getMonth(), s.currentMonthName = i[s.currentMonth],
+                                                u(s);
+                                            for (var L, Y = s.calendar.querySelectorAll('[data-direction="0"]'), j = 0; !L;) {
                                                 var O = Y[j];
                                                 O.textContent === b && (L = O), j++;
                                             }
@@ -201,7 +201,7 @@
                                 13 === t && P && l ? E(e, r, s) : 27 === t && P && l && M(!0, s);
                             } else if ("input" === n) {
                                 if (!s || !s.calendar.contains(r)) return;
-                                var k = s.calendar.querySelector(".qs-submit"), N = r.value.split("").reduce((function(e, t) {
+                                var k = s.calendar.querySelector(".qs-submit"), N = r.value.split("").reduce((function (e, t) {
                                     return e || "0" !== t ? e + (t.match(/[0-9]/) ? t : "") : "";
                                 }), "").slice(0, 4);
                                 r.value = N, k.classList[4 === N.length ? "remove" : "add"]("qs-disabled");
@@ -212,7 +212,7 @@
                         L(e), e.__qs_shadow_dom = !0;
                     }
                     function j(e, t) {
-                        l.forEach((function(n) {
+                        l.forEach((function (n) {
                             e.removeEventListener(n, t);
                         }));
                     }
@@ -230,10 +230,10 @@
                         }), u(i)), u(this), this;
                         if (!b(e)) throw new Error("`setDate` needs a JavaScript Date object.");
                         if (this.disabledDates[+n] || n < this.minDate || n > this.maxDate) throw new Error("You can't manually set a date that's disabled.");
-                        this.dateSelected = n, t && (this.currentYear = n.getFullYear(), this.currentMonth = n.getMonth(), 
-                        this.currentMonthName = this.months[n.getMonth()]), p(this.el, this), i && (y({
-                            instance: this
-                        }), u(i));
+                        this.dateSelected = n, t && (this.currentYear = n.getFullYear(), this.currentMonth = n.getMonth(),
+                            this.currentMonthName = this.months[n.getMonth()]), p(this.el, this), i && (y({
+                                instance: this
+                            }), u(i));
                         var o = a === n.getFullYear() && r === n.getMonth();
                         return o || t ? u(this, n) : o || u(this, new Date(a, r, 1)), this;
                     }
@@ -257,13 +257,13 @@
                         function v() {
                             throw new Error("Out-of-range date passed to " + f());
                         }
-                        if (null == t) e[c()] = void 0, i ? (i[c()] = void 0, n ? (r && !a || !r && !i.dateSelected) && (e.minDate = void 0, 
-                        i.minDate = void 0) : (r && !i.dateSelected || !r && !a) && (e.maxDate = void 0, 
-                        i.maxDate = void 0)) : e[h()] = void 0; else {
+                        if (null == t) e[c()] = void 0, i ? (i[c()] = void 0, n ? (r && !a || !r && !i.dateSelected) && (e.minDate = void 0,
+                            i.minDate = void 0) : (r && !i.dateSelected || !r && !a) && (e.maxDate = void 0,
+                                i.maxDate = void 0)) : e[h()] = void 0; else {
                             if (!b(t)) throw new Error("Invalid date passed to " + f());
-                            i ? ((r && n && l > (a || s) || r && !n && l < (i.dateSelected || o) || !r && n && l > (i.dateSelected || s) || !r && !n && l < (a || o)) && v(), 
-                            e[c()] = l, i[c()] = l, (n && (r && !a || !r && !i.dateSelected) || !n && (r && !i.dateSelected || !r && !a)) && (e[h()] = l, 
-                            i[h()] = l)) : ((n && l > (a || s) || !n && l < (a || o)) && v(), e[h()] = l);
+                            i ? ((r && n && l > (a || s) || r && !n && l < (i.dateSelected || o) || !r && n && l > (i.dateSelected || s) || !r && !n && l < (a || o)) && v(),
+                                e[c()] = l, i[c()] = l, (n && (r && !a || !r && !i.dateSelected) || !n && (r && !i.dateSelected || !r && !a)) && (e[h()] = l,
+                                    i[h()] = l)) : ((n && l > (a || s) || !n && l < (a || o)) && v(), e[h()] = l);
                         }
                         return i && u(i), u(e), e;
                     }
@@ -276,17 +276,17 @@
                     }
                     function R() {
                         var e = this.shadowDom, t = this.positionedEl, n = this.calendarContainer, r = this.sibling, i = this;
-                        this.inlinePosition && (a.some((function(e) {
+                        this.inlinePosition && (a.some((function (e) {
                             return e !== i && e.positionedEl === t;
                         })) || t.style.setProperty("position", null));
-                        n.remove(), a = a.filter((function(e) {
+                        n.remove(), a = a.filter((function (e) {
                             return e !== i;
                         })), r && delete r.sibling, a.length || j(document, L);
-                        var o = a.some((function(t) {
+                        var o = a.some((function (t) {
                             return t.shadowDom === e;
                         }));
                         for (var s in e && !o && j(e, Y), this) delete this[s];
-                        a.length || l.forEach((function(e) {
+                        a.length || l.forEach((function (e) {
                             document.removeEventListener(e, L);
                         }));
                     }
@@ -299,60 +299,60 @@
                         var e = !this.calendarContainer.classList.contains("qs-hidden"), t = !this.calendarContainer.querySelector(".qs-overlay").classList.contains("qs-hidden");
                         e && M(t, this);
                     }
-                    t.default = function(e, t) {
-                        var n = function(e, t) {
-                            var n, l, d = function(e) {
+                    t.default = function (e, t) {
+                        var n = function (e, t) {
+                            var n, l, d = function (e) {
                                 var t = c(e);
-                                t.events && (t.events = t.events.reduce((function(e, t) {
+                                t.events && (t.events = t.events.reduce((function (e, t) {
                                     if (!b(t)) throw new Error('"options.events" must only contain valid JavaScript Date objects.');
                                     return e[+g(t)] = !0, e;
                                 }), {}));
-                                [ "startDate", "dateSelected", "minDate", "maxDate" ].forEach((function(e) {
+                                ["startDate", "dateSelected", "minDate", "maxDate"].forEach((function (e) {
                                     var n = t[e];
                                     if (n && !b(n)) throw new Error('"options.' + e + '" needs to be a valid JavaScript Date object.');
                                     t[e] = g(n);
                                 }));
                                 var n = t.position, i = t.maxDate, l = t.minDate, d = t.dateSelected, u = t.overlayPlaceholder, h = t.overlayButton, f = t.startDay, v = t.id;
-                                if (t.startDate = g(t.startDate || d || new Date), t.disabledDates = (t.disabledDates || []).reduce((function(e, t) {
+                                if (t.startDate = g(t.startDate || d || new Date), t.disabledDates = (t.disabledDates || []).reduce((function (e, t) {
                                     var n = +g(t);
                                     if (!b(t)) throw new Error('You supplied an invalid date to "options.disabledDates".');
                                     if (n === +g(d)) throw new Error('"disabledDates" cannot contain the same date as "dateSelected".');
                                     return e[n] = 1, e;
                                 }), {}), t.hasOwnProperty("id") && null == v) throw new Error("`id` cannot be `null` or `undefined`");
                                 if (null != v) {
-                                    var m = a.filter((function(e) {
+                                    var m = a.filter((function (e) {
                                         return e.id === v;
                                     }));
                                     if (m.length > 1) throw new Error("Only two datepickers can share an id.");
                                     m.length ? (t.second = !0, t.sibling = m[0]) : t.first = !0;
                                 }
-                                var y = [ "tr", "tl", "br", "bl", "c" ].some((function(e) {
+                                var y = ["tr", "tl", "br", "bl", "c"].some((function (e) {
                                     return n === e;
                                 }));
                                 if (n && !y) throw new Error('"options.position" must be one of the following: tl, tr, bl, br, or c.');
                                 function p(e) {
                                     throw new Error('"dateSelected" in options is ' + (e ? "less" : "greater") + ' than "' + (e || "max") + 'Date".');
                                 }
-                                if (t.position = function(e) {
+                                if (t.position = function (e) {
                                     var t = e[0], n = e[1], a = {};
                                     a[o[t]] = 1, n && (a[o[n]] = 1);
                                     return a;
                                 }(n || "bl"), i < l) throw new Error('"maxDate" in options is less than "minDate".');
                                 d && (l > d && p("min"), i < d && p());
-                                if ([ "onSelect", "onShow", "onHide", "onMonthChange", "formatter", "disabler" ].forEach((function(e) {
+                                if (["onSelect", "onShow", "onHide", "onMonthChange", "formatter", "disabler"].forEach((function (e) {
                                     "function" != typeof t[e] && (t[e] = s);
-                                })), [ "customDays", "customMonths", "customOverlayMonths" ].forEach((function(e, n) {
+                                })), ["customDays", "customMonths", "customOverlayMonths"].forEach((function (e, n) {
                                     var a = t[e], r = n ? 12 : 7;
                                     if (a) {
-                                        if (!Array.isArray(a) || a.length !== r || a.some((function(e) {
+                                        if (!Array.isArray(a) || a.length !== r || a.some((function (e) {
                                             return "string" != typeof e;
                                         }))) throw new Error('"' + e + '" must be an array with ' + r + " strings.");
                                         t[n ? n < 2 ? "months" : "overlayMonths" : "days"] = a;
                                     }
                                 })), f && f > 0 && f < 7) {
                                     var w = (t.customDays || r).slice(), D = w.splice(0, f);
-                                    t.customDays = w.concat(D), t.startDay = +f, t.weekendIndices = [ w.length - 1, w.length ];
-                                } else t.startDay = 0, t.weekendIndices = [ 6, 0 ];
+                                    t.customDays = w.concat(D), t.startDay = +f, t.weekendIndices = [w.length - 1, w.length];
+                                } else t.startDay = 0, t.weekendIndices = [6, 0];
                                 "string" != typeof u && delete t.overlayPlaceholder;
                                 "string" != typeof h && delete t.overlayButton;
                                 var q = t.defaultView;
@@ -365,14 +365,14 @@
                             }), u = e;
                             if ("string" == typeof u) u = "#" === u[0] ? document.getElementById(u.slice(1)) : document.querySelector(u); else {
                                 if ("[object ShadowRoot]" === x(u)) throw new Error("Using a shadow DOM as your selector is not supported.");
-                                for (var h, f = u.parentNode; !h; ) {
+                                for (var h, f = u.parentNode; !h;) {
                                     var v = x(f);
-                                    "[object HTMLDocument]" === v ? h = !0 : "[object ShadowRoot]" === v ? (h = !0, 
-                                    n = f, l = f.host) : f = f.parentNode;
+                                    "[object HTMLDocument]" === v ? h = !0 : "[object ShadowRoot]" === v ? (h = !0,
+                                        n = f, l = f.host) : f = f.parentNode;
                                 }
                             }
                             if (!u) throw new Error("No selector / element found.");
-                            if (a.some((function(e) {
+                            if (a.some((function (e) {
                                 return e.el === u;
                             }))) throw new Error("A datepicker already exists on that element.");
                             var m = u === document.body, y = n ? u.parentElement || n : m ? document.body : u.parentElement, w = n ? u.parentElement || l : y, D = document.createElement("div"), q = document.createElement("div");
@@ -417,7 +417,7 @@
                                 months: d.months || i,
                                 days: d.customDays || r,
                                 startDay: d.startDay,
-                                overlayMonths: d.overlayMonths || (d.months || i).map((function(e) {
+                                overlayMonths: d.overlayMonths || (d.months || i).map((function (e) {
                                     return e.slice(0, 3);
                                 })),
                                 overlayPlaceholder: d.overlayPlaceholder || "4-digit year",
@@ -434,25 +434,25 @@
                             };
                             if (d.sibling) {
                                 var E = d.sibling, C = M, L = E.minDate || C.minDate, Y = E.maxDate || C.maxDate;
-                                C.sibling = E, E.sibling = C, E.minDate = L, E.maxDate = Y, C.minDate = L, C.maxDate = Y, 
-                                E.originalMinDate = L, E.originalMaxDate = Y, C.originalMinDate = L, C.originalMaxDate = Y, 
-                                E.getRange = A, C.getRange = A;
+                                C.sibling = E, E.sibling = C, E.minDate = L, E.maxDate = Y, C.minDate = L, C.maxDate = Y,
+                                    E.originalMinDate = L, E.originalMaxDate = Y, C.originalMinDate = L, C.originalMaxDate = Y,
+                                    E.getRange = A, C.getRange = A;
                             }
                             d.dateSelected && p(u, M);
                             var j = getComputedStyle(w).position;
                             m || j && "static" !== j || (M.inlinePosition = !0, w.style.setProperty("position", "relative"));
-                            var I = a.filter((function(e) {
+                            var I = a.filter((function (e) {
                                 return e.positionedEl === M.positionedEl;
                             }));
-                            I.some((function(e) {
+                            I.some((function (e) {
                                 return e.inlinePosition;
-                            })) && (M.inlinePosition = !0, I.forEach((function(e) {
+                            })) && (M.inlinePosition = !0, I.forEach((function (e) {
                                 e.inlinePosition = !0;
                             })));
                             D.appendChild(q), y.appendChild(D), M.alwaysShow && S(M);
                             return M;
                         }(e, t);
-                        if (a.length || d(document), n.shadowDom && (a.some((function(e) {
+                        if (a.length || d(document), n.shadowDom && (a.some((function (e) {
                             return e.shadowDom === n.shadowDom;
                         })) || d(n.shadowDom)), a.push(n), n.second) {
                             var l = n.sibling;
@@ -466,7 +466,7 @@
                         }
                         return u(n, n.startDate || n.dateSelected), n.alwaysShow && D(n), n;
                     };
-                } ]).default;
+                }]).default;
             }));
         }
     };
@@ -498,33 +498,33 @@
         function isWebp() {
             function testWebP(callback) {
                 let webP = new Image;
-                webP.onload = webP.onerror = function() {
+                webP.onload = webP.onerror = function () {
                     callback(webP.height == 2);
                 };
                 webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
             }
-            testWebP((function(support) {
+            testWebP((function (support) {
                 let className = support === true ? "webp" : "no-webp";
                 document.documentElement.classList.add(className);
             }));
         }
         let isMobile = {
-            Android: function() {
+            Android: function () {
                 return navigator.userAgent.match(/Android/i);
             },
-            BlackBerry: function() {
+            BlackBerry: function () {
                 return navigator.userAgent.match(/BlackBerry/i);
             },
-            iOS: function() {
+            iOS: function () {
                 return navigator.userAgent.match(/iPhone|iPad|iPod/i);
             },
-            Opera: function() {
+            Opera: function () {
                 return navigator.userAgent.match(/Opera Mini/i);
             },
-            Windows: function() {
+            Windows: function () {
                 return navigator.userAgent.match(/IEMobile/i);
             },
-            any: function() {
+            any: function () {
                 return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
             }
         };
@@ -622,7 +622,7 @@
                     document.documentElement.classList.remove("lock");
                 }), delay);
                 bodyLockStatus = false;
-                setTimeout((function() {
+                setTimeout((function () {
                     bodyLockStatus = true;
                 }), delay);
             }
@@ -638,7 +638,7 @@
                 body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
                 document.documentElement.classList.add("lock");
                 bodyLockStatus = false;
-                setTimeout((function() {
+                setTimeout((function () {
                     bodyLockStatus = true;
                 }), delay);
             }
@@ -657,7 +657,7 @@
                 }));
                 let mdQueriesArray = dataMediaQueries(tabs, "tabs");
                 if (mdQueriesArray && mdQueriesArray.length) mdQueriesArray.forEach((mdQueriesItem => {
-                    mdQueriesItem.matchMedia.addEventListener("change", (function() {
+                    mdQueriesItem.matchMedia.addEventListener("change", (function () {
                         setTitlePosition(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
                     }));
                     setTitlePosition(mdQueriesItem.itemsArray, mdQueriesItem.matchMedia);
@@ -746,12 +746,12 @@
             }), 0);
         }
         function uniqArray(array) {
-            return array.filter((function(item, index, self) {
+            return array.filter((function (item, index, self) {
                 return self.indexOf(item) === index;
             }));
         }
         function dataMediaQueries(array, dataSetValue) {
-            const media = Array.from(array).filter((function(item, index, self) {
+            const media = Array.from(array).filter((function (item, index, self) {
                 if (item.dataset[dataSetValue]) return item.dataset[dataSetValue].split(",")[0];
             }));
             if (media.length) {
@@ -765,7 +765,7 @@
                     breakpoint.item = item;
                     breakpointsArray.push(breakpoint);
                 }));
-                let mdQueries = breakpointsArray.map((function(item) {
+                let mdQueries = breakpointsArray.map((function (item) {
                     return "(" + item.type + "-width: " + item.value + "px)," + item.value + "," + item.type;
                 }));
                 mdQueries = uniqArray(mdQueries);
@@ -776,7 +776,7 @@
                         const mediaBreakpoint = paramsArray[1];
                         const mediaType = paramsArray[2];
                         const matchMedia = window.matchMedia(paramsArray[0]);
-                        const itemsArray = breakpointsArray.filter((function(item) {
+                        const itemsArray = breakpointsArray.filter((function (item) {
                             if (item.value === mediaBreakpoint && item.type === mediaType) return true;
                         }));
                         mdQueriesArray.push({
@@ -813,10 +813,10 @@
                         goHash: true
                     },
                     on: {
-                        beforeOpen: function() {},
-                        afterOpen: function() {},
-                        beforeClose: function() {},
-                        afterClose: function() {}
+                        beforeOpen: function () { },
+                        afterOpen: function () { },
+                        beforeClose: function () { },
+                        afterClose: function () { }
                     }
                 };
                 this.youTubeCode;
@@ -838,7 +838,7 @@
                 this._reopen = false;
                 this._selectorOpen = false;
                 this.lastFocusEl = false;
-                this._focusEl = [ "a[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "button:not([disabled]):not([aria-hidden])", "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "area[href]", "iframe", "object", "embed", "[contenteditable]", '[tabindex]:not([tabindex^="-"])' ];
+                this._focusEl = ["a[href]", 'input:not([disabled]):not([type="hidden"]):not([aria-hidden])', "button:not([disabled]):not([aria-hidden])", "select:not([disabled]):not([aria-hidden])", "textarea:not([disabled]):not([aria-hidden])", "area[href]", "iframe", "object", "embed", "[contenteditable]", '[tabindex]:not([tabindex^="-"])'];
                 this.options = {
                     ...config,
                     ...options,
@@ -863,7 +863,7 @@
                 this.eventsPopup();
             }
             eventsPopup() {
-                document.addEventListener("click", function(e) {
+                document.addEventListener("click", function (e) {
                     const buttonOpen = e.target.closest(`[${this.options.attributeOpenButton}]`);
                     if (buttonOpen) {
                         e.preventDefault();
@@ -885,7 +885,7 @@
                         return;
                     }
                 }.bind(this));
-                document.addEventListener("keydown", function(e) {
+                document.addEventListener("keydown", function (e) {
                     if (this.options.closeEsc && e.which == 27 && e.code === "Escape" && this.isOpen) {
                         e.preventDefault();
                         this.close();
@@ -897,10 +897,10 @@
                     }
                 }.bind(this));
                 if (this.options.hashSettings.goHash) {
-                    window.addEventListener("hashchange", function() {
+                    window.addEventListener("hashchange", function () {
                         if (window.location.hash) this._openToHash(); else this.close(this.targetOpen.selector);
                     }.bind(this));
-                    window.addEventListener("load", function() {
+                    window.addEventListener("load", function () {
                         if (window.location.hash) this._openToHash();
                     }.bind(this));
                 }
@@ -1160,16 +1160,16 @@
                 selectItems.forEach(((originalSelect, index) => {
                     this.selectInit(originalSelect, index + 1);
                 }));
-                document.addEventListener("click", function(e) {
+                document.addEventListener("click", function (e) {
                     this.selectsActions(e);
                 }.bind(this));
-                document.addEventListener("keydown", function(e) {
+                document.addEventListener("keydown", function (e) {
                     this.selectsActions(e);
                 }.bind(this));
-                document.addEventListener("focusin", function(e) {
+                document.addEventListener("focusin", function (e) {
                     this.selectsActions(e);
                 }.bind(this));
-                document.addEventListener("focusout", function(e) {
+                document.addEventListener("focusout", function (e) {
                     this.selectsActions(e);
                 }.bind(this));
             }
@@ -1191,7 +1191,7 @@
                 selectItem.insertAdjacentHTML("beforeend", `<div class="${this.selectClasses.classSelectBody}"><div hidden class="${this.selectClasses.classSelectOptions}"></div></div>`);
                 this.selectBuild(originalSelect);
                 originalSelect.dataset.speed = originalSelect.dataset.speed ? originalSelect.dataset.speed : "150";
-                originalSelect.addEventListener("change", (function(e) {
+                originalSelect.addEventListener("change", (function (e) {
                     _this.selectChange(e);
                 }));
             }
@@ -1401,7 +1401,7 @@
                 const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
                 const selectOptionsItems = selectOptions.querySelectorAll(`.${this.selectClasses.classSelectOption}`);
                 const _this = this;
-                selectInput.addEventListener("input", (function() {
+                selectInput.addEventListener("input", (function () {
                     selectOptionsItems.forEach((selectOptionsItem => {
                         if (selectOptionsItem.textContent.toUpperCase().indexOf(selectInput.value.toUpperCase()) >= 0) selectOptionsItem.hidden = false; else selectOptionsItem.hidden = true;
                     }));
@@ -1428,8 +1428,8 @@
             }));
             pickers.forEach(((item, i) => {
                 const picker = datepicker_min(`[data-datepicker-${i}="true"]`, {
-                    customDays: [ "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд" ],
-                    customMonths: [ "Січ", "Лют", "Берез", "Квіт", "Трав", "Черв", "Лип", "Серп", "Верес", "Жовт", "Листоп", "Груд" ],
+                    customDays: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"],
+                    customMonths: ["Січ", "Лют", "Берез", "Квіт", "Трав", "Черв", "Лип", "Серп", "Верес", "Жовт", "Листоп", "Груд"],
                     overlayButton: "Застосувати",
                     overlayPlaceholder: "Рік (4 цифри)",
                     startDay: 1,
@@ -1437,7 +1437,7 @@
                         const value = date.toLocaleDateString();
                         input.value = value;
                     },
-                    onSelect: function(input, instance, date) {}
+                    onSelect: function (input, instance, date) { }
                 });
                 modules_flsModules.datepicker = picker;
             }));
@@ -1451,7 +1451,7 @@
             const startPoint = header.dataset.scroll ? header.dataset.scroll : 1;
             let scrollDirection = 0;
             let timer;
-            document.addEventListener("windowScroll", (function(e) {
+            document.addEventListener("windowScroll", (function (e) {
                 const scrollTop = window.scrollY;
                 clearTimeout(timer);
                 if (scrollTop >= startPoint) {
@@ -1472,7 +1472,7 @@
         setTimeout((() => {
             if (addWindowScrollEvent) {
                 let windowScroll = new Event("windowScroll");
-                window.addEventListener("scroll", (function(e) {
+                window.addEventListener("scroll", (function (e) {
                     document.dispatchEvent(windowScroll);
                 }));
             }
@@ -1484,18 +1484,18 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
                         }, {
                             label: "Опубликованно сегодня",
                             fill: true,
-                            backgroundColor: [ "rgba(166, 206, 227, 0.80)" ],
-                            data: [ 40, 30, 37, 39, 38, 42, 0 ]
-                        } ]
+                            backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                            data: [40, 30, 37, 39, 38, 42, 0]
+                        }]
                     }
                 });
             }
@@ -1507,18 +1507,18 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
                         }, {
                             label: "Опубликованно сегодня",
                             fill: true,
-                            backgroundColor: [ "rgba(166, 206, 227, 0.80)" ],
-                            data: [ 40, 30, 37, 39, 38, 42, 0 ]
-                        } ]
+                            backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                            data: [40, 30, 37, 39, 38, 42, 0]
+                        }]
                     }
                 });
             }
@@ -1530,18 +1530,18 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
                         }, {
                             label: "Опубликованно сегодня",
                             fill: true,
-                            backgroundColor: [ "rgba(166, 206, 227, 0.80)" ],
-                            data: [ 40, 30, 37, 39, 38, 42, 0 ]
-                        } ]
+                            backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                            data: [40, 30, 37, 39, 38, 42, 0]
+                        }]
                     }
                 });
             }
@@ -1553,18 +1553,18 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Опубликованно сегодня",
                             fill: true,
-                            backgroundColor: [ "rgba(166, 206, 227, 0.80)" ],
-                            data: [ 0, 18, 17, 34, 0 ]
+                            backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                            data: [0, 18, 17, 34, 0]
                         }, {
                             label: "Рекламных постов в базе",
-                            data: [ 0, 42, 10, 5 ],
+                            data: [0, 42, 10, 5],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1576,13 +1576,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 0, 42, 10, 5 ],
+                            data: [0, 42, 10, 5],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1594,13 +1594,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "text", "text", "text" ],
-                        datasets: [ {
+                        labels: ["Text", "text", "text", "text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 0, 42, 33, 23, 15, 10, 5 ],
+                            data: [0, 42, 33, 23, 15, 10, 5],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1612,18 +1612,18 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
                         }, {
                             label: "Опубликованно сегодня",
                             fill: true,
-                            backgroundColor: [ "rgba(166, 206, 227, 0.80)" ],
-                            data: [ 40, 30, 37, 39, 38, 42, 0 ]
-                        } ]
+                            backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                            data: [40, 30, 37, 39, 38, 42, 0]
+                        }]
                     }
                 });
             }
@@ -1635,13 +1635,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1653,13 +1653,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1671,13 +1671,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1689,13 +1689,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1707,13 +1707,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1725,13 +1725,13 @@
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: [ "Text", "Text", "Text", "Text", "Text" ],
-                        datasets: [ {
+                        labels: ["Text", "Text", "Text", "Text", "Text"],
+                        datasets: [{
                             label: "Рекламных постов в базе",
-                            data: [ 20, 80, 25, 65, 20 ],
+                            data: [20, 80, 25, 65, 20],
                             fill: true,
-                            backgroundColor: [ "rgba(65, 128, 198, 0.80)" ]
-                        } ]
+                            backgroundColor: ["rgba(65, 128, 198, 0.80)"]
+                        }]
                     }
                 });
             }
@@ -1743,7 +1743,7 @@
             init() {
                 this.оbjects = [];
                 this.daClassname = "_dynamic_adapt_";
-                this.nodes = [ ...document.querySelectorAll("[data-da]") ];
+                this.nodes = [...document.querySelectorAll("[data-da]")];
                 this.nodes.forEach((node => {
                     const data = node.dataset.da.trim();
                     const dataArray = data.split(",");
@@ -1757,12 +1757,12 @@
                     this.оbjects.push(оbject);
                 }));
                 this.arraySort(this.оbjects);
-                this.mediaQueries = this.оbjects.map((({breakpoint}) => `(${this.type}-width: ${breakpoint}px),${breakpoint}`)).filter(((item, index, self) => self.indexOf(item) === index));
+                this.mediaQueries = this.оbjects.map((({ breakpoint }) => `(${this.type}-width: ${breakpoint}px),${breakpoint}`)).filter(((item, index, self) => self.indexOf(item) === index));
                 this.mediaQueries.forEach((media => {
                     const mediaSplit = media.split(",");
                     const matchMedia = window.matchMedia(mediaSplit[0]);
                     const mediaBreakpoint = mediaSplit[1];
-                    const оbjectsFilter = this.оbjects.filter((({breakpoint}) => breakpoint === mediaBreakpoint));
+                    const оbjectsFilter = this.оbjects.filter((({ breakpoint }) => breakpoint === mediaBreakpoint));
                     matchMedia.addEventListener("change", (() => {
                         this.mediaHandler(matchMedia, оbjectsFilter);
                     }));
@@ -1772,7 +1772,7 @@
             mediaHandler(matchMedia, оbjects) {
                 if (matchMedia.matches) оbjects.forEach((оbject => {
                     this.moveTo(оbject.place, оbject.element, оbject.destination);
-                })); else оbjects.forEach((({parent, element, index}) => {
+                })); else оbjects.forEach((({ parent, element, index }) => {
                     if (element.classList.contains(this.daClassname)) this.moveBack(parent, element, index);
                 }));
             }
@@ -1793,7 +1793,7 @@
                 if (parent.children[index] !== void 0) parent.children[index].before(element); else parent.append(element);
             }
             indexInParent(parent, element) {
-                return [ ...parent.children ].indexOf(element);
+                return [...parent.children].indexOf(element);
             }
             arraySort(arr) {
                 if (this.type === "min") arr.sort(((a, b) => {
@@ -1837,5 +1837,22 @@
         isWebp();
         tabs();
         headerScroll();
+        const elAllCheckbox = document.querySelectorAll(".payment__service-checkbox");
+        const elAllItemType1 = document.querySelectorAll(".item-type-1");
+        elAllCheckbox.forEach((el) => {
+            el.addEventListener("click", function (e) {
+                elAllCheckbox.forEach((newEl) => {
+                    newEl.nextElementSibling.classList.remove("payment__active");
+                })
+                el.nextElementSibling.classList.add("payment__active");
+            })
+        })
+        elAllItemType1.forEach((el) => {
+            el.addEventListener("click", function (e) {
+                e.preventDefault()
+                el.classList.toggle('no-border')
+                el.nextElementSibling.classList.toggle("active");
+            })
+        })
     })();
 })();
