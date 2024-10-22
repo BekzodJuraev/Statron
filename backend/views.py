@@ -35,9 +35,14 @@ import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 
 import time
-my_id="763127756"
-TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
-bot = telegram.Bot(TOKEN)
+
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH
+
+
+my_id=ID_OWNER_TELGRAM
+
+bot = telegram.Bot(TOKEN_WEBHOOK)
+
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
 
@@ -68,8 +73,7 @@ def authenticate_user_with_session(request):
 @csrf_exempt
 @require_POST
 def telegram_notify(request):
-    token_bot = '8190267916:AAHoonn96-rljlFMprruM-wKKONhGUCvNHM'
-    bot_notify = telegram.Bot(token=token_bot)
+    bot_notify = telegram.Bot(token=TOKEN_NOTIFY)
     if request.method == "POST":
         json_data = json.loads(request.body.decode('utf-8'))
         chat_info = json_data['message']['chat']
@@ -116,8 +120,8 @@ def telegram_notify(request):
 @csrf_exempt
 @require_POST
 def telegram_auth(request):
-    token_bot = '7304038568:AAHrDrL4u7k7d6oIfdLiThSEgVgKnyFKXU4'
-    bot_auth = telegram.Bot(token=token_bot)
+
+    bot_auth = telegram.Bot(token=TOKEN_AUTH)
     if request.method == 'POST':
         json_data = json.loads(request.body.decode('utf-8'))
         id=json_data['message']['chat']['id']

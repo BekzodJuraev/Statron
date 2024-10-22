@@ -1,12 +1,13 @@
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
+from Statron_new.config import TOKEN_NOTIFY
 
-TOKEN = '8190267916:AAHoonn96-rljlFMprruM-wKKONhGUCvNHM'
+
 #ngrok_url = 'https://stattron.ru/telegram_auth/'  # Replace with your NGROK URL
 ngrok_url = 'https://df7a-5-133-120-92.ngrok-free.app/notify/'
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=TOKEN_NOTIFY)
 dp = Dispatcher(bot)
 
 logging.basicConfig(level=logging.INFO)

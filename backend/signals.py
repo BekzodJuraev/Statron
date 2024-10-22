@@ -7,8 +7,9 @@ from celery import shared_task
 from datetime import date, timedelta, datetime
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-
-
+import telegram
+from config import TOKEN_NOTIFY
+bot = telegram.Bot(TOKEN_NOTIFY)
 @receiver(post_save,sender=Profile)
 def create_balance(sender, instance, *args, **kwargs):
     if instance.balance and instance.recommended_by:
@@ -56,8 +57,24 @@ def create_views(sender,instance,created,*args,**kwargs):
         instance.chanel.save(update_fields=['views','daily_views','yesterday_views'])
         notify=Notify.objects.filter(start=True).select_related('profile')
         for item in notify:
-            if item.profile.notify_id and item.word in instance.text:
-                print(f"World is {item.word} find")
+            try:
+                if item.Type_notify == "word" and item.profile.notify_id and item.word.lower() in instance.text.lower():
+                    text = f"Новые уведомления по запросу'{item.word}'" \
+                           f"{instance.link} {instance.chanel.name} - {instance.date}"
+
+                    bot.send_message(item.profile.notify_id, text)
+                if item.Type_notify == "chanel" and item.profile.notify_id and instance.chanel.chanel_link == item.word:
+                    text = f"Новые уведомления по каналу'{item.word}'" \
+                           f"{instance.link} {instance.chanel.name} - {instance.date}"
+
+                    bot.send_message(item.profile.notify_id, text)
+
+
+            except  Exception as e:
+                print(e)
+
+
+
 
 
 
