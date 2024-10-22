@@ -8,7 +8,7 @@ from django.db.models import Sum
 # Create your models here.
 from decimal import Decimal
 import uuid
-
+from django.utils import timezone
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     phone_number = PhoneNumberField()
@@ -212,11 +212,22 @@ class Posts(models.Model):
         return self.chanel.name
 
 class Notify(models.Model):
+    Type_enter = (
+        ('chanel', 'Упоминания канала '),
+        ('word', ' Упоминание слова и фразы'),
+
+    )
     profile=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='notify_profile')
     word=models.CharField(max_length=250)
+    Type_notify = models.CharField(max_length=20, choices=Type_enter)
     start=models.BooleanField(default=False)
     check_date = models.DateTimeField(null=True, blank=True,default=None)
 
+    def save(self, *args, **kwargs):
+        # Update the associated User's email before saving
+        if self.start is True:
+            self.check_date=timezone.now()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.word

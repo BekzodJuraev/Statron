@@ -1,12 +1,11 @@
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 import logging
-
-TOKEN = '6782469164:AAG9NWxQZ2mPx5I9U7E3QX3HgbhU5MYr6Z4'
+from Statron_new.config import TOKEN_WEBHOOK
 ngrok_url = 'https://stattron.ru/telegram_webhook/'  # Replace with your NGROK URL
 
 
-bot = Bot(token=TOKEN)
+bot = Bot(token=TOKEN_WEBHOOK)
 dp = Dispatcher(bot)
 
 logging.basicConfig(level=logging.INFO)

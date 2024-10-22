@@ -1,5 +1,5 @@
 from django.db.models.signals import post_save,pre_save
-from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment,Profile,Commission
+from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment,Profile,Commission,Notify
 from django.dispatch import receiver
 from .tasks import add_chanel,process_user_bot
 from django.db.models import Sum,Q,Count,F
@@ -54,6 +54,12 @@ def create_views(sender,instance,created,*args,**kwargs):
         total = instance.chanel.post.aggregate(total_views=Sum('view'))['total_views']
         instance.chanel.views = total
         instance.chanel.save(update_fields=['views','daily_views','yesterday_views'])
+        notify=Notify.objects.filter(start=True).select_related('profile')
+        for item in notify:
+            if item.profile.notify_id and item.word in instance.text:
+                print(f"World is {item.word} find")
+
+
 
 @receiver(post_save,sender=Chanel)
 def create_views(sender,instance,created,*args,**kwargs):
