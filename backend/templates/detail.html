@@ -45,6 +45,10 @@
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -753,7 +757,7 @@
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
@@ -1272,7 +1276,7 @@
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
 										<a href="{{ item.chanel_link }}" class="main-analitics__avatar">
 											<picture><source srcset="/{{ item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{ item.pictures}}" alt=""></picture>
@@ -1366,7 +1370,7 @@ This channel has not yet analyzed the activity of its audience. We cannot show t
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link }}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
@@ -2119,11 +2123,16 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 						<div data-tabs-body class="analitics-tabs__content">
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<p class="main-analitics__medal" data-popup="#popup-rank{{item.pk}}">{{rank.rank}}</p>
-									<!-- <img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt=""> -->
+
+
+
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -2528,10 +2537,14 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
-										<a href="{{item.chanel_link }}" class="main-analitics__avatar">
+										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -2831,10 +2844,14 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -3350,10 +3367,14 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
-										<a href="{{ item.chanel_link }}" class="main-analitics__avatar">
-											<picture><source srcset="/{{ item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{ item.pictures}}" alt=""></picture>
+										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
+											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -3446,10 +3467,14 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
-									<img class="main-analitics__medal" src="{% static 'img/analitics/medal.svg' %}" alt="">
+
 									<div class="main-analitics__info">
-										<a href="{{item.chanel_link }}" class="main-analitics__avatar">
+										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
+											<div class="main-analitics__degree">
+												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
+												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
+											</div>
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">

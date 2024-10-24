@@ -293,7 +293,7 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 			<section class="account-tabs">
 				<div class="account-tabs__container">
 					<div data-tabs class="channels-tabs tabs-account">
-						<div class="tabs-account__head">
+					<div class="tabs-account__head">
 							<nav data-tabs-titles class="tabs-navigation tabs-account__navigation">
 								<button type="button" class="tabs-navigation__title _tab-active">
 									<img class="grey" src="{% static 'img/tabs-account/management_grey.svg' %}" alt="">
@@ -351,9 +351,83 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 										</li>
 									</ul>
 								</div>
+								<div class="account-table">
+									<div class="account-table__list account-table__list-noBg">
+										<table class="table search-channels__table">
+											<thead>
+												<tr class="tabs__account-head-column">
+													<th scope="col">
+														<div class="label-black text-center">Ссылка</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Регистраций</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Оплат</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Комиссия</div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+
+												{% for item in ref_code %}
+												<tr>
+													<td>
+															<div class="search-form__item">
+																<input type="text" id="link-gen" name="link-gen"
+																	value="https://stattron.me/r/{{item.code}}/"
+																	class="form__input">
+															</div>
+
+													</td>
+													<td>
+														<div class="label-black">{{ item.count_register}}</div>
+													</td>
+													<td>
+														<div class="label-black">{{ item.count_commission}}</div>
+													</td>
+													<td>
+														{% if item.total_commission_amount is None %}
+														<div class="label-black">0</div>
+
+														{% else %}
+														<div class="label-black">{{ item.total_commission_amount }}</div>
+
+														{% endif %}
+
+													</td>
+												</tr>
+
+											{% endfor %}
 
 
 
+
+
+
+
+											</tbody>
+
+
+										</table>
+
+
+
+
+									</div>
+									<div class="account-tabs">
+						<form  method="POST" class="link-form">
+							{% csrf_token %}
+							<div class="account-tabs__container">
+								<button class="button" type="submit">Сгенерировать еще одну ссылку</button>
+							</div>
+
+
+						</form>
+						</div>
+								</div>
 							</div>
 							<div class="tabs-account__body balans-tab">
 								<div class="tabs-account__offer-amount">
@@ -509,6 +583,7 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 											</tr>
 										</tbody>
 									</table>
+
 								</div>
 							</div>
 							<div class="tabs-account__body history-tab">
@@ -638,49 +713,13 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 						</div>
 					</div>
 				</div>
+
 			</section>
-			<section class="account-table">
-				<div class="account-table__container">
-					<div class="account-table__item">
-						<h4 class="label-black">Ссылка</h4>
-						<form  method="POST" class="link-form">
-							{% csrf_token %}
-							<div class="search-form__item">
-								{% for item in ref_code %}
-								<input type="text" id="link-gen" name="link-gen" value="https://stattron.ru/r/{{item.code}}/" class="form__input">
-								{{ item.count_register}}
-								{{ item.count_commission}}
-
-								{% if item.total_commission_amount is None %}
-									0
-								{% else %}
-									{{ item.total_commission_amount }}
-								{% endif %}
 
 
 
-								{% endfor %}
-
-								<button class="button" type="submit">Сгенерировать еще одну ссылку</button>
-							</div>
 
 
-						</form>
-					</div>
-					<div class="account-table__list">
-						<div class="account-table__item">
-							<h4 class="label-black">Регистраций</h4>
-
-						</div>
-						<div class="account-table__item">
-							<h4 class="label-black">Оплат</h4>
-						</div>
-						<div class="account-table__item">
-							<h4 class="label-black">Комиссия</h4>
-						</div>
-					</div>
-				</div>
-			</section>
 		</main>
 {% endif %}
 

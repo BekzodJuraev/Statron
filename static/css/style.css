@@ -2679,14 +2679,15 @@ td {
 }
 
 .account-table__container {
-  -webkit-box-align: start;
+  /* -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: start;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   row-gap: 2.5rem;
-  gap: 1.5625rem;
+  gap: 1.5625rem; */
+  overflow: auto;
 }
 
 .account-table__list {
@@ -2696,6 +2697,24 @@ td {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.account-table__list-noBg {
+  width: auto;
+  overflow: auto;
+}
+
+.account-table__list-noBg .search-channels__table {
+  min-width: 900px;
+  max-width: 1000px;
+}
+
+.account-table__list-noBg tbody::before {
+  background: transparent;
+}
+
+.account-table__list-noBg .tabs__account-head-column th:last-child .label-black {
+  text-align: center;
 }
 
 .account-table .search-form__item {
@@ -5546,12 +5565,12 @@ td {
     overflow: auto;
   }
 
-  .account-table__container {
+  /* .account-table__container {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-  }
+  } */
 
   .analitics-tabs__subs table {
     width: 31.25rem;

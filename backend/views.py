@@ -425,11 +425,12 @@ class Main(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
 
         context =super().get_context_data(**kwargs)
+
         chart_month = Posts.objects.filter(
             mention=True,
             created_at__gte=date.today() - timedelta(days=29)
         ).values('created_at__date').annotate(count=Count('id'))
-        #print(chart_month)
+
         chart_three_month = Posts.objects.filter(
             mention=True,
             created_at__gte=date.today() - timedelta(days=89)
@@ -672,6 +673,7 @@ class DetailChanel(LoginRequiredMixin,DetailView):
             )
             context['rank'] = rank
 
+
             get_posts = Posts.objects.filter(chanel=self.object).select_related('chanel')
 
             text = Posts.objects.filter(chanel=self.object).values_list('text')
@@ -746,7 +748,7 @@ class DetailChanel(LoginRequiredMixin,DetailView):
 
             return context
 
-        except:
+        except Exception as e:
             context['limit'] =' Вы не можете смотреть эту страницу, поскольку достигли дневное ограничение тарифа.'
             return context
 
