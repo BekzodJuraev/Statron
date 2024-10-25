@@ -13,7 +13,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo,Payment,Subscribe,Type_sub
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -464,6 +464,23 @@ class Main(ListView):
         context['total']=Posts.objects.all().count()
         context['mentioned'] =Posts.objects.filter(mention=True).count()
         return context
+class PlansView(LoginRequiredMixin,TemplateView):
+    login_url = reverse_lazy('login_site')
+    template_name = 'plans.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.profile.is_onedollar:
+            sub=Type_sub.objects.exclude(name='1',price=20.00)
+        else:
+            sub=Type_sub.objects.exclude(name='1',price=1.00)
+
+        context['sub']=sub
+
+        return context
+
+
+
 
 class UpdateCabinet(LoginRequiredMixin,DetailView):
     model = Profile
@@ -480,6 +497,8 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
 
 
 
+
+
         # Redirect back to the current page (refresh the page)
         return redirect(request.path)
 
@@ -489,6 +508,9 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         ref=Profile.objects.filter(recommended_by__profile=self.object).count()
+        withdraw=Payment.objects.filter(profile=self.object)
+        context['withdraw']=withdraw
+        context['history']=Subscribe.objects.filter(profile=self.object).select_related('type_sub')
 
         context['ref_code']=Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles','commission').annotate(count_commission=Count('commission',distinct=True),total_commission_amount=Sum('commission__amount',distinct=True),count_register=Count('recommended_profiles',distinct=True))
         #prefetch_related('commission').annotate(count_commission=Count('commission'),total_commission_amount=Sum('commission__amount'))
@@ -801,15 +823,6 @@ class CreateChanel(LoginRequiredMixin,CreateView):
             return self.form_invalid(form)
 
 
-class AnalisChanel(LoginRequiredMixin,TemplateView):
-    template_name = 'audience-analysis.html'
-    login_url = reverse_lazy('login_site')
-
-
-
-class MyChanels(LoginRequiredMixin,TemplateView):
-    template_name = 'my-channels.html'
-    login_url = reverse_lazy('login_site')
 
 class Search(LoginRequiredMixin,ListView):
     model = Chanel_img

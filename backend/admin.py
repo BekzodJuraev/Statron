@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe,Commission
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe,Commission,PaymentGateway
 
+@admin.register(PaymentGateway)
+class PaymentGateway(admin.ModelAdmin):
+    pass
 @admin.register(Commission)
 class Commission(admin.ModelAdmin):
     pass
@@ -9,7 +12,7 @@ class Subscribe(admin.ModelAdmin):
     pass
 @admin.register(Type_sub)
 class Type_sub(admin.ModelAdmin):
-    pass
+    list_display = ['price','name']
 
 @admin.register(Payment)
 class Payment(admin.ModelAdmin):

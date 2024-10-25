@@ -461,126 +461,33 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 											</tr>
 										</thead>
 										<tbody>
+										{% for item in withdraw %}
 											<tr>
 												<td scope="row">
 													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
+														<span>{{ item.created_at|date:"Y-m-d" }}</span>
+														<span>{{ item.created_at|date:"H:i:s" }}</span>
 													</div>
 												</td>
 												<td>
-													<div class="label-green label-green_s20">+233 000</div>
+													<div class="label-green label-green_s20">+{{item.amount}}</div>
 												</td>
 												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
+													<div class="label-blue label-blue_s20">{{item.wallet}}</div>
 												</td>
+												{% if item.status  %}
 												<td class="text-right">
 													<button class="status__button" type="button">Выполнено</button>
 												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
+												{% else %}
 												<td class="text-right">
 													<button class="status__button status__fail"
 														type="button">Отменено</button>
 												</td>
 											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="tabs__account-date-time">
-														<span>11.02.2024</span>
-														<span>11:23:12</span>
-													</div>
-												</td>
-												<td>
-													<div class="label-green label-green_s20">+233 000</div>
-												</td>
-												<td>
-													<div class="label-blue label-blue_s20">+7 326 256 54 54</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
+											{% endif %}
+										{% endfor %}
+
 										</tbody>
 									</table>
 
@@ -606,106 +513,35 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 											</tr>
 										</thead>
 										<tbody>
+
+										{% for item in history %}
+
 											<tr>
 												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
+													<div class="label-black text-left">{{ item.created_at|date:"Y-m-d" }}</div>
 												</td>
 												<td>
-													<div class="label-black text-left">11:23:13</div>
+													<div class="label-black text-left">{{ item.created_at|date:"H:i:s" }}</div>
 												</td>
 												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
+													<div class="label-black">Оплата доступа к сервису на {{item.type_sub}} месяца</div>
 												</td>
+												{% if item.status %}
 												<td class="text-right">
 													<button class="status__button" type="button">Выполнено</button>
 												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
+												{% else %}
 												<td class="text-right">
 													<button class="status__button status__fail"
 														type="button">Отменено</button>
 												</td>
+												{% endif %}
+
 											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button status__fail"
-														type="button">Отменено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
-											<tr>
-												<td scope="row">
-													<div class="label-black text-left">11.02.2024</div>
-												</td>
-												<td>
-													<div class="label-black text-left">11:23:13</div>
-												</td>
-												<td>
-													<div class="label-black">Оплата доступа к сервису на 3 месяца</div>
-												</td>
-												<td class="text-right">
-													<button class="status__button" type="button">Выполнено</button>
-												</td>
-											</tr>
+
+
+
+											{% endfor %}
 										</tbody>
 									</table>
 								</div>

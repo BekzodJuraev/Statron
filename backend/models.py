@@ -18,7 +18,7 @@ class Profile(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2,default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     photo=models.ImageField()
-    is_online = models.BooleanField(default=False)
+    is_onedollar = models.BooleanField(default=True)
     last_visited = models.DateTimeField(auto_now=True)
     telegram_bio=models.CharField(max_length=150,null=True, blank=True, default=None)
     telegram_id = models.BigIntegerField(unique=True, null=True, blank=True, default=None)
@@ -290,28 +290,52 @@ class Add_userbot(models.Model):
     def __str__(self):
         return self.name
 
+class PaymentGateway(models.Model):
+
+    name = models.CharField(max_length=255, unique=True)
+    api_key = models.CharField(max_length=255)
+    api_secret = models.CharField(max_length=255)  # If needed
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
 class Payment(models.Model):
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='withdraw')
+    paymentgatway=models.ForeignKey(PaymentGateway,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     wallet=models.CharField(max_length=200)
     amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    status=models.BooleanField(default=False)
+
 
 
 
     def __str__(self):
         return self.profile.first_name
 
+
 class Type_sub(models.Model):
     price=models.DecimalField(max_digits=10, decimal_places=2,default=0)
     name=models.CharField(max_length=200)
+    days = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
+
+
+
 
 class Subscribe(models.Model):
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='subscribe')
     type_sub=models.ForeignKey(Type_sub,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    status=models.BooleanField(default=True)
+
 
 
     def __str__(self):
