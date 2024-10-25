@@ -236,7 +236,10 @@ class Notify(models.Model):
 class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel')
     category=models.ManyToManyField('Category_chanels',blank=True)
-    chanel_link = models.CharField(default=None,max_length=150)
+    chanel_link = models.CharField(default=None,max_length=150,unique=True)
+
+
+
 
 
     def __str__(self):

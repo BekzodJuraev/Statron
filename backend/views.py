@@ -3,6 +3,7 @@ from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
+from django.contrib import messages
 from django.contrib.sessions.models import Session
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
@@ -791,8 +792,15 @@ class CreateChanel(LoginRequiredMixin,CreateView):
 
     def form_valid(self, form):
         # Associate the current user with the model instance
-        form.instance.username = self.request.user.profile
-        return super().form_valid(form)
+        if self.request.user.profile.telegram_id:
+            form.instance.username = self.request.user.profile
+            messages.success(self.request, "Proccessing")
+            return super().form_valid(form)
+        else:
+            form.add_error(None, "User's profile is missing a Telegram ID.")
+            return self.form_invalid(form)
+
+
 class AnalisChanel(LoginRequiredMixin,TemplateView):
     template_name = 'audience-analysis.html'
     login_url = reverse_lazy('login_site')
