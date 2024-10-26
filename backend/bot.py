@@ -122,9 +122,8 @@ def get_userbots():
     return list(Add_userbot.objects.filter(is_active=True))
 
 async def initialize_clients():
-    print("hello")
     userbots = await get_userbots()
-    print("world")
+
 
     for userbot in userbots:
         # Retrieve the session data from the model
@@ -216,13 +215,16 @@ async def run_userbots():
 #sudo systemctl reload gunicorn
 #sudo service nginx reload
 async def run_userbot():
-    #await check_expired_subscriptions()
-
     await initialize_clients()
     await run_userbots()
 
 
 
+async def main_loop():
+    await asyncio.gather(
+        run_userbot(),  # Runs concurrently
+        check_expired_subscriptions()  # Runs concurrently
+    )
 
 
 
