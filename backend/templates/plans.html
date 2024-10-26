@@ -184,6 +184,7 @@
 									</p>
 								</div>
 							</div>
+							{% if request.user.profile.is_onedollar %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">1 месяц</h4>
@@ -195,6 +196,19 @@
 									Подключить за 1$
 								</button>
 							</div>
+							{% else %}
+							<div class="plans__box-month-plans">
+								<div class="small-w">
+									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<p class="plans__box-monthDesc">
+
+									</p>
+								</div>
+								<button class="plans__box-monthBtn">
+									Подключить за 20$
+								</button>
+							</div>
+							{% endif %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">1 месяц</h4>
@@ -206,26 +220,27 @@
 									Подключить за 51$
 								</button>
 							</div>
+
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">6 месяцев</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
+										Скидка 20% <span>120$</span>
 									</p>
 								</div>
 								<button class="plans__box-monthBtn">
-									Подключить за 51$
+									Подключить за 96$
 								</button>
 							</div>
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">12 месяцев</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
+										Скидка 25% <span>240$</span>
 									</p>
 								</div>
 								<button class="plans__box-monthBtn">
-									Подключить за 51$
+									Подключить за 180$
 								</button>
 							</div>
 						</div>

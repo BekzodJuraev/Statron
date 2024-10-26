@@ -468,16 +468,7 @@ class PlansView(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'plans.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.profile.is_onedollar:
-            sub=Type_sub.objects.exclude(name='1',price=20.00)
-        else:
-            sub=Type_sub.objects.exclude(name='1',price=1.00)
 
-        context['sub']=sub
-
-        return context
 
 
 

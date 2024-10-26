@@ -336,6 +336,16 @@ class Subscribe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status=models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        if self.type_sub.price == 1.00 and self.profile.is_onedollar == False:
+            return
+        if self.type_sub.price == 1.00 and self.profile.is_onedollar:
+            self.profile.is_onedollar=False
+            self.profile.save(update_fields=['is_onedollar'])
+
+        super().save(*args, **kwargs)
+
+
 
 
     def __str__(self):
