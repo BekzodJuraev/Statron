@@ -50,8 +50,20 @@
         .search-result-item:hover {
             background: #f0f0f0;
         }
+           /* Hide spinners in Chrome and Safari */
+        .no-spinner::-webkit-inner-spin-button,
+        .no-spinner::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Hide spinners in Firefox */
+        .no-spinner {
+            -moz-appearance: textfield;
+        }
 
     </style>
+
 
 <body>
 

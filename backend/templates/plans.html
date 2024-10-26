@@ -135,7 +135,7 @@
 							<div class="plans__box-flex">
 								<h3 class="plans__box-title">Premium</h3>
 								{% if request.user.profile.is_onedollar %}
-								<a href="#" class="plans__box-btn">
+								<a href="{% url 'payment' %}?price=1.00" class="plans__box-btn">
 									<span class="just_price">
 										Первый месяц 1$
 									</span>
@@ -192,9 +192,11 @@
 										Стоимость увеличится до 20$ со следующего месяца
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=1.00">
 								<button class="plans__box-monthBtn">
 									Подключить за 1$
 								</button>
+								</a>
 							</div>
 							{% else %}
 							<div class="plans__box-month-plans">
@@ -204,33 +206,40 @@
 
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=20.00">
 								<button class="plans__box-monthBtn">
 									Подключить за 20$
 								</button>
+								</a>
 							</div>
 							{% endif %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">3 месяца</h4>
 									<p class="plans__box-monthDesc">
 										Скидка 15% <span>60$</span>
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=51.00">
 								<button class="plans__box-monthBtn">
 									Подключить за 51$
 								</button>
+								</a>
 							</div>
 
 							<div class="plans__box-month-plans">
 								<div class="small-w">
+
 									<h4 class="plans__box-monthTitle">6 месяцев</h4>
 									<p class="plans__box-monthDesc">
 										Скидка 20% <span>120$</span>
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=96.00">
 								<button class="plans__box-monthBtn">
 									Подключить за 96$
 								</button>
+								</a>
 							</div>
 							<div class="plans__box-month-plans">
 								<div class="small-w">
@@ -239,9 +248,11 @@
 										Скидка 25% <span>240$</span>
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=180.00">
 								<button class="plans__box-monthBtn">
 									Подключить за 180$
 								</button>
+								</a>
 							</div>
 						</div>
 						<div class="plans__box-white">

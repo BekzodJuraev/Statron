@@ -40,6 +40,7 @@ import time
 from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH
 
 
+
 my_id=ID_OWNER_TELGRAM
 
 bot = telegram.Bot(TOKEN_WEBHOOK)
@@ -469,7 +470,13 @@ class PlansView(LoginRequiredMixin,TemplateView):
     template_name = 'plans.html'
 
 
+class PaymentView(LoginRequiredMixin,TemplateView):
+    login_url = reverse_lazy('login_site')
+    template_name = 'payment.html'
 
+class WithdrawView(LoginRequiredMixin,TemplateView):
+    login_url = reverse_lazy('login_site')
+    template_name = 'withdraw.html'
 
 
 

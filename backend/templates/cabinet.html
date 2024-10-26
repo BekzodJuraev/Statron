@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
+
 {% get_current_language as LANGUAGE_CODE %}
 {% if LANGUAGE_CODE == 'en' %}
 <main class="page">
@@ -429,16 +430,18 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 						</div>
 								</div>
 							</div>
+
 							<div class="tabs-account__body balans-tab">
 								<div class="tabs-account__offer-amount">
-									<form action="" class="tabs-account__form form">
+									<form action="{% url 'withdraw' %}" class="tabs-account__form form">
 										<label for="tabs-account__offer-amount-field">
 											Введите сумму для заказа выплаты:
 										</label>
 										<div class="tabs__account-body-box">
-											<input type="text" name="tabs-account__offer-amount-field"
-												id="tabs-account__offer-amount-field" class="form__input">
+											<input type="number" name="money" id="tabs-account__offer-amount-field"  class="form__input no-spinner" min="0">
+
 											<button class="button tabs-account__offer-amount-btn">Заказать</button>
+
 										</div>
 									</form>
 								</div>

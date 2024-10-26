@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="payment-option">
+				<div class="payment-option__container">
+					<h2 class="payment__title">
+						Выберите способ оплаты
+					</h2>
+					<div class="payment-option-boxes">
+						<a href="#" class="payment-option-box">
+							<img class="payment-option-image" src="img/payment/iokassa.jpg" alt="">
+						</a>
+						<a href="#" class="payment-option-box">
+							<img class="payment-option-image" src="img/payment/cryptomus.jpg" alt="">
+						</a>
+						<a href="#" class="payment-option-box">
+							<img class="payment-option-image" src="img/payment/wayforpay.jpg" alt="">
+						</a>
+					</div>
+					<div class="payment-option__promobox">
+						<h3 class="payment-option__promoTitle">
+							Если у вас есть промо-код, то введите его ниже !
+						</h3>
+						<form action="" class="payment-option__promoForm">
+							<input type="text" id="promo" name="promo" placeholder="АА5789А564" class="form__input payment-option__promoInput">
+							<button class="button payment-option__promoBtn" type="submit">Активировать</button>
+						</form>
+						<h4 class="payment-option__promoText">
+							Вы получаете бонус +30% к пополнению
+						</h4>
+					</div>
+				</div>
+			</section>
+		</main>
+{% else %}
+<main class="page">
+			<section class="payment-option">
+				<div class="payment-option__container">
+					<h2 class="payment__title">
+						Выберите способ оплаты
+					</h2>
+					<div class="payment-option-boxes">
+						<a href="#" class="payment-option-box">
+							<img class="payment-option-image" src="{% static 'img/payment/iokassa.jpg' %}" alt="">
+						</a>
+						<a href="#" class="payment-option-box">
+							<img class="payment-option-image" src="{% static 'img/payment/cryptomus.jpg' %}" alt="">
+						</a>
+
+					</div>
+					<div class="payment-option__promobox">
+						<h3 class="payment-option__promoTitle">
+							Если у вас есть промо-код, то введите его ниже !
+						</h3>
+						<form action="" class="payment-option__promoForm">
+							<input type="text" id="promo" name="promo" placeholder="АА5789А564" class="form__input payment-option__promoInput">
+							<button class="button payment-option__promoBtn" type="submit">Активировать</button>
+						</form>
+
+					</div>
+				</div>
+			</section>
+		</main>
+{% endif %}
+{% endblock %}

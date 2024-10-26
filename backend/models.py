@@ -26,6 +26,7 @@ class Profile(models.Model):
     recommended_by = models.ForeignKey('Ref', on_delete=models.CASCADE, related_name='recommended_profiles',
                                        null=True, blank=True)
     is_premium = models.BooleanField(default=False)
+    expire_data=models.DateTimeField(null=True, blank=True, default=None)
     notify_bio=models.CharField(max_length=150,null=True, blank=True, default=None)
     notify_name=models.CharField(max_length=150,null=True, blank=True, default=None)
     notify_id=models.BigIntegerField(unique=True, null=True, blank=True, default=None)
@@ -336,12 +337,33 @@ class Subscribe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status=models.BooleanField(default=True)
 
+
     def save(self, *args, **kwargs):
+        if not self.status:
+            self.profile.expire_data=None
+            self.profile.is_premium=False
+            self.profile.save(update_fields=['expire_data','is_premium'])
+            super().save(*args, **kwargs)
+            return
+        if self.profile.expire_data is not None and self.profile.expire_data > timezone.now():
+            return
+
+
         if self.type_sub.price == 1.00 and self.profile.is_onedollar == False:
             return
+
         if self.type_sub.price == 1.00 and self.profile.is_onedollar:
             self.profile.is_onedollar=False
-            self.profile.save(update_fields=['is_onedollar'])
+            self.profile.expire_data = timezone.now() + timedelta(days=self.type_sub.days)
+            self.profile.is_premium = True
+            self.profile.save(update_fields=['is_onedollar','is_premium','expire_data'])
+            super().save(*args, **kwargs)
+            return
+
+        self.profile.expire_data=timezone.now() + timedelta(days=self.type_sub.days)
+        self.profile.is_premium=True
+        self.profile.save(update_fields=['is_premium','expire_data'])
+
 
         super().save(*args, **kwargs)
 

@@ -6,7 +6,7 @@ import requests
 from pyrogram.enums import ChatAction,ParseMode
 from pyrogram.handlers import MessageHandler
 from pyrogram.types import Message
-from backend.models import Add_userbot,Chanel,Posts
+from backend.models import Add_userbot,Chanel,Posts,Profile
 import os
 import telegram
 from channels.db import database_sync_to_async
@@ -32,6 +32,7 @@ async def update(client):
 
             # Fetch data asynchronously from Django ORM
             chanel_all = await sync_to_async(list)(Chanel.objects.all())
+
 
             for i in chanel_all:
                 chanel_link = i.chanel_link.split('/')[-1]
@@ -116,20 +117,14 @@ async def update(client):
 
 
 
-
-
-
-
-
-
-
-
 @database_sync_to_async
 def get_userbots():
     return list(Add_userbot.objects.filter(is_active=True))
 
 async def initialize_clients():
+    print("hello")
     userbots = await get_userbots()
+    print("world")
 
     for userbot in userbots:
         # Retrieve the session data from the model
@@ -162,6 +157,23 @@ async def remove_inactive_clients():
 
         await asyncio.sleep(10)
 
+@database_sync_to_async
+def get_expired_profiles():
+    return list(Profile.objects.filter(expire_data__lte=timezone.now(), is_premium=True))
+
+@database_sync_to_async
+def update_profile(profile):
+    profile.is_premium = False
+    profile.expire_data = None
+    profile.save(update_fields=['is_premium', 'expire_data'])
+
+async def check_expired_subscriptions():
+    while True:
+        expired_profiles = await get_expired_profiles()
+        for profile in expired_profiles:
+            await update_profile(profile)
+        print("Checked for expired subscriptions.")
+        await asyncio.sleep(60)
 
 async def waiting():
     while not clients:  # Check if clients is empty
@@ -176,6 +188,7 @@ async def run_userbots():
 
     # Wait for all clients to start
     await asyncio.gather(*tasks)
+
 
     # Run update tasks concurrently
 
@@ -203,6 +216,8 @@ async def run_userbots():
 #sudo systemctl reload gunicorn
 #sudo service nginx reload
 async def run_userbot():
+    #await check_expired_subscriptions()
+
     await initialize_clients()
     await run_userbots()
 

@@ -418,7 +418,7 @@
 									Для улучшения возможностей аккаунта,
 									приобретите подписку на сервис.
 								</p>
-								<a href="#" class="button subscribe-window__btn">
+								<a href="{% url 'plans' %}" class="button subscribe-window__btn">
 									Оформить подписку
 								</a>
 							</div>
@@ -445,7 +445,7 @@
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+							<a href="{% url 'withdraw' %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/2.svg' %}" alt="">
 									Реф.баланс: {{user.profile.balance}} руб.
@@ -536,13 +536,15 @@
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+							{% if not user.profile.is_premium %}
+							<a href="{% url 'plans' %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/4.svg' %}" alt="">
 									<span class="color-red">Продление доступа</span>
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
+							{% endif %}
 							<div class="dropdown-header__bottom">
 
 								<a href="{% url 'logout' %}"><button class="button" type="button">Выйти</button></a>
