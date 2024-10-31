@@ -465,7 +465,7 @@ class Main(ListView):
         context['total']=Posts.objects.all().count()
         context['mentioned'] =Posts.objects.filter(mention=True).count()
         return context
-class PlansView(LoginRequiredMixin,TemplateView):
+class PlansView(TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'plans.html'
 
