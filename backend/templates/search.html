@@ -170,8 +170,8 @@
 							<tbody>
 							{% for item in object_list  %}
 
-							{% with last_cost_format=item.add_chanel.cost_formats.last %}
-							{% with er=item.subscribers|div:item.views|mul:100 %}
+
+
 
 
 								<tr>
@@ -235,7 +235,7 @@
 										<div class="label-blue label-blue_s24">{{item.yesterday_views}}</div>
 									</td>
 									<td>
-										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
+										<div class="label-blue label-blue_s24">{{item.er|floatformat:2 }}%</div>
 									</td>
 									<td>
 
@@ -246,8 +246,6 @@
 										</div>
 									</td>
 								</tr>
-							{% endwith %}
-                			{% endwith %}
 
 
 
@@ -727,12 +725,11 @@
             </button>
             <div class="popup__inner">
                 <div class="tabs-navigation popup__filters">
-                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button">По дате
-                    </button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По просмотрам</button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По пересылкам</button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По комментариям</button>
-                </div>
+						<button class="search-channels__num tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)">По дате</button>
+						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По просмотрам</button>
+						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По пересылкам</button>
+						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По комментариям</button>
+					</div>
                 <div class="popup__list">
 					{% for post in item.post.all %}
                     <div class="item-popup">
@@ -808,33 +805,129 @@
 </div>
 {% endfor %}
 {% for item in object_list %}
-<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup ">
-    <div class="popup__wrapper">
-        <div class="popup__content">
-            <button data-close type="button" class="popup__close">
-                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
-            </button>
+<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close">
+					<img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+				</button>
+				<div class="popup__inner">
+					<div class="popup__list">
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture>
+										<source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid"
+											src="/{{item.pictures}}}" alt="">
+									</picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">{{item.name}}</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+											{{item.views}}
+										</div>
+									</div>
+								</div>
+								<p class="item-popup__degree"></p>
+							</div>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__content">
+								<div class="item-popup__channel-text">
+									<p class="text text_fw600">
+										Описание канала:
+									</p>
+									<p class="text">
+										{{item.description}}
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="item-popup__channel-info">
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">Подписчики</p>
+								<h5 class="item-popup__channel-infoData">{{item.subscribers}}</h5>
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">Сегодня</p>
+								{% if item.daily_subscribers > 0 %}
+								<h5 class="item-popup__channel-infoData">+{{item.daily_subscribers}}</h5>
+								{% else %}
+								<h5 class="item-popup__channel-infoData">{{item.daily_subscribers}}</h5>
+								{% endif %}
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">На пост/вчера</p>
+								<h5 class="item-popup__channel-infoData">{{item.yesterday_views}}</h5>
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">ER</p>
+								<h5 class="item-popup__channel-infoData">{{item.er|floatformat:2 }}%</h5>
+							</div>
+						</div>
+						<div class="item-popup">
+							<div data-tabs class="charts-tabs">
+								<div class="tabs-head">
+									<h4 class="channels-tabs__title title">Охват публикаций за 24ч / число подписчиков
+									</h4>
+									<nav data-tabs-titles class="tabs-navigation">
+										<button type="button" class="tabs-navigation__title _tab-active">График</button>
+										<button type="button" class="tabs-navigation__title">Таблица</button>
+									</nav>
+								</div>
+								<div data-tabs-body class="charts-tabs__content">
+									<div class="charts-tabs__body">
+										<div class="charts-tabs__chart">
+											<canvas id="chart5"></canvas>
+										</div>
+									</div>
+									<div class="charts-tabs__body">
+										<div class="chars-table__wrap">
+											<table
+												class="table chars-table search-channels__table analitics-tabs__table">
+												<thead>
+													<tr>
+														<th scope="col">
+															<div class="label-black">День</div>
+														</th>
+														<th scope="col">
+															<div class="label-black">Подписчиков</div>
+														</th>
+														<th>
+															<div class="label-black">Охват за 24ч</div>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+												{% for i in item.subperday.all %}
+													<tr>
+														<td scope="row">
+															<div class="label-black label-black_s20">{{ i.created_at|date:"Y-m-d" }}</div>
+														</td>
+														<td>
+															<div class="label-blue label-blue_s20">{{i.subperday}}</div>
+														</td>
+														<td>
+															<div class="label-green label-green_s20">{{i.viewsperday}}</div>
+														</td>
+													</tr>
+												{% endfor %}
 
-                <div class="popup__list">
-                    <div class="item-popup">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                        <div class="item-popup__content">
-                            <div class="item-popup__text">
-                                <p class="text">
-                                    {{item.description}}
-                                </p>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
 {% endfor %}
 {% endif %}
 
@@ -860,6 +953,65 @@
         // Alert the user that the link has been copied
         alert('Ссылка скопирована в буфер обмена!');
    });
+   if ($("#chart_").length) {
+        var ctx = $("#chart_7")[0].getContext("2d");
+
+        var views = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.viewsperday }},
+        {% endfor %}
+    ];
+    var subperday = [ // Array of count values
+        {% for item in subperday %}
+            {{ item.subperday }},
+        {% endfor %}
+    ];
+
+
+    var labels = [ // Array of created_at__date values
+        {% for item in subperday %}
+            "{{ item.created_at|date:"Y-m-d" }}",
+        {% endfor %}
+    ];
+
+
+        new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels, // Use the labels array for x-axis
+                datasets: [{
+                    label: "Охват публикаций за 24ч",
+                    data: views, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+                },
+                {
+                    label: "число подписчиков",
+                    data: subperday, // Use the views array for y-axis data
+                    fill: true,
+                    backgroundColor: ["rgba(166, 206, 227, 0.80)"],
+                }
+                ]
+            },
+            options: {
+                responsive: true,
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
 });
+</script>
+
 </script>
 {% endblock %}

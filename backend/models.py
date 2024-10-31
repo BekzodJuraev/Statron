@@ -75,6 +75,13 @@ class Chanel(models.Model):
 
 
 
+    @property
+    def er(self):
+        return (self.subscribers/self.views) * 100
+
+
+
+
 
 
 

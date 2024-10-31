@@ -2395,7 +2395,7 @@ To see the hourly dynamics of post coverage, click on the number of views of the
                 </div>
               </div>
               <div class="plans__box-row">
-                <img src="img/icons/ph_pulse-fill.png" alt="" class="plans__box-image">
+                <img src="{% static 'img/icons/ph_pulse-fill.png' %}" alt="" class="plans__box-image">
                 <div>
                   <p class="plans__box-whiteText">
                     Анализируйте рекламные посты
@@ -2408,7 +2408,7 @@ To see the hourly dynamics of post coverage, click on the number of views of the
                 </div>
               </div>
               <div class="plans__box-row">
-                <img src="img/icons/solar_chart.png" alt="" class="plans__box-image">
+                <img src="{% static 'img/icons/solar_chart.png' %}" alt="" class="plans__box-image">
                 <div>
                   <p class="plans__box-whiteText">
                     Оценивайте эффективность тематики и контента
@@ -2419,9 +2419,10 @@ To see the hourly dynamics of post coverage, click on the number of views of the
                   </p>
                 </div>
               </div>
+				<a href="{% url 'plans' %}">
               <button class="button button_no-bg button_analytics" type="submit"
                       style="background-color: #fff; width: 40%; height: 60px; ">Подключить
-              </button>
+              </button> </a>
             </div>
 									{% endif %}
 									<div class="analitics-tabs__col">

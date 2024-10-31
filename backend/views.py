@@ -841,7 +841,7 @@ class Search(LoginRequiredMixin,ListView):
         mention_from=self.request.GET.get('mention_from')
         mention_to=self.request.GET.get('mention_to')
         description=self.request.GET.get('description')
-        queryset = Chanel_img.objects.all()
+        queryset = Chanel_img.objects.all().prefetch_related('subperday')
         #print(views_from,views_to)
         #print(subscribers_from,subscribers_to)
 
