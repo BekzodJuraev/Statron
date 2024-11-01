@@ -816,10 +816,10 @@
 						<div class="item-popup">
 							<div class="item-popup__head">
 								<div class="item-popup__img">
-									<picture>
-										<source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid"
-											src="/{{item.pictures}}}" alt="">
-									</picture>
+							<picture>
+    <source srcset="/{{ item.pictures }}" type="image/webp">
+    <img class="img-fluid" src="/{{ item.pictures }}" alt="" width="100" height="100" style="border-radius: 50%;">
+</picture>
 								</div>
 								<div class="item-popup__content">
 									<div class="label_black">{{item.name}}</div>
@@ -880,7 +880,7 @@
 								<div data-tabs-body class="charts-tabs__content">
 									<div class="charts-tabs__body">
 										<div class="charts-tabs__chart">
-											<canvas id="chart5"></canvas>
+											<canvas id="chart_{{item.pk}}"></canvas>
 										</div>
 									</div>
 									<div class="charts-tabs__body">
@@ -953,23 +953,24 @@
         // Alert the user that the link has been copied
         alert('Ссылка скопирована в буфер обмена!');
    });
-   if ($("#chart_").length) {
-        var ctx = $("#chart_7")[0].getContext("2d");
+   {% for i in object_list %}
+   if ($("#chart_{{i.pk}}").length) {
+        var ctx = $("#chart_{{i.pk}}")[0].getContext("2d");
 
         var views = [ // Array of count values
-        {% for item in subperday %}
+        {% for item in i.subperday.all %}
             {{ item.viewsperday }},
         {% endfor %}
     ];
     var subperday = [ // Array of count values
-        {% for item in subperday %}
+        {% for item in i.subperday.all %}
             {{ item.subperday }},
         {% endfor %}
     ];
 
 
     var labels = [ // Array of created_at__date values
-        {% for item in subperday %}
+        {% for item in i.subperday.all %}
             "{{ item.created_at|date:"Y-m-d" }}",
         {% endfor %}
     ];
@@ -1009,6 +1010,7 @@
             }
         });
     }
+    {% endfor %}
 
 });
 </script>
