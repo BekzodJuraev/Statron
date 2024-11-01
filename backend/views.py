@@ -937,8 +937,9 @@ class TrackingPosts(LoginRequiredMixin,TemplateView):
             # Logic for creating a Notify object
             profile = request.user.profile
             word = request.POST.get('word')
+            notify_type=request.POST.get('notify_type')
             if word:
-                Notify.objects.create(profile=profile, word=word, start=False)
+                Notify.objects.create(profile=profile, word=word, Type_notify=notify_type,start=True)
 
         return redirect(request.path)
 
