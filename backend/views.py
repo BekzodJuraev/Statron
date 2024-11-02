@@ -942,11 +942,34 @@ class TrackingPosts(LoginRequiredMixin,TemplateView):
                 Notify.objects.create(profile=profile, word=word, Type_notify=notify_type,start=True)
 
         elif action_type == "delete_notify":
+
             profile = request.user.profile
             id=request.POST.get('delete')
 
             if id:
                 Notify.objects.filter(profile=profile, id=id).delete()
+
+        elif action_type=="start_notify":
+
+            profile = request.user.profile
+            id = request.POST.get('notify_id')
+
+
+            if id:
+                notify=Notify.objects.filter(profile=profile,id=id).first()
+                notify.start = False
+                notify.save(update_fields=['start'])
+
+        elif action_type=="stop_notify":
+
+            profile = request.user.profile
+            id = request.POST.get('notify_id')
+
+            if id:
+                notify=Notify.objects.filter(profile=profile,id=id).first()
+                notify.start = True
+                notify.save(update_fields=['start'])
+
 
         return redirect(request.path)
 

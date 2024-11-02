@@ -195,12 +195,12 @@ Once your subscription ends, all your notifications will be suspended.								</
 <form id="StartForm" method="POST" style="display: none;">
     {% csrf_token %}
     <input type="hidden" name="action_type" value="start_notify">
-    <input type="hidden" name="id" id="id">
+    <input type="hidden" name="notify_id" id="id_notify_start">
 </form>
 <form id="StopForm" method="POST" style="display: none;">
     {% csrf_token %}
     <input type="hidden" name="action_type" value="stop_notify">
-    <input type="hidden" name="id" id="id">
+    <input type="hidden" name="notify_id" id="id_notify_stop">
 </form>
 
 
@@ -295,14 +295,15 @@ Once your subscription ends, all your notifications will be suspended.								</
 	function imgToggle(button,id) {
 
     const img = button.querySelector("img");
-    document.getElementById("id").value = id;
+
 
     // Toggle the image source
     if (img.src.includes("material-symbols_stop.svg")) {
-
+		document.getElementById("id_notify_start").value = id;
         img.src = "{% static 'img/tracking-posts/solar_play-bold.svg' %}"; // Replace with the path to the play icon
         document.getElementById("StartForm").submit();
     } else {
+    	document.getElementById("id_notify_stop").value = id;
         img.src = "{% static 'img/tracking-posts/material-symbols_stop.svg' %}"; // Replace with the path to the stop icon
         document.getElementById("StopForm").submit();
     }
