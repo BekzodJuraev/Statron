@@ -84,13 +84,14 @@ Once your subscription ends, all your notifications will be suspended.								</
 {% else %}
 
 	<main class="page">
-		<form method="POST" >
-					{% csrf_token %}
+
 			<section class="tracking-posts">
 				<div class="tracking-posts__container">
 					<div class="dynamic-analitics__dynamic">
 						<h2 class="title">Управление отслеживаниями</h2>
 						{% if request.user.profile.notify_id %}
+						<form method="POST" >
+						{% csrf_token %}
 						<div class="dynamic-analitics__content">
 							<div>
 								<p class="text text_s20">
@@ -203,7 +204,7 @@ Once your subscription ends, all your notifications will be suspended.								</
     <input type="hidden" name="notify_id" id="id_notify_stop">
 </form>
 
-
+		{% if request.user.profile.notify_id %}
 		<section class="last-messages">
 				<div class="last-messages__container">
 					<h2 class="title">Последние уведомления</h2>
@@ -288,6 +289,7 @@ Once your subscription ends, all your notifications will be suspended.								</
 					</div>
 				</div>
 			</section>
+		{% endif %}
 		</main>
 {% endif %}
 
