@@ -230,6 +230,7 @@ class Notify(models.Model):
     Type_notify = models.CharField(max_length=20, choices=Type_enter)
     start=models.BooleanField(default=False)
     check_date = models.DateTimeField(null=True, blank=True,default=None)
+    count=models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         # Update the associated User's email before saving

@@ -61,13 +61,17 @@ def create_views(sender,instance,created,*args,**kwargs):
                 if item.Type_notify == "word" and item.profile.notify_id and item.word.lower() in instance.text.lower():
                     text = f"Новые уведомления по запросу'{item.word}'" \
                            f"{instance.link} {instance.chanel.name} - {instance.date}"
-
+                    item.count=F('count')+1
+                    item.save(update_fields=['count'])
                     bot.send_message(item.profile.notify_id, text)
                 if item.Type_notify == "chanel" and item.profile.notify_id and instance.chanel.chanel_link == item.word:
                     text = f"Новые уведомления по каналу'{item.word}'" \
                            f"{instance.link} {instance.chanel.name} - {instance.date}"
+                    item.count = F('count') + 1
+                    item.save(update_fields=['count'])
 
                     bot.send_message(item.profile.notify_id, text)
+
 
 
             except  Exception as e:

@@ -187,32 +187,112 @@ Once your subscription ends, all your notifications will be suspended.								</
 				</div>
 			</section>
 		{% endif %}
+<form id="hiddenForm" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="action_type" value="delete_notify">
+    <input type="hidden" name="delete" id="deleteInput">
+</form>
 
-		{% for item in notify %}
-		Фраза______________{{item.word}}
-		{% endfor %}
-			<section class="last-messages">
+
+		<section class="last-messages">
 				<div class="last-messages__container">
 					<h2 class="title">Последние уведомления</h2>
-					<div class="last-messages__list">
-						<div class="last-messages__item">
-							<h4 class="label-black">Фраза или канал</h4>
-						</div>
-						<div class="last-messages__item">
-							<h4 class="label-black">Ссылка</h4>
-						</div>
-						<div class="last-messages__item">
-							<h4 class="label-black">Где</h4>
-						</div>
-						<div class="last-messages__item">
-							<h4 class="label-black">Дата</h4>
-						</div>
-						<div class="last-messages__item">
-							<h4 class="label-black">Обнаружено</h4>
-						</div>
+					<div class="analitics-tabs__table-wrap-container">
+						<table class="table search-channels__table">
+							<thead>
+							<tr class="tabs__account-head-column">
+								<th scope="col">
+									<div class="label-black text-left">Тип</div>
+								</th>
+								<th scope="col">
+									<div class="label-black text-left">Фраза или канал</div>
+								</th>
+								<th scope="col">
+									<div class="label-black text-left">Дата</div>
+								</th>
+								<th scope="col">
+									<div class="label-black text-left">Обнаружено</div>
+								</th>
+								<th scope="col">
+
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							{% for item in notify %}
+
+
+
+							<tr>
+								<td scope="row">
+									<div class="tabs__account-date-time ">
+										{% if item.Type_notify == "chanel" %}
+										<span>Канал</span>
+										{% else %}
+										<span>Фраза</span>
+										{% endif %}
+									</div>
+								</td>
+								<td>
+									{% if item.Type_notify == "chanel" %}
+									<a href="{{item.word}}" target="_blank" class="text_fw500 hhv-blue">{{item.word}}</a>
+									{% else %}
+									<p class="text_fw500 hhv-blue">{{item.word}}</p>
+
+									{% endif %}
+								</td>
+								<td>
+									<div class="label-blue label-blue_s20"></div>
+									<div class="tabs__account-date-time">
+										<span>{{ item.check_date|date:"d.m.Y" }}</span>
+										<span>{{ item.check_date|date:"H:i:s" }}</span>
+									</div>
+								</td>
+								<td>
+									<div class="label-blue label-blue_s20 text-left">{{item.count}}</div>
+								</td>
+								<td class="text-right">
+									<div>
+										<button onclick="imgToggle(this)">
+											<img src="{% static 'img/tracking-posts/material-symbols_stop.svg' %}" alt="icon" class="icon">
+										</button>
+
+									 <button type="button" onclick="submitDeleteForm({{ item.pk }})">
+										<img src="{% static 'img/tracking-posts/material-symbols_delete-outline.svg' %}" alt="icon"/>
+									</button>
+							</form>
+									</div>
+								</td>
+							</tr>
+							{% endfor %}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</section>
 		</main>
 {% endif %}
+
+<script>
+	function imgToggle(button) {
+
+    const img = button.querySelector("img");
+
+    // Toggle the image source
+    if (img.src.includes("material-symbols_stop.svg")) {
+        img.src = "{% static 'img/tracking-posts/solar_play-bold.svg' %}"; // Replace with the path to the play icon
+    } else {
+        img.src = "{% static 'img/tracking-posts/material-symbols_stop.svg' %}"; // Replace with the path to the stop icon
+    }
+
+
+}</script>
+<script>
+function submitDeleteForm(itemId) {
+
+        // Set the delete input's value to the specific item's ID
+        document.getElementById("deleteInput").value = itemId;
+        // Submit the form
+        document.getElementById("hiddenForm").submit();
+    }</script>
 {% endblock %}

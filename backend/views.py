@@ -934,12 +934,19 @@ class TrackingPosts(LoginRequiredMixin,TemplateView):
             profile.save(update_fields=fields_to_clear)
 
         elif action_type == 'create_notify':
-            # Logic for creating a Notify object
+
             profile = request.user.profile
             word = request.POST.get('word')
             notify_type=request.POST.get('notify_type')
             if word:
                 Notify.objects.create(profile=profile, word=word, Type_notify=notify_type,start=True)
+
+        elif action_type == "delete_notify":
+            profile = request.user.profile
+            id=request.POST.get('delete')
+
+            if id:
+                Notify.objects.filter(profile=profile, id=id).delete()
 
         return redirect(request.path)
 
