@@ -192,6 +192,16 @@ Once your subscription ends, all your notifications will be suspended.								</
     <input type="hidden" name="action_type" value="delete_notify">
     <input type="hidden" name="delete" id="deleteInput">
 </form>
+<form id="StartForm" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="action_type" value="start_notify">
+    <input type="hidden" name="id" id="id">
+</form>
+<form id="StopForm" method="POST" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" name="action_type" value="stop_notify">
+    <input type="hidden" name="id" id="id">
+</form>
 
 
 		<section class="last-messages">
@@ -253,9 +263,17 @@ Once your subscription ends, all your notifications will be suspended.								</
 								</td>
 								<td class="text-right">
 									<div>
-										<button onclick="imgToggle(this)">
+										{% if item.start %}
+										<button onclick="imgToggle(this,{{item.pk}})">
 											<img src="{% static 'img/tracking-posts/material-symbols_stop.svg' %}" alt="icon" class="icon">
 										</button>
+										{% else %}
+											<button onclick="imgToggle(this,{{item.pk}})">
+											<img src="{% static 'img/tracking-posts/solar_play-bold.svg' %}" alt="icon" class="icon">
+										</button>
+										{% endif %}
+
+
 
 									 <button type="button" onclick="submitDeleteForm({{ item.pk }})">
 										<img src="{% static 'img/tracking-posts/material-symbols_delete-outline.svg' %}" alt="icon"/>
@@ -274,15 +292,19 @@ Once your subscription ends, all your notifications will be suspended.								</
 {% endif %}
 
 <script>
-	function imgToggle(button) {
+	function imgToggle(button,id) {
 
     const img = button.querySelector("img");
+    document.getElementById("id").value = id;
 
     // Toggle the image source
     if (img.src.includes("material-symbols_stop.svg")) {
+
         img.src = "{% static 'img/tracking-posts/solar_play-bold.svg' %}"; // Replace with the path to the play icon
+        document.getElementById("StartForm").submit();
     } else {
         img.src = "{% static 'img/tracking-posts/material-symbols_stop.svg' %}"; // Replace with the path to the stop icon
+        document.getElementById("StopForm").submit();
     }
 
 
