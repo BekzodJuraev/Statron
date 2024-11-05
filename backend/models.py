@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date,timedelta,datetime
 import pytz
+import random
+import string
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
@@ -274,6 +277,17 @@ class Mentions(models.Model):
     def __str__(self):
         return self.mentioned_channel.name
 
+class Discount(models.Model):
+    code=models.CharField(max_length=200,editable=False,unique=True)
+    discount_percentage=models.IntegerField(default=0,validators=[MinValueValidator(0), MaxValueValidator(100)])
+
+    def save(self, *args, **kwargs):
+        self.code=''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+        super().save(*args, **kwargs)
+
+
+    def __str__(self):
+        return self.code
 
 class Like(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='like')
@@ -306,6 +320,8 @@ class PaymentGateway(models.Model):
     api_secret = models.CharField(max_length=255)  # If needed
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
 
     def __str__(self):
         return self.name
