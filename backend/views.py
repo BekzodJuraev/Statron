@@ -48,6 +48,10 @@ bot = telegram.Bot(TOKEN_WEBHOOK)
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
 
+
+class Freekassa(TemplateView):
+    template_name = 'fk-verify.html'
+
 def authenticate_user_with_session(request):
     session_key = request.GET.get('session_key')
 
