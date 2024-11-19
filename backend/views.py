@@ -3,6 +3,7 @@ from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
+from urllib.parse import urlencode
 from django.contrib import messages
 from django.contrib.sessions.models import Session
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,7 +14,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo,Payment,Subscribe,Type_sub
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo,Payment,Subscribe,Type_sub,Discount
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -477,6 +478,30 @@ class PlansView(TemplateView):
 class PaymentView(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'payment.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
+    #
+    def post(self, request, *args, **kwargs):
+        promo = self.request.POST.get('promo')
+        discount = Discount.objects.filter(code=promo).first()
+        if discount:
+            profile = self.request.user.profile
+            profile.promo_code = discount
+            profile.save(update_fields=['promo_code'])
+            messages.success(self.request, "Promo code applied successfully!")
+        else:
+            messages.error(self.request, "Invalid promo code. Please try again.")
+
+        query_params = request.GET.urlencode()
+        redirect_url = f"{request.path}?{query_params}" if query_params else request.path
+        return redirect(redirect_url)
+
+
+
+    #
+
 
 class WithdrawView(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')

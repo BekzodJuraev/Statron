@@ -28,6 +28,7 @@ class Profile(models.Model):
     timezone = models.CharField(max_length=63, choices=[(tz, tz) for tz in pytz.all_timezones], default='UTC')
     recommended_by = models.ForeignKey('Ref', on_delete=models.CASCADE, related_name='recommended_profiles',
                                        null=True, blank=True)
+    promo_code=models.ForeignKey("Discount",on_delete=models.CASCADE,null=True, blank=True, default=None)
     is_premium = models.BooleanField(default=False)
     expire_data=models.DateTimeField(null=True, blank=True, default=None)
     notify_bio=models.CharField(max_length=150,null=True, blank=True, default=None)
