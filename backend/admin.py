@@ -17,7 +17,7 @@ class Subscribe(admin.ModelAdmin):
     pass
 @admin.register(Type_sub)
 class Type_sub(admin.ModelAdmin):
-    list_display = ['price','name']
+    list_display = ['id','price','name']
 
 @admin.register(Payment)
 class Payment(admin.ModelAdmin):

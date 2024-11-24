@@ -38,7 +38,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMa
 
 import time
 
-from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR
 
 
 
@@ -498,9 +498,17 @@ class PaymentView(LoginRequiredMixin,TemplateView):
         redirect_url = f"{request.path}?{query_params}" if query_params else request.path
         return redirect(redirect_url)
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        promo = self.request.POST.get('price')
 
 
-    #
+
+        return context
+
+
+
+
 
 
 class WithdrawView(LoginRequiredMixin,TemplateView):
