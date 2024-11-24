@@ -210,8 +210,7 @@ def telegram_auth(request):
 @require_POST
 def notification_freekassa(request):
     if request.method == 'POST':
-        json_data = json.loads(request.body.decode('utf-8'))
-        print(json_data)
+
 
         return HttpResponse(status=200)
     else:
