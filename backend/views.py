@@ -210,39 +210,42 @@ def telegram_auth(request):
 @require_POST
 def notification_freekassa(request):
     try:
-        # Step 1: Parse the incoming POST data (FreeKassa sends form-data as key-value pairs)
+
         MERCHANT_ID=request.POST.get('MERCHANT_ID')
         order_id = request.POST.get('MERCHANT_ORDER_ID')
         amount = request.POST.get('AMOUNT')
         signature = request.POST.get('SIGN')
         us_key=request.POST.get('us_key')
 
-        # You can print the data for debugging
-        print(f"Received notification: Order ID = {order_id}, Amount = {amount}, Signature = {signature}")
+
 
         # Step 2: Rebuild the signature string using the data from FreeKassa
         signature_string = f"{MERCHANT_ID}:{amount}:{SECRET_KEY}:{order_id}"
 
-        # Step 3: Calculate the MD5 hash of the signature string
+
         calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
 
-        # Step 4: Compare the calculated signature with the signature sent by FreeKassa
+
         if calculated_signature == signature:
-            # Signature matches, meaning the notification is legitimate
-            print(f"Payment for Order ID {order_id} verified successfully.")
+            profile=Profile.objects.filter(first_name=us_key).first()
+            sub=Type_sub.objects.filter(id=order_id).first()
+            Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
+            if profile.promo_code:
+                profile.promo_code = None
+                profile.save(update_fields=['promo_code'])
 
-            # TODO: Handle the payment logic, e.g., update user's subscription
-            # Example: You can create or update a subscription for the user based on the order_id
 
-            return HttpResponse(status=200)  # Successful response
+
+
+            return HttpResponse(status=200)
 
         else:
-            # Signature validation failed
+
             print(f"Invalid signature for Order ID {order_id}.")
             return HttpResponse(status=400)  # Bad Request
 
     except Exception as e:
-        # Handle any errors (e.g., missing data, parsing issues)
+
         print(f"Error processing notification: {e}")
         return HttpResponse(status=500)
 
