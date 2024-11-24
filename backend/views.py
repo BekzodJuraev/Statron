@@ -3,6 +3,7 @@ from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
 import re
+import hashlib
 from urllib.parse import urlencode
 from django.contrib import messages
 from django.contrib.sessions.models import Session
@@ -500,7 +501,21 @@ class PaymentView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        promo = self.request.POST.get('price')
+        amount = float(self.request.GET.get('price'))
+        id_order=self.request.GET.get('order_id')
+        try:
+            Type_sub.objects.get(price=amount, id=id_order)
+            if self.request.user.profile.promo_code:
+                amount = amount * (1 - self.request.user.profile.promo_code.discount_percentage / 100)
+            amount = round(amount, 2)
+            signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR}:{id_order}"
+            signature = hashlib.md5(signature_string.encode()).hexdigest()
+            url = f"https://pay.freekassa.ru/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR}"
+
+            context['freekassa_url'] = url
+
+        except:
+            pass
 
 
 
