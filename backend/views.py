@@ -221,7 +221,7 @@ def notification_freekassa(request):
         print(f"Received notification: Order ID = {order_id}, Amount = {amount}, Signature = {signature}")
 
         # Step 2: Rebuild the signature string using the data from FreeKassa
-        signature_string = f"{MERCHANT_ID}:{amount}:{SECRET_KEY}:{CUR}:{order_id}"
+        signature_string = f"{MERCHANT_ID}:{amount}:{SECRET_KEY}:{order_id}"
 
         # Step 3: Calculate the MD5 hash of the signature string
         calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
