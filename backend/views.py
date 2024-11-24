@@ -211,6 +211,7 @@ def telegram_auth(request):
 def notification_freekassa(request):
     try:
         # Step 1: Parse the incoming POST data (FreeKassa sends form-data as key-value pairs)
+        MERCHANT_ID=request.POST.get('MERCHANT_ID')
         order_id = request.POST.get('MERCHANT_ORDER_ID')
         amount = request.POST.get('AMOUNT')
         signature = request.POST.get('SIGN')
@@ -220,7 +221,7 @@ def notification_freekassa(request):
         print(f"Received notification: Order ID = {order_id}, Amount = {amount}, Signature = {signature}")
 
         # Step 2: Rebuild the signature string using the data from FreeKassa
-        signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR}:{order_id}"
+        signature_string = f"{MERCHANT_ID}:{amount}:{SECRET_KEY}:{CUR}:{order_id}"
 
         # Step 3: Calculate the MD5 hash of the signature string
         calculated_signature = hashlib.md5(signature_string.encode()).hexdigest()
