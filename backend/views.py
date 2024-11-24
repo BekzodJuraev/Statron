@@ -213,7 +213,7 @@ def notification_freekassa(request):
         # Step 1: Parse the incoming POST data (FreeKassa sends form-data as key-value pairs)
         order_id = request.POST.get('MERCHANT_ORDER_ID')
         amount = request.POST.get('AMOUNT')
-        signature = request.POST.get('signature')
+        signature = request.POST.get('SIGN')
         us_key=request.POST.get('us_key')
 
         # You can print the data for debugging
