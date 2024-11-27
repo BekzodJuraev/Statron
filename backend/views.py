@@ -571,7 +571,33 @@ class WithdrawView(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'withdraw.html'
 
+    def post(self, request, *args, **kwargs):
+        payment_cryptomus=request.POST.get('payment-cryptomus')
+        payment_iokassa=request.POST.get('payment-iokassa')
+        wallet=request.POST.get('wallet')
+        amount=request.POST.get('amount')
+        password=request.POST.get('password-for-payment')
+        password_repeat=request.POST.get('password-for-payment-repeat')
 
+        if password != password_repeat:
+            messages.error(request, "Passwords do not match.")
+            return redirect(request.path)
+
+            # Verify the user's password
+        user = request.user  # Get the currently authenticated user
+        if not user.check_password(password):
+            messages.error(request, "Incorrect password.")
+            return redirect(request.path)
+
+        # Process payment logic
+        if payment_cryptomus:
+            print('freekassa')
+        elif payment_iokassa:
+            print('iokassa')
+
+        # Add your payment logic here...
+        messages.success(request, "Payment processed successfully!")
+        return redirect(request.path)
 
 class UpdateCabinet(LoginRequiredMixin,DetailView):
     model = Profile
