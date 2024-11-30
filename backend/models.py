@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import date,timedelta,datetime
+from django.db.models import F
 import pytz
 import random
 import string
@@ -314,29 +315,25 @@ class Add_userbot(models.Model):
     def __str__(self):
         return self.name
 
-class PaymentGateway(models.Model):
-
-    name = models.CharField(max_length=255, unique=True)
-    api_key = models.CharField(max_length=255)
-    api_secret = models.CharField(max_length=255)  # If needed
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
-
-    def __str__(self):
-        return self.name
 
 
 
 
 class Payment(models.Model):
     profile=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='withdraw')
-    paymentgatway=models.ForeignKey(PaymentGateway,on_delete=models.CASCADE)
+    paymentgatway=models.CharField(max_length=200)
     created_at=models.DateTimeField(auto_now_add=True)
     wallet=models.CharField(max_length=200)
     amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
     status=models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if self.status:
+            self.profile.balance = F('balance') - self.amount
+            self.profile.save(update_fields=['balance'])
+
+        super().save(*args, **kwargs)
+
 
 
 

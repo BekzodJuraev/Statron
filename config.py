@@ -13,6 +13,8 @@ URL=env("URL")
 SHOP_ID=env("SHOP_ID")
 SECRET_KEY=env("SECRET_KEY")
 CUR=env("CUR")
+Wallet_public=env("Wallet_public")
+Wallet_private=env("Wallet_private")
 DEBUG = env.bool('DEBUG', default=False)
 
 

@@ -1,14 +1,12 @@
 from django.contrib import admin
-from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe,Commission,PaymentGateway,Discount
+from .models import Profile,Chanel,Add_chanel,Like,Category_chanels,Add_userbot,Posts,SubPerday,Subperhour,Mentions,Ref,Notify,Demo,Payment,Type_sub,Subscribe,Commission,Discount
 @admin.register(Discount)
 class Discount(admin.ModelAdmin):
     list_display = ['code','discount_percentage']
     readonly_fields = ['code']
 
 
-@admin.register(PaymentGateway)
-class PaymentGateway(admin.ModelAdmin):
-    pass
+
 @admin.register(Commission)
 class Commission(admin.ModelAdmin):
     pass

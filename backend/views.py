@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
+from decimal import Decimal
 import re
 import hashlib
 from urllib.parse import urlencode
@@ -34,12 +35,12 @@ from django.views.decorators.http import require_POST
 import json
 import asyncio
 import telegram
-
+import requests
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 
 import time
 
-from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private
 
 
 
@@ -574,8 +575,8 @@ class WithdrawView(LoginRequiredMixin,TemplateView):
     def post(self, request, *args, **kwargs):
         payment_cryptomus=request.POST.get('payment-cryptomus')
         payment_iokassa=request.POST.get('payment-iokassa')
-        wallet=request.POST.get('wallet')
-        amount=request.POST.get('amount')
+        wallet=self.request.POST.get('wallet')
+        amount=float(self.request.POST.get('amount'))
         password=request.POST.get('password-for-payment')
         password_repeat=request.POST.get('password-for-payment-repeat')
 
@@ -589,14 +590,52 @@ class WithdrawView(LoginRequiredMixin,TemplateView):
             messages.error(request, "Incorrect password.")
             return redirect(request.path)
 
+        if user.profile.balance > Decimal(wallet):  # Convert wallet to Decimal
+            messages.error(request, "You don't have enough money")
+            return redirect(request.path)
         # Process payment logic
         if payment_cryptomus:
-            print('freekassa')
+
+            data={
+                'to_wallet_id':wallet,
+                'amount':amount,
+                'currency_id':2,
+                'fee_from_balance':0,
+                'description':'withdraw',
+                'idempotence_key':'5'
+
+            }
+
+            data_string = json.dumps(data)  # Compact JSON format
+            sign = hashlib.sha256((data_string + Wallet_private).encode()).hexdigest()
+            headers = {
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {sign}'
+            }
+            url = f'https://api.fkwallet.io/v1/{Wallet_public}/transfer'
+
+            # Make the POST request
+            response = requests.post(url, headers=headers, data=json.dumps(data))
+            if response.status_code == 200:
+                try:
+                    result = response.json()  # Parse JSON response
+                    Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
+                                           amount=amount, status=False)
+                    print("Request successful:", result)
+                except ValueError:
+                    print("Request successful, but response is not JSON:", response.text)
+            else:
+                Payment.objects.create(profile=user.profile,paymentgatway="Freekassa",wallet=wallet,amount=amount,status=False)
+                print(f"Request failed with status code {response.status_code}: {response.text}")
+
         elif payment_iokassa:
-            print('iokassa')
+            pass
+
+
+
 
         # Add your payment logic here...
-        messages.success(request, "Payment processed successfully!")
+        messages.success(request, "Payment is processing!")
         return redirect(request.path)
 
 class UpdateCabinet(LoginRequiredMixin,DetailView):
