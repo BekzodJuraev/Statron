@@ -426,7 +426,7 @@
 						<div class="search-form__column search-form__column_1">
 							<div class="search-form__item">
 								<label for="search-link" class="label-black">Ссылка:</label>
-								<input type="text" id="search-link" name="chanel_link" placeholder="https://telemetr.me/channels/" class="form__input" value="{{ request.GET.chanel_link }}">
+								<input type="text" id="search-link" name="chanel_link" placeholder="https://telemetr.me/channels/" class="form__input" value="{{ request.GET.chanel_link|safe }}">
 							</div>
 							<div class="search-form__item">
 								<label for="search-name" class="label-black">Название канала:</label>

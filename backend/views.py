@@ -594,48 +594,60 @@ class WithdrawView(LoginRequiredMixin,TemplateView):
             messages.error(request, "You don't have enough money")
             return redirect(request.path)
         # Process payment logic
+
         if payment_cryptomus:
-
-            data={
-                'to_wallet_id':wallet,
-                'amount':amount,
-                'currency_id':2,
-                'fee_from_balance':0,
-                'description':'withdraw',
-                'idempotence_key':'5'
-
-            }
-
-            data_string = json.dumps(data)  # Compact JSON format
-            sign = hashlib.sha256((data_string + Wallet_private).encode()).hexdigest()
-            headers = {
-                'Content-Type': 'application/json',
-                'Authorization': f'Bearer {sign}'
-            }
-            url = f'https://api.fkwallet.io/v1/{Wallet_public}/transfer'
-
-            # Make the POST request
-            response = requests.post(url, headers=headers, data=json.dumps(data))
-            if response.status_code == 200:
-                try:
-                    result = response.json()  # Parse JSON response
-                    Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
-                                           amount=amount, status=False)
-                    print("Request successful:", result)
-                except ValueError:
-                    print("Request successful, but response is not JSON:", response.text)
-            else:
-                Payment.objects.create(profile=user.profile,paymentgatway="Freekassa",wallet=wallet,amount=amount,status=False)
-                print(f"Request failed with status code {response.status_code}: {response.text}")
-
+            Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
+                                                              amount=amount, status=False)
+            messages.success(request, "Payment is processing!")
+            return redirect(request.path)
         elif payment_iokassa:
-            pass
+            Payment.objects.create(profile=user.profile, paymentgatway="Yukassa", wallet=wallet,
+                                   amount=amount, status=False)
+            messages.success(request, "Payment is processing!")
+            return redirect(request.path)
+
+        # if payment_cryptomus:
+        #
+        #     data={
+        #         'to_wallet_id':wallet,
+        #         'amount':amount,
+        #         'currency_id':2,
+        #         'fee_from_balance':0,
+        #         'description':'withdraw',
+        #         'idempotence_key':'5'
+        #
+        #     }
+        # #
+        #     data_string = json.dumps(data)  # Compact JSON format
+        #     sign = hashlib.sha256((data_string + Wallet_private).encode()).hexdigest()
+        #     headers = {
+        #         'Content-Type': 'application/json',
+        #         'Authorization': f'Bearer {sign}'
+        #     }
+        #     url = f'https://api.fkwallet.io/v1/{Wallet_public}/transfer'
+        #
+        #     # Make the POST request
+        #     response = requests.post(url, headers=headers, data=json.dumps(data))
+        #     if response.status_code == 200:
+        #         try:
+        #             result = response.json()  # Parse JSON response
+        #             Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
+        #                                    amount=amount, status=False)
+        #             print("Request successful:", result)
+        #         except ValueError:
+        #             print("Request successful, but response is not JSON:", response.text)
+        #     else:
+        #         Payment.objects.create(profile=user.profile,paymentgatway="Freekassa",wallet=wallet,amount=amount,status=False)
+        #         print(f"Request failed with status code {response.status_code}: {response.text}")
+        # #
+        # # elif payment_iokassa:
+        # #     pass
 
 
 
 
         # Add your payment logic here...
-        messages.success(request, "Payment is processing!")
+        messages.success(request, "Error wallet")
         return redirect(request.path)
 
 class UpdateCabinet(LoginRequiredMixin,DetailView):
@@ -685,7 +697,7 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
         instance = self.get_object()
 
         if request.user != instance.username:
-            # If not, you can redirect to a 403 Forbidden page or handle it as you wish
+
             return self.handle_no_permission()
 
         return super().dispatch(request, *args, **kwargs)

@@ -7,6 +7,10 @@ import pytz
 import random
 import string
 from django.core.validators import MinValueValidator, MaxValueValidator
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private
+import requests
+import json
+import hashlib
 from django.db.models import Q
 from django.db.models import Sum
 # Create your models here.
@@ -329,6 +333,28 @@ class Payment(models.Model):
 
     def save(self, *args, **kwargs):
         if self.status:
+            if self.paymentgatway == "Freekassa":
+                data = {
+                    'to_wallet_id': self.wallet,
+                    'amount': float(self.amount),
+                    'currency_id': 2,
+                    'fee_from_balance': 0,
+                    'description': 'withdraw',
+                    'idempotence_key': str(self.id)
+
+                }
+                data_string = json.dumps(data)  # Compact JSON format
+                sign = hashlib.sha256((data_string + Wallet_private).encode()).hexdigest()
+                headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {sign}'
+                }
+                url = f'https://api.fkwallet.io/v1/{Wallet_public}/transfer'
+                response = requests.post(url, headers=headers, data=json.dumps(data))
+                if response.status_code == 200:
+                    self.status = True
+                else:
+                    self.status = False
             self.profile.balance = F('balance') - self.amount
             self.profile.save(update_fields=['balance'])
 
