@@ -155,7 +155,8 @@ def telegram_auth(request):
                     else:
                         # Connect the telegram account
                         profile.telegram_id = id
-                        profile.save(update_fields=['telegram_id'])
+                        profile.telegram_bio = nickname
+                        profile.save(update_fields=['telegram_id','telegram_bio'])
                         bot_auth.send_message(id,
                                               f"Your Telegram account has been connected with profile {profile_id}.")
 

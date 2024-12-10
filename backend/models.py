@@ -343,7 +343,7 @@ class Payment(models.Model):
                     'idempotence_key': str(self.id)
 
                 }
-                data_string = json.dumps(data)  # Compact JSON format
+                data_string = json.dumps(data)
                 sign = hashlib.sha256((data_string + Wallet_private).encode()).hexdigest()
                 headers = {
                     'Content-Type': 'application/json',
