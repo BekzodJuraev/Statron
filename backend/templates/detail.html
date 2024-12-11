@@ -3638,7 +3638,13 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 														</td>
 														<td class="content-center">
 															<div class="dynamic-analitics__img">
-																<picture><source srcset="{% static 'img/analitics/chart.webp' %}" type="image/webp"><img class="img-fluid" src="{% static 'img/analitics/chart.png' %}" alt=""></picture>
+
+																	<div style="width: 250px; margin: auto; height: 250px;">
+																	<canvas id="myBarChart_{{item.id}}"></canvas>
+																	</div>
+
+
+
 															</div>
 														</td>
 														<td>
@@ -4621,5 +4627,36 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 
 
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function() {
+        {% for item in post %}
+            var ctx = document.getElementById('myBarChart_{{item.id}}').getContext('2d');
+            var minus={{item.view}} - 200
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['', '', '', '', ''],
+                    datasets: [{
+                        label: '',
+                        data: [minus,{{item.view}}],
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue color
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            {% endfor %}
+        });
+    </script>
 
 {% endblock %}
