@@ -238,11 +238,13 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 								Реферальный баланс, полученый за привлечение пользователей, вы можете потратить на продление премиум-доступа либо вывести на qiwi-кошелек.
 							</div>
 						</div>
+						{% if item.is_premium == False %}
 						<div class="info-account__item info-account__item_text">
 							<p class="text">
-								Чтобы снять все ограничения - <a href="#" class="red">приобретите полный доступ </a>ко всем возможностями сервиса без ограничений.
+								Чтобы снять все ограничения - <a href="{% url 'plans' %}" class="red">приобретите полный доступ </a>ко всем возможностями сервиса без ограничений.
 							</p>
 						</div>
+						{% endif %}
 					</div>
 					<div class="settings-account account-mainscreen__item">
 						<h4 class="title">Настройки</h4>

@@ -61,7 +61,9 @@ def authenticate_user_with_session(request):
     if session_key:
         # Retrieve the session using the session key
         try:
+            print('hello')
             session = get_object_or_404(Session, session_key=session_key)
+            print('world')
         except:
             return redirect('main')
         session_data = session.get_decoded()
@@ -165,12 +167,28 @@ def telegram_auth(request):
             except Exception as e:
                 bot_auth.send_message(id, f"Error: {str(e)}")
         else:
-            # Handle non-profile connection messages
+
             try:
                 # Check if a user with this telegram_id already exists
                 profile = Profile.objects.filter(telegram_id=id).first()
                 if profile:
                     bot_auth.send_message(id, "Your Telegram account is already connected to an existing profile.")
+                    request.session['username'] = profile.telegram_id
+                    request.session.set_expiry(3600)  # Expires after 1 hour
+                    request.session.save()
+
+                    # Get the session key to send to the user
+                    session_key = request.session.session_key
+
+                    # Construct the URL with the session key
+                    url_with_session = f"https://127.0.0.1:8000/telegram/login/?session_key={session_key}"
+
+                    # Send the URL with the session key via the Telegram bot
+                    bot_auth.send_message(id, f"Visit this link to authenticate: {url_with_session}")
+
+
+
+
                 else:
                     # Create a new User and Profile if no telegram_id is found
                     user, created = User.objects.get_or_create(username=id)
