@@ -5,7 +5,7 @@ from Statron_new.config import TOKEN_NOTIFY
 
 
 #ngrok_url = 'https://stattron.ru/telegram_auth/'  # Replace with your NGROK URL
-ngrok_url = 'https://df7a-5-133-120-92.ngrok-free.app/notify/'
+ngrok_url = 'https://stattron.ru/notify/'
 
 bot = Bot(token=TOKEN_NOTIFY)
 dp = Dispatcher(bot)
