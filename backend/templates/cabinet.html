@@ -215,7 +215,7 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 											</div>
 											<div class="info-account__item-content">
 												<div class="label-black">Реф. баланс</div>
-												<div class="label-blue label-blue_s24">{{item.balance}} руб.</div>
+												<div class="label-blue label-blue_s24">{{item.balance}} $.</div>
 											</div>
 										</div>
 										<div class="info-account__head-list-item">
@@ -250,7 +250,11 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 						<h4 class="title">Настройки</h4>
 						<div class="settings-account__content">
 							<div class="settings-account__item">
-								<div class="label-black">Telegram:@{{item.telegram_bio }}</div>
+								<div class="label-black">Telegram:
+									{% if item.telegram_bio %}
+									@{{item.telegram_bio }}
+									{% endif %}
+								</div>
 								{% if item.telegram_id %}
 								{{ item.telegram_id }}
 								{% else %}
@@ -380,7 +384,7 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 													<td>
 															<div class="search-form__item">
 																<input type="text" id="link-gen" name="link-gen"
-																	value="https://stattron.me/r/{{item.code}}/"
+																	value="https://stattron.ru/r/{{item.code}}/"
 																	class="form__input">
 															</div>
 

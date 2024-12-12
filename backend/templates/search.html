@@ -12,7 +12,7 @@
 						<div class="search-form__column search-form__column_1">
 							<div class="search-form__item">
 								<label for="search-link" class="label-black">Link:</label>
-								<input type="text" id="search-link" name="chanel_link" placeholder="https://telemetr.me/channels/" class="form__input" value="{{ request.GET.chanel_link }}">
+								<input type="text" id="search-link" name="chanel_link" placeholder="https://stattron.ru/search/" class="form__input" value="{{ request.GET.chanel_link }}">
 							</div>
 							<div class="search-form__item">
 								<label for="search-name" class="label-black">Channel name:</label>
@@ -309,15 +309,16 @@
             </button>
             <div class="popup__inner">
                 <div class="tabs-navigation popup__filters">
-                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button">По дате
+                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button" data-tab="date">По дате
                     </button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По просмотрам</button>
+                    <button class="search-channels__num tabs-navigation__title" type="button" data-tab="view">По просмотрам</button>
                     <button class="search-channels__num tabs-navigation__title" type="button">По пересылкам</button>
                     <button class="search-channels__num tabs-navigation__title" type="button">По комментариям</button>
                 </div>
+
                 <div class="popup__list">
 					{% for post in item.post.all %}
-                    <div class="item-popup">
+                    <div class="item-popup" id="date">
                         <div class="item-popup__head">
                             <div class="item-popup__img">
                                 <picture>
@@ -382,7 +383,8 @@
 						{% endif %}
                     </div>
                    {% endfor %}
-                </div>
+
+
 
             </div>
         </div>
@@ -426,7 +428,7 @@
 						<div class="search-form__column search-form__column_1">
 							<div class="search-form__item">
 								<label for="search-link" class="label-black">Ссылка:</label>
-								<input type="text" id="search-link" name="chanel_link" placeholder="https://telemetr.me/channels/" class="form__input" value="{{ request.GET.chanel_link|safe }}">
+								<input type="text" id="search-link" name="chanel_link" placeholder="https://stattron.ru/search/" class="form__input" value="{{ request.GET.chanel_link|safe }}">
 							</div>
 							<div class="search-form__item">
 								<label for="search-name" class="label-black">Название канала:</label>
@@ -725,12 +727,12 @@
             </button>
             <div class="popup__inner">
                 <div class="tabs-navigation popup__filters">
-						<button class="search-channels__num tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)">По дате</button>
+						<button class="search-channels__num tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="date">По дате</button>
 						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По просмотрам</button>
 						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По пересылкам</button>
 						<button class="search-channels__num tabs-navigation__title" type="button" onclick="setActiveTab(this)">По комментариям</button>
 					</div>
-                <div class="popup__list">
+                <div class="popup__list" id="date" >
 					{% for post in item.post.all %}
                     <div class="item-popup">
                         <div class="item-popup__head">
@@ -1015,5 +1017,5 @@
 });
 </script>
 
-</script>
+
 {% endblock %}

@@ -4,7 +4,7 @@ import logging
 from Statron_new.config import TOKEN_AUTH
 
 #ngrok_url = 'https://stattron.ru/telegram_auth/'  # Replace with your NGROK URL
-ngrok_url = 'https://stattron.ru/telegram_auth/'
+ngrok_url = 'https://e183-5-133-120-92.ngrok-free.app/telegram_auth/'
 
 bot = Bot(token=TOKEN_AUTH)
 dp = Dispatcher(bot)

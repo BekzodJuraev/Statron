@@ -2108,11 +2108,7 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 									<img class="black" src="{% static 'img/analitics/tabs/3_black.svg' %}" alt="">
 									Динамика
 								</button>
-								<button type="button" class="tabs-navigation__title">
-									<img class="grey" src="{% static 'img/analitics/tabs/4_grey.svg' %}" alt="">
-									<img class="black" src="{% static 'img/analitics/tabs/4_black.svg' %}" alt="">
-									Аудитория
-								</button>
+
 								<button type="button" class="tabs-navigation__title">
 									<img class="grey" src="{% static 'img/analitics/tabs/5_grey.svg' %}" alt="">
 									<img class="black" src="{% static 'img/analitics/tabs/5_black.svg' %}" alt="">
@@ -3412,106 +3408,7 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 									</div>
 								</section>
 							</div>
-							<div class="analitics-tabs__body">
-								<div class="analitics-tabs__main main-analitics">
 
-									<div class="main-analitics__info">
-										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
-											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
-											<div class="main-analitics__degree">
-												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
-												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
-											</div>
-										</a>
-										<div class="main-analitics__content">
-											<h1 class="main-analitics__title title title_w500">
-												{{item.name}}
-												<picture><source srcset="{% static 'img/analitics/success.webp' %}" type="image/webp"><img src="{% static 'img/analitics/success.png' %}" alt=""></picture>
-												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
-											</h1>
-											<p class="text">
-												{{item.description}}
-											</p>
-										</div>
-									</div>
-									<div class="main-analitics__actions">
-										<div class="main-analitics__actions-top">
-											<button class="main-analitics__btn-wrap title title_s20" type="button">
-												<div class="main-analitics__btn">
-													<a href="{% url 'posts' %}?mention={{ item.name }}">
-													<img src="{% static 'img/analitics/search.svg' %}" alt="">
-													<span>Рекламные посты</span>
-													</a>
-												</div>
-											</button>
-											<div class="main-analitics__btn-wrap title title_s20">
-												<button class="main-analitics__btn" type="button">
-													<a href="{% url 'posts' %}?chanel={{ item.name }}">
-													<img src="{% static 'img/analitics/repost.svg' %}" alt="">
-													<span>Упоминания</span>
-													</a>
-												</button>
-												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
-													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
-													<img class="black" src="{% static 'img/icons/eye_black.svg' %}" alt="">
-												</button>
-											</div>
-											<div class="main-analitics__btn-wrap title title_s20">
-												<button class="main-analitics__btn" type="button">
-													<a href="{% url 'posts' %}">
-													<img src="{% static 'img/analitics/posts.svg' %}" alt="">
-													<span>Все посты</span>
-														</a>
-												</button>
-												<button class="main-analitics__btn-icon" title="Быстрый просмотр" type="button">
-													<img class="grey" src="{% static 'img/icons/eye.svg' %}" alt="">
-													<img class="black" src="{% static 'img/icons/eye_black.svg' %}" alt="">
-												</button>
-											</div>
-										</div>
-											{% if request.user.is_authenticated %}
-										{% if like %}
-										{% for item in like %}
-										<div>
-										{{item.node}}
-										</div>
-											{% endfor %}
-										{% else %}
-										<form action="{% url 'detail' item.pk %}" method="POST" class="main-analitics__form">
-											{% csrf_token %}
-											{{form.node}}
-											<button class="button button_no-bg" type="submit">Сохранить</button>
-										</form>
-
-										{% endif %}
-										{% endif %}
-									</div>
-								</div>
-
-								<section class="dynamic-charts dynamic-charts_column">
-									<div class="dynamic-analitics__dynamic">
-										<h2 class="title">Аналитика аудитории</h2>
-										<div class="dynamic-analitics__content">
-											<p class="text">
-												Этот канал еще не проводил аналитику активности его аудитории. Вы можете попросить администратора канала сделать это на странице https://telemetr.me/activity_cross/ и дать вам ссылку на отчет. Информация о самом инструменте и как трактовать данные - там же.
-											</p>
-										</div>
-									</div>
-									<div class="dynamic-analitics__dynamic">
-										<h2 class="title">Распределение аудитории</h2>
-										<div class="dynamic-analitics__content">
-											<div>
-												<p class="text">
-													Этот канал еще не проводил аналитику активности его аудитории. Мы не можем показать распределение полов.
-												</p>
-												<p class="text">
-													Вы можете попросить администратора канала сделать это на странице <a href="#" target="_blank" class="hhv-blue hhv-underline">https://telemetr.me/activity_cross/</a> и дать вам ссылку на отчет. Информация о самом инструменте и как трактовать данные - там же.
-												</p>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
 

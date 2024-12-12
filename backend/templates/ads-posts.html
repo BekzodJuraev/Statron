@@ -157,7 +157,7 @@
 					{% endfor %}
 
 					</div>
-
+					{% if not request.user.profile.is_premium %}
 					<div class="ad-posts__list ad-posts__list_center">
 						<div class="ad-posts__item">
 							<p class="text">
@@ -166,6 +166,8 @@
 							<a href="#" class="button">Оформить подписку</a>
 						</div>
 					</div>
+					{% endif %}
+
 				</div>
 
 			</section>
