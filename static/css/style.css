@@ -1,5 +1,10 @@
 @charset "UTF-8";
-
+.tab-content {
+    display: none; /* Hide all content by default */
+}
+.tab-content.active {
+    display: block; /* Show the active content */
+}
 * {
   padding: 0px;
   margin: 0px;
