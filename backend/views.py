@@ -134,7 +134,12 @@ def telegram_auth(request):
     if request.method == 'POST':
         json_data = json.loads(request.body.decode('utf-8'))
         id=json_data['message']['chat']['id']
-        nickname=json_data['message']['chat']['username']
+        nickname=None
+        try:
+            nickname = json_data['message']['chat']['username']
+
+        except:
+            pass
         first_name=json_data['message']['chat']['first_name']
         text=json_data['message']['text']
 
