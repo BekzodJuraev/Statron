@@ -254,7 +254,7 @@ def notification_freekassa(request):
             sub=Type_sub.objects.filter(id=order_id).first()
             Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
             if profile.recommended_by:
-                Commission.objects.create(profile=profile.recommended_by, amount=amount)
+                Commission.objects.create(code=profile.recommended_by, amount=amount)
 
 
             if profile.promo_code:
