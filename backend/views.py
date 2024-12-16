@@ -16,7 +16,7 @@ from django.db.models.functions import TruncHour
 from datetime import date, timedelta, datetime
 from .serializers import ChanelSerializer,LoginFormSerializer,RegistrationSerializer
 from rest_framework.views import APIView
-from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo,Payment,Subscribe,Type_sub,Discount
+from .models import Chanel,Profile,Add_chanel,Like,Posts,SubPerday,Subperhour,Mentions,Category_chanels,Chanel_img,Ref,Notify,Demo,Payment,Subscribe,Type_sub,Discount,Commission
 from django.http import JsonResponse
 from django.contrib.auth import update_session_auth_hash
 from rest_framework.response import Response
@@ -253,6 +253,10 @@ def notification_freekassa(request):
             profile=Profile.objects.filter(first_name=us_key).first()
             sub=Type_sub.objects.filter(id=order_id).first()
             Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
+            if profile.recommended_by:
+                Commission.objects.create(profile=profile.recommended_by, amount=amount)
+
+
             if profile.promo_code:
                 profile.promo_code = None
                 profile.save(update_fields=['promo_code'])
