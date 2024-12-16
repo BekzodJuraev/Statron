@@ -10,10 +10,7 @@ from django.core.exceptions import ValidationError
 import telegram
 from config import TOKEN_NOTIFY
 bot = telegram.Bot(TOKEN_NOTIFY)
-@receiver(post_save,sender=Profile)
-def create_balance(sender, instance, *args, **kwargs):
-    if instance.balance and instance.recommended_by:
-        Commission.objects.create(code=instance.recommended_by,amount=instance.balance)
+
 
 
 # @receiver(pre_save, sender=Payment)

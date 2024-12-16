@@ -2119,12 +2119,15 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 						<div data-tabs-body class="analitics-tabs__content">
 							<div class="analitics-tabs__body">
 								<div class="analitics-tabs__main main-analitics">
+
+
+
 									{% if rank.rank == 1 %}
-									<img class="main-analitics__medal" src="{% static 'img/medal_1.png' %}" alt="">
+									<img class="main-analitics__medal" src="{% static 'img/medal_1.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
 									{% elif rank.rank == 2 %}
-									<img class="main-analitics__medal" src="{% static 'img/medal_2.png' %}" alt="">
+									<img class="main-analitics__medal" src="{% static 'img/medal_2.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
 									{% elif rank.rank == 3 %}
-									<img class="main-analitics__medal" src="{% static 'img/medal_3.png' %}" alt="">
+									<img class="main-analitics__medal" src="{% static 'img/medal_3.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
 									{% endif %}
 
 									<div class="main-analitics__info">
@@ -2585,15 +2588,23 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 								</div>
 							</div>
 							<div class="analitics-tabs__body">
-								<div class="analitics-tabs__main main-analitics">
+									<div class="analitics-tabs__main main-analitics">
+
+									{% if rank.rank == 1 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_1.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 2 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_2.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 3 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_3.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% endif %}
 
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
-											<div class="main-analitics__degree">
+											<!-- <div class="main-analitics__degree">
 												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
 												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
-											</div>
+											</div> -->
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -2892,15 +2903,25 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 
 							</div>
 							<div class="analitics-tabs__body">
-								<div class="analitics-tabs__main main-analitics">
+									<div class="analitics-tabs__main main-analitics">
+
+
+
+									{% if rank.rank == 1 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_1.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 2 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_2.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 3 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_3.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% endif %}
 
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
-											<div class="main-analitics__degree">
+											<!-- <div class="main-analitics__degree">
 												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
 												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
-											</div>
+											</div> -->
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">
@@ -3416,15 +3437,25 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 							</div>
 
 							<div class="analitics-tabs__body">
-								<div class="analitics-tabs__main main-analitics">
+									<div class="analitics-tabs__main main-analitics">
+
+
+
+									{% if rank.rank == 1 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_1.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 2 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_2.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% elif rank.rank == 3 %}
+									<img class="main-analitics__medal" src="{% static 'img/medal_3.png' %}" alt="" data-popup="#popup-rank{{item.pk}}">
+									{% endif %}
 
 									<div class="main-analitics__info">
 										<a href="{{item.chanel_link}}" class="main-analitics__avatar">
 											<picture><source srcset="/{{item.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.pictures}}" alt=""></picture>
-											<div class="main-analitics__degree">
+											<!-- <div class="main-analitics__degree">
 												<img class="main-analitics__mark" src="{% static 'img/analitics/mark.png' %}" alt="">
 												<span class="main-analitics__degree-number" data-popup="#popup-rank{{item.pk}}">{{rank.rank }}</span>
-											</div>
+											</div> -->
 										</a>
 										<div class="main-analitics__content">
 											<h1 class="main-analitics__title title title_w500">

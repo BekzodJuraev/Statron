@@ -430,7 +430,9 @@ class Commission(models.Model):
     def save(self, *args, **kwargs):
         # Only apply the commission rate when the instance is first created
         if self._state.adding:  # Check if it's a new instance
-            self.amount = self.amount * Decimal('0.1')  # Use Decimal instead of float
+            self.amount = self.amount * Decimal('0.1')
+            self.code.profile.balance = F('balance') + self.amount
+            self.code.profile.save(update_fields=['balance'])
 
         super().save(*args, **kwargs)
 
