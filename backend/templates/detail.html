@@ -2467,7 +2467,11 @@ To see the hourly dynamics of post coverage, click on the number of views of the
 												</div>
 												<div class="item-subs-analitics__row-inline-item">
 													<div class="label-black label-black_s20">За последние 24ч</div>
-													<div class="label-blue label-blue_s20">{{item.daily_views}}</div>
+													{% if today_view %}
+													<div class="label-blue label-blue_s20">{{today_view}}</div>
+													{% else %}
+													<div class="label-blue label-blue_s20">0</div>
+													{% endif %}
 												</div>
 											</div>
 										</div>

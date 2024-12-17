@@ -250,7 +250,7 @@ def notification_freekassa(request):
 
 
         if calculated_signature == signature:
-            profile=Profile.objects.filter(first_name=us_key).first()
+            profile=Profile.objects.filter(username__username=us_key).first()
             sub=Type_sub.objects.filter(id=order_id).first()
             Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
             if profile.recommended_by:
@@ -962,7 +962,7 @@ class DetailChanel(LoginRequiredMixin,DetailView):
             context['day'] = self.object.daily_subscribers
             context['week'] = self.object.weekly_subscribers
             context['month'] = self.object.weekly_monthy
-
+            context['today_view']=Posts.objects.filter(chanel=self.object,date__gte=timezone.now()-timedelta(hours=24)).aggregate(total_views=Sum('view'))['total_views']
             return context
 
         except Exception as e:
