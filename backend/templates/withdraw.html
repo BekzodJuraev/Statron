@@ -7,50 +7,53 @@
 <main class="page">
 			<section class="payment">
 				<div class="payment-container">
-					<h3 class="payment__title">Вывод денежных средств</h3>
-					<form action="#" class="payment-form form" method="POST">
+					<h3 class="payment__title">Withdrawal of funds</h3>
+					<form action="" class="payment-form form" method="POST">
+						{% csrf_token %}
 						<div class="payment__service">
 							<label for="payment-iokassa" class="payment__service-box">
 								<input type="checkbox" name="payment-iokassa" id="payment-iokassa"
 									class="payment__service-checkbox">
-								<img src="img/payment/iokassa.jpg" alt="" class="payment__service-image">
+								<img src="{% static 'img/payment/iokassa.jpg' %}" alt="" class="payment__service-image">
 							</label>
 							<label for="payment-cryptomus" class="payment__service-box">
 								<input type="checkbox" name="payment-cryptomus" id="payment-cryptomus"
 									class="payment__service-checkbox">
-								<img src="img/payment/cryptomus.jpg" alt="" class="payment__service-image">
+								<img src="{% static 'img/fk.png' %}" alt="" class="payment__service-image">
 							</label>
-							<label for="payment-wayforpay" class="payment__service-box">
-								<input type="checkbox" name="payment-wayforpay" id="payment-wayforpay"
-									class="payment__service-checkbox">
-								<img src="img/payment/wayforpay.jpg" alt="" class="payment__service-image">
-							</label>
+
 						</div>
 						<div class="payment-form__item">
-							<label for="wallet" class="label-black">Введите номер кошелька</label>
+							<label for="wallet" class="label-black">Enter the wallet number</label>
 							<input type="text" id="wallet" name="wallet" placeholder="Введите номер кошелька"
 								class="form__input">
 						</div>
 						<div class="payment-form__item amount__input-box">
-							<label for="amount" class="label-black">Введите сумму вывода</label>
-							<input type="text" id="amount" name="amount" placeholder="3651" class="form__input" value="{{ request.GET.money|default:'' }}">
+							<label for="amount" class="label-black">Enter the withdrawal amount</label>
+								<input type="text" id="amount" name="amount" placeholder="3651" class="form__input" value="{{ request.GET.money|default:'' }}">
 						</div>
 						<div class="payment-form__item">
-							<label for="password-for-payment" class="label-black">Введите пароль от уч. записи</label>
+							<label for="password-for-payment" class="label-black">Enter the account password</label>
 							<input type="password" id="password-for-payment" name="password-for-payment"
 								placeholder="26484..." class="form__input">
 						</div>
 						<div class="payment-form__item">
-							<label for="password-for-payment-repeat" class="label-black">Повторите пароль от уч.
-								записи</label>
+							<label for="password-for-payment-repeat" class="label-black">Repeat the account password</label>
 							<input type="password" id="password-for-payment-repeat" name="password-for-payment-repeat"
 								placeholder="26484..." class="form__input">
 						</div>
 						<div class="payment__service-btns">
-							<button class="button button_no-bg" type="button">Отменить</button>
-							<button class="button" type="submit">Вывести</button>
+							<button class="button button_no-bg" type="button">Cancel</button>
+							<button class="button" type="submit">Withdraw</button>
 						</div>
 					</form>
+					{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
 				</div>
 			</section>
 		</main>

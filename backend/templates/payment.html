@@ -8,31 +8,46 @@
 			<section class="payment-option">
 				<div class="payment-option__container">
 					<h2 class="payment__title">
-						Выберите способ оплаты
+						Select a payment method
 					</h2>
 					<div class="payment-option-boxes">
 						<a href="#" class="payment-option-box">
-							<img class="payment-option-image" src="img/payment/iokassa.jpg" alt="">
+							<img class="payment-option-image" src="{% static 'img/payment/iokassa.jpg' %}" alt="">
 						</a>
-						<a href="#" class="payment-option-box">
-							<img class="payment-option-image" src="img/payment/cryptomus.jpg" alt="">
+						<a href="{{freekassa_url}}" class="payment-option-box">
+							<img class="payment-option-image" src="{% static 'img/fk.png' %}" alt="">
 						</a>
-						<a href="#" class="payment-option-box">
-							<img class="payment-option-image" src="img/payment/wayforpay.jpg" alt="">
-						</a>
+
 					</div>
 					<div class="payment-option__promobox">
 						<h3 class="payment-option__promoTitle">
-							Если у вас есть промо-код, то введите его ниже !
+							If you have a promo code, enter it below!
 						</h3>
-						<form action="" class="payment-option__promoForm">
+						<form method="POST" action="" class="payment-option__promoForm">
+							{% csrf_token %}
 							<input type="text" id="promo" name="promo" placeholder="АА5789А564" class="form__input payment-option__promoInput">
-							<button class="button payment-option__promoBtn" type="submit">Активировать</button>
+							<button class="button payment-option__promoBtn" type="submit">Activate</button>
 						</form>
+
+
+
 						<h4 class="payment-option__promoText">
-							Вы получаете бонус +30% к пополнению
+								{% if messages %}
+
+					{% for message in messages %}
+
+							{{ message }}
+
+					{% endfor %}
+						{% endif %}
+							{% if request.user.profile.promo_code %}
+							<br>Вы получаете бонус +{{request.user.profile.promo_code.discount_percentage}}% к пополнению</br>
+							{% endif %}
 						</h4>
+
 					</div>
+
+
 				</div>
 			</section>
 		</main>

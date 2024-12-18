@@ -32,52 +32,40 @@
 							</div>
 						</button>
 						<div class="dropdown-header__list dropdown-header__list_account">
-							<!-- <a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-						<span></span>
-<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-					</a>
-					<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-						<span>Регистрация</span>
-<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-					</a> -->
+
 							<a href="{% url 'search' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/1.svg' %}" alt="">
 									Channel directory
 								</span>
-
 							</a>
-							<a href="{% url 'posts' %}" id="toggleButton" class="dropdown-header__item">
+
+							<a href="#" class="dropdown-header__item item-type-1">
 								<span>
 									<img src="{% static 'img/header/2.svg' %}" alt="">
 									Channel catalog
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<ul id="toggleLi" style="display: none;">
-								<li><a href="{% url 'posts_ads' %}"><span>
 
-									Sponsored posts
-								</span></a>
-									</li>
-								<li><a href="{% url 'like' %}"><span>
-
-								Promotional posts
-								</span></a></li>
+							<ul class="dropdown-header__sublist">
 								<li>
-								<a href="{% url 'posts' %}"><span>
+									<a class="dropdown-header__sublist-link" href="{% url 'posts_ads' %}">Sponsored posts</a>
+								</li>
+								<li>
+									<a class="dropdown-header__sublist-link" href="{% url 'like' %}">Promotional posts</a>
+								</li>
+								<li>
+									<a class="dropdown-header__sublist-link" href="{% url 'posts' %}">All posts</a>
+								</li>
+							</ul>
 
-								All posts
-								</span></a></li>
-
-								</ul>
-							<a href="{% url 'tracking' %}" class="dropdown-header__item">
+								<a href="{% url 'tracking' %}" class="dropdown-header__item">
 								<span>
 									<img src="{% static 'img/header/3.svg' %}" alt="">
 									Post tracking
 								</span>
 							</a>
-
 
 
 							<a href="{% url 'create' %}" class="dropdown-header__item">
@@ -89,7 +77,10 @@
 
 
 						</div>
+
+
 					</div>
+					{% if not user.profile.is_premium %}
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_tablet-dn">
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
 							<div class="dropdown-header__btn dropdown-header__btn_desc">
@@ -101,61 +92,22 @@
 							</div>
 						</button>
 						<div class="dropdown-header__list">
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-								<span></span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-								<span>Регистрация</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/1.svg" alt="">
-									Каталог каналов
-								</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/2.svg" alt="">
-									Поиск постов
-								</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/3.svg" alt="">
-									Отслеживание постов
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/4.svg" alt="">
-									Мои каналы
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/5.svg" alt="">
-									Анализ аудитории
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/6.svg" alt="">
-									Telegraph-статьи
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/7.svg" alt="">
-									Детальная статистика
-								</span>
-							</a>
-
+							<div class="subscribe-window">
+								<h2 class="subscribe-window__title">Free Mode</h2>
+								<p class="subscribe-window__text">
+									Your functionality is limited!
+								</p>
+								<p class="subscribe-window__text">
+									To improve your account capabilities, purchase a subscription to the service.
+								</p>
+								<a href="{% url 'plans' %}" class="button subscribe-window__btn">
+									Subscribe
+								</a>
+							</div>
 						</div>
 					</div>
+					{% endif %}
+
 					<div data-da=".header__container,767.98" data-dropdown class="header__dropdown dropdown-header dropdown-header_tablet-dn">
 						<button data-dropdown-btn class="dropdown-header__btn_wrap" type="button">
 							<div class="dropdown-header__btn dropdown-header__btn_desc">
@@ -166,59 +118,24 @@
 								<span></span>
 							</div>
 						</button>
-						<div class="dropdown-header__list">
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-								<span></span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
-								<span>Регистрация</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
-							</a>
-							<a href="#" class="dropdown-header__item">
+
+						<div class="dropdown-header__list dropdown-header__list_account">
+							<a href="{% url 'updatecabinet' user.profile.pk %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
-									<img src="img/header/1.svg" alt="">
-									Каталог каналов
+									<img src="{% static 'img/header-icons/1.svg' %}" alt="">
+									Profile
 								</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item">
+							<a href="{% url 'withdraw' %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
-									<img src="img/header/2.svg" alt="">
-									Поиск постов
+									<img src="{% static 'img/header-icons/2.svg' %}" alt="">
+									Referral balance: {{user.profile.balance}} $.
 								</span>
-								<img src="img/icons/arrow-down.svg" class="arrow" alt="">
+								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/3.svg" alt="">
-									Отслеживание постов
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/4.svg" alt="">
-									Мои каналы
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/5.svg" alt="">
-									Анализ аудитории
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/6.svg" alt="">
-									Telegraph-статьи
-								</span>
-							</a>
-							<a href="#" class="dropdown-header__item">
-								<span>
-									<img src="img/header/7.svg" alt="">
-									Детальная статистика
-								</span>
-							</a>
+
+
 
 
 						</div>
@@ -272,7 +189,11 @@
 								</a>
 								<div class="dropdown-header__head-content">
 									<div class="dropdown-header__head-email">{{user.email}}</div>
+									{% if user.profile.is_premium %}
+									<div class="dropdown-header__head-status label-green">Premium Access</div>
+									{% else %}
 									<div class="dropdown-header__head-status label-red">Demo access</div>
+									{% endif %}
 									<!-- <div class="dropdown-header__head-status label-green">Премиум-доступ</div> -->
 								</div>
 							</div>
@@ -283,10 +204,10 @@
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+							<a href="{% url 'withdraw' %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/2.svg' %}" alt="">
-									Referral balance: 0 руб.
+									Referral balance: {{user.profile.balance}} $.
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
@@ -297,13 +218,15 @@
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
-							<a href="#" class="dropdown-header__item dropdown-header__item_icon-right">
+							{% if not user.profile.is_premium %}
+							<a href="{% url 'plans' %}" class="dropdown-header__item dropdown-header__item_icon-right">
 								<span>
 									<img src="{% static 'img/header-icons/4.svg' %}" alt="">
 									<span class="color-red">Access renewal</span>
 								</span>
 								<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
 							</a>
+							{% endif %}
 							<div class="dropdown-header__bottom">
 
 								<a href="{% url 'logout' %}"><button class="button" type="button">Log out</button></a>

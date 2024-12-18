@@ -1,6 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="auth-form">
+				<div class="auth-form__container">
+					<form action="#" method="post" class="auth-form__form">
+						<h1 class="title title_center">Registration</h1>
+						<div class="auth-form__item">
+							<input type="text" name="username" placeholder="Your username" class="auth-form__input">
+						</div>
+                        <div class="auth-form__item">
+							<input type="text" name="email" placeholder="Your email" class="auth-form__input">
+						</div>
+						<div class="auth-form__item">
+							<input name="phone_number" id="phone"  value="+7" class="auth-form__input">
+
+							</a>
+						</div>
+						<div class="auth-form__item">
+							<input type="password" name="password" placeholder="Password" class="auth-form__input">
+
+							</a>
+						</div>
+
+							<div class="error-message"></div>
+						<div class="auth-form__form-bottom">
+							<button class="button" type="submit">Complete registration</button>
+							<div class="auth-form__text">
+								Already have an account? <a href="{% url 'login_site' %}" class="hhv-green">Log in</a>
+							</div>
+						</div>
+					</form>
+					<div class="auth-form__bottom">
+						<div class="label-white label-white_s16 label-white_fw700">or continue with</div>
+						<div class="place-ad__btns">
+							<a href="https://t.me/Stattron_auth_bot?start=login_123">
+							<button class="button button_sm button_no-bg" type="button">
+								<picture><source srcset="{% static 'img/icons/tg.webp' %}" type="image/webp"><img src="{% static 'img/icons/tg.png' %}" alt=""></picture>
+								Telegram
+							</button>
+								</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+{% else %}
 <main class="page">
 			<section class="auth-form">
 				<div class="auth-form__container">
@@ -45,6 +93,7 @@
 				</div>
 			</section>
 		</main>
+{% endif %}
 <script>
  		$(document).ready(function () {
             $('form').submit(function (e) {

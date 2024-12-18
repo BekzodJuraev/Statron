@@ -14,7 +14,8 @@
 						<div class="plans__box-blue">
 							<div class="plans__box-flex">
 								<h3 class="plans__box-title">Premium</h3>
-								<a href="#" class="plans__box-btn">
+								{% if request.user.profile.is_onedollar %}
+								<a href="{% url 'payment' %}?price=1.00" class="plans__box-btn">
 									<span class="just_price">
 										Первый месяц 1$
 									</span>
@@ -22,9 +23,10 @@
 										20$
 									</span>
 								</a>
+								{% endif %}
 							</div>
 							<div class="plans__box-row">
-								<img src="img/icons/mingcute_switch-fill.png" alt="" class="plans__box-image">
+								<img src="{% static 'img/icons/mingcute_switch-fill.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
 										Получите подробную информацию о каждом канале
@@ -37,7 +39,7 @@
 								</div>
 							</div>
 							<div class="plans__box-row">
-								<img src="img/icons/ph_pulse-fill.png" alt="" class="plans__box-image">
+								<img src="{% static 'img/icons/ph_pulse-fill.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
 										Получите подробную информацию о каждом канале
@@ -50,7 +52,7 @@
 								</div>
 							</div>
 							<div class="plans__box-row">
-								<img src="img/icons/solar_chart.png" alt="" class="plans__box-image">
+								<img src="{% static 'img/icons/solar_chart.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
 										Получите подробную информацию о каждом канале
@@ -62,6 +64,7 @@
 									</p>
 								</div>
 							</div>
+							{% if request.user.profile.is_onedollar %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">1 месяц</h4>
@@ -69,42 +72,67 @@
 										Стоимость увеличится до 20$ со следующего месяца
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=1.00&order_id=2">
 								<button class="plans__box-monthBtn">
 									Подключить за 1$
 								</button>
+								</a>
 							</div>
+							{% else %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">1 месяц</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
+
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=20.00&order_id=6">
 								<button class="plans__box-monthBtn">
-									Подключить за 51$
+									Подключить за 20$
 								</button>
+								</a>
 							</div>
+							{% endif %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">3 месяца</h4>
 									<p class="plans__box-monthDesc">
 										Скидка 15% <span>60$</span>
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=51.00&order_id=3">
 								<button class="plans__box-monthBtn">
 									Подключить за 51$
 								</button>
+								</a>
+							</div>
+
+							<div class="plans__box-month-plans">
+								<div class="small-w">
+
+									<h4 class="plans__box-monthTitle">6 месяцев</h4>
+									<p class="plans__box-monthDesc">
+										Скидка 20% <span>120$</span>
+									</p>
+								</div>
+								<a href="{% url 'payment' %}?price=96.00&order_id=4">
+								<button class="plans__box-monthBtn">
+									Подключить за 96$
+								</button>
+								</a>
 							</div>
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">12 месяцев</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
+										Скидка 25% <span>240$</span>
 									</p>
 								</div>
+								<a href="{% url 'payment' %}?price=180.00&order_id=5">
 								<button class="plans__box-monthBtn">
-									Подключить за 51$
+									Подключить за 180$
 								</button>
+								</a>
 							</div>
 						</div>
 						<div class="plans__box-white">
@@ -116,7 +144,7 @@
 								В этой подписке ограниченный функционал, поэтому мы рекомендуем вам преобрести
 								<strong>PREMIUM</strong> подписку
 							</p>
-							<a href="#" class="plans__box-btn-noBg">Бесплатно</a>
+
 						</div>
 					</div>
 				</div>

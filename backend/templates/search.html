@@ -12,7 +12,7 @@
 						<div class="search-form__column search-form__column_1">
 							<div class="search-form__item">
 								<label for="search-link" class="label-black">Link:</label>
-								<input type="text" id="search-link" name="chanel_link" placeholder="https://stattron.ru/search/" class="form__input" value="{{ request.GET.chanel_link }}">
+								<input type="text" id="search-link" name="chanel_link" placeholder="https://stattron.ru/search/" class="form__input" value="{{ request.GET.chanel_link|safe }}">
 							</div>
 							<div class="search-form__item">
 								<label for="search-name" class="label-black">Channel name:</label>
@@ -86,7 +86,7 @@
 							</div>
 						</div>
 						<div data-da=".search-form__column_2,992.98" class="search-form__column search-form__column_btn">
-							<button class="button" type="submit">Discover Channels</button>
+							<button class="button" type="submit">DiscoverChannels</button>
 						</div>
 					</form>
 				</div>
@@ -113,7 +113,7 @@
 
 
 							<div class="search-channels__head-text">
-								 <span>{{lists}}</span> channels found
+								channels <span>{{lists}}</span>  found
 							</div>
 						</div>
 					</div>
@@ -138,25 +138,22 @@
 												{% if request.GET.sub == "yesterday" or request.GET.sub == "weekly" or request.GET.sub == "monthly" %}
    											 <a href="{% url 'search' %}" class="dropdown-header-lang__item">за сегодня</a>
 													{% endif %}
-												<a href="?sub=yesterday" class="dropdown-header-lang__item">за вчера</a>
-												<a href="?sub=weekly" class="dropdown-header-lang__item">за неделю</a>
-												<a href="?sub=monthly" class="dropdown-header-lang__item">за месяц</a>
+												<a href="?sub=yesterday" class="dropdown-header-lang__item">yesterday</a>
+												<a href="?sub=weekly" class="dropdown-header-lang__item">weekly</a>
+												<a href="?sub=monthly" class="dropdown-header-lang__item">monthly</a>
 
 
 											</div>
 										</div>
 									</th>
 									<th scope="col">
-										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
-											<button data-dropdown-btn class="dropdown-header__btn" type="button">
+										<div data-dropdown class="label-black">
+											<div data-dropdown-btn class="dropdown-header__btn" type="">
 												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
-												<span>Per post / yesterday</span>
-												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
-											</button>
-											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
-												<a href="#" class="dropdown-header-lang__item">Per post / yesterday</a>
+												<span>Per post/yesterday</span>
 
 											</div>
+
 										</div>
 									</th>
 									<th>
@@ -169,8 +166,6 @@
 							</thead>
 							<tbody>
 							{% for item in object_list  %}
-
-
 
 
 
@@ -249,6 +244,7 @@
 
 
 
+
                 			{% endfor %}
 
 							</tbody>
@@ -308,17 +304,16 @@
                 <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
             </button>
             <div class="popup__inner">
-                <div class="tabs-navigation popup__filters">
-                    <button class="search-channels__num tabs-navigation__title _tab-active" type="button" data-tab="date">По дате
-                    </button>
-                    <button class="search-channels__num tabs-navigation__title" type="button" data-tab="view">По просмотрам</button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По пересылкам</button>
-                    <button class="search-channels__num tabs-navigation__title" type="button">По комментариям</button>
-                </div>
-
-                <div class="popup__list">
-					{% for post in item.post.all %}
-                    <div class="item-popup" id="date">
+					   <div class="tabs-navigation popup__filters">
+			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.pk}}">По дате</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.pk}}">По просмотрам</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.pk}}">По пересылкам</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-comments{{item.pk}}">По комментариям</button>
+		</div>
+				<div class="tab-content" id="tab-date{{item.pk}}" style="display: block;">
+                <div class="popup__list" >
+					  {% for post in item.post.all|dictsortreversed:"date" %}
+                    <div class="item-popup">
                         <div class="item-popup__head">
                             <div class="item-popup__img">
                                 <picture>
@@ -383,7 +378,218 @@
 						{% endif %}
                     </div>
                    {% endfor %}
+                </div>
+				</div>
+				<div class="tab-content" id="tab-views{{item.pk}}" style="display: none;">
+                <div class="popup__list" >
+					  {% for post in item.post.all|dictsortreversed:"view" %}
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="/{{item.pictures}}" type="image/webp">
+                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">{{item.name}}</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+										{{item.subscribers}}
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{post.view}}
+                                    </div>
+                                </div>
+                            </div>
+							{% if post.mention %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.name }}">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                </a>
 
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+                            </div>
+							{% endif %}
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+									{{post.text}}
+                                </p>
+
+                            </div>
+                        </div>
+                        {% if post.media == 'photo' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+                            Изображение
+                        </button>
+						{% endif %}
+						{% if post.media == 'video' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Видео
+                        </button>
+						{% endif %}
+						{% if post.media == 'animation' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Гифка
+                        </button>
+						{% endif %}
+                    </div>
+                   {% endfor %}
+                </div>
+				</div>
+				<div class="tab-content" id="tab-forwards{{item.pk}}" style="display: none;">
+                <div class="popup__list" >
+					  {% for post in item.post.all|dictsortreversed:"forwards_count" %}
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="/{{item.pictures}}" type="image/webp">
+                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">{{item.name}}</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+										{{item.subscribers}}
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{post.view}}
+                                    </div>
+                                </div>
+                            </div>
+							{% if post.mention %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.name }}">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+                            </div>
+							{% endif %}
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+									{{post.text}}
+                                </p>
+
+                            </div>
+                        </div>
+                        {% if post.media == 'photo' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+                            Изображение
+                        </button>
+						{% endif %}
+						{% if post.media == 'video' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Видео
+                        </button>
+						{% endif %}
+						{% if post.media == 'animation' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Гифка
+                        </button>
+						{% endif %}
+                    </div>
+                   {% endfor %}
+                </div>
+				</div>
+				<div class="tab-content" id="tab-comments{{item.pk}}" style="display: none;">
+                <div class="popup__list" >
+					  {% for post in item.post.all|dictsort:"date" %}
+                    <div class="item-popup">
+                        <div class="item-popup__head">
+                            <div class="item-popup__img">
+                                <picture>
+                                    <source srcset="/{{item.pictures}}" type="image/webp">
+                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
+                            </div>
+                            <div class="item-popup__content">
+                                <div class="label_black">{{item.name}}</div>
+                                <div class="item-mainscreen__info">
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+										{{item.subscribers}}
+                                    </div>
+                                    <div class="channel-count item-mainscreen__count label-grey">
+                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
+										{{post.view}}
+                                    </div>
+                                </div>
+                            </div>
+							{% if post.mention %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.name }}">
+                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+                            </div>
+							{% endif %}
+                        </div>
+                        <div class="item-popup__content">
+                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
+                            <div class="item-popup__text">
+                                <p class="text text_fw600">
+									{{post.text}}
+                                </p>
+
+                            </div>
+                        </div>
+                        {% if post.media == 'photo' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+                            Изображение
+                        </button>
+						{% endif %}
+						{% if post.media == 'video' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Видео
+                        </button>
+						{% endif %}
+						{% if post.media == 'animation' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Гифка
+                        </button>
+						{% endif %}
+                    </div>
+                   {% endfor %}
+                </div>
+				</div>
 
 
             </div>
@@ -392,33 +598,129 @@
 </div>
 {% endfor %}
 {% for item in object_list %}
-<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup ">
-    <div class="popup__wrapper">
-        <div class="popup__content">
-            <button data-close type="button" class="popup__close">
-                <img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
-            </button>
+<div id="popup-description{{item.pk}}" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close">
+					<img class="img-fluid" src="{% static 'img/icons/exit.svg' %}" alt="">
+				</button>
+				<div class="popup__inner">
+					<div class="popup__list">
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+							<picture>
+    <source srcset="/{{ item.pictures }}" type="image/webp">
+    <img class="img-fluid" src="/{{ item.pictures }}" alt="" width="100" height="100" style="border-radius: 50%;">
+</picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">{{item.name}}</div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+											{{item.views}}
+										</div>
+									</div>
+								</div>
+								<p class="item-popup__degree"></p>
+							</div>
+						</div>
+						<div class="item-popup">
+							<div class="item-popup__content">
+								<div class="item-popup__channel-text">
+									<p class="text text_fw600">
+										Описание канала:
+									</p>
+									<p class="text">
+										{{item.description}}
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="item-popup__channel-info">
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">Подписчики</p>
+								<h5 class="item-popup__channel-infoData">{{item.subscribers}}</h5>
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">Сегодня</p>
+								{% if item.daily_subscribers > 0 %}
+								<h5 class="item-popup__channel-infoData">+{{item.daily_subscribers}}</h5>
+								{% else %}
+								<h5 class="item-popup__channel-infoData">{{item.daily_subscribers}}</h5>
+								{% endif %}
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">На пост/вчера</p>
+								<h5 class="item-popup__channel-infoData">{{item.yesterday_views}}</h5>
+							</div>
+							<div class="item-popup__channel-infoBox">
+								<p class="item-popup__channel-infoText">ER</p>
+								<h5 class="item-popup__channel-infoData">{{item.er|floatformat:2 }}%</h5>
+							</div>
+						</div>
+						<div class="item-popup">
+							<div data-tabs class="charts-tabs">
+								<div class="tabs-head">
+									<h4 class="channels-tabs__title title">Охват публикаций за 24ч / число подписчиков
+									</h4>
+									<nav data-tabs-titles class="tabs-navigation">
+										<button type="button" class="tabs-navigation__title _tab-active">График</button>
+										<button type="button" class="tabs-navigation__title">Таблица</button>
+									</nav>
+								</div>
+								<div data-tabs-body class="charts-tabs__content">
+									<div class="charts-tabs__body">
+										<div class="charts-tabs__chart">
+											<canvas id="chart_{{item.pk}}"></canvas>
+										</div>
+									</div>
+									<div class="charts-tabs__body">
+										<div class="chars-table__wrap">
+											<table
+												class="table chars-table search-channels__table analitics-tabs__table">
+												<thead>
+													<tr>
+														<th scope="col">
+															<div class="label-black">День</div>
+														</th>
+														<th scope="col">
+															<div class="label-black">Подписчиков</div>
+														</th>
+														<th>
+															<div class="label-black">Охват за 24ч</div>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+												{% for i in item.subperday.all %}
+													<tr>
+														<td scope="row">
+															<div class="label-black label-black_s20">{{ i.created_at|date:"Y-m-d" }}</div>
+														</td>
+														<td>
+															<div class="label-blue label-blue_s20">{{i.subperday}}</div>
+														</td>
+														<td>
+															<div class="label-green label-green_s20">{{i.viewsperday}}</div>
+														</td>
+													</tr>
+												{% endfor %}
 
-                <div class="popup__list">
-                    <div class="item-popup">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                        <div class="item-popup__content">
-                            <div class="item-popup__text">
-                                <p class="text">
-                                    {{item.description}}
-                                </p>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
 {% endfor %}
 {% else %}
 <main class="page">
@@ -563,7 +865,15 @@
 										</div>
 									</th>
 									<th scope="col">
-										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
+										<div data-dropdown class="label-black">
+											<div data-dropdown-btn class="dropdown-header__btn" type="">
+												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
+												<span>На пост/вчера</span>
+
+											</div>
+
+										</div>
+										 <!-- !<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
 											<button data-dropdown-btn class="dropdown-header__btn" type="button">
 												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
 												<span>На пост/вчера</span>
@@ -573,7 +883,7 @@
 												<a href="#" class="dropdown-header-lang__item">На пост/вчера 1</a>
 
 											</div>
-										</div>
+										</div> -->
 									</th>
 									<th>
 										<div class="label-black">ER</div>
@@ -586,8 +896,7 @@
 							<tbody>
 							{% for item in object_list  %}
 
-							{% with last_cost_format=item.add_chanel.cost_formats.last %}
-							{% with er=item.subscribers|div:item.views|mul:100 %}
+
 
 
 								<tr>
@@ -651,7 +960,7 @@
 										<div class="label-blue label-blue_s24">{{item.yesterday_views}}</div>
 									</td>
 									<td>
-										<div class="label-blue label-blue_s24">{{er|floatformat:2 }}%</div>
+										<div class="label-blue label-blue_s24">{{item.er|floatformat:2 }}%</div>
 									</td>
 									<td>
 
@@ -662,8 +971,7 @@
 										</div>
 									</td>
 								</tr>
-							{% endwith %}
-                			{% endwith %}
+
 
 
 

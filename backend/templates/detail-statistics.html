@@ -1,6 +1,96 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<div class="content-block__content">
+						<p class="text">
+							This tool allows you to add statistics to the analytics of your channel about the exact number of <span class="text_fw500">subscribed and unsubscribed</span> users by hour, the distribution of the audience <span class="text_fw500">by language</span> and other new internal statistics from TG.
+						</p>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Step 1. Adding a bot</h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<div>
+								<p class="text">
+									You need to add our bot <a href="https://t.me/Tgnative_bot" target="_blank" class="hhv-blue hhv-underline">https://t.me/Tgnative_bot</a> to the administrators of your channel and give the minimum rights <span class="text_fw500">to add administrators - Add admins.</span>
+								</p>
+								<p class="text">
+									This is a necessary condition for obtaining these statistics.
+								</p>
+							</div>
+							<div>
+								<p class="text">
+						If, in addition to hourly detailed subscriptions and unsubscriptions, you also want to see data similar to the internal statistics of the channel from TG (audience language, % of notifications, forwarding posts), the bot needs additional rights to "Publish posts". This is a feature of the work of TG itself, of course, our bot will not publish anything.								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Step 2. Adding a Channe</h2>
+					<div class="content-block__content content-block__content_pl-big content-block__content_big">
+						<div class="content-block__text-wrap">
+							<p class="text">
+								Enter the link/username to connect detailed statistics
+							</p>
+						</div>
+					</div>
+					<div class="detail-statistics-form">
+						<form action="" method="POST" class="detail-statistics-form__form">
+                            {% csrf_token %}
+
+                            {{form.chanel_link}}
+
+
+							<button class="button" type="submit">Add</button>
+						</form>
+									 {% for message in messages %}
+					<div class="message" style="color: {% if message.tags == 'success' %} green {% else %} red {% endif %};">
+						{{ message }}
+					</div>
+				{% endfor %}
+
+
+								{% if form.non_field_errors %}
+						<div class="error">
+							{% for error in form.non_field_errors %}
+
+								<p style="color:red">{{error}}</p>
+							{% endfor %}
+						</div>
+					{% endif %}
+
+					</div>
+				</div>
+			</section>
+			<section class="content-section">
+				<div class="content-section__container content-block">
+					<h2 class="title">Additional information</h2>
+					<div class="content-block__content">
+						<div class="content-block__text-wrap">
+							<p class="text">
+							Pay attention: our bot will add an additional user (user bot) to the administrators with the same rights as the main added bot. This is a technical necessity to obtain the necessary information.
+							</p>
+							<p class="text">
+							In order for statistics to continue to be collected constantly, do not delete our bot and the user bot added by it from the administrators! We remind you that this is a necessary technical condition for collecting statistics.							</p>
+							<p class="text">
+							The distribution by language, the % of notifications enabled and the number of post forwarding are only available for channels from 500 subscribers. There is no limit for "standard" detailed statistics (the exact number of subscriptions, unsubscriptions and instant subscriptions by the hour).							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+{% else %}
 <main class="page">
 			<section class="content-section">
 				<div class="content-section__container content-block">
@@ -90,5 +180,6 @@
 				</div>
 			</section>
 		</main>
+{% endif %}
 
 {% endblock %}
