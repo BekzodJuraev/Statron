@@ -8,7 +8,7 @@
 			<section class="plans">
 				<div class="plans__container">
 					<h2 class="payment__title">
-						Тарифы на использование Stattron
+						Tariffs for using Stattron
 					</h2>
 					<div class="plans__boxes">
 						<div class="plans__box-blue">
@@ -17,7 +17,7 @@
 								{% if request.user.profile.is_onedollar %}
 								<a href="{% url 'payment' %}?price=1.00" class="plans__box-btn">
 									<span class="just_price">
-										Первый месяц 1$
+										First Month $1
 									</span>
 									<span class="old_price">
 										20$
@@ -29,12 +29,10 @@
 								<img src="{% static 'img/icons/mingcute_switch-fill.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
-										Получите подробную информацию о каждом канале
+										Get Detailed Information About Each Channel
 									</p>
 									<p class="plans__box-grayText">
-										Отберите самые эффективные каналы для
-										рекламных размещений, по приросту подписчиков,
-										ER, количеству просмотров на пост и другим метрикам
+										Select the most effective channels for advertising placements, subscriber growth, engagement rate (ER), post views, and other metrics.
 									</p>
 								</div>
 							</div>
@@ -42,12 +40,10 @@
 								<img src="{% static 'img/icons/ph_pulse-fill.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
-										Получите подробную информацию о каждом канале
+										Get Detailed Information About Each Channel
 									</p>
 									<p class="plans__box-grayText">
-										Отберите самые эффективные каналы для
-										рекламных размещений, по приросту подписчиков,
-										ER, количеству просмотров на пост и другим метрикам
+										Select the most effective channels for advertising placements, subscriber growth, engagement rate (ER), post views, and other metrics.
 									</p>
 								</div>
 							</div>
@@ -55,12 +51,10 @@
 								<img src="{% static 'img/icons/solar_chart.png' %}" alt="" class="plans__box-image">
 								<div>
 									<p class="plans__box-whiteText">
-										Получите подробную информацию о каждом канале
+										Get Detailed Information About Each Channel
 									</p>
 									<p class="plans__box-grayText">
-										Отберите самые эффективные каналы для
-										рекламных размещений, по приросту подписчиков,
-										ER, количеству просмотров на пост и другим метрикам
+										Select the most effective channels for advertising placements, subscriber growth, engagement rate (ER), post views, and other metrics.
 									</p>
 								</div>
 							</div>
@@ -69,40 +63,40 @@
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">1 месяц</h4>
 									<p class="plans__box-monthDesc">
-										Стоимость увеличится до 20$ со следующего месяца
+										Cost will increase to $20 for the next month.
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=1.00&order_id=2">
 								<button class="plans__box-monthBtn">
-									Подключить за 1$
+									Purchase for 1$
 								</button>
 								</a>
 							</div>
 							{% else %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">1 Month </h4>
 									<p class="plans__box-monthDesc">
 
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=20.00&order_id=6">
 								<button class="plans__box-monthBtn">
-									Подключить за 20$
+									Purchase for 20$
 								</button>
 								</a>
 							</div>
 							{% endif %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">3 месяца</h4>
+									<h4 class="plans__box-monthTitle">3 Months</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
+										15% Discount <span>60$</span>
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=51.00&order_id=3">
 								<button class="plans__box-monthBtn">
-									Подключить за 51$
+									Purchase for 51$
 								</button>
 								</a>
 							</div>
@@ -110,14 +104,14 @@
 							<div class="plans__box-month-plans">
 								<div class="small-w">
 
-									<h4 class="plans__box-monthTitle">6 месяцев</h4>
+									<h4 class="plans__box-monthTitle">6 Months</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 20% <span>120$</span>
+										20% Discount <span>120$</span>
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=96.00&order_id=4">
 								<button class="plans__box-monthBtn">
-									Подключить за 96$
+									Purchase for 96$
 								</button>
 								</a>
 							</div>
@@ -125,12 +119,12 @@
 								<div class="small-w">
 									<h4 class="plans__box-monthTitle">12 месяцев</h4>
 									<p class="plans__box-monthDesc">
-										Скидка 25% <span>240$</span>
+										25% Discount <span>240$</span>
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=180.00&order_id=5">
 								<button class="plans__box-monthBtn">
-									Подключить за 180$
+									Purchase for 180$
 								</button>
 								</a>
 							</div>
@@ -138,11 +132,11 @@
 						<div class="plans__box-white">
 							<h3 class="plans__box-title">Demo</h3>
 							<p class="plans__box-normalText">
-								Demo подписка доступна сразу и без регистрации !
+								Demo subscription is available immediately and without registration!
 							</p>
 							<p class="plans__box-normalText">
-								В этой подписке ограниченный функционал, поэтому мы рекомендуем вам преобрести
-								<strong>PREMIUM</strong> подписку
+								There is limited functionality in this subscription, so we recommend
+								<strong>PREMIUM</strong> subscription
 							</p>
 
 						</div>

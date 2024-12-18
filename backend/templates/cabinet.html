@@ -32,8 +32,8 @@
 												<img class="img-fluid" src="{% static 'img/account/pig.svg' %}" alt="">
 											</div>
 											<div class="info-account__item-content">
-												<div class="label-black">Ref. balance</div>
-												<div class="label-blue label-blue_s24">{{item.balance}} rub.</div>
+												<div class="label-black">Referrals</div>
+												<div class="label-blue label-blue_s24">{{item.balance}} $.</div>
 											</div>
 										</div>
 										<div class="info-account__head-list-item">
@@ -41,34 +41,45 @@
 												<img class="img-fluid" src="{% static 'img/account/member.svg' %}" alt="">
 											</div>
 											<div class="info-account__item-content">
-												<div class="label-black">Referrals</div>
-												<div class="label-blue label-blue_s24">О</div>
+												<div class="label-black">Рефералов</div>
+												<div class="label-blue label-blue_s24">{{ref}}</div>
 											</div>
 										</div>
 									</div>
+									{% if item.email %}
 									<div class="info-account__head-email">
 										<span>Email:</span>
 										<a href="mailto:{{item.email}}">{{item.email}}</a>
 									</div>
+									{% endif %}
 								</div>
 							</div>
 							<div class="text">
 								The referral balance earned from inviting users can be used to extend premium access or withdraw to a Qiwi wallet.
 							</div>
 						</div>
+						{% if item.is_premium == False %}
 						<div class="info-account__item info-account__item_text">
 							<p class="text">
-								To remove all restrictions,  <a href="#" class="red">purchase full access </a>to all the service's features without limitations.
-								 purchase full access
+								To remove all restrictions - <a href="{% url 'plans' %}" class="red">purchase full access </a>to all the service's features without limitations.
 							</p>
 						</div>
+						{% endif %}
 					</div>
 					<div class="settings-account account-mainscreen__item">
 						<h4 class="title">Settings</h4>
 						<div class="settings-account__content">
 							<div class="settings-account__item">
-								<div class="label-black">Telegram:</div>
-								<button class="button button_no-bg" type="button">Attach</button>
+								<div class="label-black">Telegram:
+									{% if item.telegram_bio %}
+									@{{item.telegram_bio }}
+									{% endif %}
+								</div>
+								{% if item.telegram_id %}
+								{{ item.telegram_id }}
+								{% else %}
+								<a href="https://t.me/Stattron_auth_bot?start=profile_{{item.id}}"><button class="button button_no-bg" type="button">Attach</button></a>
+								{% endif %}
 							</div>
 
 							<div class="settings-account__item">
@@ -109,7 +120,7 @@
 			<section class="account-tabs">
 				<div class="account-tabs__container">
 					<div data-tabs class="channels-tabs tabs-account">
-						<div class="tabs-account__head">
+					<div class="tabs-account__head">
 							<nav data-tabs-titles class="tabs-navigation tabs-account__navigation">
 								<button type="button" class="tabs-navigation__title _tab-active">
 									<img class="grey" src="{% static 'img/tabs-account/management_grey.svg' %}" alt="">
@@ -130,61 +141,241 @@
 						</div>
 						<div data-tabs-body class="tabs-account__content">
 							<div class="tabs-account__body">
-								<p class="text">
-									Our service offers you the opportunity to earn with us!
-The main rules and principles of the referral program are simple:
-								</p>
-								<ul class="tabs-account__list">
-									<li class="tabs-account__item tabs-account__item_ok">
-										You will receive 10% of the amount spent by users who registered through your referral links on access extensions.
-									</li>
-									<li class="tabs-account__item tabs-account__item_ok">
-										If you generate a good number of payments, we can increase your percentage. All terms are personalized and discussed through support.
-									</li>
-									<li class="tabs-account__item tabs-account__item_ok">
-Once a user registers through your link, they will be permanently linked to you – and you will receive your commission from each payment the user makes for extending access to the service.									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-Spam in any form is prohibited. Violations will result in a complete account ban without payouts.									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-Registering and paying through your own referral links is prohibited. This will result in a ban on all accounts without payouts.									</li>
-									<li class="tabs-account__item tabs-account__item_warning">
-Advertising the service using branded queries such as Telemetr, Telemetr.me, or Телеметр is prohibited.									</li>
-								</ul>
-							</div>
-							<div class="tabs-account__body">
-								Содержимое второго таба
-							</div>
-							<div class="tabs-account__body">
-								Содержимое третьего таба
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section class="account-table">
-				<div class="account-table__container">
-					<div class="account-table__item">
-						<h4 class="label-black">Link</h4>
-						<form action="#" method="POST" class="link-form">
-							<div class="search-form__item">
-								<input type="text" id="link-gen" name="link-gen" placeholder="https://stattron.me/r/EwtQHe5/" class="form__input">
+								<div class="tabs-account__body-hasBg">
+									<p class="text">
+										Our service offers you the opportunity to earn with us!  <br>
+The 									main rules and principles of the referral program are simple:
+
+									</p>
+									<ul class="tabs-account__list">
+										<li class="tabs-account__item tabs-account__item_ok">
+											You will receive 10% of the amount spent by users who registered through your referral links on access extensions.
+										</li>
+										<li class="tabs-account__item tabs-account__item_ok">
+											If you generate a good number of payments, we can increase your percentage. All terms are personalized and discussed through support.
+										</li>
+										<li class="tabs-account__item tabs-account__item_ok">
+											Once a user registers through your link, they will be permanently linked to you – and you will receive your commission from each payment the user makes for extending access to the service.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Spam in any form is prohibited. Violations will result in a complete account ban without payouts.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Registering and paying through your own referral links is prohibited. This will result in a ban on all accounts without payouts.
+										</li>
+										<li class="tabs-account__item tabs-account__item_warning">
+											Advertising the service using branded queries such as Telemetr, Telemetr.me, or Телеметр is prohibited.
+										</li>
+									</ul>
+								</div>
+								<div class="account-table">
+									<div class="account-table__list account-table__list-noBg">
+										<table class="table search-channels__table">
+											<thead>
+												<tr class="tabs__account-head-column">
+													<th scope="col">
+														<div class="label-black text-center">Link</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Number of registrations</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Number of payments</div>
+													</th>
+													<th scope="col">
+														<div class="label-black text-center">Commission</div>
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+
+												{% for item in ref_code %}
+												<tr>
+													<td>
+															<div class="search-form__item">
+																<input type="text" id="link-gen" name="link-gen"
+																	value="https://stattron.ru/r/{{item.code}}/"
+																	class="form__input">
+															</div>
+
+													</td>
+													<td>
+														<div class="label-black">{{ item.count_register}}</div>
+													</td>
+													<td>
+														<div class="label-black">{{ item.count_commission}}</div>
+													</td>
+													<td>
+														{% if item.total_commission_amount is None %}
+														<div class="label-black">0</div>
+
+														{% else %}
+														<div class="label-black">{{ item.total_commission_amount }}</div>
+
+														{% endif %}
+
+													</td>
+												</tr>
+
+											{% endfor %}
+
+
+
+
+
+
+
+											</tbody>
+
+
+										</table>
+
+
+
+
+									</div>
+									<div class="account-tabs">
+						<form  method="POST" class="link-form">
+							{% csrf_token %}
+							<div class="account-tabs__container">
 								<button class="button" type="submit">Generate another link</button>
 							</div>
+
+
 						</form>
-					</div>
-					<div class="account-table__list">
-						<div class="account-table__item">
-							<h4 class="label-black">Number of registrations</h4>
 						</div>
-						<div class="account-table__item">
-							<h4 class="label-black">Number of payments</h4>
-						</div>
-						<div class="account-table__item">
-							<h4 class="label-black">Commission</h4>
+								</div>
+							</div>
+
+							<div class="tabs-account__body balans-tab">
+								<div class="tabs-account__offer-amount">
+									<form action="{% url 'withdraw' %}" class="tabs-account__form form">
+										<label for="tabs-account__offer-amount-field">
+											Enter the amount to order the payout:
+										</label>
+										<div class="tabs__account-body-box">
+											<input type="number" name="money" id="tabs-account__offer-amount-field"  class="form__input no-spinner" min="0">
+
+											<button class="button tabs-account__offer-amount-btn">Order</button>
+
+										</div>
+									</form>
+								</div>
+								<div class="analitics-tabs__table-wrap-container">
+									<table class="table search-channels__table">
+										<thead>
+											<tr class="tabs__account-head-column">
+												<th scope="col">
+													<div class="label-black">Date and time:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Total amount:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Wallet:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Status:</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+										{% for item in withdraw %}
+											<tr>
+												<td scope="row">
+													<div class="tabs__account-date-time">
+														<span>{{ item.created_at|date:"Y-m-d" }}</span>
+														<span>{{ item.created_at|date:"H:i:s" }}</span>
+													</div>
+												</td>
+												<td>
+													<div class="label-green label-green_s20">+{{item.amount}}</div>
+												</td>
+												<td>
+													<div class="label-blue label-blue_s20">{{item.wallet}}</div>
+												</td>
+												{% if item.status  %}
+												<td class="text-right">
+													<button class="status__button" type="button">Done</button>
+												</td>
+												{% else %}
+												<td class="text-right">
+													<button class="status__button status__fail"
+														type="button">Cancelled</button>
+												</td>
+											</tr>
+											{% endif %}
+										{% endfor %}
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+							<div class="tabs-account__body history-tab">
+								<div class="analitics-tabs__table-wrap-container">
+									<table class="table search-channels__table">
+										<thead>
+											<tr class="tabs__account-head-column">
+												<th scope="col">
+													<div class="label-black">Date:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black text-left">Time:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Description:</div>
+												</th>
+												<th scope="col">
+													<div class="label-black">Status:</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										{% for item in history %}
+
+											<tr>
+												<td scope="row">
+													<div class="label-black text-left">{{ item.created_at|date:"Y-m-d" }}</div>
+												</td>
+												<td>
+													<div class="label-black text-left">{{ item.created_at|date:"H:i:s" }}</div>
+												</td>
+												<td>
+													<div class="label-black">
+													Payment for access to the service for {{item.type_sub}} months</div>
+												</td>
+												{% if item.status %}
+												<td class="text-right">
+													<button class="status__button" type="button">Done</button>
+												</td>
+												{% else %}
+												<td class="text-right">
+													<button class="status__button status__fail"
+														type="button">Cancelled</button>
+												</td>
+												{% endif %}
+
+											</tr>
+
+
+
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+
 			</section>
+
+
+
+
+
 		</main>
 {% else %}
 <main class="page">
@@ -228,10 +419,12 @@ Advertising the service using branded queries such as Telemetr, Telemetr.me, or 
 											</div>
 										</div>
 									</div>
+									{% if item.email %}
 									<div class="info-account__head-email">
 										<span>Email:</span>
 										<a href="mailto:{{item.email}}">{{item.email}}</a>
 									</div>
+									{% endif %}
 								</div>
 							</div>
 							<div class="text">

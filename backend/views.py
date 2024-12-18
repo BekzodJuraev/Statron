@@ -1376,6 +1376,7 @@ class Like_chanel(LoginRequiredMixin,ListView):
         context['count'] = self.get_queryset().count()
         context['node']=note
         context['count_node']=note.count()
+        context['category'] = Category_chanels.objects.all()
 
         return context
 
