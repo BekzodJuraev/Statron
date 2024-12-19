@@ -3,6 +3,7 @@ from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
 from decimal import Decimal
+from django.utils.translation import get_language
 import re
 import hashlib
 from urllib.parse import urlencode
@@ -957,7 +958,8 @@ class DetailChanel(LoginRequiredMixin,DetailView):
             context['posts_ads'] = Posts.objects.filter(chanel=self.object, mention=True).values(
                 'created_at__date').annotate(
                 count=Count('id'))
-            context['form'] = LikeForm
+            language_code = get_language()
+            context['form'] = LikeForm(language_code=language_code)
 
             context['day'] = self.object.daily_subscribers
             context['week'] = self.object.weekly_subscribers
