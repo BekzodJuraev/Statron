@@ -1,8 +1,178 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% load mathfilters %}
 {% load static %}
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == 'en' %}
+<main class="page">
+			<section class="search">
+				<div class="search__container">
+					<form action="{% url 'posts' %}" class="search-form form" method="GET">
+						<div class="search-form__column search-form__column_1">
+							<div class="search-form__item">
+								<label for="channel" class="label-black">Mentioned channel:</label>
+								<input type="text" id="channel" name="mention" placeholder="Marketing" class="form__input" value="{{ request.GET.mention }}">
+							</div>
+							<div class="search-form__item">
+								<label for="word-or-phrase" class="label-black">A word or phrase in the text:</label>
+								<input type="text" id="word-or-phrase" name="text" placeholder="Marketing" class="form__input" value="{{ request.GET.text }}">
+							</div>
+						</div>
+						<div class="search-form__column search-form__column_2">
+							<div class="search-form__item">
+								<label for="channel-for-search" class="label-black">Search channel:</label>
+								<input type="text" id="channel-for-search" name="chanel" placeholder="young Trader" class="form__input" value="{{ request.GET.chanel }}">
+							</div>
+							<div class="search-form__item">
+								<label for="period" class="label-black">Over the period:</label>
+								<input data-datepicker type="text" id="period" name="period" placeholder="2021-04-23 - 2022-04-11" class="form__input" value="{{ request.GET.period }}">
+								<img class="search-form__calendar" src="{% static 'img/analitics/calendar.svg' %}" alt="">
+							</div>
+						</div>
+						<div data-da=".search-form__column_1,992.98" class="search-form__column">
+							<div class="search-form__item search-form__item_select">
+								<div class="search-form__item-content">
+									<div class="search-form__item" style="left:150px;">
+										<label for="sort" class="label-black">Sorting:</label>
+										<select name="sort" id="sort" data-class-modif="custom-select">
+											<option value="1" selected>Sorting</option>
 
+										</select>
+									</div>
+
+								</div>
+							</div>
+							<div data-da=".search-form__column_2,992.98" class="search-form__item search-form__item_center">
+								<label for="view-from" class="label-black search-form__label">Views:</label>
+								<div class="search-form__item-content search-form__item-content_center">
+									<label for="view-from" class="label-black">From</label>
+									<input type="number" id="view-from" name="view_from" placeholder="1000" class="form__input" value="{{ request.GET.view_from }}">
+									<label for="view-to" class="label-black">To</label>
+									<input type="number" id="view-to" name="view_to" placeholder="4,570" class="form__input" value="{{ request.GET.view_to }}">
+								</div>
+							</div>
+						</div>
+						<div data-da=".search-form__column_2,992.98" class="search-form__column search-form__column_btn">
+							<button class="button" type="submit">Find posts</button>
+						</div>
+					</form>
+				</div>
+			</section>
+			<section class="ad-posts">
+				<div class="ad-posts__container">
+					<div class="search-channels__head ad-posts__head">
+						<div class="search-channels__tabs-head">
+							<div class="search-channels__nums tabs-navigation">
+						{% for p in page_range %}
+						{% if p <= page_obj.number|add:1  and  p >= page_obj.number|sub:1 or p >= page_obj.paginator.num_pages or p <= 1 %}
+						{% if page_obj.number == p %}
+							<a href="?page={{ p }}">
+								<button class="search-channels__num tabs-navigation__title _tab-active" type="button">{{ p }}</button>
+							</a>
+						{% else %}
+							<a href="?page={{ p }}">
+								<button class="search-channels__num tabs-navigation__title" type="button">{{ p }}</button>
+							</a>
+						{% endif %}
+
+						{% elif p == page_obj.number|add:2 or p == page_obj.number|sub:2  %}
+								<span>...</span>
+						{% endif %}
+
+
+
+				{% endfor %}
+							</div>
+							<div class="search-channels__head-text">
+								Found <span>{{count}}</span> posts
+							</div>
+						</div>
+					</div>
+					<div class="ad-posts__list">
+					{% for item in obj %}
+
+
+						<div class="item-popup">
+							<div class="item-popup__head">
+								<div class="item-popup__img">
+									<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel.pictures}}" width="100px" height="100px" style="border-radius: 50%;" alt=""></picture>
+								</div>
+								<div class="item-popup__content">
+									<div class="label_black">{{item.chanel.name}} </div>
+									<div class="item-mainscreen__info">
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
+											{{item.chanel.subscribers}}
+										</div>
+										<div class="channel-count item-mainscreen__count label-grey">
+											<img src="{% static 'img/icons/eye.svg' %}" alt="">
+											{{item.chanel.views}}
+										</div>
+									</div>
+								</div>
+								{% if item.mention %}
+                            <div class="item-popup__btns">
+								<a href="{% url 'posts' %}?chanel={{ item.chanel.name }}">
+                                <button class="button button_no-bg" type="button">Mentions</button>
+                                </a>
+
+								<a href="{% url 'posts' %}?mention={{ item.chanel.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
+                            </div>
+							{% endif %}
+							</div>
+							<div class="item-popup__content">
+								<div class="label-blue label-blue_s14">{{item.date|date:"Y-m-d H:i"}}</div>
+								<div class="item-popup__text">
+									<p class="text">
+										{{item.text}}
+									</p>
+
+								</div>
+							</div>
+								{% if item.media == 'photo' %}
+							<button class="item-popup__btn button button_no-bg" type="button">
+								<picture><source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp"><img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
+								Image
+							</button>
+								{% endif %}
+
+							{% if item.media == 'video' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Video
+                        </button>
+						{% endif %}
+						{% if item.media == 'animation' %}
+                        <button class="item-popup__btn button button_no-bg" type="button">
+                            <picture>
+                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
+                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
+                            Gif
+                        </button>
+						{% endif %}
+						</div>
+
+					{% endfor %}
+
+					</div>
+					{% if not request.user.profile.is_premium %}
+					<div class="ad-posts__list ad-posts__list_center">
+						<div class="ad-posts__item">
+							<p class="text">
+					Unfortunately, you cannot view the remaining posts as your account is in demo mode. To remove restrictions and gain full access to all the service's features, please subscribe.							</p>
+							<a href="{% url 'plans' %}" class="button">Subscribe</a>
+						</div>
+					</div>
+					{% endif %}
+
+				</div>
+
+			</section>
+		</main>
+{% else %}
 <main class="page">
 			<section class="search">
 				<div class="search__container">
@@ -164,7 +334,7 @@
 							<p class="text">
 								К сожалению вам недоступен просмотр остальных постов, поскольку у вашего аккаунта демонстрационный режим. Чтобы снять ограничения и получить доступ ко всем возможностям сервиса оформите подписку.
 							</p>
-							<a href="#" class="button">Оформить подписку</a>
+							<a href="{% url 'plans' %}" class="button">Оформить подписку</a>
 						</div>
 					</div>
 					{% endif %}
@@ -173,5 +343,6 @@
 
 			</section>
 		</main>
+{% endif %}
 
 {% endblock %}
