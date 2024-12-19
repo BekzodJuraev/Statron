@@ -305,10 +305,10 @@
             </button>
             <div class="popup__inner">
 					   <div class="tabs-navigation popup__filters">
-			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.pk}}">По дате</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.pk}}">По просмотрам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.pk}}">По пересылкам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-comments{{item.pk}}">По комментариям</button>
+			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.pk}}">By date</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.pk}}">By views</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.pk}}">By forwards</button>
+
 		</div>
 				<div class="tab-content" id="tab-date{{item.pk}}" style="display: block;">
                 <div class="popup__list" >
@@ -336,10 +336,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -357,7 +357,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -365,17 +365,10 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
@@ -406,10 +399,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -427,7 +420,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -435,17 +428,10 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
@@ -476,10 +462,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.name }}"><button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -497,7 +483,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -505,91 +491,15 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
 				</div>
-				<div class="tab-content" id="tab-comments{{item.pk}}" style="display: none;">
-                <div class="popup__list" >
-					  {% for post in item.post.all|dictsort:"date" %}
-                    <div class="item-popup">
-                        <div class="item-popup__head">
-                            <div class="item-popup__img">
-                                <picture>
-                                    <source srcset="/{{item.pictures}}" type="image/webp">
-                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
-                            </div>
-                            <div class="item-popup__content">
-                                <div class="label_black">{{item.name}}</div>
-                                <div class="item-mainscreen__info">
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-										{{item.subscribers}}
-                                    </div>
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{post.view}}
-                                    </div>
-                                </div>
-                            </div>
-							{% if post.mention %}
-                            <div class="item-popup__btns">
-								<a href="{% url 'posts' %}?chanel={{ item.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
-                                </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
-                            </div>
-							{% endif %}
-                        </div>
-                        <div class="item-popup__content">
-                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
-                            <div class="item-popup__text">
-                                <p class="text text_fw600">
-									{{post.text}}
-                                </p>
-
-                            </div>
-                        </div>
-                        {% if post.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
-                        </button>
-						{% endif %}
-						{% if post.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
-                        </button>
-						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
-                    </div>
-                   {% endfor %}
-                </div>
-				</div>
 
 
             </div>
@@ -630,7 +540,7 @@
 							<div class="item-popup__content">
 								<div class="item-popup__channel-text">
 									<p class="text text_fw600">
-										Описание канала:
+										Channel Description:
 									</p>
 									<p class="text">
 										{{item.description}}
@@ -640,11 +550,11 @@
 						</div>
 						<div class="item-popup__channel-info">
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">Подписчики</p>
+								<p class="item-popup__channel-infoText">Subscribers</p>
 								<h5 class="item-popup__channel-infoData">{{item.subscribers}}</h5>
 							</div>
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">Сегодня</p>
+								<p class="item-popup__channel-infoText">Today</p>
 								{% if item.daily_subscribers > 0 %}
 								<h5 class="item-popup__channel-infoData">+{{item.daily_subscribers}}</h5>
 								{% else %}
@@ -652,7 +562,7 @@
 								{% endif %}
 							</div>
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">На пост/вчера</p>
+								<p class="item-popup__channel-infoText">Per Post/Yesterday</p>
 								<h5 class="item-popup__channel-infoData">{{item.yesterday_views}}</h5>
 							</div>
 							<div class="item-popup__channel-infoBox">
@@ -663,11 +573,11 @@
 						<div class="item-popup">
 							<div data-tabs class="charts-tabs">
 								<div class="tabs-head">
-									<h4 class="channels-tabs__title title">Охват публикаций за 24ч / число подписчиков
+									<h4 class="channels-tabs__title title">Reach of Publications in 24 Hours / Number of Subscribers
 									</h4>
 									<nav data-tabs-titles class="tabs-navigation">
-										<button type="button" class="tabs-navigation__title _tab-active">График</button>
-										<button type="button" class="tabs-navigation__title">Таблица</button>
+										<button type="button" class="tabs-navigation__title _tab-active">Graph</button>
+										<button type="button" class="tabs-navigation__title">Table</button>
 									</nav>
 								</div>
 								<div data-tabs-body class="charts-tabs__content">
@@ -683,13 +593,13 @@
 												<thead>
 													<tr>
 														<th scope="col">
-															<div class="label-black">День</div>
+															<div class="label-black">Day</div>
 														</th>
 														<th scope="col">
-															<div class="label-black">Подписчиков</div>
+															<div class="label-black">Subscribers</div>
 														</th>
 														<th>
-															<div class="label-black">Охват за 24ч</div>
+															<div class="label-black">Coverage in 24 hours</div>
 														</th>
 													</tr>
 												</thead>
@@ -1038,7 +948,7 @@
 			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.pk}}">По дате</button>
 			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.pk}}">По просмотрам</button>
 			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.pk}}">По пересылкам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-comments{{item.pk}}">По комментариям</button>
+
 		</div>
 				<div class="tab-content" id="tab-date{{item.pk}}" style="display: block;">
                 <div class="popup__list" >
@@ -1250,76 +1160,7 @@
                    {% endfor %}
                 </div>
 				</div>
-				<div class="tab-content" id="tab-comments{{item.pk}}" style="display: none;">
-                <div class="popup__list" >
-					  {% for post in item.post.all|dictsort:"date" %}
-                    <div class="item-popup">
-                        <div class="item-popup__head">
-                            <div class="item-popup__img">
-                                <picture>
-                                    <source srcset="/{{item.pictures}}" type="image/webp">
-                                    <img class="img-fluid" src="/{{item.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
-                            </div>
-                            <div class="item-popup__content">
-                                <div class="label_black">{{item.name}}</div>
-                                <div class="item-mainscreen__info">
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-										{{item.subscribers}}
-                                    </div>
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{post.view}}
-                                    </div>
-                                </div>
-                            </div>
-							{% if post.mention %}
-                            <div class="item-popup__btns">
-								<a href="{% url 'posts' %}?chanel={{ item.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
-                                </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
-                            </div>
-							{% endif %}
-                        </div>
-                        <div class="item-popup__content">
-                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
-                            <div class="item-popup__text">
-                                <p class="text text_fw600">
-									{{post.text}}
-                                </p>
-
-                            </div>
-                        </div>
-                        {% if post.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
-                        </button>
-						{% endif %}
-						{% if post.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
-                        </button>
-						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
-                    </div>
-                   {% endfor %}
-                </div>
-				</div>
 
 
             </div>
@@ -1497,6 +1338,13 @@
             "{{ item.created_at|date:"Y-m-d" }}",
         {% endfor %}
     ];
+    {% if LANGUAGE_CODE == 'en' %}
+		var messages = 'Reach of Publications in 24 Hours';
+		var sub = 'Number of Subscribers';
+		{% else %}
+		var messages = 'Охват публикаций за 24ч';
+		var sub = 'число подписчиков';
+		{% endif %}
 
 
         new Chart(ctx, {
@@ -1504,13 +1352,13 @@
             data: {
                 labels: labels, // Use the labels array for x-axis
                 datasets: [{
-                    label: "Охват публикаций за 24ч",
+                    label: messages,
                     data: views, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
                 },
                 {
-                    label: "число подписчиков",
+                    label: sub,
                     data: subperday, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(166, 206, 227, 0.80)"],

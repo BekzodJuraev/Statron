@@ -479,10 +479,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.chanel_name.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -500,7 +500,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -508,17 +508,10 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
@@ -549,10 +542,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.chanel_name.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -570,7 +563,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -578,17 +571,10 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
@@ -619,10 +605,10 @@
 							{% if post.mention %}
                             <div class="item-popup__btns">
 								<a href="{% url 'posts' %}?chanel={{ item.chanel_name.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
+                                <button class="button button_no-bg" type="button">Mentions</button>
                                 </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
+								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Promotional posts</button></a>
                             </div>
 							{% endif %}
                         </div>
@@ -640,7 +626,7 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
+                            Image
                         </button>
 						{% endif %}
 						{% if post.media == 'video' %}
@@ -648,90 +634,16 @@
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
+                            Video
                         </button>
 						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
+
                     </div>
                    {% endfor %}
                 </div>
 				</div>
 
-                <div class="popup__list" >
-					  {% for post in item.chanel_name.post.all|dictsort:"date" %}
-                    <div class="item-popup">
-                        <div class="item-popup__head">
-                            <div class="item-popup__img">
-                                <picture>
-                                    <source srcset="/{{item.chanel_name.pictures}}" type="image/webp">
-                                    <img class="img-fluid" src="/{{item.chanel_name.pictures}}"  width="100px" height="100px"  style="border-radius: 50%;" alt=""></picture>
-                            </div>
-                            <div class="item-popup__content">
-                                <div class="label_black">{{item.chanel_name.name}}</div>
-                                <div class="item-mainscreen__info">
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-										{{item.chanel_name.subscribers}}
-                                    </div>
-                                    <div class="channel-count item-mainscreen__count label-grey">
-                                        <img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{post.view}}
-                                    </div>
-                                </div>
-                            </div>
-							{% if post.mention %}
-                            <div class="item-popup__btns">
-								<a href="{% url 'posts' %}?chanel={{ item.chanel_name.name }}">
-                                <button class="button button_no-bg" type="button">Упоминания</button>
-                                </a>
 
-								<a href="{% url 'posts' %}?mention={{ item.chanel_name.name }}">	<button class="button button_no-bg" type="button">Рекламные посты</button></a>
-                            </div>
-							{% endif %}
-                        </div>
-                        <div class="item-popup__content">
-                            <div class="label-blue label-blue_s14">{{ post.date|date:"Y-m-d H:i" }}</div>
-                            <div class="item-popup__text">
-                                <p class="text text_fw600">
-									{{post.text}}
-                                </p>
-
-                            </div>
-                        </div>
-                        {% if post.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
-                            Изображение
-                        </button>
-						{% endif %}
-						{% if post.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Видео
-                        </button>
-						{% endif %}
-						{% if post.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
-                            <picture>
-                                <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
-                                <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
-                            Гифка
-                        </button>
-						{% endif %}
-                    </div>
-                   {% endfor %}
-                </div>
 				</div>
 
 
