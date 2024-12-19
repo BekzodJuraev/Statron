@@ -448,10 +448,10 @@
             </button>
             <div class="popup__inner">
 					   <div class="tabs-navigation popup__filters">
-			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.chanel_name.pk}}">По дате</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.chanel_name.pk}}">По просмотрам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.chanel_name.pk}}">По пересылкам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-comments{{item.chanel_name.pk}}">По комментариям</button>
+			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.chanel_name.pk}}">By date</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.chanel_name.pk}}">By views</button>
+			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.chanel_name.pk}}">By forwards</button>
+
 		</div>
 				<div class="tab-content" id="tab-date{{item.chanel_name.pk}}" style="display: block;">
                 <div class="popup__list" >
@@ -663,7 +663,7 @@
                    {% endfor %}
                 </div>
 				</div>
-				<div class="tab-content" id="tab-comments{{item.chanel_name.pk}}" style="display: none;">
+
                 <div class="popup__list" >
 					  {% for post in item.chanel_name.post.all|dictsort:"date" %}
                     <div class="item-popup">
@@ -741,7 +741,6 @@
 </div>
 {% endfor %}
 {% for item in item %}
-
 <div id="popup-description{{item.chanel_name.pk}}" aria-hidden="true" class="popup">
 		<div class="popup__wrapper">
 			<div class="popup__content">
@@ -774,7 +773,7 @@
 							<div class="item-popup__content">
 								<div class="item-popup__channel-text">
 									<p class="text text_fw600">
-										Описание канала:
+										Channel Description:
 									</p>
 									<p class="text">
 										{{item.chanel_name.description}}
@@ -784,11 +783,11 @@
 						</div>
 						<div class="item-popup__channel-info">
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">Подписчики</p>
+								<p class="item-popup__channel-infoText">Subscribers</p>
 								<h5 class="item-popup__channel-infoData">{{item.chanel_name.subscribers}}</h5>
 							</div>
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">Сегодня</p>
+								<p class="item-popup__channel-infoText">Today</p>
 								{% if item.chanel_name.daily_subscribers > 0 %}
 								<h5 class="item-popup__channel-infoData">+{{item.chanel_name.daily_subscribers}}</h5>
 								{% else %}
@@ -796,7 +795,7 @@
 								{% endif %}
 							</div>
 							<div class="item-popup__channel-infoBox">
-								<p class="item-popup__channel-infoText">На пост/вчера</p>
+								<p class="item-popup__channel-infoText">Per Post/Yesterday</p>
 								<h5 class="item-popup__channel-infoData">{{item.chanel_name.yesterday_views}}</h5>
 							</div>
 							<div class="item-popup__channel-infoBox">
@@ -807,11 +806,11 @@
 						<div class="item-popup">
 							<div data-tabs class="charts-tabs">
 								<div class="tabs-head">
-									<h4 class="channels-tabs__title title">Охват публикаций за 24ч / число подписчиков
+									<h4 class="channels-tabs__title title">Reach of Publications in 24 Hours / Number of Subscribers
 									</h4>
 									<nav data-tabs-titles class="tabs-navigation">
-										<button type="button" class="tabs-navigation__title _tab-active">График</button>
-										<button type="button" class="tabs-navigation__title">Таблица</button>
+										<button type="button" class="tabs-navigation__title _tab-active">Graph</button>
+										<button type="button" class="tabs-navigation__title">Table</button>
 									</nav>
 								</div>
 								<div data-tabs-body class="charts-tabs__content">
@@ -827,13 +826,13 @@
 												<thead>
 													<tr>
 														<th scope="col">
-															<div class="label-black">День</div>
+															<div class="label-black">Day</div>
 														</th>
 														<th scope="col">
-															<div class="label-black">Подписчиков</div>
+															<div class="label-black">Subscribers</div>
 														</th>
 														<th>
-															<div class="label-black">Охват за 24ч</div>
+															<div class="label-black">Coverage in 24 hours</div>
 														</th>
 													</tr>
 												</thead>
@@ -864,6 +863,7 @@
 			</div>
 		</div>
 	</div>
+
 {% endfor %}
 {% else %}
 <main class="page">
@@ -1027,17 +1027,12 @@
 										</div>
 									</th>
 									<th scope="col">
-										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
-											<button data-dropdown-btn class="dropdown-header__btn" type="button">
+										<div data-dropdown class="label-black">
+											<div data-dropdown-btn class="dropdown-header__btn" type="">
 												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
 												<span>На пост/вчера</span>
-												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
-											</button>
-											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
-												<a href="#" class="dropdown-header-lang__item">На пост/вчера 1</a>
-												<a href="#" class="dropdown-header-lang__item">На пост/вчера 2</a>
+
 											</div>
-										</div>
 									</th>
 									<th>
 										<div class="label-black">ER</div>
@@ -1189,17 +1184,12 @@
 										</div>
 									</th>
 									<th scope="col">
-										<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
-											<button data-dropdown-btn class="dropdown-header__btn" type="button">
+										<div data-dropdown class="label-black">
+											<div data-dropdown-btn class="dropdown-header__btn" type="">
 												<img src="{% static 'img/icons/eye_black.svg' %}" alt="">
 												<span>На пост/вчера</span>
-												<img src="{% static 'img/icons/arrow-down.svg' %}" class="arrow" alt="">
-											</button>
-											<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
-												<a href="#" class="dropdown-header-lang__item">На пост/вчера 1</a>
-												<a href="#" class="dropdown-header-lang__item">На пост/вчера 2</a>
+
 											</div>
-										</div>
 									</th>
 									<th>
 										<div class="label-black">ER</div>
@@ -1317,7 +1307,7 @@
 			<button class="tabs-navigation__title _tab-active" type="button" onclick="setActiveTab(this)" data-tab="tab-date{{item.chanel_name.pk}}">По дате</button>
 			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-views{{item.chanel_name.pk}}">По просмотрам</button>
 			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-forwards{{item.chanel_name.pk}}">По пересылкам</button>
-			<button class="tabs-navigation__title" type="button" onclick="setActiveTab(this)" data-tab="tab-comments{{item.chanel_name.pk}}">По комментариям</button>
+
 		</div>
 				<div class="tab-content" id="tab-date{{item.chanel_name.pk}}" style="display: block;">
                 <div class="popup__list" >
@@ -1529,7 +1519,7 @@
                    {% endfor %}
                 </div>
 				</div>
-				<div class="tab-content" id="tab-comments{{item.chanel_name.pk}}" style="display: none;">
+
                 <div class="popup__list" >
 					  {% for post in item.chanel_name.post.all|dictsort:"date" %}
                     <div class="item-popup">
@@ -1778,20 +1768,27 @@
             "{{ item.created_at|date:"Y-m-d" }}",
         {% endfor %}
     ];
-
+		{% if LANGUAGE_CODE == 'en' %}
+		var messages = 'Reach of Publications in 24 Hours';
+		var sub = 'Number of Subscribers';
+		{% else %}
+		var messages = 'Охват публикаций за 24ч';
+		var sub = 'число подписчиков';
+		{% endif %}
 
         new Chart(ctx, {
             type: "line",
             data: {
                 labels: labels, // Use the labels array for x-axis
                 datasets: [{
-                    label: "Охват публикаций за 24ч",
+
+                    label: messages,
                     data: views, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
                 },
                 {
-                    label: "число подписчиков",
+                    label: sub,
                     data: subperday, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(166, 206, 227, 0.80)"],
