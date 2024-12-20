@@ -43,7 +43,7 @@ class Profile(models.Model):
 
 
     def save(self, *args, **kwargs):
-        # Update the associated User's email before saving
+        # Update the associated User'sa email before saving
         self.username.email = self.email
         self.username.save()
         super().save(*args, **kwargs)
@@ -73,8 +73,7 @@ class Chanel(models.Model):
     views=models.IntegerField()
     created_at=models.DateTimeField(auto_now_add=True)
     last_update=models.DateTimeField(auto_now=True)
-    add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE)
-    username=models.CharField(max_length=140)
+    add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE,default=None,null=True,blank=True)
     daily_views=models.IntegerField(default=0,blank=True,null=True)
     yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
@@ -252,7 +251,7 @@ class Notify(models.Model):
 
 
 class Add_chanel(models.Model):
-    username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel')
+    username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel',default=None,null=True,blank=True)
     category=models.ManyToManyField('Category_chanels',blank=True)
     chanel_link = models.CharField(default=None,max_length=150,unique=True)
 
@@ -261,7 +260,7 @@ class Add_chanel(models.Model):
 
 
     def __str__(self):
-        return self.username.username.username
+        return self.chanel_link
 
 
 class Category_chanels(models.Model):

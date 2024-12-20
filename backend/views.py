@@ -255,7 +255,7 @@ def notification_freekassa(request):
             sub=Type_sub.objects.filter(id=order_id).first()
             Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
             if profile.recommended_by:
-                Commission.objects.create(code=profile.recommended_by, amount=amount)
+                Commission.objects.create(code=profile.recommended_by, amount=Decimal(amount))
 
 
             if profile.promo_code:
@@ -405,7 +405,7 @@ def process_callback_query(json_data):
     if callback_data_message == 'reject':
         bot.delete_message(chat_id=my_id, message_id=message_id)
     if callback_data_message == "add":
-        add,created=Add_chanel.objects.get_or_create(username_id=1,chanel_link=callback_data_link_or_id)
+        add,created=Add_chanel.objects.get_or_create(chanel_link=callback_data_link_or_id)
         if created:
             bot.send_message(chat_id=my_id,text=f"✅Канал {callback_data_link_or_id} успешно добавлен в базу!")
             bot.send_message(chat_id=callback_data_chat_id, text=f"🤝Здравствуйте. Вы недавно пытались найти анализ на канал {callback_data_link_or_id}. Теперь мы его добавили в нашу базу и Вы сможете каждый день проверять статистику этого канала в нашем боте и сайте")
