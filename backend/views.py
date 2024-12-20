@@ -185,7 +185,7 @@ def telegram_auth(request):
                     session_key = request.session.session_key
 
                     # Construct the URL with the session key
-                    url_with_session = f"https://127.0.0.1:8000/telegram/login/?session_key={session_key}"
+                    url_with_session = f"https://stattron.ru/telegram/login/?session_key={session_key}"
 
                     # Send the URL with the session key via the Telegram bot
                     bot_auth.send_message(id, f"Visit this link to authenticate: {url_with_session}")
@@ -216,7 +216,7 @@ def telegram_auth(request):
                     session_key = request.session.session_key
 
                     # Construct the URL with the session key
-                    url_with_session = f"https://127.0.0.1:8000/telegram/login/?session_key={session_key}"
+                    url_with_session = f"https://stattron.ru/telegram/login/?session_key={session_key}"
 
                     # Send the URL with the session key via the Telegram bot
                     bot_auth.send_message(id, f"Visit this link to authenticate: {url_with_session}")
