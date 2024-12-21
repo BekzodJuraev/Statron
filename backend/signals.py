@@ -8,7 +8,7 @@ from datetime import date, timedelta, datetime
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 import telegram
-from config import TOKEN_NOTIFY
+from config import TOKEN_NOTIFY,TOKEN_WEBHOOK
 bot = telegram.Bot(TOKEN_NOTIFY)
 
 
@@ -29,7 +29,7 @@ bot = telegram.Bot(TOKEN_NOTIFY)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
         add_chanel.delay(instance.chanel_link)
-        Chanel.objects.create(add_chanel=instance,chanel_link=instance.chanel_link,subscribers=0,views=0)
+        Chanel.objects.create(add_chanel=instance.username,chanel_link=instance.chanel_link,subscribers=0,views=0)
 
 
 
@@ -68,6 +68,28 @@ def create_views(sender,instance,created,*args,**kwargs):
 
             except  Exception as e:
                 print(e)
+
+
+
+
+@receiver(post_save,sender=Subperhour)
+def send_detail(sender,instance,created,*args,**kwargs):
+    if not created:
+        return
+
+    try:
+        instance = sender.objects.select_related('chanel__add_chanel').get(pk=instance.pk)
+        if instance.chanel.add_chanel and instance.chanel.add_chanel.telegram_id:
+            bot = telegram.Bot(TOKEN_WEBHOOK)
+            text = (
+                f"📅Подписок по часам:\n\n"
+                f"{instance.chanel.name}\n"
+                f"{instance.created_at.strftime('%Y-%m-%d %H:%M')}: {instance.subperhour}: {'+' + str(instance.difference) if instance.difference >= 0 else str(instance.difference)}\n"
+                f"👆Выше Вы сможете просмотреть детальную аналитику за запрашиваемый канал / Спасибо за запрос ❤"
+            )
+            bot.send_message(instance.chanel.add_chanel.telegram_id, text=text)
+    except Exception as e:
+        pass
 
 
 

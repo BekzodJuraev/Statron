@@ -4560,7 +4560,10 @@
         $(document).ready(function() {
         {% for item in post %}
             var ctx = document.getElementById('myBarChart_{{item.id}}').getContext('2d');
-            var minus={{item.view}} - 200
+            var minus=Math.round({{item.view}} * 0.7);
+            if (minus<0){
+            minus=0;
+            };
             var myBarChart = new Chart(ctx, {
                 type: 'bar',
                 data: {

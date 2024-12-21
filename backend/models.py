@@ -73,7 +73,7 @@ class Chanel(models.Model):
     views=models.IntegerField()
     created_at=models.DateTimeField(auto_now_add=True)
     last_update=models.DateTimeField(auto_now=True)
-    add_chanel =models.ForeignKey("Add_chanel", on_delete=models.CASCADE,default=None,null=True,blank=True)
+    add_chanel =models.ForeignKey(Profile, on_delete=models.CASCADE,default=None,null=True,blank=True)
     daily_views=models.IntegerField(default=0,blank=True,null=True)
     yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)

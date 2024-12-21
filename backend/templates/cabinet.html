@@ -32,7 +32,7 @@
 												<img class="img-fluid" src="{% static 'img/account/pig.svg' %}" alt="">
 											</div>
 											<div class="info-account__item-content">
-												<div class="label-black">Referrals</div>
+												<div class="label-black">Ref.balance</div>
 												<div class="label-blue label-blue_s24">{{item.balance}} $.</div>
 											</div>
 										</div>
@@ -41,7 +41,7 @@
 												<img class="img-fluid" src="{% static 'img/account/member.svg' %}" alt="">
 											</div>
 											<div class="info-account__item-content">
-												<div class="label-black">Рефералов</div>
+												<div class="label-black">Referrals</div>
 												<div class="label-blue label-blue_s24">{{ref}}</div>
 											</div>
 										</div>
@@ -210,7 +210,7 @@ The 									main rules and principles of the referral program are simple:
 														<div class="label-black">0</div>
 
 														{% else %}
-														<div class="label-black">{{ item.total_commission_amount }}</div>
+														<div class="label-black">{{ item.total_commission_amount|floatformat:2  }}</div>
 
 														{% endif %}
 
@@ -593,7 +593,7 @@ The 									main rules and principles of the referral program are simple:
 														<div class="label-black">0</div>
 
 														{% else %}
-														<div class="label-black">{{ item.total_commission_amount }}</div>
+														<div class="label-black">{{ item.total_commission_amount|floatformat:2 }}</div>
 
 														{% endif %}
 
