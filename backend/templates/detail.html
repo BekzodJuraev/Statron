@@ -2238,7 +2238,7 @@
 															{% for mention in item.chanel.mentions.all %}
 																{% if  item.created_at.month == mention.post.date.month and item.created_at.day == mention.post.date.day and item.created_at.hour == mention.post.date.hour %}
 
-													<tr>
+																<tr>
 															<td scope="row">
 																<div class="label-black">{{mention.post.date|date:"Y-m-d H:i" }}</div>
 															</td>
@@ -2402,8 +2402,8 @@
                       style="background-color: #fff; width: 40%; height: 60px; ">Подключить
               </button> </a>
             </div>
-									{% endif %}
-									<div class="analitics-tabs__col">
+			{% endif %}
+			<div class="analitics-tabs__col">
 										<div class="analitics-tabs__item item-subs-analitics">
 											<h4 class="title">Подписчиков</h4>
 											<div class="item-subs-analitics__row-col">
@@ -2477,6 +2477,7 @@
 												{% endif %}
 
 											</div>
+
 										</div>
 									{% if request.user.profile.is_premium %}
 										<section class="analitics-tabs__table-wrap analitics-tabs__table-wrap_auto">
@@ -3232,11 +3233,14 @@
 															<div class="label-blue label-blue_s20">{{item.view}}</div>
 														</td>
 														<td class="content-center">
-															<div class="dynamic-analitics__img">
 
-																	<div style="width: 250px; margin: auto; height: 250px;">
-																	<canvas id="myBarChart_{{item.id}}"></canvas>
-																	</div>
+
+																	<div style="width: 200px; margin: auto; height: 45px; display: flex;
+																			  justify-content: center;
+																			  align-items: center;
+																			  margin: 0 auto;">
+																			<canvas id="myBarChart_{{item.id}}"></canvas>
+
 
 
 
@@ -4554,39 +4558,52 @@
 
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-        $(document).ready(function() {
-        {% for item in post %}
-            var ctx = document.getElementById('myBarChart_{{item.id}}').getContext('2d');
-            var minus=Math.round({{item.view}} * 0.7);
-            if (minus<0){
-            minus=0;
-            };
-            var myBarChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['', '', '', '', ''],
-                    datasets: [{
-                        label: '',
-                        data: [minus,{{item.view}}],
-                        backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue color
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
+$(document).ready(function() {
+    {% for item in post %}
+        var ctx = document.getElementById('myBarChart_{{item.id}}').getContext('2d');
+        var minus = Math.round({{item.view}} * 0.7);
+        if (minus < 0) {
+            minus = 0;
+        }
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['', '', '', '', ''],
+                datasets: [{
+                    label: '',
+                    data: [minus, {{item.view}}],
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false // Removes the button/legend
+                    }
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                scales: {
+                    x: {
+                        display: false,  // Removes x-axis and its labels
+                        grid: {
+                            drawOnChartArea: false
+                        }
+                    },
+                    y: {
+                        display: false,  // Removes y-axis and its labels
+                        grid: {
+                            drawOnChartArea: false
                         }
                     }
                 }
-            });
-            {% endfor %}
+            }
         });
-    </script>
+    {% endfor %}
+});
+</script>
 
 {% endblock %}

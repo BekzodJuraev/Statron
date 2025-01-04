@@ -606,6 +606,14 @@
 {% endif %}
 <script>
 	$(document).ready(function() {
+	{% if LANGUAGE_CODE == 'en' %}
+		var messages = 'Posts';
+
+		{% else %}
+		var messages = 'Пост';
+
+		{% endif %}
+
      if ($("#chart_1").length) {
         var ctx = $("#chart_1")[0].getContext("2d");
 
@@ -626,7 +634,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Views',
+                    label: messages,
                     data: views,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
 
@@ -675,7 +683,7 @@ if ($("#chart_2").length) {
             data: {
                 labels: labels, // Use the labels array for x-axis
                 datasets: [{
-                    label: "Пост",
+                    label: messages,
                     data: views, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
@@ -723,7 +731,7 @@ if ($("#chart_3").length) {
             data: {
                 labels: labels, // Use the labels array for x-axis
                 datasets: [{
-                    label: "Пост",
+                    label: messages,
                     data: views, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
@@ -770,7 +778,7 @@ if ($("#chart_4").length) {
             data: {
                 labels: labels, // Use the labels array for x-axis
                 datasets: [{
-                    label: "Пост",
+                    label: messages,
                     data: views, // Use the views array for y-axis data
                     fill: true,
                     backgroundColor: ["rgba(65, 128, 198, 0.80)"],
