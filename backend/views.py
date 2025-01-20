@@ -269,12 +269,12 @@ def notification_freekassa(request):
 
         else:
 
-            print(f"Invalid signature for Order ID {order_id}.")
+
             return HttpResponse(status=400)  # Bad Request
 
     except Exception as e:
 
-        print(f"Error processing notification: {e}")
+
         return HttpResponse(status=500)
 
 @csrf_exempt
