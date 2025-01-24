@@ -15,6 +15,8 @@ SECRET_KEY=env("SECRET_KEY")
 CUR=env("CUR")
 Wallet_public=env("Wallet_public")
 Wallet_private=env("Wallet_private")
+YOOKASSA_ID=env('YOOKASSA_ID')
+YOOKASSA_SECRET_KEY=env('YOOKASSA_SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 
 

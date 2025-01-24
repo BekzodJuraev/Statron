@@ -39,9 +39,10 @@ import telegram
 import requests
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
 
+
 import time
 
-from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private,YOOKASSA_ID,YOOKASSA_SECRET_KEY
 
 
 
@@ -224,6 +225,7 @@ def telegram_auth(request):
                 bot_auth.send_message(id, f"Error during user creation: {str(e)}")
 
         return HttpResponse(status=200)
+
 
 
 
@@ -1419,3 +1421,39 @@ class Ref_View(View):
 
 
         return redirect(reverse_lazy('main'))
+
+def yookassa_payment(request):
+    from yookassa import Configuration, Payment
+    Configuration.account_id = YOOKASSA_ID
+    Configuration.secret_key = YOOKASSA_SECRET_KEY
+
+    payment = Payment.create({
+        "amount": {
+            "value": f"10",
+            "currency": "RUB"
+        },
+        "confirmation": {
+            "type": "redirect",  # Use redirect for payment confirmation
+            "return_url": "https://stattron.ru/"  # URL after successful payment
+        },
+        "receipt": {
+            "customer": {
+                "email": "john.doe@example.com"  # Optional
+            },
+            "items": [
+                {
+                    "description": "Sample Item",
+                    "quantity": "1.00",
+                    "amount": {
+                        "value": "100.00",
+                        "currency": "RUB"
+                    },
+                    "vat_code": "1"  # VAT code for the item (check documentation for appropriate value)
+                }
+            ]
+        }
+    })
+
+    # Get the confirmation URL
+    payment_url = payment.confirmation.confirmation_url
+    return redirect(payment_url)
