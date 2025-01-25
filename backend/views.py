@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from rest_framework import generics
 from django.db.models import Value,Case,When
 from django.core.cache import cache
+from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.utils.translation import get_language
 import re
@@ -1422,14 +1423,18 @@ class Ref_View(View):
 
         return redirect(reverse_lazy('main'))
 
+@login_required
 def yookassa_payment(request):
     from yookassa import Configuration, Payment
     Configuration.account_id = YOOKASSA_ID
     Configuration.secret_key = YOOKASSA_SECRET_KEY
+    amount = float(request.GET.get('price'))
+    id_order = request.GET.get('order_id')
+
 
     payment = Payment.create({
         "amount": {
-            "value": f"10",
+            "value": f"{amount}",
             "currency": "RUB"
         },
         "confirmation": {
@@ -1438,19 +1443,9 @@ def yookassa_payment(request):
         },
         "receipt": {
             "customer": {
-                "email": "john.doe@example.com"  # Optional
+                "email": f"{request.user.email}"  # Optional
             },
-            "items": [
-                {
-                    "description": "Sample Item",
-                    "quantity": "1.00",
-                    "amount": {
-                        "value": "100.00",
-                        "currency": "RUB"
-                    },
-                    "vat_code": "1"  # VAT code for the item (check documentation for appropriate value)
-                }
-            ]
+
         }
     })
 

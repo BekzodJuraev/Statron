@@ -16,17 +16,7 @@ payment = Payment.create({
         "customer": {
             "email": "john.doe@example.com"  # Optional
         },
-        "items": [
-            {
-                "description": "Sample Item",
-                "quantity": "1.00",
-                "amount": {
-                    "value": "100.00",
-                    "currency": "RUB"
-                },
-                "vat_code": "1"  # VAT code for the item (check documentation for appropriate value)
-            }
-        ]
+
     }
 })
 
