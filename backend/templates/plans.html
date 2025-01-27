@@ -16,9 +16,9 @@
 							<div class="plans__box-flex">
 								<h3 class="plans__box-title">Premium</h3>
 								{% if request.user.profile.is_onedollar %}
-								<a href="{% url 'payment' %}?price=1.00" class="plans__box-btn">
+								<a href="{% url 'payment' %}?price={{one.price}}&order_id={{one.id}}" class="plans__box-btn">
 									<span class="just_price">
-										First Month $1
+										First Month ${{ one.price|floatformat:0 }}
 									</span>
 									<span class="old_price">
 										20$
@@ -59,76 +59,46 @@
 									</p>
 								</div>
 							</div>
+
 							{% if request.user.profile.is_onedollar %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">{{one.name_en}}</h4>
 									<p class="plans__box-monthDesc">
-										Cost will increase to $20 for the next month.
+										{{one.discout_en}}
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=1.00&order_id=2">
 								<button class="plans__box-monthBtn">
-									Purchase for 1$
+									Purchase for {{ one.price|floatformat:0 }}$
 								</button>
 								</a>
 							</div>
-							{% else %}
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 Month </h4>
-									<p class="plans__box-monthDesc">
 
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=20.00&order_id=6">
-								<button class="plans__box-monthBtn">
-									Purchase for 20$
-								</button>
-								</a>
-							</div>
+
 							{% endif %}
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">3 Months</h4>
-									<p class="plans__box-monthDesc">
-										15% Discount <span>60$</span>
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=51.00&order_id=3">
-								<button class="plans__box-monthBtn">
-									Purchase for 51$
-								</button>
-								</a>
-							</div>
+							{% for item in plans %}
+
 
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-
-									<h4 class="plans__box-monthTitle">6 Months</h4>
+									<h4 class="plans__box-monthTitle">{{item.name_en}}</h4>
 									<p class="plans__box-monthDesc">
-										20% Discount <span>120$</span>
+										{% if item.discout_en %}
+										{{item.discout_en}}
+										{% endif %}
+										{% if item.discout_minus_en %}
+										<span>{{item.discout_minus_en}}</span>
+										{% endif %}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price=96.00&order_id=4">
+								<a href="{% url 'payment' %}?price={{item.price}}&order_id={{item.id}}">
 								<button class="plans__box-monthBtn">
-									Purchase for 96$
+									Purchase for {{ item.price|floatformat:0 }}$
 								</button>
 								</a>
 							</div>
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">12 месяцев</h4>
-									<p class="plans__box-monthDesc">
-										25% Discount <span>240$</span>
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=180.00&order_id=5">
-								<button class="plans__box-monthBtn">
-									Purchase for 180$
-								</button>
-								</a>
-							</div>
+							{% endfor %}
 						</div>
 						<div class="plans__box-white">
 							<h3 class="plans__box-title">Demo</h3>
@@ -158,9 +128,9 @@
 							<div class="plans__box-flex">
 								<h3 class="plans__box-title">Premium</h3>
 								{% if request.user.profile.is_onedollar %}
-								<a href="{% url 'payment' %}?price=1.00" class="plans__box-btn">
+								<a href="{% url 'payment' %}?price={{one.price}}&order_id={{one.id}}" class="plans__box-btn">
 									<span class="just_price">
-										Первый месяц 1$
+										Первый месяц {{ one.price|floatformat:0 }}$
 									</span>
 									<span class="old_price">
 										20$
@@ -210,73 +180,44 @@
 							{% if request.user.profile.is_onedollar %}
 							<div class="plans__box-month-plans">
 								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
+									<h4 class="plans__box-monthTitle">{{one.name}}</h4>
 									<p class="plans__box-monthDesc">
-										Стоимость увеличится до 20$ со следующего месяца
+										{{one.discout}}
 									</p>
 								</div>
 								<a href="{% url 'payment' %}?price=1.00&order_id=2">
 								<button class="plans__box-monthBtn">
-									Подключить за 1$
+									Подключить за {{ one.price|floatformat:0 }}$
 								</button>
 								</a>
 							</div>
-							{% else %}
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">1 месяц</h4>
-									<p class="plans__box-monthDesc">
 
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=20.00&order_id=6">
-								<button class="plans__box-monthBtn">
-									Подключить за 20$
-								</button>
-								</a>
-							</div>
+
 							{% endif %}
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">3 месяца</h4>
-									<p class="plans__box-monthDesc">
-										Скидка 15% <span>60$</span>
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=51.00&order_id=3">
-								<button class="plans__box-monthBtn">
-									Подключить за 51$
-								</button>
-								</a>
-							</div>
+							{% for item in plans %}
+
 
 							<div class="plans__box-month-plans">
 								<div class="small-w">
+									<h4 class="plans__box-monthTitle">{{item.name}}</h4>
+									<p class="plans__box-monthDesc">
+										{% if item.discout %}
+										{{item.discout}}
+										{% endif %}
+										{% if item.discout_minus %}
+										<span>{{item.discout_minus}}</span>
+										{% endif %}
+									</p>
+								</div>
+								<a href="{% url 'payment' %}?price={{item.price}}&order_id={{item.id}}">
+								<button class="plans__box-monthBtn">
+									Подключить за {{ item.price|floatformat:0 }}$
+								</button>
+								</a>
+							</div>
+							{% endfor %}
 
-									<h4 class="plans__box-monthTitle">6 месяцев</h4>
-									<p class="plans__box-monthDesc">
-										Скидка 20% <span>120$</span>
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=96.00&order_id=4">
-								<button class="plans__box-monthBtn">
-									Подключить за 96$
-								</button>
-								</a>
-							</div>
-							<div class="plans__box-month-plans">
-								<div class="small-w">
-									<h4 class="plans__box-monthTitle">12 месяцев</h4>
-									<p class="plans__box-monthDesc">
-										Скидка 25% <span>240$</span>
-									</p>
-								</div>
-								<a href="{% url 'payment' %}?price=180.00&order_id=5">
-								<button class="plans__box-monthBtn">
-									Подключить за 180$
-								</button>
-								</a>
-							</div>
+
 						</div>
 						<div class="plans__box-white">
 							<h3 class="plans__box-title">Demo</h3>

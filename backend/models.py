@@ -369,8 +369,17 @@ class Payment(models.Model):
 
 class Type_sub(models.Model):
     price=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    price_rubl=models.DecimalField(max_digits=10, decimal_places=2,default=0)
     name=models.CharField(max_length=200)
+    name_en=models.CharField(max_length=200,default=None,blank=True,null=True)
+
+    discout=models.CharField(max_length=200,default=None,blank=True,null=True)
+    discout_en = models.CharField(max_length=200, default=None, blank=True, null=True)
+
+    discout_minus=models.CharField(max_length=200,default=None,blank=True,null=True)
+    discout_minus_en=models.CharField(max_length=200,default=None,blank=True,null=True)
     days = models.IntegerField(default=0)
+    one_dollar=models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

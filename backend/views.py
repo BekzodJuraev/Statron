@@ -547,6 +547,21 @@ class PlansView(TemplateView):
     login_url = reverse_lazy('login_site')
     template_name = 'plans.html'
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        one=Type_sub.objects.filter(one_dollar=True).first()
+        context['one']=one
+        if self.request.user.profile.is_onedollar:
+            context['plans'] = Type_sub.objects.filter(one_dollar=False).exclude(days=one.days)
+        else:
+            context['plans'] = Type_sub.objects.filter(one_dollar=False)
+
+
+
+        return context
+
+
+
 
 class PaymentView(LoginRequiredMixin,TemplateView):
     login_url = reverse_lazy('login_site')
