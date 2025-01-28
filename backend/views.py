@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from decimal import Decimal
 from django.utils.translation import get_language
 import re
+import requests
 import hashlib
 from urllib.parse import urlencode
 from django.contrib import messages
@@ -549,6 +550,8 @@ class PlansView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+
+
         one=Type_sub.objects.filter(one_dollar=True).first()
         context['one']=one
         if self.request.user.profile.is_onedollar:
@@ -724,8 +727,30 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
         withdraw=Payment.objects.filter(profile=self.object)
         context['withdraw']=withdraw
         context['history']=Subscribe.objects.filter(profile=self.object).select_related('type_sub')
+        if get_language() == 'en':
+            context['ref_code'] = Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles',
+                                                                                           'commission').annotate(
+                count_commission=Count('commission', distinct=True),
+                total_commission_amount=Sum('commission__amount', distinct=True),
+                count_register=Count('recommended_profiles', distinct=True))
+        else:
+            try:
+                url = "https://api.exchangerate-api.com/v4/latest/USD"
+                response = requests.get(url)
+                data = response.json()
+                rub_rate = data['rates']['RUB']
+                context['ref_code'] = Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles',
+                                                                                               'commission').annotate(
+                    count_commission=Count('commission', distinct=True),
+                    total_commission_amount=Sum('commission__amount', distinct=True),
+                    total_commission_amount_rubl=Sum(F('commission__amount') * Value(Decimal(rub_rate)), distinct=True),
+                    count_register=Count('recommended_profiles', distinct=True))
 
-        context['ref_code']=Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles','commission').annotate(count_commission=Count('commission',distinct=True),total_commission_amount=Sum('commission__amount',distinct=True),count_register=Count('recommended_profiles',distinct=True))
+            except Exception as e:
+                pass
+
+
+
         #prefetch_related('commission').annotate(count_commission=Count('commission'),total_commission_amount=Sum('commission__amount'))
 
 

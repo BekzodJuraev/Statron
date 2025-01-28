@@ -68,7 +68,7 @@
 										{{one.discout_en}}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price=1.00&order_id=2">
+								<a href="{% url 'payment' %}?price={{one.price}}&order_id=2">
 								<button class="plans__box-monthBtn">
 									Purchase for {{ one.price|floatformat:0 }}$
 								</button>
@@ -128,9 +128,9 @@
 							<div class="plans__box-flex">
 								<h3 class="plans__box-title">Premium</h3>
 								{% if request.user.profile.is_onedollar %}
-								<a href="{% url 'payment' %}?price={{one.price}}&order_id={{one.id}}" class="plans__box-btn">
+								<a href="{% url 'payment' %}?price={{one.price_rubl}}&order_id={{one.id}}" class="plans__box-btn">
 									<span class="just_price">
-										Первый месяц {{ one.price|floatformat:0 }}$
+										Первый месяц {{ one.price_rubl}}₽
 									</span>
 									<span class="old_price">
 										20$
@@ -185,9 +185,9 @@
 										{{one.discout}}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price=1.00&order_id=2">
+								<a href="{% url 'payment' %}?price={{one.price_rubl}}&order_id=2">
 								<button class="plans__box-monthBtn">
-									Подключить за {{ one.price|floatformat:0 }}$
+									Подключить за {{ one.price_rubl }}₽
 								</button>
 								</a>
 							</div>
@@ -209,9 +209,9 @@
 										{% endif %}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price={{item.price}}&order_id={{item.id}}">
+								<a href="{% url 'payment' %}?price={{item.price_rubl}}&order_id={{item.id}}">
 								<button class="plans__box-monthBtn">
-									Подключить за {{ item.price|floatformat:0 }}$
+									Подключить за {{ item.price_rubl }}₽
 								</button>
 								</a>
 							</div>

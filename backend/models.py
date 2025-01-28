@@ -17,6 +17,8 @@ from django.db.models import Sum
 from decimal import Decimal
 import uuid
 from django.utils import timezone
+
+url = "https://api.exchangerate-api.com/v4/latest/USD"
 class Profile(models.Model):
     username=models.OneToOneField(User,on_delete=models.CASCADE,related_name='profile')
     phone_number = PhoneNumberField()
@@ -43,13 +45,24 @@ class Profile(models.Model):
 
 
     def save(self, *args, **kwargs):
-        # Update the associated User'sa email before saving
         self.username.email = self.email
         self.username.save()
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username.username
+
+    @property
+    def balance_rubl(self):
+        try:
+            response = requests.get(url)
+            data = response.json()
+            rub_rate = data['rates']['RUB']
+            converted_amount = Decimal(rub_rate) * self.balance
+            return round(converted_amount)
+
+        except Exception as e:
+            pass
 
 class Ref(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='referal')
@@ -369,7 +382,7 @@ class Payment(models.Model):
 
 class Type_sub(models.Model):
     price=models.DecimalField(max_digits=10, decimal_places=2,default=0)
-    price_rubl=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+
     name=models.CharField(max_length=200)
     name_en=models.CharField(max_length=200,default=None,blank=True,null=True)
 
@@ -380,6 +393,21 @@ class Type_sub(models.Model):
     discout_minus_en=models.CharField(max_length=200,default=None,blank=True,null=True)
     days = models.IntegerField(default=0)
     one_dollar=models.BooleanField(default=False)
+
+
+    @property
+    def price_rubl(self):
+        try:
+            response = requests.get(url)
+            data = response.json()
+            rub_rate = data['rates']['RUB']
+            converted_amount = Decimal(rub_rate)  * self.price
+
+            return round(converted_amount)
+
+        except Exception as e:
+            pass
+
 
     def __str__(self):
         return self.name
@@ -443,6 +471,18 @@ class Commission(models.Model):
             self.code.profile.save(update_fields=['balance'])
 
         super().save(*args, **kwargs)
+
+    @property
+    def amount_rubl(self):
+        try:
+            response = requests.get(url)
+            data = response.json()
+            rub_rate = data['rates']['RUB']
+            converted_amount = rub_rate * int(self.amount)
+            return round(converted_amount)
+
+        except Exception as e:
+            pass
 
 
 

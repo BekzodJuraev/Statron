@@ -406,7 +406,7 @@ The 									main rules and principles of the referral program are simple:
 											</div>
 											<div class="info-account__item-content">
 												<div class="label-black">Реф. баланс</div>
-												<div class="label-blue label-blue_s24">{{item.balance}} $.</div>
+												<div class="label-blue label-blue_s24">{{item.balance_rubl}} ₽.</div>
 											</div>
 										</div>
 										<div class="info-account__head-list-item">
@@ -593,7 +593,7 @@ The 									main rules and principles of the referral program are simple:
 														<div class="label-black">0</div>
 
 														{% else %}
-														<div class="label-black">{{ item.total_commission_amount|floatformat:2 }}</div>
+														<div class="label-black">{{ item.total_commission_amount_rubl|floatformat:0 }}</div>
 
 														{% endif %}
 
