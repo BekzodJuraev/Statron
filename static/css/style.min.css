@@ -3715,7 +3715,24 @@ td {
   background: #fff;
   padding: 1.25rem 1.4375rem
 }
+.amount__input-box_dollar::after {
+  content: "$";
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.3rem;
+  color: #000;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(0, -0.5px);
+  border-radius: 0 20px 20px 0;
+  background: #FFF;
+  padding: 1.25rem 1.4375rem;
+}
 
+.amount__input-box_dollar > .form__input {
+  padding-right: 3.75rem
+}
 .amount__input-box > .form__input {
   padding-right: 3.75rem
 }

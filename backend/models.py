@@ -341,6 +341,8 @@ class Payment(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     wallet=models.CharField(max_length=200)
     amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    amount_rubl = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
     status=models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
@@ -369,6 +371,10 @@ class Payment(models.Model):
                     self.status = False
             self.profile.balance = F('balance') - self.amount
             self.profile.save(update_fields=['balance'])
+        response = requests.get("https://api.exchangerate-api.com/v4/latest/USD")
+        data = response.json()
+        rub_rate = data['rates']['RUB']
+        self.amount_rubl = round(Decimal(rub_rate) * self.amount)
 
         super().save(*args, **kwargs)
 
@@ -461,6 +467,7 @@ class Subscribe(models.Model):
 class Commission(models.Model):
     code=models.ForeignKey(Ref,on_delete=models.CASCADE,related_name='commission')
     amount=models.DecimalField(max_digits=10, decimal_places=2,default=0)
+    amount_rubl=models.DecimalField(max_digits=10, decimal_places=2,default=0)
 
 
     def save(self, *args, **kwargs):
@@ -469,20 +476,20 @@ class Commission(models.Model):
             self.amount = self.amount * Decimal('0.1')
             self.code.profile.balance = F('balance') + self.amount
             self.code.profile.save(update_fields=['balance'])
+            try:
+                response = requests.get(url)
+                data = response.json()
+                rub_rate = data['rates']['RUB']
+                self.amount_rubl=round(Decimal(rub_rate) * self.amount)
+            except:
+                pass
+
+
+
 
         super().save(*args, **kwargs)
 
-    @property
-    def amount_rubl(self):
-        try:
-            response = requests.get(url)
-            data = response.json()
-            rub_rate = data['rates']['RUB']
-            converted_amount = rub_rate * int(self.amount)
-            return round(converted_amount)
 
-        except Exception as e:
-            pass
 
 
 

@@ -44,7 +44,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMa
 
 import time
 
-from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private,YOOKASSA_ID,YOOKASSA_SECRET_KEY
+from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,SHOP_ID,SECRET_KEY,SECRET_KEY,CUR,Wallet_public,Wallet_private,YOOKASSA_ID,YOOKASSA_SECRET_KEY,CUR_RUB
 
 
 
@@ -593,19 +593,35 @@ class PaymentView(LoginRequiredMixin,TemplateView):
         context = super().get_context_data(**kwargs)
         amount = float(self.request.GET.get('price'))
         id_order=self.request.GET.get('order_id')
-        try:
-            Type_sub.objects.get(price=amount, id=id_order)
-            if self.request.user.profile.promo_code:
-                amount = amount * (1 - self.request.user.profile.promo_code.discount_percentage / 100)
+        if self.request.user.profile.promo_code:
+            amount = amount * (1 - self.request.user.profile.promo_code.discount_percentage / 100)
             amount = round(amount, 2)
-            signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR}:{id_order}"
-            signature = hashlib.md5(signature_string.encode()).hexdigest()
-            url = f"https://pay.freekassa.ru/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR}&us_key={self.request.user.username}"
+        if get_language() == 'en':
+            try:
+                Type_sub.objects.get(id=id_order)
+                amount = round(amount, 2)
+                signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR}:{id_order}"
+                signature = hashlib.md5(signature_string.encode()).hexdigest()
+                url = f"https://pay.freekassa.ru/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR}&us_key={self.request.user.username}"
 
-            context['freekassa_url'] = url
+                context['freekassa_url'] = url
 
-        except:
-            pass
+            except Exception as e:
+                print(e)
+        else:
+            try:
+                Type_sub.objects.get(id=id_order)
+                signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR_RUB}:{id_order}"
+                signature = hashlib.md5(signature_string.encode()).hexdigest()
+                url = f"https://pay.freekassa.ru/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR_RUB}&us_key={self.request.user.username}"
+
+                context['freekassa_url'] = url
+
+            except Exception as e:
+                print(e)
+
+
+
 
 
 
@@ -727,27 +743,12 @@ class UpdateCabinet(LoginRequiredMixin,DetailView):
         withdraw=Payment.objects.filter(profile=self.object)
         context['withdraw']=withdraw
         context['history']=Subscribe.objects.filter(profile=self.object).select_related('type_sub')
-        if get_language() == 'en':
-            context['ref_code'] = Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles',
-                                                                                           'commission').annotate(
-                count_commission=Count('commission', distinct=True),
-                total_commission_amount=Sum('commission__amount', distinct=True),
-                count_register=Count('recommended_profiles', distinct=True))
-        else:
-            try:
-                url = "https://api.exchangerate-api.com/v4/latest/USD"
-                response = requests.get(url)
-                data = response.json()
-                rub_rate = data['rates']['RUB']
-                context['ref_code'] = Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles',
-                                                                                               'commission').annotate(
-                    count_commission=Count('commission', distinct=True),
-                    total_commission_amount=Sum('commission__amount', distinct=True),
-                    total_commission_amount_rubl=Sum(F('commission__amount') * Value(Decimal(rub_rate)), distinct=True),
-                    count_register=Count('recommended_profiles', distinct=True))
-
-            except Exception as e:
-                pass
+        context['ref_code'] = Ref.objects.filter(profile=self.object).prefetch_related('recommended_profiles',
+                                                                                       'commission').annotate(
+            count_commission=Count('commission', distinct=True),
+            total_commission_amount=Sum('commission__amount', distinct=True),
+            total_commission_amount_rubl=Sum('commission__amount_rubl', distinct=True),
+            count_register=Count('recommended_profiles', distinct=True))
 
 
 
