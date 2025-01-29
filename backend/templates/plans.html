@@ -68,7 +68,7 @@
 										{{one.discout_en}}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price={{one.price}}&order_id=2">
+								<a href="{% url 'payment' %}?price={{one.price}}&order_id={{one.id}}">
 								<button class="plans__box-monthBtn">
 									Purchase for {{ one.price|floatformat:0 }}$
 								</button>
@@ -132,9 +132,7 @@
 									<span class="just_price">
 										Первый месяц {{ one.price_rubl}}₽
 									</span>
-									<span class="old_price">
-										20$
-									</span>
+
 								</a>
 								{% endif %}
 							</div>
@@ -185,7 +183,7 @@
 										{{one.discout}}
 									</p>
 								</div>
-								<a href="{% url 'payment' %}?price={{one.price_rubl}}&order_id=2">
+								<a href="{% url 'payment' %}?price={{one.price_rubl}}&order_id={{one.id}}">
 								<button class="plans__box-monthBtn">
 									Подключить за {{ one.price_rubl }}₽
 								</button>

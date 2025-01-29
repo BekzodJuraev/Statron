@@ -1472,21 +1472,22 @@ def yookassa_payment(request):
     amount = float(request.GET.get('price'))
     id_order = request.GET.get('order_id')
 
-
     payment = Payment.create({
         "amount": {
             "value": f"{amount}",
             "currency": "RUB"
         },
         "confirmation": {
-            "type": "redirect",  # Use redirect for payment confirmation
-            "return_url": "https://stattron.ru/"  # URL after successful payment
+            "type": "redirect",
+            "return_url": "https://stattron.ru/"
         },
         "receipt": {
             "customer": {
-                "email": f"{request.user.email}"  # Optional
-            },
-
+                "email": f"{request.user.email}"
+            }
+        },
+        "metadata": {
+            "order_id": id_order,
         }
     })
 
