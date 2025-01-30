@@ -11,11 +11,7 @@
 					<form action="" class="payment-form form" method="POST">
 						{% csrf_token %}
 						<div class="payment__service">
-							<label for="payment-iokassa" class="payment__service-box">
-								<input type="checkbox" name="payment-iokassa" id="payment-iokassa"
-									class="payment__service-checkbox">
-								<img src="{% static 'img/payment/iokassa.jpg' %}" alt="" class="payment__service-image">
-							</label>
+
 							<label for="payment-cryptomus" class="payment__service-box">
 								<input type="checkbox" name="payment-cryptomus" id="payment-cryptomus"
 									class="payment__service-checkbox">

@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns=[
  path('fk-verify.html',views.Freekassa.as_view(),name="fk-verify"),
  path('yookassa/',views.yookassa_payment,name='yookassa'),
+ path('yookassa/payment', views.notification_yukassa, name='yukassa'),
  path('chanel/',views.ChanelAPI.as_view(),name="chanel"),
  path('update_cabinet/<int:pk>',views.UpdateCabinet.as_view(),name='updatecabinet'),
  path('login/', views.LoginAPIView.as_view(), name='login'),

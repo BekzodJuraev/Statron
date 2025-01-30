@@ -233,7 +233,6 @@ def telegram_auth(request):
 
 
 
-
 @csrf_exempt
 @require_POST
 def notification_freekassa(request):
@@ -259,7 +258,7 @@ def notification_freekassa(request):
             sub=Type_sub.objects.filter(id=order_id).first()
             Subscribe.objects.create(profile=profile,type_sub=sub,status=True)
             if profile.recommended_by:
-                Commission.objects.create(code=profile.recommended_by, amount=Decimal(amount))
+                Commission.objects.create(code=profile.recommended_by, amount=sub.price)
 
 
             if profile.promo_code:
@@ -644,31 +643,48 @@ class WithdrawView(LoginRequiredMixin,TemplateView):
         password=request.POST.get('password-for-payment')
         password_repeat=request.POST.get('password-for-payment-repeat')
 
+
         if password != password_repeat:
             messages.error(request, "Passwords do not match.")
             return redirect(request.path)
 
-            # Verify the user's password
-        user = request.user  # Get the currently authenticated user
+        user = request.user
         if not user.check_password(password):
             messages.error(request, "Incorrect password.")
             return redirect(request.path)
 
-        if user.profile.balance > Decimal(wallet):  # Convert wallet to Decimal
-            messages.error(request, "You don't have enough money")
-            return redirect(request.path)
-        # Process payment logic
+        if get_language() == 'en':
+            if user.profile.balance < Decimal(amount):  # Convert wallet to Decimal
+                messages.error(request, "You don't have enough money")
+                return redirect(request.path)
+            # Process payment logic
 
-        if payment_cryptomus:
-            Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
-                                                              amount=amount, status=False)
-            messages.success(request, "Payment is processing!")
-            return redirect(request.path)
-        elif payment_iokassa:
-            Payment.objects.create(profile=user.profile, paymentgatway="Yukassa", wallet=wallet,
-                                   amount=amount, status=False)
-            messages.success(request, "Payment is processing!")
-            return redirect(request.path)
+            if payment_cryptomus:
+                Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
+                                       amount=amount, status=False)
+                messages.success(request, "Payment is processing!")
+                return redirect(request.path)
+
+
+        else:
+            if user.profile.balance_rubl < Decimal(amount):
+                messages.error(request, "You don't have enough money")
+                return redirect(request.path)
+            # Process payment logic
+
+            if payment_cryptomus:
+                Payment.objects.create(profile=user.profile, paymentgatway="Freekassa", wallet=wallet,
+                                       amount_rubl=amount, status=False)
+                messages.success(request, "Payment is processing!")
+                return redirect(request.path)
+            elif payment_iokassa:
+                Payment.objects.create(profile=user.profile, paymentgatway="Yukassa", wallet=wallet,
+                                       amount_rubl=amount, status=False)
+                messages.success(request, "Payment is processing!")
+                return redirect(request.path)
+
+        messages.success(request, "Error wallet")
+        return redirect(request.path)
 
         # if payment_cryptomus:
         #
@@ -1464,15 +1480,18 @@ class Ref_View(View):
 
         return redirect(reverse_lazy('main'))
 
+from yookassa import Configuration
+from yookassa import Payment as Pay
 @login_required
 def yookassa_payment(request):
-    from yookassa import Configuration, Payment
     Configuration.account_id = YOOKASSA_ID
     Configuration.secret_key = YOOKASSA_SECRET_KEY
     amount = float(request.GET.get('price'))
     id_order = request.GET.get('order_id')
-
-    payment = Payment.create({
+    if request.user.profile.promo_code:
+        amount = amount * (1 - request.user.profile.promo_code.discount_percentage / 100)
+        amount = round(amount, 2)
+    payment = Pay.create({
         "amount": {
             "value": f"{amount}",
             "currency": "RUB"
@@ -1481,16 +1500,46 @@ def yookassa_payment(request):
             "type": "redirect",
             "return_url": "https://stattron.ru/"
         },
-        "receipt": {
-            "customer": {
-                "email": f"{request.user.email}"
-            }
-        },
         "metadata": {
             "order_id": id_order,
+            "username": f"{request.user.username}"
         }
     })
 
     # Get the confirmation URL
     payment_url = payment.confirmation.confirmation_url
     return redirect(payment_url)
+
+@csrf_exempt
+@require_POST
+def notification_yukassa(request):
+    try:
+        data = json.loads(request.body)
+        event = data.get("event")
+        payment_object = data.get("object", {})
+        amount = payment_object.get("amount", {}).get("value")
+        order_id = payment_object.get("metadata", {}).get("order_id")
+        username = payment_object.get("metadata", {}).get("username")
+
+        if event == "payment.succeeded":
+            profile = Profile.objects.filter(username__username=username).first()
+            sub = Type_sub.objects.filter(id=order_id).first()
+            Subscribe.objects.create(profile=profile, type_sub=sub, status=True)
+            if profile.recommended_by:
+                Commission.objects.create(code=profile.recommended_by, amount=sub.price)
+
+            if profile.promo_code:
+                profile.promo_code = None
+                profile.save(update_fields=['promo_code'])
+
+
+
+            # Process the payment (e.g., update database)
+            return JsonResponse({"status": "success", "order_id": order_id, "amount": amount})
+
+        return JsonResponse({"status": "error", "message": "Unhandled event"}, status=400)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"status": "error", "message": "Invalid JSON"}, status=400)
+
+    return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)

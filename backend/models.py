@@ -371,10 +371,6 @@ class Payment(models.Model):
                     self.status = False
             self.profile.balance = F('balance') - self.amount
             self.profile.save(update_fields=['balance'])
-        response = requests.get("https://api.exchangerate-api.com/v4/latest/USD")
-        data = response.json()
-        rub_rate = data['rates']['RUB']
-        self.amount_rubl = round(Decimal(rub_rate) * self.amount)
 
         super().save(*args, **kwargs)
 
