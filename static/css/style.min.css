@@ -5765,10 +5765,10 @@ td {
     padding: .3125rem 0
   }
 
-  .dropdown-header__list {
-    right: -20px;
-    width: 100vw
-  }
+  /*.dropdown-header__list {*/
+  /*  right: -20px;*/
+  /*  width: 100vw*/
+  /*}*/
 
   .channels-tabs__bottom {
     -webkit-box-orient: vertical;

@@ -153,10 +153,18 @@
 						</button>
 						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
 							{% if request.LANGUAGE_CODE == 'en' %}
-							<a href="/" class="dropdown-header-lang__item">Ru</a>
+							<a href="/"><li class="language-item">
+									Russian
+									<i class="chevron-right"></i>
+								</li></a>
 							{% else %}
-							<a href="/en/" class="dropdown-header-lang__item">En</a>
+							<a href="/en/"><li class="language-item">
+									English
+									<i class="chevron-right"></i>
+								</li></a>
+							</ul>
 							{% endif %}
+
 
 						</div>
 					</div>
@@ -389,10 +397,18 @@
 						</button>
 						<div class="dropdown-header-lang__list dropdown-header__list dropdown-header__list_lang">
 							{% if request.LANGUAGE_CODE == 'en' %}
-							<a href="/" class="dropdown-header-lang__item">Ru</a>
+							<a href="/"><li class="language-item">
+									Русский
+									<i class="chevron-right"></i>
+								</li></a>
 							{% else %}
-							<a href="/en/" class="dropdown-header-lang__item">En</a>
+							<a href="/en/"><li class="language-item">
+									Английский
+									<i class="chevron-right"></i>
+								</li></a>
+							</ul>
 							{% endif %}
+
 
 						</div>
 					</div>
