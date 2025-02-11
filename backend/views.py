@@ -1500,6 +1500,24 @@ def yookassa_payment(request):
             "type": "redirect",
             "return_url": "https://stattron.ru/"
         },
+        "receipt": {  # ✅ Fix: "items" is inside "receipt"
+            "customer": {
+                "email": request.user.email  # or "phone": "+79000000000"
+            },
+            "items": [  # ✅ Move "items" inside "receipt"
+                {
+                    "description": "Product Name",
+                    "quantity": "1.00",
+                    "amount": {
+                        "value": f"{amount}",
+                        "currency": "RUB"
+                    },
+                    "vat_code": "1",  # 1 = 20%, 2 = 10%, etc.
+                    "payment_mode": "full_payment",
+                    "payment_subject": "service"
+                }
+            ]
+        },
         "metadata": {
             "order_id": id_order,
             "username": f"{request.user.username}"
