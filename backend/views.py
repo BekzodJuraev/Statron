@@ -1486,6 +1486,7 @@ from yookassa import Payment as Pay
 def yookassa_payment(request):
     Configuration.account_id = YOOKASSA_ID
     Configuration.secret_key = YOOKASSA_SECRET_KEY
+    customer_email = request.user.email if request.user.email else "anonymous@example.com"
     amount = float(request.GET.get('price'))
     id_order = request.GET.get('order_id')
     if request.user.profile.promo_code:
@@ -1502,7 +1503,7 @@ def yookassa_payment(request):
         },
         "receipt": {  # ✅ Fix: "items" is inside "receipt"
             "customer": {
-                "email": request.user.email  # or "phone": "+79000000000"
+                "email": customer_email
             },
             "items": [  # ✅ Move "items" inside "receipt"
                 {
