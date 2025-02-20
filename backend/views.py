@@ -612,7 +612,7 @@ class PaymentView(LoginRequiredMixin,TemplateView):
                 Type_sub.objects.get(id=id_order)
                 signature_string = f"{SHOP_ID}:{amount}:{SECRET_KEY}:{CUR_RUB}:{id_order}"
                 signature = hashlib.md5(signature_string.encode()).hexdigest()
-                url = f"https://pay.freekassa.ru/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR_RUB}&us_key={self.request.user.username}"
+                url = f"https://pay.freekassa.net/?m={SHOP_ID}&oa={amount}&o={id_order}&s={signature}&currency={CUR_RUB}&us_key={self.request.user.username}"
 
                 context['freekassa_url'] = url
 
