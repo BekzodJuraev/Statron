@@ -370,7 +370,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
-  background: #000;
+  background: #fff;
   -webkit-box-shadow: 0 1.25em 1.25em -0.9375em rgba(0, 0, 0, 0.3);
   box-shadow: 0 1.25em 1.25em -0.9375em rgba(0, 0, 0, 0.3);
   border-right: 1px solid #fff;
@@ -3671,7 +3671,7 @@ td {
 }
 
 .amount__input-box::after {
-  content: "₽";
+  content: "$";
   font-size: 1.125rem;
   font-weight: 400;
   line-height: 1.3rem;
@@ -3684,8 +3684,20 @@ td {
   background: #FFF;
   padding: 1.25rem 1.4375rem;
 }
-
-
+.amount__input-box_dollar::after {
+  content: "$";
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.3rem;
+  color: #000;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(0, -0.5px);
+  border-radius: 0 20px 20px 0;
+  background: #FFF;
+  padding: 1.25rem 1.4375rem;
+}
 .amount__input-box > .form__input {
   padding-right: 3.75rem;
 }

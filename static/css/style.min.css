@@ -347,7 +347,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
-  background: #000;
+  background: #fff;
   -webkit-box-shadow: 0 1.25em 1.25em -.9375em rgba(0, 0, 0, .3);
   box-shadow: 0 1.25em 1.25em -.9375em rgba(0, 0, 0, .3);
   border-right: 1px solid #fff;
@@ -398,7 +398,7 @@ body {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, .75);
-  color: #fff;
+  color: #000;
   width: 100%;
   height: 100%;
   padding: .5em;
@@ -509,8 +509,8 @@ body {
   flex-grow: 1;
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  background: #000;
-  color: #fff;
+  background: #fff;
+  color: #000;
   -webkit-filter: blur(0);
   filter: blur(0);
   -webkit-transition: -webkit-filter .3s;
@@ -599,7 +599,7 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  color: #fff;
+  color: #000;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   padding: .3125em;
@@ -685,7 +685,7 @@ body {
 .qs-datepicker .qs-square.qs-day {
   cursor: default;
   font-weight: 700;
-  color: grey
+  color: black
 }
 
 .qs-datepicker .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {

@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'mathfilters',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

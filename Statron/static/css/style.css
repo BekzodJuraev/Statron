@@ -370,7 +370,7 @@ body {
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
-  background: #000;
+  background: #fff;
   -webkit-box-shadow: 0 1.25em 1.25em -0.9375em rgba(0, 0, 0, 0.3);
   box-shadow: 0 1.25em 1.25em -0.9375em rgba(0, 0, 0, 0.3);
   border-right: 1px solid #fff;

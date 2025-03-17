@@ -96,7 +96,9 @@
 						<div class="item-popup">
 							<div class="item-popup__head">
 								<div class="item-popup__img">
+									<a href="{% url 'detail' item.chanel.pk %}">
 									<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel.pictures}}" width="70%" height="70%" style="border-radius: 50%;" alt=""></picture>
+									</a>
 								</div>
 								<div class="item-popup__content">
 									<div class="label_black">{{item.chanel.name}} </div>
@@ -265,7 +267,9 @@
 						<div class="item-popup">
 							<div class="item-popup__head">
 								<div class="item-popup__img">
+									<a href="{% url 'detail' item.chanel.pk %}">
 									<picture><source srcset="/{{item.chanel.pictures}}" type="image/webp"><img class="img-fluid" src="/{{item.chanel.pictures}}" width="70%" height="70%" style="border-radius: 50%;" alt=""></picture>
+									</a>
 								</div>
 								<div class="item-popup__content">
 									<div class="label_black">{{item.chanel.name}} </div>

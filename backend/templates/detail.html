@@ -66,7 +66,13 @@
 												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
-                                                {{item.description}}
+                                                {% for word in item.description.split %}
+												{% if word|slice:":1" == "@" %}
+													<a href="https://t.me/{{ word|slice:"1:" }}">{{ word|slice:"1:" }}</a>
+												{% else %}
+													{{ word }}
+												{% endif %}
+											{% endfor %}
 											</p>
 										</div>
 									</div>
@@ -2126,7 +2132,14 @@
 												<img class="copyButton" src="{% static 'img/icons/copy.svg' %}" data-chanel-link="{{item.chanel_link }}"alt="">
 											</h1>
 											<p class="text">
-                                                {{item.description}}
+
+												{% for word in item.description.split %}
+												{% if word|slice:":1" == "@" %}
+													<a href="https://t.me/{{ word|slice:"1:" }}">{{ word|slice:"1:" }}</a>
+												{% else %}
+													{{ word }}
+												{% endif %}
+											{% endfor %}
 											</p>
 										</div>
 									</div>

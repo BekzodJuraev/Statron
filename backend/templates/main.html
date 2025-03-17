@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 {% get_current_language as LANGUAGE_CODE %}
 {% if LANGUAGE_CODE == 'en' %}
@@ -24,11 +25,11 @@
 								<div class="item-mainscreen__info">
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
 										<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-										{{ item.subscribers}}
+										{{ item.subscribers|intcomma }}
 									</div>
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
 										<img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{ item.v }}
+										{{ item.v|intcomma  }}
 									</div>
 								</div>
 							</div>
@@ -63,7 +64,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.daily_subscribers > 0 %}
@@ -91,7 +92,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.yesterday_subscribers > 0 %}
@@ -116,7 +117,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.weekly_subscribers > 0 %}
@@ -155,7 +156,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.daily_views > 0 %}
@@ -184,7 +185,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.yesterday_views > 0 %}
@@ -324,11 +325,11 @@
 								<div class="item-mainscreen__info">
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
 										<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-										{{ item.subscribers}}
+										{{ item.subscribers|intcomma }}
 									</div>
 									<div class="channel-count item-mainscreen__count label-blue label-blue_s20">
 										<img src="{% static 'img/icons/eye.svg' %}" alt="">
-										{{ item.v }}
+										{{ item.v|intcomma  }}
 									</div>
 								</div>
 							</div>
@@ -363,7 +364,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+											{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.daily_subscribers > 0 %}
@@ -391,7 +392,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+											{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.yesterday_subscribers > 0 %}
@@ -416,7 +417,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.weekly_subscribers > 0 %}
@@ -455,7 +456,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+											{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.daily_views > 0 %}
@@ -484,7 +485,7 @@
 											<a href="{% url 'detail' item.pk %}" class="channel-tabs-channels__title title title_s20">{{item.name}}</a>
 											<div class="channel-count label-grey">
 												<img src="{% static 'img/icons/users-filling.svg' %}" alt="">
-												{{item.subscribers}}
+												{{ item.subscribers|intcomma }}
 											</div>
 										</div>
 										{% if item.yesterday_views > 0 %}
