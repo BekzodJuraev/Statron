@@ -284,11 +284,14 @@ def notification_freekassa(request):
 @require_POST
 def telegram_webhook(request):
     if request.method == 'POST':
-        json_data = json.loads(request.body.decode('utf-8'))
-        if 'message' in json_data:
-            process_message(json_data)
-        elif 'callback_query' in json_data:
-            process_callback_query(json_data)
+        try:
+            json_data = json.loads(request.body.decode('utf-8'))
+            if 'message' in json_data:
+                process_message(json_data)
+            elif 'callback_query' in json_data:
+                process_callback_query(json_data)
+        except:
+            print('error')
 
         return HttpResponse(status=200)
     else:
@@ -302,7 +305,7 @@ def process_message(json_data):
     forward_id = json_data['message'].get('forward_from_chat', {}).get('id')
     chat_username = json_data['message']['chat'].get('first_name', 'Someone')
 
-    if message_text.startswith("@") or message_text.startswith("-") or forward_id:
+    if message_text.startswith("@") or message_text.startswith("-") or message_text.startswith('t.me/') or forward_id:
         try:
             chanel_chanel_id = message_text if message_text else forward_id
             chat = bot.get_chat(chat_id=chanel_chanel_id)
@@ -379,17 +382,23 @@ def process_message(json_data):
 
 
                 # Convert dictionary to JSON string
-
-                bot.send_message(chat_id,
+                try:
+                    inline_keyboard = [
+                        [InlineKeyboardButton("✅Добавить", callback_data=f'add#{message_text}#{chat_id}'),
+                         InlineKeyboardButton("❌Отклонить", callback_data=f'reject#{message_text}#{chat_id}')],
+                    ]
+                    inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
+                    bot.send_message(my_id,
+                                     text=f"🔥Пользователь {chat_username}  пытался проанализировать канал  {message_text}, но его нету в базе каналов. Добавим?",
+                                     reply_markup=inline_markup)
+                    bot.send_message(chat_id,
                                  f"🤷‍♂️Мы не увидели, что в нашей базе есть этот канал. Мы передали информацию администрации на добавление этого канала. Если его добавят в базу, Вам придёт уведомление ❗️Анализ этого канала могут добавить только если в канале больше 200 подписчиков")
-                inline_keyboard = [
-                    [InlineKeyboardButton("✅Добавить", callback_data=f'add#{message_text}#{chat_id}'),
-                     InlineKeyboardButton("❌Отклонить", callback_data=f'reject#{message_text}#{chat_id}')],
-                ]
-                inline_markup = InlineKeyboardMarkup(inline_keyboard, resize_keyboard=True)
-                bot.send_message(my_id,
-                                 text=f"🔥Пользователь {chat_username}  пытался проанализировать канал  {message_text}, но его нету в базе каналов. Добавим?",
-                                 reply_markup=inline_markup)
+
+
+                except:
+                    bot.send_message(chat_id,
+                                     "Неправильная ссылка!")
+
 
     else:
         bot.send_message(chat_id=chat_id,
