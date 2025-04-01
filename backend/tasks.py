@@ -60,7 +60,7 @@ def add_chanel(chanel_link):
         with Client(name, api_id=api_id, api_hash=api_hash, phone_number=phone,session_string=session_data) as client:
             channel_username = chanel_link.split('/')[-1]
             chat = client.get_chat(channel_username)
-            total_view = client.get_chat_history(channel_username, limit=100)
+            total_view = client.get_chat_history(channel_username, limit=10)
             payload = {
                 'name': chat.title,
                 'subscribers': str(chat.members_count),
@@ -75,12 +75,15 @@ def add_chanel(chanel_link):
 
 
 
+
                 # Add the payload as form fields
-                for key, value in payload.items():
-                    files[key] = (None, str(value))
+                #for key, value in payload.items():
+                 #   files[key] = (None, str(value))
+
+
 
                 #response = requests.post('https://stattron.ru/chanel/', files=files)
-                response = requests.post('http://127.0.0.1:8000/chanel/', files=files)
+                response = requests.post('http://127.0.0.1:8000/chanel/', data=payload, files=files)
 
 
 
@@ -93,10 +96,16 @@ def add_chanel(chanel_link):
                     text=views.caption
 
                 media = ""
+                photo=None
+                video=None
                 if views.photo:
                     media="photo"
+                    file_path = os.path.join("photo/", "posts.jpg")
+                    photo = client.download_media(views.photo.file_id, file_name=file_path)
                 elif views.video:
                     media="video"
+                    file_path = os.path.join("video/", "posts.mp4")
+                    video = client.download_media(views.video.file_id, file_name=file_path)
                 elif views.animation:
                     media="animation"
 
@@ -114,6 +123,8 @@ def add_chanel(chanel_link):
                         text=view_text,
                         view=views.views,
                         media=media,
+                        photo=photo,
+                        video=video,
                         forwards_count=views.forwards,
                         link=views.link,
                         date=timezone.make_aware(views.date),

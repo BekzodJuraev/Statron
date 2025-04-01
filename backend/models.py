@@ -228,6 +228,8 @@ class Posts(models.Model):
     id_channel_forward_from=models.IntegerField(null=True)
     link=models.CharField(null=True, blank=True, default=None,max_length=250)
     forwards_count=models.BigIntegerField(null=True, blank=True, default=None)
+    photo=models.ImageField(upload_to="pictures/",blank=True,null=True)
+    video = models.FileField(upload_to='videos/',blank=True,null=True)
 
 
     class Meta:

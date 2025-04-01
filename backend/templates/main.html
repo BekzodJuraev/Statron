@@ -615,97 +615,101 @@
 
 		{% endif %}
 
-     if ($("#chart_1").length) {
-        var ctx = $("#chart_1")[0].getContext("2d");
 
-        var views = [ // Array of count values
+	if ($("#chart_1").length) {
+			var ctx = $("#chart_1")[0].getContext("2d");
+
+			var views = [ // Array of count values
             {% for item in chart_month %}
                 {{ item.count }},
             {% endfor %}
         ];
 
-        var labels = [ // Array of created_at__date values
+		 var labels = [ // Array of created_at__date values
             {% for item in chart_month %}
                 "{{ item.created_at__date }}",
             {% endfor %}
         ];
 
-        var chart = new Chart(ctx, {
-            type: 'line', // You can change this to 'bar', 'line', 'pie', etc.
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: messages,
-                    data: views,
-                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
 
-                }]
-            },
-            options: {
-                responsive: true,
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
+			// Assuming you have some dates as labels, you can use them
+			// Replace this with your actual date labels
 
 
-if ($("#chart_2").length) {
-        var ctx = $("#chart_2")[0].getContext("2d");
+			new Chart(ctx, {
+				type: "line",
+				data: {
+					labels: labels, // Use the labels array for x-axis
+					datasets: [{
+						label: messages,
+						data: views, // Use the views array for y-axis data
+						fill: true,
+						backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+					}]
+				},
+				options: {
+					responsive: true,
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					}
+				}
+			});
+		}
+	if ($("#chart_2").length) {
+			var ctx = $("#chart_2")[0].getContext("2d");
 
-        var views = [ // Array of count values
-        {% for item in chart_three_month %}
-            {{ item.count }},
-        {% endfor %}
-    ];
+			var views = [ // Array of count values
+			{% for item in chart_three_month %}
+				{{ item.count }},
+			{% endfor %}
+		];
 
-    var labels = [ // Array of created_at__date values
-        {% for item in chart_three_month %}
-            "{{ item.created_at__date }}",
-        {% endfor %}
-    ];
-
-
-        // Assuming you have some dates as labels, you can use them
-        // Replace this with your actual date labels
+		var labels = [ // Array of created_at__date values
+			{% for item in chart_three_month %}
+				"{{ item.created_at__date }}",
+			{% endfor %}
+		];
 
 
-        new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: labels, // Use the labels array for x-axis
-                datasets: [{
-                    label: messages,
-                    data: views, // Use the views array for y-axis data
-                    fill: true,
-                    backgroundColor: ["rgba(65, 128, 198, 0.80)"],
-                }]
-            },
-            options: {
-                responsive: true,
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
+			// Assuming you have some dates as labels, you can use them
+			// Replace this with your actual date labels
+
+
+			new Chart(ctx, {
+				type: "line",
+				data: {
+					labels: labels, // Use the labels array for x-axis
+					datasets: [{
+						label: messages,
+						data: views, // Use the views array for y-axis data
+						fill: true,
+						backgroundColor: ["rgba(65, 128, 198, 0.80)"],
+					}]
+				},
+				options: {
+					responsive: true,
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					}
+				}
+			});
+		}
 
 if ($("#chart_3").length) {
         var ctx = $("#chart_3")[0].getContext("2d");
