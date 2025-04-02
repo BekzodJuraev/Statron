@@ -9,9 +9,12 @@ from .models import Add_userbot,Posts,Chanel
 from celery import shared_task
 import os
 import requests
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.db.models.signals import post_save
+from django.conf import settings
 
 @shared_task
 @transaction.atomic
@@ -100,12 +103,17 @@ def add_chanel(chanel_link):
                 video=None
                 if views.photo:
                     media="photo"
-                    file_path = os.path.join("photo/", "posts.jpg")
-                    photo = client.download_media(views.photo.file_id, file_name=file_path)
+                    #file_path = os.path.join(settings.MEDIA_ROOT, f"posts_{views.photo.file_id}.jpg")
+                    photo = client.download_media(views.photo.file_id, file_name='posts.jpg')
+
+
+
                 elif views.video:
                     media="video"
-                    file_path = os.path.join("video/", "posts.mp4")
+                    #file_path = os.path.join(settings.MEDIA_ROOT, f"posts_{views.video.file_id}.mp4")
                     video = client.download_media(views.video.file_id, file_name=file_path)
+                    video = client.download_media(views.video.file_id, file_name='posts.mp4')
+
                 elif views.animation:
                     media="animation"
 
