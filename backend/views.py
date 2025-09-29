@@ -51,7 +51,7 @@ from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,
 my_id=ID_OWNER_TELGRAM
 
 bot = telegram.Bot(TOKEN_WEBHOOK)
-
+#ASDSAD
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
 
