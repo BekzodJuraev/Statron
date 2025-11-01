@@ -55,7 +55,9 @@ bot = telegram.Bot(TOKEN_WEBHOOK)
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())
 
-
+class Add_chanel_View(LoginRequiredMixin,TemplateView):
+    template_name = 'add-tg-chanell.html'
+    login_url = reverse_lazy('login_site')
 class Freekassa(TemplateView):
     template_name = 'fk-verify.html'
 
