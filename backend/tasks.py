@@ -90,57 +90,70 @@ def add_chanel(chanel_link):
 
 
 
+
             chanel_id = Chanel.objects.get(chanel_link=chanel_link)
 
-            for views in total_view:
-                if views.text is not None:
-                    text=views.text
-                else:
-                    text=views.caption
+
+            for view in total_view:
+                # Get text or caption
+                text_content = view.text or view.caption
+                if not text_content:
+                    continue  # skip if no text
 
                 media = ""
-                photo=None
-                video=None
-                if views.photo:
-                    media="photo"
-                    #file_path = os.path.join(settings.MEDIA_ROOT, f"posts_{views.photo.file_id}.jpg")
-                    photo = client.download_media(views.photo.file_id, file_name='posts.jpg')
+                photo_file = None
+                video_file = None
+
+                # Helper function to download and wrap file
+                def download_to_django(file_id, ext, folder="posts"):
+                     local_path = client.download_media(file_id, file_name=f"{folder}_{file_id}.{ext}")
+                     with open(local_path, 'rb') as f:
+                         django_file = File(f)
+                         filename = f"{folder}/{folder}_{file_id}.{ext}"
+                         saved_path = default_storage.save(filename, django_file)
+                         return saved_path
+                    # filename = f"{folder}/{folder}_{file_id}.{ext}"
+                    # file_content = ContentFile(local_path)
+                    # saved_path = Posts.photo.field.storage.save(filename, file_content)
+                    # return saved_path
 
 
 
-                elif views.video:
-                    media="video"
-                    #file_path = os.path.join(settings.MEDIA_ROOT, f"posts_{views.video.file_id}.mp4")
-                    video = client.download_media(views.video.file_id, file_name=file_path)
-                    video = client.download_media(views.video.file_id, file_name='posts.mp4')
+                # Determine media type and download
+                if view.photo:
+                    media = "photo"
+                    photo_file = download_to_django(view.photo.file_id, "jpg", folder="photo")
+                elif view.video:
+                    media = "video"
+                    video_file = download_to_django(view.video.file_id, "mp4", folder="video")
+                elif view.animation:
+                    media = "animation"
 
-                elif views.animation:
-                    media="animation"
+                # Lowercase for mention checking
+                text_lower = text_content.lower()
+                channel_username_lower = channel_username.lower()
 
+                mention_flag = (
+                        ("@" in text_lower or "t.me/" in text_lower or 'https://t.me/' in text_lower) and
+                        (f'@{channel_username_lower}' not in text_lower and
+                         f't.me/{channel_username_lower}' not in text_lower and
+                         f'https://t.me/{channel_username_lower}' not in text_lower)
+                )
 
-
-
-
-
-                if text is not None:
-                    view_text=text
-                    text=text.lower()
-                    channel_username=channel_username.lower()
-                    instance=Posts.objects.create(
-                        chanel=chanel_id,  # Assuming chanel_id is the ID of the channel
-                        text=view_text,
-                        view=views.views,
-                        media=media,
-                        photo=photo,
-                        video=video,
-                        forwards_count=views.forwards,
-                        link=views.link,
-                        date=timezone.make_aware(views.date),
-                        id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
-                        mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
-                                    f'@{channel_username}' not in text and f't.me/{channel_username}' not in text and f'https://t.me/{channel_username}' not in text)
-                    )
-                    #post_save.send(sender=Posts,instance=instance,created=True)
+                # Save post immediately
+                Posts.objects.create(
+                    chanel=chanel_id,
+                    text=text_content,
+                    view=view.views,
+                    media=media,
+                    photo=photo_file if media == "photo" else None,
+                    video=video_file if media == "video" else None,
+                    forwards_count=view.forwards,
+                    link=view.link,
+                    date=timezone.make_aware(view.date),
+                    id_channel_forward_from=getattr(view.forward_from_chat, 'id', None),
+                    mention=mention_flag
+                )
 
 
 

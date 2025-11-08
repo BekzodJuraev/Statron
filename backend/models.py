@@ -267,7 +267,9 @@ class Notify(models.Model):
 
 class Add_chanel(models.Model):
     username = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='add_chanel',default=None,null=True,blank=True)
-    category=models.ManyToManyField('Category_chanels',blank=True)
+    category=models.ForeignKey('Category_chanels',on_delete=models.CASCADE,null=True,blank=True)
+    language=models.CharField(max_length=255,null=True,blank=True)
+    country=models.CharField(max_length=255,null=True,blank=True)
     chanel_link = models.CharField(default=None,max_length=150,unique=True)
 
 

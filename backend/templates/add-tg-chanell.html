@@ -176,7 +176,8 @@
             </p>
         </div>
 
-        <form class="modal-form" >
+        <form class="modal-form" method="POST" id="channel-form">
+            {% csrf_token %}
             <div class="form-group">
                 <label class="form-label" for="channel-link">Ссылка на канал или @username</label>
                 <input
@@ -184,12 +185,14 @@
                     id="channel-link"
                     class="form-input"
                     placeholder="Ссылка на канал или @username"
+                    name="chanel_link"
+
                 >
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="country">Страна</label>
-                <select id="country" class="form-select">
+                <select id="country" class="form-select" name="country" >
                     <option value="">Выберите страну</option>
                     <option value="russia">Россия</option>
                     <option value="ukraine">Украина</option>
@@ -201,7 +204,7 @@
 
             <div class="form-group">
                 <label class="form-label" for="language">Язык контента канала</label>
-                <select id="language" class="form-select">
+                <select id="language" class="form-select"  name="language" >
                     <option value="">Выберите язык</option>
                     <option value="russian">Русский</option>
                     <option value="english">Английский</option>
@@ -211,27 +214,57 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label" for="category">Категория канала</label>
-                <select id="category" class="form-select">
+                <label class="form-label" for="category"required>Категория канала</label>
+                <select id="category" class="form-select" name="category">
                     <option value="">Выберите категорию</option>
-                    <option value="news">Новости</option>
-                    <option value="entertainment">Развлечения</option>
-                    <option value="education">Образование</option>
-                    <option value="technology">Технологии</option>
-                    <option value="business">Бизнес</option>
-                    <option value="other">Другое</option>
+                    {% for item in category %}
+                     <option value={{item.pk}}>{{item.name}}</option>
+                    {% endfor %}
+
                 </select>
             </div>
 
-            <div class="error-message">
-                Заполните пустые поля. Все поля необходимы для заполнения.
-            </div>
+                <div class="error-message" style="display:none;">
+        Заполните пустые поля. Все поля необходимы для заполнения.
+    </div>
+
+            {% if messages %}
+    {% for message in messages %}
+        <div class="error-message">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
             <button type="submit" class="submit-button">Добавить</button>
         </form>
     </div>
 </div>
+<script>
+document.getElementById('channel-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // stop default form submission
 
+    const form = e.target;
+    const inputs = form.querySelectorAll('input, select');
+    const errorMessage = form.querySelector('.error-message');
+
+    // Check if any field is empty
+    let emptyField = false;
+    inputs.forEach(el => {
+        if (el.value.trim() === '') {
+            emptyField = true;
+        }
+    });
+
+    if (emptyField) {
+        errorMessage.style.display = 'block';  // show error
+    } else {
+        errorMessage.style.display = 'none';   // hide error
+        form.submit(); // submit if everything is filled
+    }
+});
+</script>
 </body>
 </html>
+
 {% endblock %}

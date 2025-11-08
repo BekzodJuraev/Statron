@@ -2,6 +2,263 @@
 {% load static %}
 {% load i18n %}
 {% block content %}
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .media-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: white;
+            border: 2px solid #4285f4;
+            border-radius: 12px;
+            color: #4285f4;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-decoration: none;
+        }
+
+        .media-button:hover {
+            background-color: #4285f4;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+        }
+
+        .media-button svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .close-button:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        /* Video Player Styles */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            background: url('') center/cover;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .video-container:hover .video-overlay {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .play-button svg {
+            width: 32px;
+            height: 32px;
+            fill: #333;
+            margin-left: 4px;
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ff4444;
+            width: 35%;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Image Viewer Styles */
+        .image-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .image-viewer {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .image-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .image-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .image-description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .media-button {
+                min-width: 250px;
+            }
+
+            .modal {
+                margin: 20px;
+                max-width: calc(100vw - 40px);
+                padding: 15px;
+            }
+
+            .play-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .play-button svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
 {% get_current_language as LANGUAGE_CODE %}
 {% if LANGUAGE_CODE == 'en' %}
 {% if limit %}
@@ -1344,13 +1601,13 @@
 						{% if item.media == 'photo' %}
                         <button class="item-popup__btn button button_no-bg" type="button">
                             <picture>
-                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
+                                <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp" onclick="openImageModal()">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
                             Image
                         </button>
 						{% endif %}
 						{% if item.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" onclick="openVideoModal()">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
@@ -1358,7 +1615,7 @@
                         </button>
 						{% endif %}
 						{% if item.media == 'animation' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" >
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
@@ -1884,7 +2141,7 @@
                             </div>
                         </div>
                         {% if item.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" >
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
@@ -1892,7 +2149,7 @@
                         </button>
 						{% endif %}
 						{% if item.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" >
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
@@ -3424,7 +3681,7 @@
 
 
 						{% if item.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button"  onclick="openImageModal('{{ item.photo.url }}')">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
@@ -3432,7 +3689,7 @@
                         </button>
 						{% endif %}
 						{% if item.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" onclick="openVideoModal('{{ item.video.url }}')">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>
@@ -4119,7 +4376,7 @@
                         </div>
 
                         {% if item.post.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button">
+                        <button class="item-popup__btn button button_no-bg" type="button" >
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
@@ -4154,8 +4411,91 @@
 {% endif %}
 
 
+<div class="modal-overlay" id="videoModal">
+    <div class="modal">
+        <button class="close-button" onclick="closeVideoModal()">×</button>
+        <div class="video-container">
+            <video class="video-player" width="1310" height="737" controls>
+                <source src="" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+    </div>
+</div>
 
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal">
+            <button class="close-button" onclick="closeImageModal()">×</button>
+            <div class="image-container">
+                <img src=""
+                     class="image-viewer">
+            </div>
+        </div>
+    </div>
+<script>
+        // Video Modal Functions
+        function openVideoModal(src) {
+          const modal = document.getElementById('videoModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 
+    // Вставляем src в видео
+    const video = modal.querySelector('.video-player');
+    video.querySelector('source').src = src;
+    video.load(); // Обновляем видео, чтобы подхватился новый src
+    video.play(); //
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Image Modal Functions
+        function openImageModal(src) {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+               const img = modal.querySelector('.image-viewer');
+    		   img.src = src;
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+                closeImageModal();
+            }
+        });
+
+        // Simulate progress bar interaction
+        document.querySelector('.progress-bar').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const percent = ((e.clientX - rect.left) / rect.width) * 100;
+            document.querySelector('.progress-fill').style.width = percent + '%';
+        });
+    </script>
 <script>
 	$(document).ready(function() {
     $('#c_2').change(function() {

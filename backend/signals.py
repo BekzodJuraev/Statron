@@ -81,13 +81,16 @@ def send_detail(sender,instance,created,*args,**kwargs):
         instance = sender.objects.select_related('chanel__add_chanel').get(pk=instance.pk)
         if instance.chanel.add_chanel and instance.chanel.add_chanel.telegram_id:
             bot = telegram.Bot(TOKEN_WEBHOOK)
-            text = (
-                f"📅Подписок по часам:\n\n"
-                f"{instance.chanel.name}\n"
-                f"{instance.created_at.strftime('%Y-%m-%d %H:%M')}: {instance.subperhour}: {'+' + str(instance.difference) if instance.difference >= 0 else str(instance.difference)}\n"
-                f"👆Выше Вы сможете просмотреть детальную аналитику за запрашиваемый канал / Спасибо за запрос ❤"
-            )
-            bot.send_message(instance.chanel.add_chanel.telegram_id, text=text)
+            if instance.chanel.name:
+                text = (
+                    f"📅Подписок по часам:\n\n"
+                    f"{instance.chanel.name}\n"
+                    f"{instance.created_at.strftime('%Y-%m-%d %H:%M')}: {instance.subperhour}: {'+' + str(instance.difference) if instance.difference >= 0 else str(instance.difference)}\n"
+                    f"👆Выше Вы сможете просмотреть детальную аналитику за запрашиваемый канал / Спасибо за запрос ❤"
+                )
+                bot.send_message(instance.chanel.add_chanel.telegram_id, text=text)
+
+
     except Exception as e:
         pass
 

@@ -58,6 +58,27 @@ bot = telegram.Bot(TOKEN_WEBHOOK)
 class Add_chanel_View(LoginRequiredMixin,TemplateView):
     template_name = 'add-tg-chanell.html'
     login_url = reverse_lazy('login_site')
+
+    def post(self, request, *args, **kwargs):
+        chanel_link = request.POST.get('chanel_link')
+        country = request.POST.get('country')
+        language = request.POST.get('language')
+        category = request.POST.get('category')
+        try:
+            Add_chanel.objects.get_or_create(chanel_link=chanel_link, country=country, language=language,
+                                             category_id=category)
+        except:
+            messages.error(request, 'Этот канал уже существует.')
+
+
+
+
+        return redirect(request.path)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category']=Category_chanels.objects.all()
+        return context
 class Freekassa(TemplateView):
     template_name = 'fk-verify.html'
 

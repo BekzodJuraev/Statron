@@ -11,9 +11,10 @@ import os
 import telegram
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from pyrogram import filters
-
+from django.core.files import File
 
 #client=Client('me_client', api_id, api_hash)
 
@@ -40,7 +41,7 @@ async def update(client):
 
                 try:
                     chat = await client.get_chat(chanel_link)
-                    total_view =   client.get_chat_history(chanel_link, limit=10)
+                    total_view =  client.get_chat_history(chanel_link, limit=10)
 
                     # Update ORM asynchronously
                     chanel_get = await sync_to_async(Chanel.objects.get)(chanel_link=i.chanel_link)
@@ -63,10 +64,23 @@ async def update(client):
                             text = views.caption
 
                         media = ""
+                        photo_file = None
+                        video_file = None
+
+                        async def download_to_django(file_id, ext, folder="posts"):
+                            local_path = await client.download_media(file_id, file_name=f"{folder}_{file_id}.{ext}")
+                            with open(local_path, 'rb') as f:
+                                django_file = File(f)
+                                filename = f"{folder}/{folder}_{file_id}.{ext}"
+                                saved_path = default_storage.save(filename, django_file)
+                                return saved_path
+
                         if views.photo:
                             media = "photo"
+                            photo_file = await download_to_django(views.photo.file_id, "jpg", folder="photo")
                         elif views.video:
                             media = "video"
+                            video_file = await download_to_django(views.video.file_id, "mp4", folder="video")
                         elif views.animation:
                             media = "animation"
 
@@ -81,6 +95,10 @@ async def update(client):
                                     text=view_text,
                                     view=views.views,
                                     media=media,
+                                    photo=photo_file if media == "photo" else None,
+                                    video=video_file if media == "video" else None,
+                                    forwards_count=views.forwards,
+                                    link=views.link,
                                     date=timezone.make_aware(views.date),
                                     id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
                                     mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
