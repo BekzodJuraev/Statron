@@ -2400,6 +2400,7 @@
 											</p>
 										</div>
 									</div>
+
 									<div class="main-analitics__actions">
 										<div class="main-analitics__actions-top">
 											<button class="main-analitics__btn-wrap title title_s20" type="button">
@@ -2434,7 +2435,9 @@
 													<img class="black" src="{% static 'img/icons/eye_black.svg' %}" alt="">
 												</button>
 											</div>
+
 										</div>
+
 										{% if request.user.is_authenticated %}
 										{% if like %}
 										{% for item in like %}
@@ -2452,6 +2455,7 @@
 										{% endif %}
 										{% endif %}
 									</div>
+									<div> </div>
 								</div>
 								<div class="plans__boxes analitics_info_wrapper">
 									{% if request.user.profile.is_premium %}
@@ -2924,6 +2928,7 @@
 										{% endif %}
 										{% endif %}
 									</div>
+
 								</div>
 								<section class="ad-analitics">
 									<div class="ad-analitics__posts">

@@ -29,7 +29,7 @@ bot = telegram.Bot(TOKEN_NOTIFY)
 def create_chanel(sender,instance,created,*args,**kwargs):
     if created:
         add_chanel.delay(instance.chanel_link)
-        Chanel.objects.create(add_chanel=instance.username,chanel_link=instance.chanel_link,subscribers=0,views=0)
+        Chanel.objects.create(chanels=instance,add_chanel=instance.username,chanel_link=instance.chanel_link,subscribers=0,views=0)
 
 
 

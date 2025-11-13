@@ -87,12 +87,14 @@ class Chanel(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     last_update=models.DateTimeField(auto_now=True)
     add_chanel =models.ForeignKey(Profile, on_delete=models.CASCADE,default=None,null=True,blank=True)
+    chanels=models.OneToOneField("Add_chanel",on_delete=models.CASCADE,null=True)
     daily_views=models.IntegerField(default=0,blank=True,null=True)
     yesterday_views=models.IntegerField(default=0,blank=True,null=True)
     daily_subscribers=models.IntegerField(default=0, blank=True, null=True)
     yesterday_subscribers=models.IntegerField(default=0,blank=True,null=True)
     weekly_subscribers=models.IntegerField(default=0, blank=True, null=True)
     weekly_monthy = models.IntegerField(default=0, blank=True, null=True)
+
 
 
 
@@ -282,6 +284,7 @@ class Add_chanel(models.Model):
 
 class Category_chanels(models.Model):
     name=models.CharField(max_length=150)
+    icon=models.FileField(upload_to='icons/',null=True)
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

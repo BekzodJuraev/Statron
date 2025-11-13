@@ -85,7 +85,7 @@ social-auth-app-django==5.4.0
 social-auth-core==4.4.2
 telebot==0.0.5
 telegram==0.0.1
-TgCrypto==1.2.5
+TgCrypto==1.2.5F
 typing_extensions==4.8.0
 tzdata==2023.3
 tzlocal==5.0.1
