@@ -86,7 +86,7 @@ def add_chanel(chanel_link):
 
 
                 #response = requests.post('https://stattron.ru/chanel/', files=files)
-                response = requests.post('http://127.0.0.1:8000/chanel/', data=payload, files=files)
+                response = requests.post('http://127.0.0.1:8001/chanel/', data=payload, files=files)
 
 
 
