@@ -20,3 +20,11 @@ pkill -f 'celery'
 pkill -f 'webhook.py'
 sudo systemctl restart nginx
 sudo systemctl restart nginx
+
+new
+nohup celery -A Statron worker -l info &
+nohup python3 webhook.py &
+nohup python manage.py run_bot &
+nohup python3 webhook_notify.py &
+nohup python3 webhook_auth.py &
+gunicorn Statron.wsgi:application --bind 127.0.0.1:8001
