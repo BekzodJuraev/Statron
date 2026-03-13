@@ -172,3 +172,16 @@ DEBUG_TOOLBAR_CONFIG = {
     'POSITION': 'bottom',
 }
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1", # Используем 1-ю базу Redis
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Настройки Celery (теперь он тоже через Redis)
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0' # Используем 0-ю базу для очередей
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'

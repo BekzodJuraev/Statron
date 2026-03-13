@@ -224,14 +224,15 @@ class Posts(models.Model):
     text=models.TextField()
     view=models.IntegerField()
     media=models.CharField(max_length=250)
+    media_file=models.CharField(max_length=250,blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     mention=models.BooleanField(default=False)
     date=models.DateTimeField(default=None)
     id_channel_forward_from=models.IntegerField(null=True)
     link=models.CharField(null=True, blank=True, default=None,max_length=250)
     forwards_count=models.BigIntegerField(null=True, blank=True, default=None)
-    photo=models.ImageField(upload_to="photo/",blank=True,null=True)
-    video = models.FileField(upload_to='video/',blank=True,null=True)
+    #photo=models.ImageField(upload_to="photo/",blank=True,null=True)
+    #video = models.FileField(upload_to='video/',blank=True,null=True)
 
 
     class Meta:

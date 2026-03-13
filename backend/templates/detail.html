@@ -3902,7 +3902,7 @@
 
 
 						{% if item.media == 'photo' %}
-                        <button class="item-popup__btn button button_no-bg" type="button"  onclick="openImageModal('{{ item.photo.url }}')">
+                        <button class="item-popup__btn button button_no-bg" type="button" onclick="openImageModal('{% url 'media_proxy' item.media_file %}')">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-img.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-img.png' %}" alt=""></picture>
@@ -3910,7 +3910,7 @@
                         </button>
 						{% endif %}
 						{% if item.media == 'video' %}
-                        <button class="item-popup__btn button button_no-bg" type="button" onclick="openVideoModal('{{ item.video.url }}')">
+                        <button class="item-popup__btn button button_no-bg" type="button" onclick="openVideoModal('{% url 'media_proxy' item.media_file %}')">
                             <picture>
                                 <source srcset="{% static 'img/icons/icon-video.webp' %}" type="image/webp">
                                 <img src="{% static 'img/icons/icon-video.png' %}" alt=""></picture>

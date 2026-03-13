@@ -8,6 +8,7 @@ from django.db import transaction
 from .models import Add_userbot,Posts,Chanel
 from celery import shared_task
 import os
+from django.core.cache import cache
 import requests
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -16,6 +17,9 @@ from django.core.files.base import ContentFile
 from django.db.models.signals import post_save
 from django.conf import settings
 
+@shared_task
+def hello_world():
+    print("hello world")
 @shared_task
 @transaction.atomic
 def process_user_bot(name, api_id, api_hash, phone):
@@ -46,8 +50,35 @@ def process_user_bot(name, api_id, api_hash, phone):
     client.disconnect()
 
 
+@shared_task(name="download_tg_media_to_cache")
+def download_media_to_cache(media_file):
+    try:
+        # Берем первого активного юзербота (или можно сделать ротацию)
+        userbot = Add_userbot.objects.filter(is_active=True).first()
 
+        if not userbot:
+            return "No active userbots found"
 
+        # Подключаемся
+        with Client(
+                name=userbot.name,
+                api_id=userbot.api_id,
+                api_hash=userbot.api_hash,
+                session_string=userbot.session,
+        ) as client:
+            # Скачиваем файл в оперативную память
+            file_buffer = client.download_media(media_file, in_memory=True)
+            file_buffer.seek(0)
+            file_data = file_buffer.read()
+
+            # Сохраняем в Redis кэш под ключом, который знает Django View
+            cache_key = f"tg_media_{media_file}"
+            cache.set(cache_key, file_data, timeout=86400)  # Храним 24 часа
+
+        return f"Success: Post {media_file} media cached"
+
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 @shared_task
 def add_chanel(chanel_link):
@@ -86,7 +117,7 @@ def add_chanel(chanel_link):
 
 
                 #response = requests.post('https://stattron.ru/chanel/', files=files)
-                response = requests.post('http://127.0.0.1:8001/chanel/', data=payload, files=files)
+                response = requests.post('http://127.0.0.1:8000/chanel/', data=payload, files=files)
 
 
 
@@ -103,6 +134,7 @@ def add_chanel(chanel_link):
                 media = ""
                 photo_file = None
                 video_file = None
+                media_file=None
 
                 # Helper function to download and wrap file
                 def download_to_django(file_id, ext, folder="posts"):
@@ -122,10 +154,12 @@ def add_chanel(chanel_link):
                 # Determine media type and download
                 if view.photo:
                     media = "photo"
-                    photo_file = download_to_django(view.photo.file_id, "jpg", folder="photo")
+                    #photo_file = download_to_django(view.photo.file_id, "jpg", folder="photo")
+                    media_file=view.photo.file_id
                 elif view.video:
                     media = "video"
-                    video_file = download_to_django(view.video.file_id, "mp4", folder="video")
+                    #video_file = download_to_django(view.video.file_id, "mp4", folder="video")
+                    media_file = view.video.file_id
                 elif view.animation:
                     media = "animation"
 
@@ -146,8 +180,9 @@ def add_chanel(chanel_link):
                     text=text_content,
                     view=view.views,
                     media=media,
-                    photo=photo_file if media == "photo" else None,
-                    video=video_file if media == "video" else None,
+                    media_file=media_file,
+                   # photo=photo_file if media == "photo" else None,
+                   # video=video_file if media == "video" else None,
                     forwards_count=view.forwards,
                     link=view.link,
                     date=timezone.make_aware(view.date),

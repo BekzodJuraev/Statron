@@ -7,6 +7,7 @@ from decimal import Decimal
 from django.utils.translation import get_language
 import re
 import requests
+from .tasks import download_media_to_cache
 import hashlib
 from urllib.parse import urlencode
 from django.contrib import messages
@@ -40,7 +41,8 @@ import asyncio
 import telegram
 import requests
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton,WebAppInfo
-
+from django.core.cache import cache
+from django.http import HttpResponse
 
 import time
 
@@ -51,6 +53,29 @@ from config import TOKEN_NOTIFY, TOKEN_WEBHOOK, ID_OWNER_TELGRAM,TOKEN_AUTH,URL,
 my_id=ID_OWNER_TELGRAM
 
 bot = telegram.Bot(TOKEN_WEBHOOK)
+
+
+def media_display_view(request, media_file):
+    cache_key = f"tg_media_{media_file}"
+    lock_key = f"lock_{media_file}"  # Ключ для "замка"
+
+    data = cache.get(cache_key)
+
+    if not data:
+        # Проверяем, не скачивает ли уже Celery этот файл
+        if not cache.get(lock_key):
+            # Ставим временный "замок" на 60 секунд
+            cache.set(lock_key, True, timeout=60)
+            download_media_to_cache.delay(media_file)
+
+        return HttpResponse("Загрузка... Пожалуйста, подождите.", status=202)
+
+    # Если данные есть, отдаем их
+    # Маленькая хитрость: если в ключе есть намек на видео, меняем тип
+    content_type = "image/jpeg"
+    # Если вы сохраняете информацию о типе в ключе или БД, лучше брать оттуда
+
+    return HttpResponse(data, content_type=content_type)
 #ASDSAD
 #dp = Dispatcher(bot)
 #dp.middleware.setup(LoggingMiddleware())

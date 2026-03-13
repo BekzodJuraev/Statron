@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save,pre_save
 from .models import Chanel,Add_chanel,Add_userbot,Posts,Subperhour,Mentions,Payment,Profile,Commission,Notify
 from django.dispatch import receiver
-from .tasks import add_chanel,process_user_bot
+from .tasks import add_chanel,process_user_bot,hello_world
 from django.db.models import Sum,Q,Count,F
 from celery import shared_task
 from datetime import date, timedelta, datetime
@@ -39,13 +39,14 @@ def handle_new_userbot(sender, instance,created, **kwargs):
         # Ensure that the instance is saved with the provided phone number
 
 
-        # Schedule the Celery task after the instance is saved
+
         process_user_bot.delay(
             name=instance.name,
             api_id=instance.api_id,
             api_hash=instance.api_hash,
             phone=instance.phone_number
         )
+        #hello_world.delay()
 @receiver(post_save,sender=Posts)
 def create_views(sender,instance,created,*args,**kwargs):
     if created:
