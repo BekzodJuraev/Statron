@@ -213,12 +213,12 @@
 
 					</div>
 					<div class="header__btns">
-						<a href="{% url 'register_site' %}" class="header__btn button">Регистрация</a>
-						<a data-da=".dropdown-header__item span,767.98" href="{% url 'login_site' %}" class="header__btn_no-bg">
-							Войти
-							<img src="{% static 'img/icons/login.svg' %}" alt="">
-						</a>
-					</div>
+    <a href="{% url 'register_site' %}" class="header__btn button">Регистрация</a>
+    <a href="{% url 'login_site' %}" class="header__btn_no-bg">
+        Войти
+        <img src="{% static 'img/icons/login.svg' %}" alt="">
+    </a>
+</div>
 					<div data-dropdown class="header__dropdown dropdown-header dropdown-header-lang">
 						<button data-dropdown-btn class="dropdown-header__btn" type="button">
 							{% if request.LANGUAGE_CODE == 'en' %}
