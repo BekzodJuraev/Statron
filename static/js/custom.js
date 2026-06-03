@@ -30,3 +30,45 @@ function setActiveTab(button) {
         activeContent.style.display = 'block';
     }
 }
+document.addEventListener("click", function (e) {
+    const s = e.target;
+
+    // --- ЛОГИКА DROPDOWN (Balance) ---
+    const dropBtn = s.closest("[data-dropdown-btn]");
+    const currentDropdown = s.closest("[data-dropdown]");
+
+    if (dropBtn) {
+        // 1. Клик по кнопке: закрываем все другие, переключаем текущий
+        document.querySelectorAll("[data-dropdown]._active").forEach(openDrp => {
+            if (openDrp !== currentDropdown) openDrp.classList.remove("_active");
+        });
+        currentDropdown.classList.toggle("_active");
+        return; // Важно: выходим, чтобы не сработал код закрытия ниже
+    }
+
+    if (currentDropdown) {
+        // 2. Клик внутри контента дропдауна: ничего не делаем, не закрываем
+        // Здесь можно добавить проверку на клик по ссылкам внутри, если нужно закрывать при переходе
+    } else {
+        // 3. Клик мимо (на пустое место): закрываем все активные дропдауны
+        document.querySelectorAll("[data-dropdown]._active").forEach(openDrp => {
+            openDrp.classList.remove("_active");
+        });
+    }
+
+    // --- ВАША ОСТАЛЬНАЯ ЛОГИКА ---
+    // Обработка [data-click]
+    if (s.closest("[data-click]")) {
+        const clickElement = s.closest("[data-click]");
+        document.querySelectorAll("[data-click]._active").forEach(el => {
+            if (el !== clickElement) el.classList.remove("_active");
+        });
+        clickElement.classList.add("_active");
+    }
+
+    // Обработка #like
+    if (s.closest("#like")) {
+        // Используем стандартный toggle вместо функции t
+        s.closest("#like").classList.toggle("_active");
+    }
+});

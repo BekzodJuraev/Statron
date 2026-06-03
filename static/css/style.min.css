@@ -1,4 +1,32 @@
 @charset "UTF-8";
+
+
+@media (max-width: 62.06125em) { /* Это соответствует 992.98px */
+
+    /* Делаем колонку поиска на всю ширину при переносе */
+    .search-form__column_1 {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 100% !important;
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 15px; /* Чтобы не прилипало к нижним элементам */
+    }
+
+    /* Исправляем саму форму, чтобы она не была узкой */
+    .search-form {
+        width: 100% !important;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    /* Растягиваем инпут */
+    .search-form__input {
+        width: 100% !important;
+        padding-right: 50px; /* Место для иконки/кнопки поиска */
+    }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -6893,4 +6921,293 @@ td {
 
 .webp .tabs-account__item_warning::before {
   background: url(../img/tabs-account/li2.webp) center/cover no-repeat
+}
+/* --- Аккуратное исправление ТОЛЬКО блока сортировки --- */
+@media (max-width: 992.98px) {
+
+    /* 1. Отключаем сдвиг 150px и возвращаем нормальное отображение */
+    .search-form__column [style*="left:150px;"],
+    .search-form__column [style*="left: 150px;"],
+    .search-form__column [style*="left:150px"] {
+        left: 0 !important;
+        position: relative !important; /* Убираем абсолютные косяки, если они были */
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* 2. Заставляем именно этот селект растянуться на всю ширину, как и другие поля */
+    .search-form__column [style*="left:150px"] .select,
+    .search-form__column [style*="left:150px"] .select__body,
+    .search-form__column [style*="left:150px"] select {
+        width: 100% !important;
+    }
+}
+/* --- Финальный адаптивный код для iOS/Android (992.98px) --- */
+@media (max-width: 992.98px) {
+
+    /* Базовый сброс для всех интерактивных элементов на iOS */
+    .main-analitics button,
+    .main-analitics a,
+    .main-analitics input {
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Главный контейнер карточки */
+    .main-analitics {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Инфо-блок (Аватар + Текст) */
+    .main-analitics__info {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Зафиксированный круглый аватар */
+    .main-analitics__avatar {
+        flex: 0 0 60px !important;
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 50% !important;
+        overflow: hidden !important;
+    }
+
+    .main-analitics__avatar img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    /* Контент с названием и описанием */
+    .main-analitics__content {
+        flex: 1 1 auto !important;
+        min-width: 0 !important; /* Важно, чтобы текст не распирал контейнер */
+    }
+
+    /* Название канала: фиксируем галочку, чтобы не улетала */
+    .main-analitics__title {
+        font-size: 16px !important;
+        line-height: 1.3 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+
+    .main-analitics__title img,
+    .main-analitics__title picture {
+        display: inline-block !important;
+        vertical-align: middle !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Кнопки действий */
+    .main-analitics__actions {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .main-analitics__actions-top {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    /* Обёртка для Кнопки + Глазика */
+    .main-analitics__btn-wrap {
+        display: flex !important;
+        width: 100% !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Сама текстовая кнопка */
+    .main-analitics__btn {
+        flex: 1 1 auto !important;
+        width: 100% !important;
+        min-width: 0 !important; /* Позволяет флексу правильно рассчитывать ширину на iOS */
+    }
+
+    .main-analitics__btn a,
+    .main-analitics__btn button {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 46px !important; /* Чёткая фиксированная высота */
+        background: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+        border-radius: 8px !important;
+        font-size: 14px !important;
+        color: #212529 !important;
+        text-decoration: none !important;
+        padding: 0 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Иконка-глазик (Быстрый просмотр) */
+    .main-analitics__btn-icon {
+        flex: 0 0 46px !important; /* Должна быть строго квадратной, равной высоте кнопки */
+        width: 46px !important;
+        height: 46px !important;
+        margin-left: 8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Кнопка сохранить в самом низу */
+    .main-analitics__form {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .main-analitics__form .button {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 46px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+}
+/* --- ПЕРЕПИСАННЫЙ КОД ДЛЯ IPHONE (992.98px) --- */
+@media (max-width: 992.98px) {
+
+    /* 1. Карточка: убираем сложные флексы, которые Safari путает */
+    .main-analitics {
+        display: block !important;
+        width: 100% !important;
+        padding: 15px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 2. Аватар и название (верхняя часть) */
+    .main-analitics__info {
+        display: block !important; /* Блочный вид */
+        width: 100% !important;
+        margin-bottom: 15px !important;
+        clear: both;
+    }
+
+    .main-analitics__avatar {
+        float: left !important; /* Аватарка прижата влево */
+        width: 60px !important;
+        height: 60px !important;
+        margin-right: 15px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .main-analitics__avatar img {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 50% !important;
+        object-fit: cover;
+    }
+
+    /* Название канала рядом с аватаром */
+    .main-analitics__title {
+        display: block !important;
+        font-size: 17px !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+        word-wrap: break-word;
+    }
+
+    /* 3. Кнопки (Advertising, Mentions, All posts) */
+    .main-analitics__actions-top {
+        display: block !important;
+        width: 100% !important;
+        clear: both; /* Очистка флоата аватара */
+    }
+
+    .main-analitics__btn-wrap {
+        display: table !important; /* Режим таблицы — самый надежный для iOS */
+        width: 100% !important;
+        margin-bottom: 8px !important;
+        border-spacing: 0;
+    }
+
+    .main-analitics__btn {
+        display: table-cell !important;
+        vertical-align: middle;
+        width: 100% !important;
+    }
+
+    .main-analitics__btn a,
+    .main-analitics__btn button {
+        display: block !important;
+        width: 100% !important;
+        height: 48px !important;
+        line-height: 48px !important; /* Центровка текста по вертикали */
+        background: #f8f9fa !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        font-size: 14px !important;
+        text-decoration: none !important;
+        color: #000 !important;
+        padding: 0 !important;
+    }
+
+    /* Кнопка с глазиком отдельно в ячейке */
+    .main-analitics__btn-icon {
+        display: table-cell !important;
+        vertical-align: middle;
+        width: 48px !important;
+        padding-left: 8px !important;
+    }
+
+    .main-analitics__btn-icon img {
+        width: 48px !important;
+        height: 48px !important;
+        background: #f8f9fa !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 4. ТАБЛИЦА: заставляем её прокручиваться */
+    .analitics-tabs__table-wrap-container {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding: 0 !important;
+    }
+
+    .analitics-tabs__table {
+        min-width: 550px !important; /* Чтобы колонки не сжались */
+        width: 100% !important;
+    }
+
+    /* 5. Исправляем блоки статистики (37122) */
+    .main-analitics__content > div[style*="display: flex"] {
+        display: flex !important;
+        flex-wrap: wrap !important; /* Чтобы иконки не вылетали */
+        gap: 10px !important;
+    }
 }
