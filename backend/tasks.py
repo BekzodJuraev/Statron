@@ -17,9 +17,7 @@ from django.core.files.base import ContentFile
 from django.db.models.signals import post_save
 from django.conf import settings
 
-@shared_task
-def hello_world():
-    print("hello world")
+
 @shared_task
 @transaction.atomic
 def process_user_bot(name, api_id, api_hash, phone):
@@ -117,7 +115,7 @@ def add_chanel(chanel_link):
 
 
                 #response = requests.post('https://stattron.ru/chanel/', files=files)
-                response = requests.post('http://127.0.0.1:8000/chanel/', data=payload, files=files)
+                response = requests.post('http://127.0.0.1:8001/chanel/', data=payload, files=files)
 
 
 
