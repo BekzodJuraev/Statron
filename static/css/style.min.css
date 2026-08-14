@@ -1685,7 +1685,7 @@ td {
   -webkit-box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, .25);
   box-shadow: 0 -4px 10px 0 rgba(0, 0, 0, .25);
   padding: .9375rem 1.5625rem 2.5rem 1.5625rem;
-  width: 27.5rem;
+  width: 24rem;
   overflow: auto;
   max-height: calc(100vh - 70px)
 }
