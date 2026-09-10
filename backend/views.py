@@ -98,7 +98,7 @@ class Add_chanel_View(LoginRequiredMixin,TemplateView):
 
 
 
-        return redirect(request.path)
+        return redirect('main')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
