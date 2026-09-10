@@ -34,84 +34,67 @@ async def update(client):
             # Fetch data asynchronously from Django ORM
             chanel_all = await sync_to_async(list)(Chanel.objects.all())
 
-
             for i in chanel_all:
                 chanel_link = i.chanel_link.split('/')[-1]
 
-
                 try:
                     chat = await client.get_chat(chanel_link)
-                    total_view =  client.get_chat_history(chanel_link, limit=10)
+                    total_view = client.get_chat_history(chanel_link, limit=10)
 
-                    # Update ORM asynchronously
-                    chanel_get = await sync_to_async(Chanel.objects.get)(chanel_link=i.chanel_link)
-                    chanel_get.subscribers = chat.members_count
-                    await sync_to_async(chanel_get.save)()
+                    # Update subscribers
+                    i.subscribers = chat.members_count
+                    await sync_to_async(i.save)()
 
-                    post_query = await sync_to_async(Posts.objects.filter)(chanel=chanel_get)
-                    Post_get = await sync_to_async(post_query.order_by('-date').first)()
-
-
-
-
-
-
+                    # Get last recorded post to avoid duplicates
+                    post_get = await sync_to_async(
+                        lambda: Posts.objects.filter(chanel=i).order_by('-date').first()
+                    )()
 
                     async for views in total_view:
-                        if views.text is not None:
-                            text = views.text
-                        else:
-                            text = views.caption
+                        text_content = views.text or views.caption
+                        if not text_content:
+                            continue
 
                         media = ""
-                        photo_file = None
-                        video_file = None
+                        media_file = None
 
-                        async def download_to_django(file_id, ext, folder="posts"):
-                            local_path = await client.download_media(file_id, file_name=f"{folder}_{file_id}.{ext}")
-                            with open(local_path, 'rb') as f:
-                                django_file = File(f)
-                                filename = f"{folder}/{folder}_{file_id}.{ext}"
-                                saved_path = default_storage.save(filename, django_file)
-                                return saved_path
-
+                        # Determine media type and extract file_id
                         if views.photo:
                             media = "photo"
-                            photo_file = await download_to_django(views.photo.file_id, "jpg", folder="photo")
+                            media_file = views.photo.file_id
                         elif views.video:
                             media = "video"
-                            video_file = await download_to_django(views.video.file_id, "mp4", folder="video")
+                            media_file = views.video.file_id
                         elif views.animation:
                             media = "animation"
 
+                        # Check mentions
+                        text_lower = text_content.lower()
+                        chanel_link_lower = chanel_link.lower()
 
-                        if text is not None:
-                            view_text = text
-                            text = text.lower()
-                            chanel_link=chanel_link.lower()
-                            if Post_get is None or timezone.make_aware(views.date) > Post_get.date:
-                                await sync_to_async(Posts.objects.create)(
-                                    chanel=chanel_get,  # Assuming chanel_id is the ID of the channel
-                                    text=view_text,
-                                    view=views.views,
-                                    media=media,
-                                    photo=photo_file if media == "photo" else None,
-                                    video=video_file if media == "video" else None,
-                                    forwards_count=views.forwards,
-                                    link=views.link,
-                                    date=timezone.make_aware(views.date),
-                                    id_channel_forward_from=views.forward_from_chat.id if views.forward_from_chat is not None else None,
-                                    mention=("@" in text or "t.me/" in text or 'https://t.me/' in text) and (
-                                            f'@{chanel_link}' not in text and f't.me/{chanel_link}' not in text and f'https://t.me/{chanel_link}' not in text)
-                                )
+                        mention_flag = (
+                            ("@" in text_lower or "t.me/" in text_lower or "https://t.me/" in text_lower) and
+                            (f"@{chanel_link_lower}" not in text_lower and
+                             f"t.me/{chanel_link_lower}" not in text_lower and
+                             f"https://t.me/{chanel_link_lower}" not in text_lower)
+                        )
 
+                        post_date = timezone.make_aware(views.date) if timezone.is_naive(views.date) else views.date
 
-
-
-
-
-
-
+                        # Create new post if it's newer than the latest stored post
+                        if post_get is None or post_date > post_get.date:
+                            await sync_to_async(Posts.objects.create)(
+                                chanel=i,
+                                text=text_content,
+                                view=views.views,
+                                media=media,
+                                media_file=media_file,
+                                forwards_count=views.forwards,
+                                link=views.link,
+                                date=post_date,
+                                id_channel_forward_from=getattr(views.forward_from_chat, 'id', None),
+                                mention=mention_flag
+                            )
 
                 except Exception as e:
                     print(f"Error updating channel {chanel_link}: {e}")

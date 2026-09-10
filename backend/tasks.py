@@ -135,13 +135,13 @@ def add_chanel(chanel_link):
                 media_file=None
 
                 # Helper function to download and wrap file
-                def download_to_django(file_id, ext, folder="posts"):
-                     local_path = client.download_media(file_id, file_name=f"{folder}_{file_id}.{ext}")
-                     with open(local_path, 'rb') as f:
-                         django_file = File(f)
-                         filename = f"{folder}/{folder}_{file_id}.{ext}"
-                         saved_path = default_storage.save(filename, django_file)
-                         return saved_path
+                # def download_to_django(file_id, ext, folder="posts"):
+                #      local_path = client.download_media(file_id, file_name=f"{folder}_{file_id}.{ext}")
+                #      with open(local_path, 'rb') as f:
+                #          django_file = File(f)
+                #          filename = f"{folder}/{folder}_{file_id}.{ext}"
+                #          saved_path = default_storage.save(filename, django_file)
+                #          return saved_path
                     # filename = f"{folder}/{folder}_{file_id}.{ext}"
                     # file_content = ContentFile(local_path)
                     # saved_path = Posts.photo.field.storage.save(filename, file_content)
